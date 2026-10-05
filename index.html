@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kramavriddhi — Growth, step by step</title>
+  <meta name="description" content="Kramavriddhi builds apps and tools for everyday growth: fitness, productivity, media and data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --surface: #ffffff;
+      --text: #14201e;
+      --muted: #55625f;
+      --border: #e2e5e1;
+      --accent: #0f766e;
+      --accent-soft: #e3f3f0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1413;
+        --surface: #141d1c;
+        --text: #eef3f2;
+        --muted: #9aa9a6;
+        --border: #24302e;
+        --accent: #2dd4bf;
+        --accent-soft: #10302c;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Inter", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: inherit; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; }
+    .brand svg { width: 30px; height: 30px; }
+    nav ul { display: flex; gap: 22px; list-style: none; }
+    nav ul a { text-decoration: none; color: var(--muted); font-size: 0.95rem; }
+    nav ul a:hover { color: var(--text); }
+
+    .hero { padding: 88px 0 96px; max-width: 720px; }
+    .eyebrow { color: var(--accent); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.05; letter-spacing: -0.02em; margin-top: 14px; }
+    .hero p { color: var(--muted); font-size: 1.15rem; margin-top: 20px; max-width: 580px; }
+    .btns { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+    .btn.primary { background: var(--accent); color: #fff; }
+    @media (prefers-color-scheme: dark) { .btn.primary { color: #06201d; } }
+    .btn.ghost { border: 1px solid var(--border); }
+    .btn:hover { opacity: 0.85; }
+
+    section { padding: 64px 0; border-top: 1px solid var(--border); }
+    .section-head { margin-bottom: 32px; max-width: 620px; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: 2rem; letter-spacing: -0.01em; }
+    .section-head p { color: var(--muted); margin-top: 8px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 24px; text-decoration: none; display: flex; flex-direction: column; gap: 10px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .icon { width: 42px; height: 42px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+    .icon svg { width: 22px; height: 22px; }
+    .card h3 { font-size: 1.1rem; }
+    .card p { color: var(--muted); font-size: 0.93rem; flex-grow: 1; }
+    .status { align-self: flex-start; font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); }
+    .card.soon { border-style: dashed; }
+    .card.soon .status { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; }
+    .step .num { font-family: "Fraunces", Georgia, serif; font-size: 2rem; color: var(--accent); }
+    .step h3 { margin: 4px 0 6px; }
+    .step p { color: var(--muted); font-size: 0.95rem; }
+
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .about p { color: var(--muted); margin-bottom: 14px; }
+    .founder { display: flex; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-decoration: none; }
+    .founder img { width: 64px; height: 64px; border-radius: 50%; }
+    .founder small { color: var(--muted); display: block; }
+
+    .contact { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 48px 32px; text-align: center; }
+    .contact p { color: var(--muted); margin: 10px auto 24px; max-width: 480px; }
+    .contact .btns { justify-content: center; }
+
+    footer { padding: 36px 0; color: var(--muted); font-size: 0.9rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+    @media (max-width: 720px) {
+      .about { grid-template-columns: 1fr; }
+      nav ul li.hide-sm { display: none; }
+      .hero { padding: 48px 0 64px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="/">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Kramavriddhi
+      </a>
+      <ul>
+        <li><a href="#products">Products</a></li>
+        <li class="hide-sm"><a href="#approach">Approach</a></li>
+        <li class="hide-sm"><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <header class="hero">
+      <div class="eyebrow">क्रमवृद्धि · Step-by-step growth</div>
+      <h1>Small steps.<br>Steady growth.</h1>
+      <p>Kramavriddhi is a home for apps and tools that help people grow a little every day: in health, in work, and in what they create.</p>
+      <div class="btns">
+        <a class="btn primary" href="#products">Explore products</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </header>
+
+    <section id="products">
+      <div class="section-head">
+        <h2>What we're building</h2>
+        <p>Every product under Kramavriddhi follows one idea: make progress simple enough to do daily.</p>
+      </div>
+      <div class="grid">
+        <a class="card" href="https://github.com/NagendraBabuEdru/VYAYAM" target="_blank" rel="noopener">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/></svg></div>
+          <h3>VYAYAM</h3>
+          <p>Fitness and exercise, one workout at a time.</p>
+          <span class="status">In development</span>
+        </a>
+        <a class="card" href="https://github.com/NagendraBabuEdru/Task_Planner" target="_blank" rel="noopener">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>
+          <h3>Task Planner</h3>
+          <p>Plan your day and keep track of what matters.</p>
+          <span class="status">In development</span>
+        </a>
+        <a class="card" href="https://github.com/NagendraBabuEdru/Video_Editing" target="_blank" rel="noopener">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg></div>
+          <h3>Video Editing</h3>
+          <p>Simple tools to edit and share your videos.</p>
+          <span class="status">In development</span>
+        </a>
+        <a class="card" href="https://github.com/NagendraBabuEdru/Group-Locator" target="_blank" rel="noopener">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+          <h3>Group Locator</h3>
+          <p>Stay connected with your group, wherever you are.</p>
+          <span class="status">In development</span>
+        </a>
+        <div class="card soon">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+          <h3>Insights</h3>
+          <p>Data dashboards and reports that turn numbers into decisions.</p>
+          <span class="status">Coming soon</span>
+        </div>
+        <div class="card soon">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+          <h3>More on the way</h3>
+          <p>New ideas are always growing here. Check back soon.</p>
+          <span class="status">Coming soon</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="approach">
+      <div class="section-head">
+        <h2>Our approach</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="num">01</div><h3>Start small</h3><p>Build the simplest useful version first, and put it in people's hands.</p></div>
+        <div class="step"><div class="num">02</div><h3>Learn daily</h3><p>Listen to real users and improve a little with every release.</p></div>
+        <div class="step"><div class="num">03</div><h3>Grow steadily</h3><p>Compound small improvements into products people rely on.</p></div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="about">
+        <div>
+          <h2>About Kramavriddhi</h2>
+        </div>
+        <div>
+          <p><strong>Kramavriddhi</strong> (क्रमवृद्धि) means "growth in steps" in Sanskrit. It's the idea behind everything we make: real progress comes from small, consistent steps.</p>
+          <p>Founded by Nagendra Babu Edru, Kramavriddhi brings together apps for fitness, productivity, media and data under one name.</p>
+          <a class="founder" href="https://nagendrababuedru.github.io" target="_blank" rel="noopener">
+            <img src="https://avatars.githubusercontent.com/u/95692402?v=4" alt="Nagendra Babu Edru">
+            <div><strong>Nagendra Babu Edru</strong><small>Founder</small></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact">
+        <h2>Let's talk</h2>
+        <p>Questions, feedback or ideas to work on together? We'd love to hear from you.</p>
+        <div class="btns">
+          <a class="btn primary" href="mailto:support@kramavriddhi.com">support@kramavriddhi.com</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Kramavriddhi</span>
+      <span>Growth, step by step.</span>
+    </footer>
+  </div>
+</body>
+</html>
