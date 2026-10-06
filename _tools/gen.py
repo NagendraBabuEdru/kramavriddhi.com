@@ -1,6 +1,6 @@
 import os, sys, json
 sys.path.insert(0, os.path.dirname(__file__))
-from parts import head, nav, FOOTER
+from parts import head, nav, footer, FOOTER
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UPDATED = "6 October 2026"
@@ -127,6 +127,7 @@ write("schemes/index.html",
       <div class="eyebrow">Government schemes</div>
       <h1>Government schemes, explained simply</h1>
       <p>Clear guides to central schemes and Andhra Pradesh and Telangana state schemes: who can apply, what you get, which documents you need, and how to apply on the official portal.</p>
+      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a></p>
     </header>
 
     <div class="filters" role="group" aria-label="Filter by government">
@@ -184,7 +185,15 @@ write("schemes/index.html",
 """ + FOOTER)
 
 # ---------------------------------------------------------------- article shell
+# Guides that also have a Telugu version (content in te_content.py)
+from te_content import TE
+SOURCES = {}
+
 def article(s, lede, facts, body, faqs, sources, description):
+    SOURCES[s["slug"]] = sources
+    has_te = s["slug"] in TE
+    alts = {"en": f'/schemes/{s["slug"]}/', "te": f'/te/schemes/{s["slug"]}/'} if has_te else None
+    lang_switch = f'\n        <p class="lang-switch"><a href="/te/schemes/{s["slug"]}/" lang="te">తెలుగులో చదవండి →</a></p>' if has_te else ""
     hub = STATES[st(s)]["hub"]
     state_crumb = f'<a href="{hub}">{STATES[st(s)]["label"]}</a> › ' if hub else ""
     facts_html = "\n".join(f'        <div class="fact"><small>{k}</small><strong>{v}</strong></div>' for k, v in facts)
@@ -207,7 +216,7 @@ def article(s, lede, facts, body, faqs, sources, description):
     extra = ('\n  <script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>'
              + '\n  <script type="application/ld+json">' + json.dumps(faq_ld, ensure_ascii=False) + '</script>')
     return (head(f'{s["name"]}: Eligibility, Benefits & How to Apply | Kramavriddhi', description,
-                 f'/schemes/{s["slug"]}/', extra)
+                 f'/schemes/{s["slug"]}/', extra, alternates=alts)
         + nav("schemes") + f'''
     <div class="narrow">
       <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › {state_crumb}{s["short"]}</p>
@@ -215,7 +224,7 @@ def article(s, lede, facts, body, faqs, sources, description):
         <div class="eyebrow">{s["icon"]} {s["cat_label"]}</div>
         <h1>{s["name"]}</h1>
         <p class="lede">{lede}</p>
-        <div class="meta"><span>Last updated: {UPDATED}</span><span>{STATES[st(s)]["label"]} scheme</span></div>
+        <div class="meta"><span>Last updated: {UPDATED}</span><span>{STATES[st(s)]["label"]} scheme</span></div>{lang_switch}
 
         <div class="facts">
 {facts_html}
@@ -1759,6 +1768,7 @@ def state_hub(key, intro, slug):
       <div class="eyebrow">State schemes</div>
       <h1>{label} government schemes</h1>
       <p>{intro}</p>
+      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a></p>
     </header>
     <div class="grid">
 {"".join(scheme_card(x) for x in items)}    </div>
@@ -2130,6 +2140,87 @@ write("tools/sukanya-samriddhi-calculator/index.html",
     </script>
 ''' + FOOTER)
 
+# ---------------------------------------------------------------- Telugu pages (added 6 Oct 2026)
+TE_STATE = {"central": "కేంద్ర ప్రభుత్వ పథకం", "ap": "ఆంధ్రప్రదేశ్ ప్రభుత్వ పథకం", "ts": "తెలంగాణ ప్రభుత్వ పథకం"}
+TE_STATE_SHORT = {"central": "కేంద్రం", "ap": "ఆంధ్రప్రదేశ్", "ts": "తెలంగాణ"}
+TE_UPDATED = "6 అక్టోబర్ 2026"
+
+def article_te(s, t):
+    slug = s["slug"]
+    facts_html = "\n".join(f'        <div class="fact"><small>{k}</small><strong>{v}</strong></div>' for k, v in t["facts"])
+    faq_html = "\n".join(f'      <details><summary>{q}</summary><p>{a}</p></details>' for q, a in t["faqs"])
+    src_html = "\n".join(f'        <li><a href="{u}" target="_blank" rel="noopener">{n}</a></li>' for n, u in SOURCES[slug])
+    ld = {
+        "@context": "https://schema.org", "@type": "Article", "inLanguage": "te",
+        "headline": t["name"], "dateModified": UPDATED_ISO,
+        "author": {"@type": "Organization", "name": "Kramavriddhi"},
+        "publisher": {"@type": "Organization", "name": "Kramavriddhi"},
+        "mainEntityOfPage": f"https://kramavriddhi.com/te/schemes/{slug}/",
+    }
+    faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "te",
+              "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in t["faqs"]]}
+    extra = ('\n  <script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>'
+             + '\n  <script type="application/ld+json">' + json.dumps(faq_ld, ensure_ascii=False) + '</script>')
+    alts = {"en": f"/schemes/{slug}/", "te": f"/te/schemes/{slug}/"}
+    return (head(f'{t["name"]}: అర్హత, లబ్ధి, దరఖాస్తు విధానం | Kramavriddhi', t["description"],
+                 f"/te/schemes/{slug}/", extra, lang="te", alternates=alts)
+        + nav("schemes", lang="te") + f'''
+    <div class="narrow">
+      <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › {t["short"]}</p>
+      <article>
+        <div class="eyebrow">{s["icon"]} {t["cat_label"]}</div>
+        <h1>{t["name"]}</h1>
+        <p class="lede">{t["lede"]}</p>
+        <div class="meta"><span>చివరిగా అప్‌డేట్ చేసింది: {TE_UPDATED}</span><span>{TE_STATE[st(s)]}</span></div>
+        <p class="lang-switch"><a href="/schemes/{slug}/" lang="en">Read in English →</a></p>
+
+        <div class="facts">
+{facts_html}
+        </div>
+{t["body"]}
+        <h2>తరచుగా అడిగే ప్రశ్నలు</h2>
+{faq_html}
+
+        <h2>మూలాలు (Sources)</h2>
+        <ul class="sources">
+{src_html}
+        </ul>
+        <div class="note">ఈ గైడ్ సాధారణ సమాచారం కోసం మాత్రమే. పథకం నిబంధనలు, మొత్తాలు, తేదీలు మారవచ్చు. దరఖాస్తు చేసే ముందు అధికారిక పోర్టల్‌లో తప్పకుండా సరిచూసుకోండి. క్రమవృద్ధికి భారత ప్రభుత్వంతో గానీ, ఏ రాష్ట్ర ప్రభుత్వంతో గానీ సంబంధం లేదు.</div>
+      </article>
+    </div>
+''' + footer("te"))
+
+for slug, t in TE.items():
+    write(f"te/schemes/{slug}/index.html", article_te(BY_SLUG[slug], t))
+
+def te_card(s, t):
+    return f'''        <a class="card" href="/te/schemes/{s["slug"]}/" lang="te">
+          <div class="icon" aria-hidden="true">{s["icon"]}</div>
+          <h3>{t["name"]}</h3>
+          <p>{t["lede"].split(". ")[0].split("। ")[0]}.</p>
+          <div class="tags"><span class="tag state">{TE_STATE_SHORT[st(s)]}</span><span class="tag">{t["cat_label"]}</span></div>
+        </a>
+'''
+
+te_items = [x for x in DISPLAY if x["slug"] in TE]
+write("te/schemes/index.html",
+    head("తెలుగులో ప్రభుత్వ పథకాలు: ఆంధ్రప్రదేశ్, తెలంగాణ | Kramavriddhi",
+         "ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాల సులభమైన తెలుగు గైడ్‌లు: అర్హత, లబ్ధి, పత్రాలు, దరఖాస్తు విధానం.",
+         "/te/schemes/", lang="te", alternates={"en": "/schemes/", "te": "/te/schemes/"})
+    + nav("schemes", lang="te") + f'''
+    <header class="page-head">
+      <div class="eyebrow">తెలుగులో పథకాలు</div>
+      <h1>ప్రభుత్వ పథకాలు, సులభమైన తెలుగులో</h1>
+      <p>ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాల గురించి స్పష్టమైన గైడ్‌లు: ఎవరు అర్హులు, ఏం లభిస్తుంది, ఏ పత్రాలు కావాలి, అధికారిక పోర్టల్‌లో ఎలా దరఖాస్తు చేయాలి.</p>
+      <p class="lang-switch"><a href="/schemes/" lang="en">All schemes in English →</a></p>
+    </header>
+    <div class="grid">
+{"".join(te_card(x, TE[x["slug"]]) for x in te_items)}    </div>
+    <p class="soon-list"><strong>త్వరలో:</strong> మరిన్ని ఆంధ్రప్రదేశ్, తెలంగాణ పథకాలు, కేంద్ర పథకాలు తెలుగులో.</p>
+    <div class="note" style="margin-top:32px">క్రమవృద్ధి ఒక స్వతంత్ర సమాచార వెబ్‌సైట్, ప్రభుత్వ వెబ్‌సైట్ కాదు. మేము మీ ఆధార్, బ్యాంకు వివరాలు లేదా ఎలాంటి ఫీజు అడగము. ఎల్లప్పుడూ గైడ్‌లో ఇచ్చిన అధికారిక పోర్టల్‌లోనే దరఖాస్తు చేయండి.</div>
+    <div style="height:40px"></div>
+''' + footer("te"))
+
 # ---------------------------------------------------------------- simple pages
 def simple(path, title, desc, active, h1, eyebrow, body):
     write(path.strip("/") + "/index.html", head(f"{title} | Kramavriddhi", desc, path) + nav(active) + f'''
@@ -2225,7 +2316,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/schemes/", "/schemes/andhra-pradesh/", "/schemes/telangana/"] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/schemes/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")

@@ -191,3 +191,11 @@ table.simple tr.hl td { background: var(--accent-soft); font-weight: 600; }
 .checker #go { grid-column: 1 / -1; justify-self: start; border: 0; cursor: pointer; font: inherit; font-weight: 600; padding: 12px 26px; }
 #out { scroll-margin-top: 16px; }
 #out .grid { margin-bottom: 24px; }
+
+/* Telugu */
+:lang(te) { font-family: "Noto Sans Telugu", "Inter", system-ui, sans-serif; }
+html[lang="te"] h1, html[lang="te"] h2 { font-family: "Noto Sans Telugu", "Fraunces", Georgia, serif; font-weight: 700; line-height: 1.35; }
+html[lang="te"] body { line-height: 1.8; }
+.lang-switch { margin-top: 12px; font-size: 0.95rem; }
+.lang-switch a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.lang-switch a:hover { text-decoration: underline; }

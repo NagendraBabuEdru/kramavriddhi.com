@@ -2,22 +2,33 @@
 LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"
 
-def head(title, desc, path, extra=""):
+FONTS = {
+    "en": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600",
+    "te": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&family=Noto+Sans+Telugu:wght@400;600;700",
+}
+
+def head(title, desc, path, extra="", lang="en", alternates=None):
+    """alternates: {"en": "/path/", "te": "/te/path/"} when a page exists in both languages."""
+    alt = ""
+    if alternates:
+        alt = "".join(f'\n  <link rel="alternate" hreflang="{l}" href="https://kramavriddhi.com{p}">' for l, p in alternates.items())
+        alt += f'\n  <link rel="alternate" hreflang="x-default" href="https://kramavriddhi.com{alternates["en"]}">'
     return f'''<!doctype html>
-<html lang="en">
+<html lang="{lang}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content="{desc}">
-  <link rel="canonical" href="https://kramavriddhi.com{path}">
+  <link rel="canonical" href="https://kramavriddhi.com{path}">{alt}
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{desc}">
   <meta property="og:url" content="https://kramavriddhi.com{path}">
   <meta property="og:site_name" content="Kramavriddhi">
+  <meta property="og:locale" content="{"te_IN" if lang == "te" else "en_IN"}">
   <link rel="icon" href="{FAVICON}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?{FONTS[lang]}&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css">
   <script src="/assets/site.js" defer></script>{extra}
 </head>
@@ -25,7 +36,14 @@ def head(title, desc, path, extra=""):
   <div class="wrap">
 '''
 
-def nav(active=""):
+NAV_LABELS = {
+    "en": dict(schemes="Schemes", tools="Tools", products="Products", about="About", contact="Contact"),
+    "te": dict(schemes="పథకాలు", tools="సాధనాలు", products="ఉత్పత్తులు", about="మా గురించి", contact="సంప్రదించండి"),
+}
+
+def nav(active="", lang="en"):
+    L = NAV_LABELS[lang]
+    schemes_href = "/te/schemes/" if lang == "te" else "/schemes/"
     def li(href, label, key, cls=""):
         cur = ' aria-current="page"' if key == active else ""
         c = f' class="{cls}"' if cls else ""
@@ -36,31 +54,46 @@ def nav(active=""):
         Kramavriddhi
       </a>
       <ul>
-        {li("/schemes/", "Schemes", "schemes")}
-        {li("/tools/", "Tools", "tools")}
-        {li("/#products", "Products", "products", "hide-sm")}
-        {li("/about/", "About", "about", "hide-sm")}
-        {li("/contact/", "Contact", "contact")}
+        {li(schemes_href, L["schemes"], "schemes")}
+        {li("/tools/", L["tools"], "tools")}
+        {li("/#products", L["products"], "products", "hide-sm")}
+        {li("/about/", L["about"], "about", "hide-sm")}
+        {li("/contact/", L["contact"], "contact")}
       </ul>
     </nav>
 '''
 
-FOOTER = '''
-    <footer class="site">
-      <div class="cols">
-        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
-        <ul>
-          <li><a href="/schemes/">Schemes</a></li>
+def footer(lang="en"):
+    if lang == "te":
+        links = '''          <li><a href="/te/schemes/">తెలుగు పథకాలు</a></li>
+          <li><a href="/schemes/">Schemes (English)</a></li>
+          <li><a href="/tools/">సాధనాలు</a></li>
+          <li><a href="/contact/">సంప్రదించండి</a></li>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/disclaimer/">Disclaimer</a></li>'''
+        note = "క్రమవృద్ధి ఒక స్వతంత్ర సమాచార వెబ్‌సైట్. ఇది ప్రభుత్వ వెబ్‌సైట్ కాదు, భారత ప్రభుత్వం లేదా ఏ రాష్ట్ర ప్రభుత్వంతోనూ సంబంధం లేదు. దరఖాస్తు చేసే ముందు అధికారిక పోర్టల్‌లో వివరాలు తప్పకుండా సరిచూసుకోండి."
+    else:
+        links = '''          <li><a href="/schemes/">Schemes</a></li>
+          <li><a href="/te/schemes/">తెలుగు</a></li>
           <li><a href="/tools/">Tools</a></li>
           <li><a href="/about/">About</a></li>
           <li><a href="/contact/">Contact</a></li>
           <li><a href="/privacy-policy/">Privacy Policy</a></li>
-          <li><a href="/disclaimer/">Disclaimer</a></li>
+          <li><a href="/disclaimer/">Disclaimer</a></li>'''
+        note = "Kramavriddhi is an independent information website. It is not a government website and is not affiliated with the Government of India or any state government. Always confirm details on the official portal before applying."
+    return f'''
+    <footer class="site">
+      <div class="cols">
+        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <ul>
+{links}
         </ul>
       </div>
-      <p class="disclaimer">Kramavriddhi is an independent information website. It is not a government website and is not affiliated with the Government of India or any state government. Always confirm details on the official portal before applying.</p>
+      <p class="disclaimer">{note}</p>
     </footer>
   </div>
 </body>
 </html>
 '''
+
+FOOTER = footer("en")
