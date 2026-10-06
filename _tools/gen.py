@@ -75,6 +75,9 @@ SCHEMES = [
     dict(slug="ts-rajiv-aarogyasri", name="Rajiv Aarogyasri (Telangana)", short="Rajiv Aarogyasri",
          state="ts", cat="health", cat_label="Health", icon="🩺",
          summary="Cashless treatment up to ₹10 lakh per family per year for 1,835 procedures, for white ration card families."),
+    dict(slug="ts-cheyutha-pension", name="Cheyutha Pension (Telangana)", short="Cheyutha Pension",
+         state="ts", cat="pension", cat_label="Pension & Insurance", icon="👵",
+         summary="Monthly pensions for poor elderly people, widows, single women, persons with disabilities and other groups."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -1663,6 +1666,85 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Telangana Today: 163 new procedures included in Rajiv Aarogyasri (July 2024)", "https://telanganatoday.com/telangana-163-new-procedures-included-in-rajiv-aarogyasri-scheme"),
     ]))
 
+# ---- TS: Cheyutha pensions (added 6 Oct 2026)
+s = BY_SLUG["ts-cheyutha-pension"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Cheyutha (earlier called Aasara) is Telangana's social security pension scheme. It pays a monthly pension to poor elderly people, widows, single women, persons with disabilities, weavers, toddy tappers, beedi workers and patients with certain illnesses.",
+    description="Cheyutha pension (Telangana) explained: categories, current pension amounts and the promised increase, 2026 enrolment, new thalassemia and sickle cell pensions, how to apply.",
+    facts=[("Categories", "10+"), ("2026 enrolment", "Closed 15 Sept 2026"), ("New in 2026", "Thalassemia, sickle cell"), ("Paid", "Monthly to bank")],
+    body='''
+        <h2>What is Cheyutha?</h2>
+        <p>Cheyutha is the Telangana government's pension scheme for vulnerable people, continuing the earlier Aasara pensions. The money is credited to the beneficiary's bank account every month. Pensioners from white ration card families are also covered for health care under <a href="/schemes/ts-rajiv-aarogyasri/">Rajiv Aarogyasri</a>.</p>
+
+        <h2>Who gets a Cheyutha pension?</h2>
+        <ul>
+          <li>Senior citizens</li>
+          <li>Widows and single women</li>
+          <li>Persons with disabilities</li>
+          <li>Weavers and toddy tappers</li>
+          <li>Beedi workers</li>
+          <li>People living with HIV, filaria patients and dialysis patients</li>
+          <li><strong>New in 2026:</strong> persons with thalassemia, sickle cell disease and haemophilia (distribution to identified beneficiaries began from 15 August 2026)</li>
+        </ul>
+        <p>Applicants should be permanent residents of Telangana from poor (BPL) families, usually with a white ration card.</p>
+
+        <h2>How much is the pension?</h2>
+        <div class="note"><strong>Reports differ on the current amount.</strong> Some government pages and statements list <strong>₹4,000 per month</strong> (and <strong>₹6,000</strong> for persons with disabilities), the amounts promised in 2023. But a news report from 1 October 2026 says senior citizens are <strong>still receiving ₹2,016 per month</strong> and that the increase to ₹4,000 has not been implemented for them. Please check the amount credited in your bank account, or ask your MPDO or municipal office, for the amount that applies to your category.</div>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Category</th><th>Amount before 2023</th><th>Amount listed / promised</th></tr>
+          <tr><td>Senior citizens, widows, single women, weavers, toddy tappers, beedi workers, HIV, filaria, dialysis</td><td>₹2,016</td><td>₹4,000</td></tr>
+          <tr><td>Persons with disabilities</td><td>₹4,016</td><td>₹6,000</td></tr>
+        </table>
+        </div>
+        <p>We will update this page as soon as the government confirms the amounts being paid.</p>
+
+        <h2>2026 enrolment for new pensions</h2>
+        <ul>
+          <li>In 2026 the government announced about <strong>2 lakh new pensions</strong>.</li>
+          <li>Applications were accepted for <strong>widows, single women, persons with disabilities, toddy tappers, weavers, filaria patients, dialysis patients</strong>, and the new categories (thalassemia, sickle cell, haemophilia).</li>
+          <li><strong>Senior citizens, HIV patients and beedi workers were not part of this enrolment round.</strong></li>
+          <li>The last date was 31 August 2026, extended to <strong>15 September 2026</strong> in some districts.</li>
+          <li>Applications given earlier through Praja Palana, the 99-day Pragathi Pranalika Gram Sabhas or Prajavani are processed automatically. You don't need to apply again.</li>
+        </ul>
+
+        <h2>How to apply (when enrolment is open)</h2>
+        <ol>
+          <li>Villages: apply through the <strong>Panchayat Secretary</strong> or the <strong>MPDO</strong> office.</li>
+          <li>Towns: apply through the <strong>Ward Officer</strong> or <strong>Municipal Commissioner</strong> (Deputy Commissioner in municipal corporations).</li>
+          <li>You can also apply through <strong>MeeSeva</strong>.</li>
+          <li>Your application is entered on the Cheyutha portal, checked in the field, verified by the department and approved by the District Collector.</li>
+        </ol>
+
+        <h2>Documents usually needed</h2>
+        <ul>
+          <li>Aadhaar card</li>
+          <li>White ration card</li>
+          <li>Bank account details (linked to Aadhaar)</li>
+          <li>Category proof: husband's death certificate (widows), SADAREM disability certificate, medical certificates (dialysis, thalassemia, etc.), or occupation proof (weavers, toddy tappers)</li>
+          <li>Passport-size photograph</li>
+        </ul>
+
+        <div class="official">
+          <strong>Help:</strong> Panchayat Secretary / MPDO (villages), Ward Officer / Municipal Commissioner (towns), or MeeSeva<br>
+          <strong>Health cover for pensioners:</strong> <a href="/schemes/ts-rajiv-aarogyasri/">Rajiv Aarogyasri</a>
+        </div>
+''',
+    faqs=[
+        ("How much is the old age pension in Telangana?", "Reports differ. Some government pages list ₹4,000 a month, but an October 2026 news report says senior citizens still receive ₹2,016 and the promised increase hasn't been implemented. Check with your MPDO or the amount credited to your account."),
+        ("Can senior citizens apply for a new Cheyutha pension now?", "Senior citizens were not included in the 2026 enrolment round, which accepted widows, single women, persons with disabilities, toddy tappers, weavers, filaria and dialysis patients, and new illness categories."),
+        ("Who got new pensions in 2026?", "Persons with thalassemia, sickle cell disease and haemophilia were added, with distribution to identified beneficiaries starting from 15 August 2026."),
+        ("Where do I apply for a Cheyutha pension?", "Through the Panchayat Secretary or MPDO in villages, the Ward Officer or Municipal Commissioner in towns, or MeeSeva, when enrolment is open."),
+        ("Do I need to apply again if I applied in Praja Palana?", "No. Earlier complete applications from Praja Palana, the 99-day Gram Sabhas and Prajavani are processed automatically."),
+    ],
+    sources=[
+        ("Warangal district (telangana.gov.in): Cheyutha Scheme", "https://warangal.telangana.gov.in/scheme/cheyutha-scheme/"),
+        ("Siasat: Applications invited for Cheyutha pension scheme (Aug 2026)", "https://www.siasat.com/applications-invited-for-cheyutha-pension-scheme-in-telangana-3523654/"),
+        ("The Hans India: Cheyutha application deadline extended to 15 September", "https://www.thehansindia.com/news/cities/warangal/telangana-extends-cheyutha-pension-application-deadline-to-september-15-1116222"),
+        ("The Hans India: Thalassemia, sickle cell patients to get pensions (Aug 2026)", "https://www.thehansindia.com/telangana/thalassemia-sickle-cell-patients-to-get-pensions-cm-revanth-1103640"),
+        ("Telangana Today: Senior citizens still await ₹4,000 pension promise (1 Oct 2026)", "https://telanganatoday.com/three-years-on-telangana-senior-citizens-still-await-congress-rs-4000-pension-promise"),
+    ]))
+
 # ---- state hub pages
 def state_hub(key, intro, slug):
     items = [x for x in DISPLAY if st(x) == key]
@@ -1853,6 +1935,8 @@ write("tools/scheme-eligibility-checker/index.html",
             if (poor && !f.pucca && inc <= 1) add('ts-indiramma-indlu', 'White ration card, income under ₹2 lakh and no pucca house: up to ₹5 lakh to build.');
             if (poor) add('ts-gruha-jyothi', 'White ration card families get a zero bill up to 200 units a month.');
             if (poor) add('ts-rajiv-aarogyasri', 'White ration card families get health cover up to ₹10 lakh a year.');
+            if (poor && (f.widow || f.disabled)) add('ts-cheyutha-pension', f.disabled ? 'Persons with disabilities from white ration card families can get a monthly pension.' : 'Widows and single women from white ration card families can get a monthly pension.');
+            else if (poor && age >= 57) add('ts-cheyutha-pension', 'Elderly people from white ration card families get a monthly pension (new enrolment for seniors was not open in 2026).');
           }}
 
           var out = $('out');
