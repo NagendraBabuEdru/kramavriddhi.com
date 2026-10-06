@@ -18,6 +18,11 @@
       text: "Use our free Atal Pension and Sukanya Samriddhi calculators.",
       href: "/tools/", cta: "See calculators"
     },
+    "/te/schemes/": {
+      key: "checker-te", icon: "✅", title: "మీకు ఏ పథకాలు వర్తిస్తాయి?",
+      text: "కొన్ని సులభమైన ప్రశ్నలకు సమాధానం ఇచ్చి మీకు సరిపోయే ప్రభుత్వ పథకాలు చూడండి.",
+      href: "/te/tools/scheme-eligibility-checker/", cta: "ఒక నిమిషంలో చూడండి"
+    },
     "/schemes/": {
       key: "checker", icon: "✅", title: "Which schemes are for you?",
       text: "Answer a few simple questions and see the government schemes that may suit you.",

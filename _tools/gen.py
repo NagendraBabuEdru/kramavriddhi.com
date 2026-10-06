@@ -1824,140 +1824,253 @@ def tool_card(t):
         </a>
 '''
 
-# ---------------------------------------------------------------- eligibility checker (added 6 Oct 2026)
+# ---------------------------------------------------------------- eligibility checker (English + Telugu)
 TOOLS.insert(0, dict(slug="scheme-eligibility-checker", name="Which Schemes Am I Eligible For?", icon="✅",
     summary="Answer a few simple questions and see the central, Andhra Pradesh and Telangana schemes that may suit you."))
 
-CHECKER_DATA = {x["slug"]: dict(name=x["name"], summary=x["summary"], state=st(x), icon=x["icon"]) for x in SCHEMES}
+CHECKER_TEXT = {
+    "en": dict(
+        path="/tools/scheme-eligibility-checker/",
+        title="Which Government Schemes Am I Eligible For? Free Checker | Kramavriddhi",
+        desc="Free scheme eligibility checker: answer a few questions to find central, Andhra Pradesh and Telangana government schemes that may suit you, with simple guides.",
+        crumbs='<a href="/">Home</a> › <a href="/tools/">Tools</a> › Scheme Eligibility Checker',
+        eyebrow="✅ Free tool", h1="Which schemes am I eligible for?",
+        lede="Answer a few simple questions to see which government schemes may suit you. It takes less than a minute, and nothing you enter leaves your phone or computer.",
+        switch='<a href="/te/tools/scheme-eligibility-checker/" lang="te">తెలుగులో చూడండి →</a>',
+        q_state="Where do you live?", states=[("ap", "Andhra Pradesh"), ("ts", "Telangana"), ("other", "Another state")],
+        q_area="Village or town?", areas=[("rural", "Village (rural)"), ("urban", "Town or city (urban)")],
+        q_age="Your age",
+        q_gender="You are", genders=[("f", "Woman / girl"), ("m", "Man / boy"), ("t", "Transgender person")],
+        q_income="Family income per year", incomes=[("1", "Up to ₹2 lakh"), ("3", "₹2 – 3 lakh"), ("6", "₹3 – 6 lakh"), ("9", "₹6 – 9 lakh"), ("99", "More than ₹9 lakh")],
+        q_checks="Tick everything that applies to you",
+        checks=[
+            ("ration", "Our family has a ration card (white / rice / BPL card)"),
+            ("farmland", "Our family owns farm land"),
+            ("bank", "I have a bank or post office account"),
+            ("incometax", "I or my family pay income tax"),
+            ("govtjob", "Someone in the family is a government employee or pensioner"),
+            ("pucca", "Our family already owns a pucca (concrete) house"),
+            ("lpg", "We have an LPG gas connection"),
+            ("daughter", "I have a daughter below 10 years"),
+            ("school", "We have children studying in Classes 1–12"),
+            ("business", "I want a loan to start or grow a small business"),
+            ("widow", "I am a widow or single woman"),
+            ("disabled", "I or a family member have a disability"),
+        ],
+        button="Show my schemes",
+        note="This checker gives a <strong>first idea only</strong>, based on the main rules of each scheme. Every scheme has more detailed conditions, so open each guide and confirm on the official portal, or at your village/ward secretariat, before applying. Kramavriddhi is not a government website and never asks for your Aadhaar, bank details or any fee.",
+        none='<strong>No matches from our guides yet.</strong><p>Try changing your answers, or <a href="/schemes/">browse all schemes</a>. We add new guides every week.</p>',
+        count_one="scheme may suit you", count_many="schemes may suit you",
+        open_each="Open each guide to check the full rules and how to apply.", why="Why:",
+        tags={"central": "Central", "ap": "Andhra Pradesh", "ts": "Telangana"},
+        W=dict(
+            kisan="Your family owns farm land and doesn't pay income tax.",
+            jay70="Everyone aged 70 or above gets ₹5 lakh health cover, whatever their income.",
+            jayPoor="Families with a BPL / ration card are often covered. Check your name on the official site.",
+            ssy="You have a daughter below 10 years.",
+            pmayu="You live in a town, don't own a pucca house, and your income is within ₹9 lakh.",
+            pmayg="You live in a village and don't own a pucca house.",
+            mudra="You want a loan for a small business. Mudra gives up to ₹20 lakh without collateral.",
+            apy="You are 18–40 and don't pay income tax, so you can join for a pension after 60.",
+            jdy="You don't have a bank account yet. Open a zero-balance account.",
+            pmjjby="You are 18–50: ₹2 lakh life cover for ₹436 a year.",
+            pmsby="You are 18–70: ₹2 lakh accident cover for ₹20 a year.",
+            apAnnadata="AP farmer family: ₹20,000 a year with PM-KISAN.",
+            apNtr60="You are 60+ with a rice card.",
+            apNtrDis="Your family has a person with disability and a rice card.",
+            apNtrWidow="You are a widow or single woman with a rice card.",
+            apThalliki="You have school-going children and a rice card: ₹15,000 per child per year.",
+            apDeepam="Rice card and LPG connection: three free cylinders a year.",
+            apStree="Free travel in APSRTC ordinary and express buses.",
+            tsRythu="Telangana farmer: ₹12,000 per acre per year.",
+            tsMahaBus="Free TGSRTC bus travel.",
+            tsMahaBusGas="Free TGSRTC bus travel, and ₹500 gas cylinders for your family.",
+            tsMahaGas="₹500 gas cylinders for white ration card families with LPG.",
+            tsIndiramma="White ration card, income under ₹2 lakh and no pucca house: up to ₹5 lakh to build.",
+            tsGruha="White ration card families get a zero bill up to 200 units a month.",
+            tsAarogya="White ration card families get health cover up to ₹10 lakh a year.",
+            tsCheyDis="Persons with disabilities from white ration card families can get a monthly pension.",
+            tsCheyWidow="Widows and single women from white ration card families can get a monthly pension.",
+            tsCheyOld="Elderly people from white ration card families get a monthly pension (new enrolment for seniors was not open in 2026).",
+        ),
+    ),
+    "te": dict(
+        path="/te/tools/scheme-eligibility-checker/",
+        title="నాకు ఏ ప్రభుత్వ పథకాలు వర్తిస్తాయి? ఉచిత చెకర్ | Kramavriddhi",
+        desc="ఉచిత పథకాల అర్హత చెకర్: కొన్ని ప్రశ్నలకు సమాధానం ఇచ్చి మీకు వర్తించే కేంద్ర, ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాలు తెలుసుకోండి.",
+        crumbs='<a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › అర్హత చెకర్',
+        eyebrow="✅ ఉచిత సాధనం", h1="నాకు ఏ పథకాలు వర్తిస్తాయి?",
+        lede="కొన్ని సులభమైన ప్రశ్నలకు సమాధానం ఇవ్వండి, మీకు ఏ ప్రభుత్వ పథకాలు సరిపోతాయో చూడండి. ఒక నిమిషం కూడా పట్టదు. మీరు ఇచ్చే సమాచారం మీ ఫోన్ లేదా కంప్యూటర్ దాటి ఎక్కడికీ వెళ్ళదు.",
+        switch='<a href="/tools/scheme-eligibility-checker/" lang="en">Use in English →</a>',
+        q_state="మీరు ఎక్కడ నివసిస్తున్నారు?", states=[("ap", "ఆంధ్రప్రదేశ్"), ("ts", "తెలంగాణ"), ("other", "ఇతర రాష్ట్రం")],
+        q_area="గ్రామమా, పట్టణమా?", areas=[("rural", "గ్రామం"), ("urban", "పట్టణం / నగరం")],
+        q_age="మీ వయసు",
+        q_gender="మీరు", genders=[("f", "మహిళ / బాలిక"), ("m", "పురుషుడు / బాలుడు"), ("t", "ట్రాన్స్‌జెండర్")],
+        q_income="కుటుంబ వార్షిక ఆదాయం", incomes=[("1", "₹2 లక్షల వరకు"), ("3", "₹2 – 3 లక్షలు"), ("6", "₹3 – 6 లక్షలు"), ("9", "₹6 – 9 లక్షలు"), ("99", "₹9 లక్షల కంటే ఎక్కువ")],
+        q_checks="మీకు వర్తించే వాటన్నింటినీ టిక్ చేయండి",
+        checks=[
+            ("ration", "మా కుటుంబానికి రేషన్ కార్డు ఉంది (తెల్ల / బియ్యం / BPL కార్డు)"),
+            ("farmland", "మా కుటుంబానికి వ్యవసాయ భూమి ఉంది"),
+            ("bank", "నాకు బ్యాంకు లేదా పోస్టాఫీసు ఖాతా ఉంది"),
+            ("incometax", "నేను లేదా మా కుటుంబం ఆదాయపు పన్ను కడతాం"),
+            ("govtjob", "మా కుటుంబంలో ఎవరైనా ప్రభుత్వ ఉద్యోగి లేదా పింఛనుదారు"),
+            ("pucca", "మా కుటుంబానికి ఇప్పటికే పక్కా (కాంక్రీటు) ఇల్లు ఉంది"),
+            ("lpg", "మాకు ఎల్పీజీ గ్యాస్ కనెక్షన్ ఉంది"),
+            ("daughter", "నాకు 10 ఏళ్ళ లోపు కూతురు ఉంది"),
+            ("school", "మా పిల్లలు 1–12 తరగతుల్లో చదువుతున్నారు"),
+            ("business", "చిన్న వ్యాపారం ప్రారంభించడానికి లేదా పెంచడానికి నాకు రుణం కావాలి"),
+            ("widow", "నేను వితంతువు లేదా ఒంటరి మహిళను"),
+            ("disabled", "నాకు లేదా మా కుటుంబ సభ్యులకు వైకల్యం ఉంది"),
+        ],
+        button="నా పథకాలు చూపించు",
+        note="ఈ చెకర్ ప్రతి పథకం ప్రధాన నిబంధనల ఆధారంగా <strong>ప్రాథమిక అంచనా మాత్రమే</strong> ఇస్తుంది. ప్రతి పథకానికి మరిన్ని వివరమైన షరతులు ఉంటాయి, కాబట్టి దరఖాస్తు చేసే ముందు ప్రతి గైడ్ తెరిచి, అధికారిక పోర్టల్‌లో లేదా మీ గ్రామ/వార్డు సచివాలయంలో నిర్ధారించుకోండి. క్రమవృద్ధి ప్రభుత్వ వెబ్‌సైట్ కాదు, మీ ఆధార్, బ్యాంకు వివరాలు లేదా ఎలాంటి ఫీజు ఎప్పుడూ అడగదు.",
+        none='<strong>మా గైడ్‌లలో ఇంకా సరిపోయే పథకాలు లేవు.</strong><p>మీ సమాధానాలు మార్చి చూడండి, లేదా <a href="/te/schemes/">అన్ని తెలుగు పథకాలు చూడండి</a>. ప్రతి వారం కొత్త గైడ్‌లు జోడిస్తున్నాం.</p>',
+        count_one="పథకం మీకు సరిపోవచ్చు", count_many="పథకాలు మీకు సరిపోవచ్చు",
+        open_each="పూర్తి నిబంధనలు, దరఖాస్తు విధానం కోసం ప్రతి గైడ్ తెరవండి.", why="ఎందుకు:",
+        tags={"central": "కేంద్రం", "ap": "ఆంధ్రప్రదేశ్", "ts": "తెలంగాణ"},
+        W=dict(
+            kisan="మీ కుటుంబానికి వ్యవసాయ భూమి ఉంది, ఆదాయపు పన్ను కట్టరు.",
+            jay70="70 ఏళ్ళు దాటిన ప్రతి ఒక్కరికీ, ఆదాయంతో సంబంధం లేకుండా ₹5 లక్షల ఆరోగ్య రక్షణ.",
+            jayPoor="BPL / రేషన్ కార్డు ఉన్న కుటుంబాలు తరచుగా ఇందులో ఉంటాయి. అధికారిక సైట్‌లో మీ పేరు చూసుకోండి.",
+            ssy="మీకు 10 ఏళ్ళ లోపు కూతురు ఉంది.",
+            pmayu="మీరు పట్టణంలో ఉంటారు, పక్కా ఇల్లు లేదు, ఆదాయం ₹9 లక్షల లోపు.",
+            pmayg="మీరు గ్రామంలో ఉంటారు, పక్కా ఇల్లు లేదు.",
+            mudra="చిన్న వ్యాపారానికి రుణం కావాలి. ముద్ర హామీ లేకుండా ₹20 లక్షల వరకు ఇస్తుంది.",
+            apy="మీ వయసు 18–40, ఆదాయపు పన్ను కట్టరు, కాబట్టి 60 తర్వాత పింఛన్ కోసం చేరవచ్చు.",
+            jdy="మీకు ఇంకా బ్యాంకు ఖాతా లేదు. జీరో బ్యాలెన్స్ ఖాతా తెరవండి.",
+            pmjjby="మీ వయసు 18–50: ఏడాదికి ₹436కు ₹2 లక్షల జీవిత బీమా.",
+            pmsby="మీ వయసు 18–70: ఏడాదికి ₹20కు ₹2 లక్షల ప్రమాద బీమా.",
+            apAnnadata="ఏపీ రైతు కుటుంబం: పీఎం కిసాన్‌తో కలిపి ఏడాదికి ₹20,000.",
+            apNtr60="మీ వయసు 60+, బియ్యం కార్డు ఉంది.",
+            apNtrDis="మీ కుటుంబంలో దివ్యాంగులు ఉన్నారు, బియ్యం కార్డు ఉంది.",
+            apNtrWidow="మీరు వితంతువు లేదా ఒంటరి మహిళ, బియ్యం కార్డు ఉంది.",
+            apThalliki="బడికి వెళ్ళే పిల్లలు, బియ్యం కార్డు ఉన్నాయి: ఒక్కో బిడ్డకు ఏడాదికి ₹15,000.",
+            apDeepam="బియ్యం కార్డు, ఎల్పీజీ కనెక్షన్ ఉన్నాయి: ఏడాదికి మూడు ఉచిత సిలిండర్లు.",
+            apStree="ఏపీఎస్ఆర్టీసీ ఆర్డినరీ, ఎక్స్‌ప్రెస్ బస్సుల్లో ఉచిత ప్రయాణం.",
+            tsRythu="తెలంగాణ రైతు: ఎకరానికి ఏడాదికి ₹12,000.",
+            tsMahaBus="టీజీఎస్ఆర్టీసీ బస్సుల్లో ఉచిత ప్రయాణం.",
+            tsMahaBusGas="టీజీఎస్ఆర్టీసీ బస్సుల్లో ఉచిత ప్రయాణం, మీ కుటుంబానికి ₹500కే గ్యాస్ సిలిండర్.",
+            tsMahaGas="ఎల్పీజీ ఉన్న తెల్ల రేషన్ కార్డు కుటుంబాలకు ₹500కే గ్యాస్ సిలిండర్.",
+            tsIndiramma="తెల్ల రేషన్ కార్డు, ₹2 లక్షల లోపు ఆదాయం, పక్కా ఇల్లు లేదు: ఇల్లు కట్టుకోవడానికి ₹5 లక్షల వరకు.",
+            tsGruha="తెల్ల రేషన్ కార్డు కుటుంబాలకు నెలకు 200 యూనిట్ల వరకు జీరో బిల్లు.",
+            tsAarogya="తెల్ల రేషన్ కార్డు కుటుంబాలకు ఏడాదికి ₹10 లక్షల వరకు ఆరోగ్య రక్షణ.",
+            tsCheyDis="తెల్ల రేషన్ కార్డు కుటుంబాల దివ్యాంగులకు నెలవారీ పింఛన్ వస్తుంది.",
+            tsCheyWidow="తెల్ల రేషన్ కార్డు కుటుంబాల వితంతువులు, ఒంటరి మహిళలకు నెలవారీ పింఛన్ వస్తుంది.",
+            tsCheyOld="తెల్ల రేషన్ కార్డు కుటుంబాల వృద్ధులకు నెలవారీ పింఛన్ వస్తుంది (2026లో వృద్ధులకు కొత్త నమోదు తెరవలేదు).",
+        ),
+    ),
+}
 
-CHECK_OPTS = [
-    ("ration", "Our family has a ration card (white / rice / BPL card)"),
-    ("farmland", "Our family owns farm land"),
-    ("bank", "I have a bank or post office account"),
-    ("incometax", "I or my family pay income tax"),
-    ("govtjob", "Someone in the family is a government employee or pensioner"),
-    ("pucca", "Our family already owns a pucca (concrete) house"),
-    ("lpg", "We have an LPG gas connection"),
-    ("daughter", "I have a daughter below 10 years"),
-    ("school", "We have children studying in Classes 1–12"),
-    ("business", "I want a loan to start or grow a small business"),
-    ("widow", "I am a widow or single woman"),
-    ("disabled", "I or a family member have a disability"),
-]
-checks_html = "\n".join(
-    f'            <label class="check"><input type="checkbox" name="f" value="{k}"> <span>{v}</span></label>' for k, v in CHECK_OPTS)
+def checker_data(lang):
+    out = {}
+    for x in SCHEMES:
+        t = TE.get(x["slug"]) if lang == "te" else None
+        out[x["slug"]] = dict(
+            name=t["name"] if t else x["name"],
+            href=(f'/te/schemes/{x["slug"]}/' if t else f'/schemes/{x["slug"]}/'),
+            state=st(x), icon=x["icon"])
+    return out
 
-write("tools/scheme-eligibility-checker/index.html",
-    head("Which Government Schemes Am I Eligible For? Free Checker | Kramavriddhi",
-         "Free scheme eligibility checker: answer a few questions to find central, Andhra Pradesh and Telangana government schemes that may suit you, with simple guides.",
-         "/tools/scheme-eligibility-checker/")
-    + nav("tools") + f'''
+def checker_page(lang):
+    T = CHECKER_TEXT[lang]
+    opts = lambda pairs: "".join(f'<option value="{v}">{l}</option>' for v, l in pairs)
+    checks_html = "\n".join(
+        f'            <label class="check"><input type="checkbox" name="f" value="{k}"> <span>{v}</span></label>' for k, v in T["checks"])
+    alts = {"en": CHECKER_TEXT["en"]["path"], "te": CHECKER_TEXT["te"]["path"]}
+    js_cfg = dict(S=checker_data(lang), W=T["W"], tags=T["tags"], none=T["none"], one=T["count_one"],
+                  many=T["count_many"], open_each=T["open_each"], why=T["why"])
+    return (head(T["title"], T["desc"], T["path"], lang=lang, alternates=alts)
+        + nav("tools", lang=lang) + f'''
     <div class="narrow">
-      <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Scheme Eligibility Checker</p>
+      <p class="crumbs">{T["crumbs"]}</p>
       <article>
-        <div class="eyebrow">✅ Free tool</div>
-        <h1>Which schemes am I eligible for?</h1>
-        <p class="lede">Answer a few simple questions to see which government schemes may suit you. It takes less than a minute, and nothing you enter leaves your phone or computer.</p>
+        <div class="eyebrow">{T["eyebrow"]}</div>
+        <h1>{T["h1"]}</h1>
+        <p class="lede">{T["lede"]}</p>
+        <p class="lang-switch">{T["switch"]}</p>
 
         <form id="checker" class="calc checker" onsubmit="return false">
-          <label>Where do you live?
-            <select id="state">
-              <option value="ap">Andhra Pradesh</option>
-              <option value="ts">Telangana</option>
-              <option value="other">Another state</option>
-            </select>
+          <label>{T["q_state"]}
+            <select id="state">{opts(T["states"])}</select>
           </label>
-          <label>Village or town?
-            <select id="area">
-              <option value="rural">Village (rural)</option>
-              <option value="urban">Town or city (urban)</option>
-            </select>
+          <label>{T["q_area"]}
+            <select id="area">{opts(T["areas"])}</select>
           </label>
-          <label>Your age
+          <label>{T["q_age"]}
             <input type="number" id="age" min="1" max="110" value="30" inputmode="numeric">
           </label>
-          <label>You are
-            <select id="gender">
-              <option value="f">Woman / girl</option>
-              <option value="m">Man / boy</option>
-              <option value="t">Transgender person</option>
-            </select>
+          <label>{T["q_gender"]}
+            <select id="gender">{opts(T["genders"])}</select>
           </label>
-          <label>Family income per year
-            <select id="income">
-              <option value="1">Up to ₹2 lakh</option>
-              <option value="3">₹2 – 3 lakh</option>
-              <option value="6">₹3 – 6 lakh</option>
-              <option value="9">₹6 – 9 lakh</option>
-              <option value="99">More than ₹9 lakh</option>
-            </select>
+          <label>{T["q_income"]}
+            <select id="income">{opts(T["incomes"])}</select>
           </label>
           <fieldset class="checks">
-            <legend>Tick everything that applies to you</legend>
+            <legend>{T["q_checks"]}</legend>
 {checks_html}
           </fieldset>
-          <button class="btn primary" type="submit" id="go">Show my schemes</button>
+          <button class="btn primary" type="submit" id="go">{T["button"]}</button>
         </form>
 
         <div id="out" aria-live="polite"></div>
 
-        <div class="note">This checker gives a <strong>first idea only</strong>, based on the main rules of each scheme. Every scheme has more detailed conditions, so open each guide and confirm on the official portal, or at your village/ward secretariat, before applying. Kramavriddhi is not a government website and never asks for your Aadhaar, bank details or any fee.</div>
+        <div class="note">{T["note"]}</div>
       </article>
     </div>
     <script>
       (function () {{
-        var S = {json.dumps(CHECKER_DATA, ensure_ascii=False)};
+        var C = {json.dumps(js_cfg, ensure_ascii=False)};
+        var S = C.S, W = C.W;
         function $(id) {{ return document.getElementById(id); }}
         function run() {{
           var f = {{}};
           document.querySelectorAll('input[name=f]').forEach(function (c) {{ f[c.value] = c.checked; }});
           var state = $('state').value, rural = $('area').value === 'rural', age = parseInt($('age').value, 10) || 0;
           var g = $('gender').value, inc = parseInt($('income').value, 10);
-          var woman = g === 'f', notRich = !f.incometax, poor = f.ration;
+          var woman = g === 'f', trans = g === 't', notRich = !f.incometax, poor = f.ration;
           var hits = [];
-          function add(slug, why) {{ hits.push({{ slug: slug, why: why }}); }}
+          function add(slug, key) {{ hits.push({{ slug: slug, why: W[key] }}); }}
 
           // Central schemes
-          if (f.farmland && notRich && !f.govtjob) add('pm-kisan', 'Your family owns farm land and doesn\\'t pay income tax.');
-          if (age >= 70) add('ayushman-bharat-pm-jay', 'Everyone aged 70 or above gets ₹5 lakh health cover, whatever their income.');
-          else if (poor) add('ayushman-bharat-pm-jay', 'Families with a BPL / ration card are often covered. Check your name on the official site.');
-          if (f.daughter) add('sukanya-samriddhi-yojana', 'You have a daughter below 10 years.');
-          if (!f.pucca && !rural && inc <= 9) add('pm-awas-yojana-urban', 'You live in a town, don\\'t own a pucca house, and your income is within ₹9 lakh.');
-          if (!f.pucca && rural && notRich && !f.govtjob && (poor || inc <= 1)) add('pm-awas-yojana-gramin', 'You live in a village and don\\'t own a pucca house.');
-          if (f.business) add('pm-mudra-yojana', 'You want a loan for a small business. Mudra gives up to ₹20 lakh without collateral.');
-          if (age >= 18 && age <= 40 && notRich) add('atal-pension-yojana', 'You are 18–40 and don\\'t pay income tax, so you can join for a pension after 60.');
-          if (!f.bank && age >= 10) add('pm-jan-dhan-yojana', 'You don\\'t have a bank account yet. Open a zero-balance account.');
-          if (age >= 18 && age <= 50) add('pm-jeevan-jyoti-bima-yojana', 'You are 18–50: ₹2 lakh life cover for ₹436 a year.');
-          if (age >= 18 && age <= 70) add('pm-suraksha-bima-yojana', 'You are 18–70: ₹2 lakh accident cover for ₹20 a year.');
+          if (f.farmland && notRich && !f.govtjob) add('pm-kisan', 'kisan');
+          if (age >= 70) add('ayushman-bharat-pm-jay', 'jay70');
+          else if (poor) add('ayushman-bharat-pm-jay', 'jayPoor');
+          if (f.daughter) add('sukanya-samriddhi-yojana', 'ssy');
+          if (!f.pucca && !rural && inc <= 9) add('pm-awas-yojana-urban', 'pmayu');
+          if (!f.pucca && rural && notRich && !f.govtjob && (poor || inc <= 1)) add('pm-awas-yojana-gramin', 'pmayg');
+          if (f.business) add('pm-mudra-yojana', 'mudra');
+          if (age >= 18 && age <= 40 && notRich) add('atal-pension-yojana', 'apy');
+          if (!f.bank && age >= 10) add('pm-jan-dhan-yojana', 'jdy');
+          if (age >= 18 && age <= 50) add('pm-jeevan-jyoti-bima-yojana', 'pmjjby');
+          if (age >= 18 && age <= 70) add('pm-suraksha-bima-yojana', 'pmsby');
 
           // Andhra Pradesh
           if (state === 'ap') {{
-            if (f.farmland && notRich && !f.govtjob) add('ap-annadata-sukhibhava', 'AP farmer family: ₹20,000 a year with PM-KISAN.');
-            if (poor && (age >= 60 || f.widow || f.disabled)) add('ap-ntr-bharosa-pension', age >= 60 ? 'You are 60+ with a rice card.' : (f.disabled ? 'Your family has a person with disability and a rice card.' : 'You are a widow or single woman with a rice card.'));
-            if (poor && f.school) add('ap-thalliki-vandanam', 'You have school-going children and a rice card: ₹15,000 per child per year.');
-            if (poor && f.lpg) add('ap-deepam-2', 'Rice card and LPG connection: three free cylinders a year.');
-            if (woman || g === 't') add('ap-stree-shakti', 'Free travel in APSRTC ordinary and express buses.');
+            if (f.farmland && notRich && !f.govtjob) add('ap-annadata-sukhibhava', 'apAnnadata');
+            if (poor && (age >= 60 || f.widow || f.disabled)) add('ap-ntr-bharosa-pension', age >= 60 ? 'apNtr60' : (f.disabled ? 'apNtrDis' : 'apNtrWidow'));
+            if (poor && f.school) add('ap-thalliki-vandanam', 'apThalliki');
+            if (poor && f.lpg) add('ap-deepam-2', 'apDeepam');
+            if (woman || trans) add('ap-stree-shakti', 'apStree');
           }}
           // Telangana
           if (state === 'ts') {{
-            if (f.farmland) add('ts-rythu-bharosa', 'Telangana farmer: ₹12,000 per acre per year.');
-            if (woman || g === 't' || (poor && f.lpg)) add('ts-mahalakshmi', (woman || g === 't') ? 'Free TGSRTC bus travel' + (poor && f.lpg ? ', and ₹500 gas cylinders for your family.' : '.') : '₹500 gas cylinders for white ration card families with LPG.');
-            if (poor && !f.pucca && inc <= 1) add('ts-indiramma-indlu', 'White ration card, income under ₹2 lakh and no pucca house: up to ₹5 lakh to build.');
-            if (poor) add('ts-gruha-jyothi', 'White ration card families get a zero bill up to 200 units a month.');
-            if (poor) add('ts-rajiv-aarogyasri', 'White ration card families get health cover up to ₹10 lakh a year.');
-            if (poor && (f.widow || f.disabled)) add('ts-cheyutha-pension', f.disabled ? 'Persons with disabilities from white ration card families can get a monthly pension.' : 'Widows and single women from white ration card families can get a monthly pension.');
-            else if (poor && age >= 57) add('ts-cheyutha-pension', 'Elderly people from white ration card families get a monthly pension (new enrolment for seniors was not open in 2026).');
+            if (f.farmland) add('ts-rythu-bharosa', 'tsRythu');
+            if (woman || trans || (poor && f.lpg)) add('ts-mahalakshmi', (woman || trans) ? (poor && f.lpg ? 'tsMahaBusGas' : 'tsMahaBus') : 'tsMahaGas');
+            if (poor && !f.pucca && inc <= 1) add('ts-indiramma-indlu', 'tsIndiramma');
+            if (poor) add('ts-gruha-jyothi', 'tsGruha');
+            if (poor) add('ts-rajiv-aarogyasri', 'tsAarogya');
+            if (poor && (f.widow || f.disabled)) add('ts-cheyutha-pension', f.disabled ? 'tsCheyDis' : 'tsCheyWidow');
+            else if (poor && age >= 57) add('ts-cheyutha-pension', 'tsCheyOld');
           }}
 
           var out = $('out');
           if (!hits.length) {{
-            out.innerHTML = '<div class="result"><strong>No matches from our guides yet.</strong><p>Try changing your answers, or <a href="/schemes/">browse all schemes</a>. We add new guides every week.</p></div>';
+            out.innerHTML = '<div class="result">' + C.none + '</div>';
           }} else {{
-            var html = '<div class="result"><div class="big">' + hits.length + ' <small>scheme' + (hits.length > 1 ? 's' : '') + ' may suit you</small></div><p>Open each guide to check the full rules and how to apply.</p></div><div class="grid">';
+            var html = '<div class="result"><div class="big">' + hits.length + ' <small>' + (hits.length > 1 ? C.many : C.one) + '</small></div><p>' + C.open_each + '</p></div><div class="grid">';
             hits.forEach(function (h) {{
               var s = S[h.slug];
-              var tag = s.state === 'ap' ? 'Andhra Pradesh' : s.state === 'ts' ? 'Telangana' : 'Central';
-              html += '<a class="card" href="/schemes/' + h.slug + '/"><div class="icon" aria-hidden="true">' + s.icon + '</div><h3>' + s.name + '</h3><p><strong>Why:</strong> ' + h.why + '</p><div class="tags"><span class="tag">' + tag + '</span></div></a>';
+              html += '<a class="card" href="' + s.href + '"><div class="icon" aria-hidden="true">' + s.icon + '</div><h3>' + s.name + '</h3><p><strong>' + C.why + '</strong> ' + h.why + '</p><div class="tags"><span class="tag">' + C.tags[s.state] + '</span></div></a>';
             }});
             out.innerHTML = html + '</div>';
           }}
@@ -1966,7 +2079,10 @@ write("tools/scheme-eligibility-checker/index.html",
         $('go').addEventListener('click', run);
       }})();
     </script>
-''' + FOOTER)
+''' + footer(lang))
+
+write("tools/scheme-eligibility-checker/index.html", checker_page("en"))
+write("te/tools/scheme-eligibility-checker/index.html", checker_page("te"))
 
 write("tools/index.html",
     head("Free Calculators for Government Schemes | Kramavriddhi",
@@ -2214,6 +2330,7 @@ write("te/schemes/index.html",
       <p>ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాల గురించి స్పష్టమైన గైడ్‌లు: ఎవరు అర్హులు, ఏం లభిస్తుంది, ఏ పత్రాలు కావాలి, అధికారిక పోర్టల్‌లో ఎలా దరఖాస్తు చేయాలి.</p>
       <p class="lang-switch"><a href="/schemes/" lang="en">All schemes in English →</a></p>
     </header>
+    <a class="cta" href="/te/tools/scheme-eligibility-checker/" style="margin-bottom:28px"><span>✅</span><div><strong>మీకు ఏ పథకాలు వర్తిస్తాయో తెలియదా?</strong><br><span class="muted" style="font-size:0.9rem">కొన్ని ప్రశ్నలకు సమాధానం ఇచ్చి మీకు సరిపోయే పథకాలు చూడండి.</span></div></a>
     <div class="grid">
 {"".join(te_card(x, TE[x["slug"]]) for x in te_items)}    </div>
     <p class="soon-list"><strong>త్వరలో:</strong> మరిన్ని ఆంధ్రప్రదేశ్, తెలంగాణ పథకాలు, కేంద్ర పథకాలు తెలుగులో.</p>
@@ -2316,7 +2433,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/schemes/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/schemes/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
