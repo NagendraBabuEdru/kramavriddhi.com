@@ -36,6 +36,15 @@ SCHEMES = [
     dict(slug="atal-pension-yojana", name="Atal Pension Yojana (APY)", short="Atal Pension Yojana",
          cat="pension", cat_label="Pension & Insurance", icon="👴",
          summary="A guaranteed pension of ₹1,000 to ₹5,000 a month after 60, for anyone aged 18–40 who is not an income-tax payer."),
+    dict(slug="pm-jan-dhan-yojana", name="PM Jan Dhan Yojana (PMJDY)", short="PM Jan Dhan Yojana",
+         cat="banking", cat_label="Banking", icon="🏦",
+         summary="A zero-balance bank account with a free RuPay card, ₹2 lakh accident cover and an overdraft of up to ₹10,000."),
+    dict(slug="pm-jeevan-jyoti-bima-yojana", name="PM Jeevan Jyoti Bima Yojana (PMJJBY)", short="PM Jeevan Jyoti Bima Yojana",
+         cat="pension", cat_label="Pension & Insurance", icon="🛡️",
+         summary="₹2 lakh life insurance for ₹436 a year, for anyone aged 18–50 with a bank or post office account."),
+    dict(slug="pm-suraksha-bima-yojana", name="PM Suraksha Bima Yojana (PMSBY)", short="PM Suraksha Bima Yojana",
+         cat="pension", cat_label="Pension & Insurance", icon="🩹",
+         summary="Accident insurance up to ₹2 lakh for just ₹20 a year, for anyone aged 18–70 with a bank account."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -83,7 +92,7 @@ write("schemes/index.html",
 {"".join(scheme_card(s) for s in DISPLAY)}    </div>
     <p class="empty" id="empty">No schemes in this category yet. New guides are added every week.</p>
 
-    <p class="soon-list"><strong>Coming soon:</strong> PM Vishwakarma, PM Jeevan Jyoti Bima Yojana, PM Suraksha Bima Yojana, PM Jan Dhan Yojana, PM Fasal Bima Yojana, PM Kaushal Vikas Yojana.</p>
+    <p class="soon-list"><strong>Coming soon:</strong> PM Vishwakarma, PM Fasal Bima Yojana, PM Kaushal Vikas Yojana, National Scholarship Portal, PM Ujjwala Yojana, Stand-Up India.</p>
 
     <div class="note" style="margin-top:32px">Kramavriddhi is an independent information website, not a government website. We never ask for your Aadhaar, bank details or any fee. Always apply only on the official portal linked in each guide.</div>
 
@@ -757,6 +766,228 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("PFRDA: Atal Pension Yojana", "https://pfrda.org.in/schemes/atal-pension-yojana-apy"),
     ]))
 
+# ---------------------------------------------------------------- batch 3 (added 6 Oct 2026)
+
+# ---- PM Jan Dhan Yojana
+s = BY_SLUG["pm-jan-dhan-yojana"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Pradhan Mantri Jan Dhan Yojana lets anyone without a bank account open a zero-balance savings account, with a free RuPay debit card, free accident insurance of up to ₹2 lakh and an overdraft of up to ₹10,000. It is the starting point for receiving government benefits directly in your account.",
+    description="PM Jan Dhan Yojana explained: zero-balance account, RuPay card with ₹2 lakh accident insurance, ₹10,000 overdraft, who can open, documents and how to open a Jan Dhan account.",
+    facts=[("Minimum balance", "Zero"), ("Accident cover", "Up to ₹2 lakh"), ("Overdraft", "Up to ₹10,000"), ("Accounts opened", "59 crore+")],
+    body='''
+        <h2>What is PM Jan Dhan Yojana?</h2>
+        <p>PMJDY is India's national mission for financial inclusion, launched in August 2014. It gives every unbanked adult a basic savings bank account, along with access to credit, insurance, pension and remittances. As of 19 August 2026, more than <strong>59 crore</strong> Jan Dhan accounts have been opened, about 33 crore of them by women.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>Zero balance:</strong> no minimum balance is needed.</li>
+          <li><strong>Interest</strong> on your savings, at the bank's normal savings rate.</li>
+          <li><strong>Free RuPay debit card</strong>, accepted at all ATMs and most shops.</li>
+          <li><strong>Accident insurance</strong> with the RuPay card: ₹2 lakh for accounts opened after 28 August 2018 (₹1 lakh for older accounts). You pay no premium.</li>
+          <li><strong>Overdraft up to ₹10,000</strong> for one account holder per household, after 6 months of satisfactory use of the account.</li>
+          <li><strong>Direct Benefit Transfer (DBT):</strong> government subsidies and payments can come straight into the account.</li>
+          <li>Easy access to <a href="/schemes/atal-pension-yojana/">Atal Pension Yojana</a>, <a href="/schemes/pm-jeevan-jyoti-bima-yojana/">PM Jeevan Jyoti Bima</a>, <a href="/schemes/pm-suraksha-bima-yojana/">PM Suraksha Bima</a> and <a href="/schemes/pm-mudra-yojana/">Mudra loans</a>.</li>
+        </ul>
+
+        <h2>Who can open a Jan Dhan account?</h2>
+        <ul>
+          <li>Any Indian citizen who does not already have a bank account. There is no upper age limit.</li>
+          <li>One basic savings account per unbanked person. Joint accounts are allowed.</li>
+        </ul>
+
+        <h2>Documents needed</h2>
+        <ul>
+          <li>Aadhaar card</li>
+          <li>A government ID if needed (voter ID, PAN card or ration card)</li>
+          <li>Address proof (for example passport, driving licence, or an electricity, telephone or water bill)</li>
+          <li>Passport-size photograph</li>
+          <li>Filled and signed PMJDY account opening form</li>
+        </ul>
+        <div class="note">No documents at all? Banks can open a <strong>"small account"</strong> with a self-attested photo and your signature or thumb impression in front of a bank officer. It has limits on deposits and withdrawals until you complete full KYC.</div>
+
+        <h2>How to open an account</h2>
+        <ol>
+          <li>Visit any bank branch, or a <strong>Business Correspondent (Bank Mitra)</strong> outlet in your village or area.</li>
+          <li>Ask for the PMJDY account opening form and fill it in.</li>
+          <li>Submit it with your KYC documents.</li>
+          <li>After verification, your account is opened. Collect your passbook and RuPay card.</li>
+        </ol>
+
+        <h2>How to claim the accident insurance</h2>
+        <p>The RuPay card accident cover applies if the cardholder has used the card (for example at an ATM, shop or online) at least once in the 90 days before the accident. The nominee should contact the bank branch where the account is held to start the claim.</p>
+
+        <h2>Keep your account active</h2>
+        <p>If you don't use your account for a long time, it may become inactive. Make at least one transaction now and then, and complete <strong>re-KYC</strong> when your bank asks for it.</p>
+
+        <div class="official">
+          <strong>Official website:</strong> <a href="https://pmjdy.gov.in" target="_blank" rel="noopener">pmjdy.gov.in</a><br>
+          <strong>Toll-free:</strong> 1800 11 0001 · 1800 180 1111
+        </div>
+''',
+    faqs=[
+        ("Is a Jan Dhan account really zero balance?", "Yes. There is no minimum balance requirement in a PMJDY account."),
+        ("How much accident insurance does a Jan Dhan account give?", "₹2 lakh for accounts opened after 28 August 2018, and ₹1 lakh for older accounts, through the RuPay debit card. No premium is charged."),
+        ("How do I get the ₹10,000 overdraft?", "It is available to one account holder per household after 6 months of satisfactory operation of the account, subject to the bank's eligibility checks."),
+        ("Can I open a Jan Dhan account if I already have a bank account?", "PMJDY is meant for people who do not have any bank account. If you already have one, you can still use other schemes through your existing account."),
+        ("Can a minor open a Jan Dhan account?", "Banks allow accounts for minors above 10 years under their normal rules, and a guardian can open one for younger children. Ask your bank branch."),
+    ],
+    sources=[
+        ("PMJDY official website: Scheme details", "https://pmjdy.gov.in/scheme"),
+        ("PIB: PM Jan Dhan Yojana – Banking for All (27 Aug 2026)", "https://www.pib.gov.in/PressNoteDetails.aspx?NoteId=159721&ModuleId=3"),
+    ]))
+
+# ---- PMJJBY
+s = BY_SLUG["pm-jeevan-jyoti-bima-yojana"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Jeevan Jyoti Bima Yojana is life insurance of ₹2 lakh for just ₹436 a year, which is less than ₹2 a day. If the insured person dies for any reason, the nominee gets ₹2 lakh. Anyone aged 18 to 50 with a bank or post office account can join.",
+    description="PM Jeevan Jyoti Bima Yojana explained: ₹2 lakh life cover for ₹436 a year, age 18–50, pro-rata premium if you join late, 30-day waiting period, how to enrol and claim.",
+    facts=[("Life cover", "₹2 lakh"), ("Premium", "₹436 / year"), ("Join at age", "18 – 50"), ("Cover period", "1 June – 31 May")],
+    body='''
+        <h2>What is PMJJBY?</h2>
+        <p>PMJJBY is a one-year term life insurance scheme, renewable every year. It was launched on 9 May 2015 and is offered by LIC and other life insurers through banks and post offices. As of April 2026, more than 27 crore people have enrolled and over ₹21,500 crore has been paid in claims to more than 10.7 lakh families.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>₹2 lakh</strong> paid to the nominee on the death of the insured person, <strong>due to any reason</strong>.</li>
+          <li>Premium of <strong>₹436 per year</strong>, auto-debited from your account.</li>
+          <li>No medical examination needed to join.</li>
+        </ul>
+
+        <h2>Who can join?</h2>
+        <ul>
+          <li>Anyone aged <strong>18 to 50 years</strong> with a savings account in a participating bank or post office.</li>
+          <li>You can join through <strong>one account only</strong>, even if you have several.</li>
+          <li>If you join before 50 and keep renewing, the cover continues until you turn <strong>55</strong>.</li>
+        </ul>
+
+        <h2>Premium if you join in the middle of the year</h2>
+        <p>The cover year runs from 1 June to 31 May. If you join later in the year, you pay less:</p>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>When you join</th><th>Premium</th></tr>
+          <tr><td>June, July, August</td><td>₹436</td></tr>
+          <tr><td>September, October, November</td><td>₹342</td></tr>
+          <tr><td>December, January, February</td><td>₹228</td></tr>
+          <tr><td>March, April, May</td><td>₹114</td></tr>
+        </table>
+        </div>
+        <p>From the next 1 June, the full ₹436 is auto-debited every year.</p>
+
+        <h2>Waiting period</h2>
+        <p>For new members, there is a <strong>30-day waiting (lien) period</strong> from the date of joining. If death happens in these first 30 days for any reason other than an accident, the claim is not paid. Death due to an accident is covered from day one.</p>
+
+        <h2>When the cover ends</h2>
+        <ul>
+          <li>On turning 55.</li>
+          <li>If the bank account is closed or there isn't enough balance for the auto-debit on renewal.</li>
+          <li>If you are covered through more than one account, only one cover is valid and extra premium is not refunded.</li>
+        </ul>
+
+        <h2>How to join</h2>
+        <h3>Online</h3>
+        <p>Use your bank's net banking or mobile app, or the official <a href="https://jansuraksha.gov.in" target="_blank" rel="noopener">Jan Suraksha portal</a>.</p>
+        <h3>At the bank or post office</h3>
+        <ol>
+          <li>Fill in the PMJJBY consent-cum-declaration form at your branch.</li>
+          <li>Give your nominee's details and Aadhaar.</li>
+          <li>Keep enough balance for the premium. You get an acknowledgement slip as proof.</li>
+        </ol>
+
+        <h2>How to make a claim</h2>
+        <ol>
+          <li>The nominee goes to the bank or post office where the insured person had the account.</li>
+          <li>Fill in the claim form and submit it with the death certificate and the nominee's ID and bank details.</li>
+          <li>The bank sends the claim to the insurer, and the money is paid into the nominee's account.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://jansuraksha.gov.in" target="_blank" rel="noopener">jansuraksha.gov.in</a> · <a href="https://financialservices.gov.in/pradhan-mantri-jeevan-jyoti-bima-yojana-pmjjby" target="_blank" rel="noopener">Department of Financial Services</a>
+        </div>
+''',
+    faqs=[
+        ("How much is the PMJJBY premium?", "₹436 per year for ₹2 lakh life cover. If you join from September to November it is ₹342, December to February ₹228, and March to May ₹114."),
+        ("What is the age limit for PMJJBY?", "You can join between 18 and 50 years. The cover continues up to 55 if you keep renewing."),
+        ("Does PMJJBY cover death due to illness?", "Yes. It covers death due to any reason, but non-accidental deaths in the first 30 days after joining are not covered."),
+        ("Can I have PMJJBY from two banks?", "No. You can be covered through only one bank or post office account."),
+        ("Is PMJJBY the same as PMSBY?", "No. PMJJBY is life insurance (death due to any cause, ₹436 a year). PMSBY is accident insurance (accidental death or disability, ₹20 a year). You can join both."),
+    ],
+    sources=[
+        ("PIB: Jan Suraksha schemes complete 11 years (9 May 2026)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2259251"),
+        ("Revised rules for PMJJBY w.e.f. 1 June 2022 (PDF)", "https://jansuraksha.gov.in/Files/PMJJBY/ENGLISH/Rules.pdf"),
+        ("Department of Financial Services: PMJJBY", "https://financialservices.gov.in/pradhan-mantri-jeevan-jyoti-bima-yojana-pmjjby"),
+    ]))
+
+# ---- PMSBY
+s = BY_SLUG["pm-suraksha-bima-yojana"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Suraksha Bima Yojana is accident insurance of up to ₹2 lakh for only ₹20 a year. It pays if the insured person dies or becomes disabled in an accident. Anyone aged 18 to 70 with a bank or post office account can join.",
+    description="PM Suraksha Bima Yojana explained: ₹2 lakh accident cover for ₹20 a year, age 18–70, what is covered, how to enrol and how to claim.",
+    facts=[("Accident cover", "Up to ₹2 lakh"), ("Premium", "₹20 / year"), ("Age", "18 – 70"), ("Cover period", "1 June – 31 May")],
+    body='''
+        <h2>What is PMSBY?</h2>
+        <p>PMSBY is a one-year accident insurance scheme, renewable every year. It was launched on 9 May 2015 and is offered by public sector general insurers and other insurers through banks and post offices. As of April 2026, more than 58 crore people have enrolled and about ₹3,660 crore has been paid for over 1.84 lakh claims.</p>
+
+        <h2>What does it pay?</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Event (due to an accident)</th><th>Amount</th></tr>
+          <tr><td>Death</td><td>₹2 lakh</td></tr>
+          <tr><td>Total and permanent loss of both eyes, or both hands or feet, or one eye and one hand or foot</td><td>₹2 lakh</td></tr>
+          <tr><td>Total and permanent loss of sight in one eye, or loss of one hand or foot</td><td>₹1 lakh</td></tr>
+        </table>
+        </div>
+        <p>Death due to illness is <strong>not</strong> covered. For that, see <a href="/schemes/pm-jeevan-jyoti-bima-yojana/">PM Jeevan Jyoti Bima Yojana</a>.</p>
+
+        <h2>Who can join?</h2>
+        <ul>
+          <li>Anyone aged <strong>18 to 70 years</strong> with a savings account in a participating bank or post office.</li>
+          <li>You can join through <strong>one account only</strong>.</li>
+        </ul>
+
+        <h2>Premium</h2>
+        <p><strong>₹20 per year</strong>, auto-debited from your account. The cover year runs from 1 June to 31 May, and renewal is automatic as long as your account has enough balance around the end of May.</p>
+
+        <h2>When the cover ends</h2>
+        <ul>
+          <li>On turning 70.</li>
+          <li>If the bank account is closed or there isn't enough balance for renewal.</li>
+          <li>If you are covered through more than one account, only one cover is valid.</li>
+        </ul>
+
+        <h2>How to join</h2>
+        <h3>Online</h3>
+        <p>Use your bank's net banking or mobile app, or the official <a href="https://jansuraksha.gov.in" target="_blank" rel="noopener">Jan Suraksha portal</a>.</p>
+        <h3>At the bank or post office</h3>
+        <ol>
+          <li>Fill in the PMSBY consent-cum-declaration form.</li>
+          <li>Give your nominee's details and Aadhaar.</li>
+          <li>Keep ₹20 in the account for the auto-debit and collect your acknowledgement slip.</li>
+        </ol>
+
+        <h2>How to make a claim</h2>
+        <ol>
+          <li>Inform the bank or post office as soon as possible after the accident.</li>
+          <li>Submit the claim form with documents such as the FIR or police report, the post-mortem report and death certificate (in case of death), or a disability certificate from a government doctor (in case of disability).</li>
+          <li>The bank forwards the claim to the insurer, and the money is paid into the nominee's or insured person's account.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://jansuraksha.gov.in" target="_blank" rel="noopener">jansuraksha.gov.in</a> · <a href="https://financialservices.gov.in/index.php/pradhan-mantri-suraksha-bima-yojana-pmsby" target="_blank" rel="noopener">Department of Financial Services</a>
+        </div>
+''',
+    faqs=[
+        ("How much is the PMSBY premium?", "₹20 per year, auto-debited from your bank or post office account."),
+        ("What does PMSBY cover?", "Accidental death and full permanent disability (₹2 lakh) and partial permanent disability (₹1 lakh). It does not cover death due to illness."),
+        ("What is the age limit for PMSBY?", "18 to 70 years."),
+        ("Can I join both PMSBY and PMJJBY?", "Yes. Many people take both: PMJJBY for life cover (₹436) and PMSBY for accident cover (₹20)."),
+        ("How do I join PMSBY online?", "Through your bank's net banking or mobile app, or the Jan Suraksha portal at jansuraksha.gov.in."),
+    ],
+    sources=[
+        ("PIB: Jan Suraksha schemes complete 11 years (9 May 2026)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2259251"),
+        ("Department of Financial Services: PMSBY", "https://financialservices.gov.in/index.php/pradhan-mantri-suraksha-bima-yojana-pmsby"),
+        ("Jan Suraksha portal", "https://jansuraksha.gov.in"),
+    ]))
+
 # ---------------------------------------------------------------- simple pages
 def simple(path, title, desc, active, h1, eyebrow, body):
     write(path.strip("/") + "/index.html", head(f"{title} | Kramavriddhi", desc, path) + nav(active) + f'''
@@ -860,4 +1091,4 @@ write("robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://kramavriddhi.co
 
 # cards for the home page "Latest schemes" section
 with open(os.path.join(os.path.dirname(__file__), "home_cards.html"), "w", encoding="utf-8") as f:
-    f.write("".join(scheme_card(s) for s in DISPLAY))
+    f.write("".join(scheme_card(s) for s in DISPLAY[:6]))
