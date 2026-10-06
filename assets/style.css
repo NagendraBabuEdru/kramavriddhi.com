@@ -180,3 +180,14 @@ table.simple tr.hl td { background: var(--accent-soft); font-weight: 600; }
 /* Scheme card tags */
 .tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .tag.state { background: transparent; border: 1px solid var(--accent); }
+
+/* Eligibility checker */
+.checker { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.checker fieldset.checks { grid-column: 1 / -1; border: 0; padding: 0; margin: 4px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; }
+.checker legend { font-weight: 600; font-size: 0.92rem; margin-bottom: 8px; }
+.checker label.check { flex-direction: row; align-items: flex-start; gap: 10px; font-weight: 400; font-size: 0.95rem; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+.checker label.check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; padding: 0; }
+.checker label.check:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.checker #go { grid-column: 1 / -1; justify-self: start; border: 0; cursor: pointer; font: inherit; font-weight: 600; padding: 12px 26px; }
+#out { scroll-margin-top: 16px; }
+#out .grid { margin-bottom: 24px; }

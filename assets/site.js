@@ -19,14 +19,14 @@
       href: "/tools/", cta: "See calculators"
     },
     "/schemes/": {
-      key: "tools", icon: "🧮", title: "Free scheme calculators",
-      text: "Find your APY pension contribution or SSY maturity amount in seconds.",
-      href: "/tools/", cta: "Try the calculators"
+      key: "checker", icon: "✅", title: "Which schemes are for you?",
+      text: "Answer a few simple questions and see the government schemes that may suit you.",
+      href: "/tools/scheme-eligibility-checker/", cta: "Check in 1 minute"
     },
     "/": {
-      key: "tools", icon: "🧮", title: "Free scheme calculators",
-      text: "Find your APY pension contribution or SSY maturity amount in seconds.",
-      href: "/tools/", cta: "Try the calculators"
+      key: "checker", icon: "✅", title: "Which schemes are for you?",
+      text: "Answer a few simple questions and see the government schemes that may suit you.",
+      href: "/tools/scheme-eligibility-checker/", cta: "Check in 1 minute"
     }
   };
 

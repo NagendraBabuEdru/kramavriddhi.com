@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Which Government Schemes Am I Eligible For? Free Checker | Kramavriddhi</title>
+  <meta name="description" content="Free scheme eligibility checker: answer a few questions to find central, Andhra Pradesh and Telangana government schemes that may suit you, with simple guides.">
+  <link rel="canonical" href="https://kramavriddhi.com/tools/scheme-eligibility-checker/">
+  <meta property="og:title" content="Which Government Schemes Am I Eligible For? Free Checker | Kramavriddhi">
+  <meta property="og:description" content="Free scheme eligibility checker: answer a few questions to find central, Andhra Pradesh and Telangana government schemes that may suit you, with simple guides.">
+  <meta property="og:url" content="https://kramavriddhi.com/tools/scheme-eligibility-checker/">
+  <meta property="og:site_name" content="Kramavriddhi">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top">
+      <a class="brand" href="/">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Kramavriddhi
+      </a>
+      <ul>
+        <li><a href="/schemes/">Schemes</a></li>
+        <li><a href="/tools/" aria-current="page">Tools</a></li>
+        <li class="hide-sm"><a href="/#products">Products</a></li>
+        <li class="hide-sm"><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="narrow">
+      <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Scheme Eligibility Checker</p>
+      <article>
+        <div class="eyebrow">✅ Free tool</div>
+        <h1>Which schemes am I eligible for?</h1>
+        <p class="lede">Answer a few simple questions to see which government schemes may suit you. It takes less than a minute, and nothing you enter leaves your phone or computer.</p>
+
+        <form id="checker" class="calc checker" onsubmit="return false">
+          <label>Where do you live?
+            <select id="state">
+              <option value="ap">Andhra Pradesh</option>
+              <option value="ts">Telangana</option>
+              <option value="other">Another state</option>
+            </select>
+          </label>
+          <label>Village or town?
+            <select id="area">
+              <option value="rural">Village (rural)</option>
+              <option value="urban">Town or city (urban)</option>
+            </select>
+          </label>
+          <label>Your age
+            <input type="number" id="age" min="1" max="110" value="30" inputmode="numeric">
+          </label>
+          <label>You are
+            <select id="gender">
+              <option value="f">Woman / girl</option>
+              <option value="m">Man / boy</option>
+              <option value="t">Transgender person</option>
+            </select>
+          </label>
+          <label>Family income per year
+            <select id="income">
+              <option value="1">Up to ₹2 lakh</option>
+              <option value="3">₹2 – 3 lakh</option>
+              <option value="6">₹3 – 6 lakh</option>
+              <option value="9">₹6 – 9 lakh</option>
+              <option value="99">More than ₹9 lakh</option>
+            </select>
+          </label>
+          <fieldset class="checks">
+            <legend>Tick everything that applies to you</legend>
+            <label class="check"><input type="checkbox" name="f" value="ration"> <span>Our family has a ration card (white / rice / BPL card)</span></label>
+            <label class="check"><input type="checkbox" name="f" value="farmland"> <span>Our family owns farm land</span></label>
+            <label class="check"><input type="checkbox" name="f" value="bank"> <span>I have a bank or post office account</span></label>
+            <label class="check"><input type="checkbox" name="f" value="incometax"> <span>I or my family pay income tax</span></label>
+            <label class="check"><input type="checkbox" name="f" value="govtjob"> <span>Someone in the family is a government employee or pensioner</span></label>
+            <label class="check"><input type="checkbox" name="f" value="pucca"> <span>Our family already owns a pucca (concrete) house</span></label>
+            <label class="check"><input type="checkbox" name="f" value="lpg"> <span>We have an LPG gas connection</span></label>
+            <label class="check"><input type="checkbox" name="f" value="daughter"> <span>I have a daughter below 10 years</span></label>
+            <label class="check"><input type="checkbox" name="f" value="school"> <span>We have children studying in Classes 1–12</span></label>
+            <label class="check"><input type="checkbox" name="f" value="business"> <span>I want a loan to start or grow a small business</span></label>
+            <label class="check"><input type="checkbox" name="f" value="widow"> <span>I am a widow or single woman</span></label>
+            <label class="check"><input type="checkbox" name="f" value="disabled"> <span>I or a family member have a disability</span></label>
+          </fieldset>
+          <button class="btn primary" type="submit" id="go">Show my schemes</button>
+        </form>
+
+        <div id="out" aria-live="polite"></div>
+
+        <div class="note">This checker gives a <strong>first idea only</strong>, based on the main rules of each scheme. Every scheme has more detailed conditions, so open each guide and confirm on the official portal, or at your village/ward secretariat, before applying. Kramavriddhi is not a government website and never asks for your Aadhaar, bank details or any fee.</div>
+      </article>
+    </div>
+    <script>
+      (function () {
+        var S = {"pm-kisan": {"name": "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)", "summary": "₹6,000 a year for land-holding farmer families, paid in three ₹2,000 instalments straight to the bank account.", "state": "central", "icon": "🌾"}, "ayushman-bharat-pm-jay": {"name": "Ayushman Bharat PM-JAY", "summary": "Free hospital treatment up to ₹5 lakh per family per year, plus cover for every citizen aged 70 and above.", "state": "central", "icon": "🏥"}, "sukanya-samriddhi-yojana": {"name": "Sukanya Samriddhi Yojana (SSY)", "summary": "A high-interest, tax-free savings account for a girl child under 10, for her education and marriage.", "state": "central", "icon": "👧"}, "pm-awas-yojana-urban": {"name": "PM Awas Yojana – Urban 2.0 (PMAY-U 2.0)", "summary": "Help to build, buy or rent a house in towns and cities: ₹2.5 lakh assistance or up to ₹1.8 lakh home-loan subsidy.", "state": "central", "icon": "🏠"}, "pm-awas-yojana-gramin": {"name": "PM Awas Yojana – Gramin (PMAY-G)", "summary": "₹1.2 lakh (₹1.3 lakh in hilly and North-East areas) to build a pucca house in villages, plus toilet and wage support.", "state": "central", "icon": "🏡"}, "pm-mudra-yojana": {"name": "PM Mudra Yojana (PMMY)", "summary": "Collateral-free business loans up to ₹20 lakh for small shops, services, manufacturing and allied farm activities.", "state": "central", "icon": "💼"}, "atal-pension-yojana": {"name": "Atal Pension Yojana (APY)", "summary": "A guaranteed pension of ₹1,000 to ₹5,000 a month after 60, for anyone aged 18–40 who is not an income-tax payer.", "state": "central", "icon": "👴"}, "pm-jan-dhan-yojana": {"name": "PM Jan Dhan Yojana (PMJDY)", "summary": "A zero-balance bank account with a free RuPay card, ₹2 lakh accident cover and an overdraft of up to ₹10,000.", "state": "central", "icon": "🏦"}, "pm-jeevan-jyoti-bima-yojana": {"name": "PM Jeevan Jyoti Bima Yojana (PMJJBY)", "summary": "₹2 lakh life insurance for ₹436 a year, for anyone aged 18–50 with a bank or post office account.", "state": "central", "icon": "🛡️"}, "pm-suraksha-bima-yojana": {"name": "PM Suraksha Bima Yojana (PMSBY)", "summary": "Accident insurance up to ₹2 lakh for just ₹20 a year, for anyone aged 18–70 with a bank account.", "state": "central", "icon": "🩹"}, "ap-annadata-sukhibhava": {"name": "Annadata Sukhibhava (Andhra Pradesh)", "summary": "₹20,000 a year for AP farmer families: ₹14,000 from the state plus ₹6,000 from PM-KISAN, in three instalments.", "state": "ap", "icon": "🌾"}, "ap-ntr-bharosa-pension": {"name": "NTR Bharosa Pension (Andhra Pradesh)", "summary": "Monthly pensions of ₹4,000 to ₹15,000 for the elderly, widows, persons with disabilities and other groups.", "state": "ap", "icon": "👵"}, "ap-thalliki-vandanam": {"name": "Thalliki Vandanam (Andhra Pradesh)", "summary": "₹15,000 a year for every school-going child in Classes 1–12, with ₹13,000 paid to the mother.", "state": "ap", "icon": "📚"}, "ts-rythu-bharosa": {"name": "Rythu Bharosa (Telangana)", "summary": "₹12,000 per acre every year for Telangana farmers, paid as ₹6,000 per acre each crop season.", "state": "ts", "icon": "🚜"}, "ts-mahalakshmi": {"name": "Mahalakshmi Scheme (Telangana)", "summary": "Free TGSRTC bus travel for women and girls, and ₹500 LPG cylinders for eligible families.", "state": "ts", "icon": "🚌"}, "ts-indiramma-indlu": {"name": "Indiramma Indlu (Telangana)", "summary": "Up to ₹5 lakh to build a pucca house for poor families who don't own one, paid in stages.", "state": "ts", "icon": "🏘️"}, "ap-deepam-2": {"name": "Deepam-2 Free Gas Cylinders (Andhra Pradesh)", "summary": "Three free LPG cylinders a year for rice card families, one every four months, refunded within 48 hours.", "state": "ap", "icon": "🔥"}, "ap-stree-shakti": {"name": "Stree Shakti Free Bus Travel (Andhra Pradesh)", "summary": "Free travel for women, girls and transgender persons in APSRTC ordinary and express buses across AP.", "state": "ap", "icon": "🚍"}, "ts-gruha-jyothi": {"name": "Gruha Jyothi Free Electricity (Telangana)", "summary": "Zero electricity bill for eligible households that use up to 200 units a month.", "state": "ts", "icon": "💡"}, "ts-rajiv-aarogyasri": {"name": "Rajiv Aarogyasri (Telangana)", "summary": "Cashless treatment up to ₹10 lakh per family per year for 1,835 procedures, for white ration card families.", "state": "ts", "icon": "🩺"}};
+        function $(id) { return document.getElementById(id); }
+        function run() {
+          var f = {};
+          document.querySelectorAll('input[name=f]').forEach(function (c) { f[c.value] = c.checked; });
+          var state = $('state').value, rural = $('area').value === 'rural', age = parseInt($('age').value, 10) || 0;
+          var g = $('gender').value, inc = parseInt($('income').value, 10);
+          var woman = g === 'f', notRich = !f.incometax, poor = f.ration;
+          var hits = [];
+          function add(slug, why) { hits.push({ slug: slug, why: why }); }
+
+          // Central schemes
+          if (f.farmland && notRich && !f.govtjob) add('pm-kisan', 'Your family owns farm land and doesn\'t pay income tax.');
+          if (age >= 70) add('ayushman-bharat-pm-jay', 'Everyone aged 70 or above gets ₹5 lakh health cover, whatever their income.');
+          else if (poor) add('ayushman-bharat-pm-jay', 'Families with a BPL / ration card are often covered. Check your name on the official site.');
+          if (f.daughter) add('sukanya-samriddhi-yojana', 'You have a daughter below 10 years.');
+          if (!f.pucca && !rural && inc <= 9) add('pm-awas-yojana-urban', 'You live in a town, don\'t own a pucca house, and your income is within ₹9 lakh.');
+          if (!f.pucca && rural && notRich && !f.govtjob && (poor || inc <= 1)) add('pm-awas-yojana-gramin', 'You live in a village and don\'t own a pucca house.');
+          if (f.business) add('pm-mudra-yojana', 'You want a loan for a small business. Mudra gives up to ₹20 lakh without collateral.');
+          if (age >= 18 && age <= 40 && notRich) add('atal-pension-yojana', 'You are 18–40 and don\'t pay income tax, so you can join for a pension after 60.');
+          if (!f.bank && age >= 10) add('pm-jan-dhan-yojana', 'You don\'t have a bank account yet. Open a zero-balance account.');
+          if (age >= 18 && age <= 50) add('pm-jeevan-jyoti-bima-yojana', 'You are 18–50: ₹2 lakh life cover for ₹436 a year.');
+          if (age >= 18 && age <= 70) add('pm-suraksha-bima-yojana', 'You are 18–70: ₹2 lakh accident cover for ₹20 a year.');
+
+          // Andhra Pradesh
+          if (state === 'ap') {
+            if (f.farmland && notRich && !f.govtjob) add('ap-annadata-sukhibhava', 'AP farmer family: ₹20,000 a year with PM-KISAN.');
+            if (poor && (age >= 60 || f.widow || f.disabled)) add('ap-ntr-bharosa-pension', age >= 60 ? 'You are 60+ with a rice card.' : (f.disabled ? 'Your family has a person with disability and a rice card.' : 'You are a widow or single woman with a rice card.'));
+            if (poor && f.school) add('ap-thalliki-vandanam', 'You have school-going children and a rice card: ₹15,000 per child per year.');
+            if (poor && f.lpg) add('ap-deepam-2', 'Rice card and LPG connection: three free cylinders a year.');
+            if (woman || g === 't') add('ap-stree-shakti', 'Free travel in APSRTC ordinary and express buses.');
+          }
+          // Telangana
+          if (state === 'ts') {
+            if (f.farmland) add('ts-rythu-bharosa', 'Telangana farmer: ₹12,000 per acre per year.');
+            if (woman || g === 't' || (poor && f.lpg)) add('ts-mahalakshmi', (woman || g === 't') ? 'Free TGSRTC bus travel' + (poor && f.lpg ? ', and ₹500 gas cylinders for your family.' : '.') : '₹500 gas cylinders for white ration card families with LPG.');
+            if (poor && !f.pucca && inc <= 1) add('ts-indiramma-indlu', 'White ration card, income under ₹2 lakh and no pucca house: up to ₹5 lakh to build.');
+            if (poor) add('ts-gruha-jyothi', 'White ration card families get a zero bill up to 200 units a month.');
+            if (poor) add('ts-rajiv-aarogyasri', 'White ration card families get health cover up to ₹10 lakh a year.');
+          }
+
+          var out = $('out');
+          if (!hits.length) {
+            out.innerHTML = '<div class="result"><strong>No matches from our guides yet.</strong><p>Try changing your answers, or <a href="/schemes/">browse all schemes</a>. We add new guides every week.</p></div>';
+          } else {
+            var html = '<div class="result"><div class="big">' + hits.length + ' <small>scheme' + (hits.length > 1 ? 's' : '') + ' may suit you</small></div><p>Open each guide to check the full rules and how to apply.</p></div><div class="grid">';
+            hits.forEach(function (h) {
+              var s = S[h.slug];
+              var tag = s.state === 'ap' ? 'Andhra Pradesh' : s.state === 'ts' ? 'Telangana' : 'Central';
+              html += '<a class="card" href="/schemes/' + h.slug + '/"><div class="icon" aria-hidden="true">' + s.icon + '</div><h3>' + s.name + '</h3><p><strong>Why:</strong> ' + h.why + '</p><div class="tags"><span class="tag">' + tag + '</span></div></a>';
+            });
+            out.innerHTML = html + '</div>';
+          }
+          out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        $('go').addEventListener('click', run);
+      })();
+    </script>
+
+    <footer class="site">
+      <div class="cols">
+        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <ul>
+          <li><a href="/schemes/">Schemes</a></li>
+          <li><a href="/tools/">Tools</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/disclaimer/">Disclaimer</a></li>
+        </ul>
+      </div>
+      <p class="disclaimer">Kramavriddhi is an independent information website. It is not a government website and is not affiliated with the Government of India or any state government. Always confirm details on the official portal before applying.</p>
+    </footer>
+  </div>
+</body>
+</html>

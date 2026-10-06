@@ -36,11 +36,17 @@ html = head("Kramavriddhi — Government schemes explained, step by step",
 
     <section id="tools">
       <div class="section-head">
-        <h2>Free calculators</h2>
-        <p>Plan your pension and savings in seconds.</p>
+        <h2>Free tools</h2>
+        <p>Find schemes for you, and plan your pension and savings in seconds.</p>
         <a class="more" href="/tools/">See all tools →</a>
       </div>
       <div class="grid">
+        <a class="card" href="/tools/scheme-eligibility-checker/">
+          <div class="icon" aria-hidden="true">✅</div>
+          <h3>Which schemes am I eligible for?</h3>
+          <p>Answer a few simple questions and see the schemes that may suit you.</p>
+          <span class="tag">Free tool</span>
+        </a>
         <a class="card" href="/tools/atal-pension-calculator/">
           <div class="icon" aria-hidden="true">👴</div>
           <h3>Atal Pension Calculator</h3>
