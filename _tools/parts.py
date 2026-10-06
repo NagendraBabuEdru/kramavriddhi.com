@@ -18,7 +18,8 @@ def head(title, desc, path, extra=""):
   <link rel="icon" href="{FAVICON}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css">{extra}
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/site.js" defer></script>{extra}
 </head>
 <body>
   <div class="wrap">

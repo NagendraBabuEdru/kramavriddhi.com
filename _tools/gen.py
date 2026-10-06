@@ -87,6 +87,7 @@ write("schemes/index.html",
 {chips}
     </div>
     <input class="search" type="search" placeholder="Search schemes…" aria-label="Search schemes">
+    <a class="cta" href="/tools/" style="margin-top:-8px;margin-bottom:28px"><span>🧮</span><div><strong>Free calculators</strong><br><span class="muted" style="font-size:0.9rem">Atal Pension contribution by age · Sukanya Samriddhi maturity amount</span></div></a>
 
     <div class="grid" id="scheme-list">
 {"".join(scheme_card(s) for s in DISPLAY)}    </div>
@@ -377,7 +378,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </div>
 
         <h2>How much can you save? (example)</h2>
-        <p>If the interest rate stayed at 8.2% for the whole period, yearly deposits at the start of each year for 15 years would grow roughly like this by maturity (21 years):</p>
+        <p>If the interest rate stayed at 8.2% for the whole period, yearly deposits at the start of each year for 15 years would grow roughly like this by maturity (21 years). Try your own amount in our <a href="/tools/sukanya-samriddhi-calculator/">Sukanya Samriddhi calculator</a>.</p>
         <div class="table-wrap">
         <table class="simple">
           <tr><th>Yearly deposit</th><th>Total you deposit</th><th>Approx. maturity amount</th></tr>
@@ -710,7 +711,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </ul>
 
         <h2>How much do you need to pay?</h2>
-        <p>The earlier you join, the less you pay. Monthly contributions for some ages (from the official APY chart):</p>
+        <p>The earlier you join, the less you pay. Monthly contributions for some ages (from the official APY chart). For your exact age, use our <a href="/tools/atal-pension-calculator/">Atal Pension calculator</a>.</p>
         <div class="table-wrap">
         <table class="simple">
           <tr><th>Age when joining</th><th>₹1,000 pension</th><th>₹2,000</th><th>₹3,000</th><th>₹4,000</th><th>₹5,000</th></tr>
@@ -761,7 +762,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("What is the age limit for Atal Pension Yojana?", "You can join between 18 and 40 years of age. The pension starts at 60."),
         ("Can income-tax payers join APY?", "No. From 1 October 2022, anyone who is or has been an income-tax payer cannot open a new APY account. Those who joined earlier can continue."),
-        ("How much should I pay for a ₹5,000 pension?", "It depends on your age when you join: ₹210 a month at 18, ₹376 at 25, ₹577 at 30, ₹902 at 35 and ₹1,454 at 40."),
+        ("How much should I pay for a ₹5,000 pension?", "It depends on your age when you join: ₹210 a month at 18, ₹376 at 25, ₹577 at 30, ₹902 at 35 and ₹1,454 at 40. Use our APY calculator at kramavriddhi.com/tools/atal-pension-calculator/ for your exact age."),
         ("What happens to APY if the subscriber dies?", "The spouse gets the same pension for life. If death happens before 60, the spouse can continue the account or take the money. After both, the nominee gets the accumulated amount."),
         ("Can I close my APY account early?", "Yes, but on voluntary exit you get only your own contributions plus net interest, not any government co-contribution."),
     ],
@@ -792,6 +793,8 @@ write(f"schemes/{s['slug']}/index.html", article(s,
           <li><strong>Direct Benefit Transfer (DBT):</strong> government subsidies and payments can come straight into the account.</li>
           <li>Easy access to <a href="/schemes/atal-pension-yojana/">Atal Pension Yojana</a>, <a href="/schemes/pm-jeevan-jyoti-bima-yojana/">PM Jeevan Jyoti Bima</a>, <a href="/schemes/pm-suraksha-bima-yojana/">PM Suraksha Bima</a> and <a href="/schemes/pm-mudra-yojana/">Mudra loans</a>.</li>
         </ul>
+
+        <a class="cta" href="/tools/"><span>🧮</span><div><strong>Plan your savings</strong><br><span class="muted" style="font-size:0.9rem">Use our free Atal Pension and Sukanya Samriddhi calculators.</span></div></a>
 
         <h2>Who can open a Jan Dhan account?</h2>
         <ul>
