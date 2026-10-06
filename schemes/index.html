@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Central Government Schemes Explained Simply | Kramavriddhi</title>
+  <meta name="description" content="Simple, step-by-step guides to central government schemes in India: who can apply, benefits, documents and how to apply.">
+  <link rel="canonical" href="https://kramavriddhi.com/schemes/">
+  <meta property="og:title" content="Central Government Schemes Explained Simply | Kramavriddhi">
+  <meta property="og:description" content="Simple, step-by-step guides to central government schemes in India: who can apply, benefits, documents and how to apply.">
+  <meta property="og:url" content="https://kramavriddhi.com/schemes/">
+  <meta property="og:site_name" content="Kramavriddhi">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top">
+      <a class="brand" href="/">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Kramavriddhi
+      </a>
+      <ul>
+        <li><a href="/schemes/" aria-current="page">Schemes</a></li>
+        <li class="hide-sm"><a href="/#products">Products</a></li>
+        <li class="hide-sm"><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+
+    <header class="page-head">
+      <div class="eyebrow">Government schemes</div>
+      <h1>Central schemes, explained simply</h1>
+      <p>Clear guides to Government of India schemes: who can apply, what you get, which documents you need, and how to apply on the official portal.</p>
+    </header>
+
+    <div class="filters" role="group" aria-label="Filter by category">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-filter="farmers" aria-pressed="false">🌾 Farmers & Agriculture</button>
+        <button class="chip" type="button" data-filter="health" aria-pressed="false">🏥 Health</button>
+        <button class="chip" type="button" data-filter="housing" aria-pressed="false">🏠 Housing</button>
+        <button class="chip" type="button" data-filter="business" aria-pressed="false">💼 Business & Self-employment</button>
+        <button class="chip" type="button" data-filter="pension" aria-pressed="false">👴 Pension & Insurance</button>
+        <button class="chip" type="button" data-filter="women" aria-pressed="false">👧 Women & Girls</button>
+        <button class="chip" type="button" data-filter="banking" aria-pressed="false">🏦 Banking</button>
+        <button class="chip" type="button" data-filter="education" aria-pressed="false">🎓 Education & Skills</button>
+    </div>
+    <input class="search" type="search" placeholder="Search schemes…" aria-label="Search schemes">
+
+    <div class="grid" id="scheme-list">
+        <a class="card" href="/schemes/pm-kisan/" data-cat="farmers" data-name="pm-kisan (pradhan mantri kisan samman nidhi) pm-kisan">
+          <div class="icon" aria-hidden="true">🌾</div>
+          <h3>PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)</h3>
+          <p>₹6,000 a year for land-holding farmer families, paid in three ₹2,000 instalments straight to the bank account.</p>
+          <span class="tag">Farmers & Agriculture</span>
+        </a>
+        <a class="card" href="/schemes/ayushman-bharat-pm-jay/" data-cat="health" data-name="ayushman bharat pm-jay ayushman bharat pm-jay">
+          <div class="icon" aria-hidden="true">🏥</div>
+          <h3>Ayushman Bharat PM-JAY</h3>
+          <p>Free hospital treatment up to ₹5 lakh per family per year, plus cover for every citizen aged 70 and above.</p>
+          <span class="tag">Health</span>
+        </a>
+        <a class="card" href="/schemes/sukanya-samriddhi-yojana/" data-cat="women" data-name="sukanya samriddhi yojana (ssy) sukanya samriddhi yojana">
+          <div class="icon" aria-hidden="true">👧</div>
+          <h3>Sukanya Samriddhi Yojana (SSY)</h3>
+          <p>A high-interest, tax-free savings account for a girl child under 10, for her education and marriage.</p>
+          <span class="tag">Women & Girls</span>
+        </a>
+    </div>
+    <p class="empty" id="empty">No schemes in this category yet. New guides are added every week.</p>
+
+    <p class="soon-list"><strong>Coming soon:</strong> PM Awas Yojana, PM Mudra Yojana, PM Vishwakarma, Atal Pension Yojana, PM Jeevan Jyoti Bima Yojana, PM Suraksha Bima Yojana, PM Jan Dhan Yojana, PM Fasal Bima Yojana, PM Kaushal Vikas Yojana.</p>
+
+    <div class="note" style="margin-top:32px">Kramavriddhi is an independent information website, not a government website. We never ask for your Aadhaar, bank details or any fee. Always apply only on the official portal linked in each guide.</div>
+
+    <script>
+      (function () {
+        var chips = document.querySelectorAll('.chip');
+        var cards = document.querySelectorAll('#scheme-list .card');
+        var search = document.querySelector('.search');
+        var empty = document.getElementById('empty');
+        var current = 'all';
+        function apply() {
+          var q = search.value.trim().toLowerCase();
+          var shown = 0;
+          cards.forEach(function (c) {
+            var ok = (current === 'all' || c.dataset.cat === current) && (!q || c.dataset.name.indexOf(q) !== -1);
+            c.style.display = ok ? '' : 'none';
+            if (ok) shown++;
+          });
+          empty.style.display = shown ? 'none' : 'block';
+        }
+        chips.forEach(function (b) {
+          b.addEventListener('click', function () {
+            current = b.dataset.filter;
+            chips.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+            apply();
+          });
+        });
+        search.addEventListener('input', apply);
+      })();
+    </script>
+
+    <footer class="site">
+      <div class="cols">
+        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <ul>
+          <li><a href="/schemes/">Schemes</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/disclaimer/">Disclaimer</a></li>
+        </ul>
+      </div>
+      <p class="disclaimer">Kramavriddhi is an independent information website. It is not a government website and is not affiliated with the Government of India or any state government. Always confirm details on the official portal before applying.</p>
+    </footer>
+  </div>
+</body>
+</html>
