@@ -176,3 +176,7 @@ table.simple tr.hl td { background: var(--accent-soft); font-weight: 600; }
 .nudge-x:hover { background: var(--accent-soft); color: var(--text); }
 @media (max-width: 600px) { .nudge { left: 16px; right: 16px; bottom: 16px; width: auto; } }
 @media (prefers-reduced-motion: reduce) { .nudge { transition: none; } }
+
+/* Scheme card tags */
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag.state { background: transparent; border: 1px solid var(--accent); }

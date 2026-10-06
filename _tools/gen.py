@@ -45,6 +45,24 @@ SCHEMES = [
     dict(slug="pm-suraksha-bima-yojana", name="PM Suraksha Bima Yojana (PMSBY)", short="PM Suraksha Bima Yojana",
          cat="pension", cat_label="Pension & Insurance", icon="🩹",
          summary="Accident insurance up to ₹2 lakh for just ₹20 a year, for anyone aged 18–70 with a bank account."),
+    dict(slug="ap-annadata-sukhibhava", name="Annadata Sukhibhava (Andhra Pradesh)", short="Annadata Sukhibhava",
+         state="ap", cat="farmers", cat_label="Farmers & Agriculture", icon="🌾",
+         summary="₹20,000 a year for AP farmer families: ₹14,000 from the state plus ₹6,000 from PM-KISAN, in three instalments."),
+    dict(slug="ap-ntr-bharosa-pension", name="NTR Bharosa Pension (Andhra Pradesh)", short="NTR Bharosa Pension",
+         state="ap", cat="pension", cat_label="Pension & Insurance", icon="👵",
+         summary="Monthly pensions of ₹4,000 to ₹15,000 for the elderly, widows, persons with disabilities and other groups."),
+    dict(slug="ap-thalliki-vandanam", name="Thalliki Vandanam (Andhra Pradesh)", short="Thalliki Vandanam",
+         state="ap", cat="education", cat_label="Education & Skills", icon="📚",
+         summary="₹15,000 a year for every school-going child in Classes 1–12, with ₹13,000 paid to the mother."),
+    dict(slug="ts-rythu-bharosa", name="Rythu Bharosa (Telangana)", short="Rythu Bharosa",
+         state="ts", cat="farmers", cat_label="Farmers & Agriculture", icon="🚜",
+         summary="₹12,000 per acre every year for Telangana farmers, paid as ₹6,000 per acre each crop season."),
+    dict(slug="ts-mahalakshmi", name="Mahalakshmi Scheme (Telangana)", short="Mahalakshmi",
+         state="ts", cat="women", cat_label="Women & Girls", icon="🚌",
+         summary="Free TGSRTC bus travel for women and girls, and ₹500 LPG cylinders for eligible families."),
+    dict(slug="ts-indiramma-indlu", name="Indiramma Indlu (Telangana)", short="Indiramma Indlu",
+         state="ts", cat="housing", cat_label="Housing", icon="🏘️",
+         summary="Up to ₹5 lakh to build a pucca house for poor families who don't own one, paid in stages."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -59,30 +77,46 @@ CATEGORIES = [
     ("education", "🎓 Education & Skills"),
 ]
 
+STATES = {
+    "central": dict(label="Central Government", short="Central", hub=None),
+    "ap": dict(label="Andhra Pradesh", short="Andhra Pradesh", hub="/schemes/andhra-pradesh/"),
+    "ts": dict(label="Telangana", short="Telangana", hub="/schemes/telangana/"),
+}
+def st(s):
+    return s.get("state", "central")
+
 def scheme_card(s):
-    return f'''        <a class="card" href="/schemes/{s["slug"]}/" data-cat="{s["cat"]}" data-name="{s["name"].lower()} {s["short"].lower()}">
+    state_tag = "" if st(s) == "central" else f'<span class="tag state">{STATES[st(s)]["short"]}</span>'
+    return f"""        <a class="card" href="/schemes/{s["slug"]}/" data-cat="{s["cat"]}" data-state="{st(s)}" data-name="{s["name"].lower()} {s["short"].lower()} {STATES[st(s)]["label"].lower()}">
           <div class="icon" aria-hidden="true">{s["icon"]}</div>
           <h3>{s["name"]}</h3>
           <p>{s["summary"]}</p>
-          <span class="tag">{s["cat_label"]}</span>
+          <div class="tags">{state_tag}<span class="tag">{s["cat_label"]}</span></div>
         </a>
-'''
+"""
 
 # ---------------------------------------------------------------- schemes index
+STATE_FILTERS = [("all", "All"), ("central", "🇮🇳 Central"), ("ap", "Andhra Pradesh"), ("ts", "Telangana")]
+state_chips = "\n".join(
+    f'        <button class="chip" type="button" data-state-filter="{k}" aria-pressed="{"true" if k=="all" else "false"}">{v}</button>'
+    for k, v in STATE_FILTERS)
 chips = "\n".join(
     f'        <button class="chip" type="button" data-filter="{k}" aria-pressed="{"true" if k=="all" else "false"}">{v}</button>'
     for k, v in CATEGORIES)
 write("schemes/index.html",
-    head("Central Government Schemes Explained Simply | Kramavriddhi",
-         "Simple, step-by-step guides to central government schemes in India: who can apply, benefits, documents and how to apply.",
+    head("Government Schemes Explained Simply: Central, Andhra Pradesh & Telangana | Kramavriddhi",
+         "Simple, step-by-step guides to central government schemes and Andhra Pradesh and Telangana state schemes: who can apply, benefits, documents and how to apply.",
          "/schemes/")
-    + nav("schemes") + f'''
+    + nav("schemes") + f"""
     <header class="page-head">
       <div class="eyebrow">Government schemes</div>
-      <h1>Central schemes, explained simply</h1>
-      <p>Clear guides to Government of India schemes: who can apply, what you get, which documents you need, and how to apply on the official portal.</p>
+      <h1>Government schemes, explained simply</h1>
+      <p>Clear guides to central schemes and Andhra Pradesh and Telangana state schemes: who can apply, what you get, which documents you need, and how to apply on the official portal.</p>
     </header>
 
+    <div class="filters" role="group" aria-label="Filter by government">
+{state_chips}
+    </div>
     <div class="filters" role="group" aria-label="Filter by category">
 {chips}
     </div>
@@ -91,43 +125,52 @@ write("schemes/index.html",
 
     <div class="grid" id="scheme-list">
 {"".join(scheme_card(s) for s in DISPLAY)}    </div>
-    <p class="empty" id="empty">No schemes in this category yet. New guides are added every week.</p>
+    <p class="empty" id="empty">No schemes match yet. New guides are added every week.</p>
 
-    <p class="soon-list"><strong>Coming soon:</strong> PM Vishwakarma, PM Fasal Bima Yojana, PM Kaushal Vikas Yojana, National Scholarship Portal, PM Ujjwala Yojana, Stand-Up India.</p>
+    <p class="soon-list"><strong>Coming soon:</strong> PM Vishwakarma, PM Fasal Bima Yojana, PM Kaushal Vikas Yojana, National Scholarship Portal, PM Ujjwala Yojana, Stand-Up India, and more Andhra Pradesh and Telangana schemes.</p>
 
     <div class="note" style="margin-top:32px">Kramavriddhi is an independent information website, not a government website. We never ask for your Aadhaar, bank details or any fee. Always apply only on the official portal linked in each guide.</div>
 
     <script>
       (function () {{
-        var chips = document.querySelectorAll('.chip');
+        var catChips = document.querySelectorAll('[data-filter]');
+        var stateChips = document.querySelectorAll('[data-state-filter]');
         var cards = document.querySelectorAll('#scheme-list .card');
         var search = document.querySelector('.search');
         var empty = document.getElementById('empty');
-        var current = 'all';
+        var cat = 'all', state = 'all';
+        var m = /[?&]state=(central|ap|ts)/.exec(location.search);
+        if (m) state = m[1];
+        function press(list, attr, val) {{
+          list.forEach(function (x) {{ x.setAttribute('aria-pressed', x.getAttribute(attr) === val ? 'true' : 'false'); }});
+        }}
         function apply() {{
           var q = search.value.trim().toLowerCase();
           var shown = 0;
           cards.forEach(function (c) {{
-            var ok = (current === 'all' || c.dataset.cat === current) && (!q || c.dataset.name.indexOf(q) !== -1);
+            var ok = (cat === 'all' || c.dataset.cat === cat) && (state === 'all' || c.dataset.state === state) && (!q || c.dataset.name.indexOf(q) !== -1);
             c.style.display = ok ? '' : 'none';
             if (ok) shown++;
           }});
           empty.style.display = shown ? 'none' : 'block';
         }}
-        chips.forEach(function (b) {{
-          b.addEventListener('click', function () {{
-            current = b.dataset.filter;
-            chips.forEach(function (x) {{ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }});
-            apply();
-          }});
+        catChips.forEach(function (b) {{
+          b.addEventListener('click', function () {{ cat = b.dataset.filter; press(catChips, 'data-filter', cat); apply(); }});
+        }});
+        stateChips.forEach(function (b) {{
+          b.addEventListener('click', function () {{ state = b.dataset.stateFilter; press(stateChips, 'data-state-filter', state); apply(); }});
         }});
         search.addEventListener('input', apply);
+        press(stateChips, 'data-state-filter', state);
+        apply();
       }})();
     </script>
-''' + FOOTER)
+""" + FOOTER)
 
 # ---------------------------------------------------------------- article shell
 def article(s, lede, facts, body, faqs, sources, description):
+    hub = STATES[st(s)]["hub"]
+    state_crumb = f'<a href="{hub}">{STATES[st(s)]["label"]}</a> › ' if hub else ""
     facts_html = "\n".join(f'        <div class="fact"><small>{k}</small><strong>{v}</strong></div>' for k, v in facts)
     faq_html = "\n".join(f'      <details><summary>{q}</summary><p>{a}</p></details>' for q, a in faqs)
     src_html = "\n".join(f'        <li><a href="{u}" target="_blank" rel="noopener">{t}</a></li>' for t, u in sources)
@@ -151,12 +194,12 @@ def article(s, lede, facts, body, faqs, sources, description):
                  f'/schemes/{s["slug"]}/', extra)
         + nav("schemes") + f'''
     <div class="narrow">
-      <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › {s["short"]}</p>
+      <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › {state_crumb}{s["short"]}</p>
       <article>
         <div class="eyebrow">{s["icon"]} {s["cat_label"]}</div>
         <h1>{s["name"]}</h1>
         <p class="lede">{lede}</p>
-        <div class="meta"><span>Last updated: {UPDATED}</span><span>Central Government scheme</span></div>
+        <div class="meta"><span>Last updated: {UPDATED}</span><span>{STATES[st(s)]["label"]} scheme</span></div>
 
         <div class="facts">
 {facts_html}
@@ -995,6 +1038,406 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Jan Suraksha portal", "https://jansuraksha.gov.in"),
     ]))
 
+# ---------------------------------------------------------------- state schemes: Andhra Pradesh & Telangana (added 6 Oct 2026)
+
+# ---- AP: Annadata Sukhibhava
+s = BY_SLUG["ap-annadata-sukhibhava"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Annadata Sukhibhava is the Andhra Pradesh government's support scheme for farmers. Together with the Centre's PM-KISAN, each eligible farmer family gets ₹20,000 a year: ₹14,000 from the state and ₹6,000 from the Centre, paid in three instalments straight to the bank account.",
+    description="Annadata Sukhibhava (Andhra Pradesh) explained: ₹20,000 a year for farmers with PM-KISAN, instalments, who is eligible, how to check status, latest release.",
+    facts=[("Per year", "₹20,000 / family"), ("From the state", "₹14,000"), ("From PM-KISAN", "₹6,000"), ("Latest", "1st instalment, June 2026")],
+    body='''
+        <h2>What is Annadata Sukhibhava?</h2>
+        <p>Annadata Sukhibhava – PM KISAN is a farmer income-support scheme of the Government of Andhra Pradesh. It is run along with the Central Government's <a href="/schemes/pm-kisan/">PM-KISAN</a>, so farmers get both benefits together. The state adds ₹14,000 a year to PM-KISAN's ₹6,000, for a total of <strong>₹20,000 per farmer family per year</strong>.</p>
+
+        <h2>Latest update</h2>
+        <p>The <strong>first instalment for 2026-27</strong> was released in June 2026: ₹7,000 per family (₹5,000 from the state and ₹2,000 from PM-KISAN), a total of ₹3,125.47 crore to about <strong>46.86 lakh farmer families</strong>, including cultivators under the Forest Rights Act. Further instalments are expected later in the year; we will update this page when dates are announced.</p>
+
+        <h2>How the ₹20,000 is paid</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Instalment</th><th>State</th><th>PM-KISAN</th><th>Total</th></tr>
+          <tr><td>1st</td><td>₹5,000</td><td>₹2,000</td><td>₹7,000</td></tr>
+          <tr><td>2nd</td><td>₹5,000</td><td>₹2,000</td><td>₹7,000</td></tr>
+          <tr><td>3rd</td><td>₹4,000</td><td>₹2,000</td><td>₹6,000</td></tr>
+          <tr><td><strong>Year</strong></td><td><strong>₹14,000</strong></td><td><strong>₹6,000</strong></td><td><strong>₹20,000</strong></td></tr>
+        </table>
+        </div>
+        <p class="muted" style="font-size:0.9rem">The state releases its share together with PM-KISAN instalments. Exact dates are announced by the government each time.</p>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Farmer families in Andhra Pradesh who own cultivable land (as per land records), and cultivators holding Forest Rights (RoFR) land.</li>
+          <li>The government has also said landless cultivators will be supported at ₹20,000 a year from the state budget. Check with your Rythu Seva Kendram for the current status of tenant/landless farmer payments.</li>
+          <li>The same exclusions as PM-KISAN generally apply, such as income-tax payers, government employees, and people holding constitutional posts.</li>
+        </ul>
+
+        <h2>What you need</h2>
+        <ul>
+          <li>Aadhaar-linked bank account enabled for DBT</li>
+          <li>Completed eKYC</li>
+          <li>Land details updated in the state's records (webland)</li>
+          <li>Mobile number linked with Aadhaar</li>
+        </ul>
+
+        <h2>How to apply or fix problems</h2>
+        <ol>
+          <li>Visit your <strong>Rythu Seva Kendram (RSK)</strong> or village secretariat. Agriculture staff there handle registration and eKYC.</li>
+          <li>If you are not on the list, ask the agriculture assistant to check your land records, Aadhaar and bank details.</li>
+          <li>Make sure your PM-KISAN registration and eKYC are complete. See our <a href="/schemes/pm-kisan/">PM-KISAN guide</a>.</li>
+        </ol>
+
+        <h2>Check your status</h2>
+        <p>Open the official portal <a href="https://annadathasukhibhava.ap.gov.in" target="_blank" rel="noopener">annadathasukhibhava.ap.gov.in</a>, choose <strong>Know Your Status</strong>, and enter your Aadhaar number.</p>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://annadathasukhibhava.ap.gov.in" target="_blank" rel="noopener">annadathasukhibhava.ap.gov.in</a><br>
+          <strong>Help:</strong> your Rythu Seva Kendram or village/ward secretariat
+        </div>
+''',
+    faqs=[
+        ("How much do farmers get under Annadata Sukhibhava?", "₹20,000 per farmer family per year: ₹14,000 from the Andhra Pradesh government and ₹6,000 from PM-KISAN."),
+        ("When was the latest Annadata Sukhibhava instalment released?", "The first instalment for 2026-27 (₹7,000 per family) was released in June 2026 to about 46.86 lakh farmer families."),
+        ("Do I need PM-KISAN to get Annadata Sukhibhava?", "The two are paid together. Keeping your PM-KISAN registration and eKYC complete helps make sure you receive the full ₹20,000."),
+        ("How do I check Annadata Sukhibhava status?", "On annadathasukhibhava.ap.gov.in, choose Know Your Status and enter your Aadhaar number, or ask at your Rythu Seva Kendram."),
+        ("Are tenant farmers eligible?", "The government announced support for landless cultivators from the state budget, but payment status for tenant farmers has varied. Check with your Rythu Seva Kendram."),
+    ],
+    sources=[
+        ("Annadatha Sukhibhava – PM KISAN official portal", "https://annadathasukhibhava.ap.gov.in"),
+        ("Tirupati district (ap.gov.in): Agriculture schemes", "https://tirupati.ap.gov.in/agriculture/"),
+        ("Deccan Chronicle: CM releases ₹3,125 crore aid (June 2026)", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/farmers-natural-farming-take-centre-stage-as-cm-releases-3125-crore-aid-1965111"),
+    ]))
+
+# ---- AP: NTR Bharosa Pensions
+s = BY_SLUG["ap-ntr-bharosa-pension"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="NTR Bharosa is Andhra Pradesh's social security pension scheme. Elderly people, widows, single women, persons with disabilities and several other groups get a monthly pension of ₹4,000 to ₹15,000, depending on their category.",
+    description="NTR Bharosa Pension (Andhra Pradesh) explained: ₹4,000, ₹6,000, ₹10,000 and ₹15,000 monthly pensions, who is eligible, how to apply at the village or ward secretariat.",
+    facts=[("Old age / widow", "₹4,000 / month"), ("Disabled", "₹6,000 / month"), ("Chronic illness", "₹10,000 / month"), ("Fully disabled", "₹15,000 / month")],
+    body='''
+        <h2>What is NTR Bharosa Pension?</h2>
+        <p>The NTR Bharosa Pension Scheme gives monthly pensions to poor and vulnerable people in Andhra Pradesh. Under G.O.Ms.No.43 dated 13 June 2024, the pension amounts were increased, with the higher amounts paid from July 2024.</p>
+
+        <h2>Pension amounts</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Category</th><th>Monthly pension</th></tr>
+          <tr><td>Old age (60+), widows, single women, fishermen, weavers, toddy tappers, traditional cobblers, Dappu artists, transgender persons, ART (PLHIV) patients</td><td><strong>₹4,000</strong></td></tr>
+          <tr><td>Persons with disabilities, multi-deformity leprosy</td><td><strong>₹6,000</strong></td></tr>
+          <tr><td>Chronic diseases such as kidney patients on dialysis, CKDU/CKD (as notified), kidney/liver/heart transplant, thalassemia and other notified conditions</td><td><strong>₹10,000</strong></td></tr>
+          <tr><td>Fully disabled persons (as notified)</td><td><strong>₹15,000</strong></td></tr>
+        </table>
+        </div>
+        <p class="muted" style="font-size:0.9rem">The exact list of illnesses and disability conditions for the ₹10,000 and ₹15,000 categories is set in the government order. Confirm your category at the village or ward secretariat.</p>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>A permanent resident of Andhra Pradesh.</li>
+          <li>From a poor household (usually holding a rice card), meeting the income and asset conditions set by the government.</li>
+          <li>Belonging to one of the categories above, for example 60 years or older for the old-age pension, or holding a SADAREM disability certificate for the disability pension.</li>
+          <li>Not receiving another government pension.</li>
+        </ul>
+
+        <h2>How the pension is paid</h2>
+        <p>Pensions are released at the start of every month. In Andhra Pradesh they are usually handed over at the beneficiary's home by village or ward secretariat staff, so elderly and disabled people don't have to travel.</p>
+
+        <h2>Documents usually needed</h2>
+        <ul>
+          <li>Aadhaar card</li>
+          <li>Rice card</li>
+          <li>Age proof (for old-age pension)</li>
+          <li>Husband's death certificate (for widow pension)</li>
+          <li>SADAREM certificate (for disability pension)</li>
+          <li>Medical certificates (for chronic disease pensions)</li>
+          <li>Bank account details and photograph</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Go to your <strong>village or ward secretariat</strong>.</li>
+          <li>Ask for the new pension application form (it is also on the official portal).</li>
+          <li>Submit it with your documents. The welfare assistant verifies your details.</li>
+          <li>New sanctions are approved by the government from time to time. You can check your status on the official portal.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://sspensions.ap.gov.in" target="_blank" rel="noopener">sspensions.ap.gov.in</a> (Social Security Pensions, Govt. of Andhra Pradesh)<br>
+          <strong>Office:</strong> 0866-2410017
+        </div>
+''',
+    faqs=[
+        ("How much is the NTR Bharosa old age pension?", "₹4,000 per month, paid from July 2024 onwards under G.O.Ms.No.43."),
+        ("How much pension do disabled persons get in Andhra Pradesh?", "₹6,000 per month for persons with disabilities. Fully disabled persons in notified categories get ₹15,000 per month."),
+        ("Which patients get the ₹10,000 pension?", "People with notified chronic diseases, such as kidney patients on dialysis, certain CKD/CKDU conditions and organ transplant recipients."),
+        ("Where do I apply for NTR Bharosa pension?", "At your village or ward secretariat, with Aadhaar, rice card and the documents for your category."),
+        ("When is the pension paid?", "At the start of every month, usually handed over at home by secretariat staff."),
+    ],
+    sources=[
+        ("Social Security Pensions portal, Govt. of Andhra Pradesh", "https://sspensions.ap.gov.in"),
+    ]))
+
+# ---- AP: Thalliki Vandanam
+s = BY_SLUG["ap-thalliki-vandanam"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Thalliki Vandanam is the Andhra Pradesh government's education support scheme. For every school-going child in Classes 1 to 12, the mother gets ₹13,000 a year in her bank account, and ₹2,000 more goes to the school's maintenance.",
+    description="Thalliki Vandanam (Andhra Pradesh) explained: ₹15,000 per child per year, ₹13,000 to mothers, eligibility, 75% attendance rule, 2026-27 release and how to check.",
+    facts=[("Per child", "₹15,000 / year"), ("To mother", "₹13,000"), ("To school upkeep", "₹2,000"), ("2026-27", "Released 22 July 2026")],
+    body='''
+        <h2>What is Thalliki Vandanam?</h2>
+        <p>Thalliki Vandanam (also written Talliki Vandanam) supports families so their children can keep going to school. The benefit is given <strong>for every eligible child</strong> in the family, with no limit on the number of children.</p>
+
+        <h2>Latest update</h2>
+        <p>For the <strong>2026-27</strong> academic year, the government released ₹10,120.78 crore on <strong>22 July 2026</strong>, for about <strong>67.47 lakh students</strong>, credited to the accounts of about 42.70 lakh mothers. Beneficiary lists were displayed at village (Swarna Gramam) and ward offices. Newly admitted students in Classes 1–9 and Intermediate first year were to be covered by 30 August 2026.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>₹15,000 per child per year.</strong></li>
+          <li><strong>₹13,000</strong> is credited directly to the mother's (or guardian's) bank account.</li>
+          <li><strong>₹2,000</strong> is kept for school maintenance and development.</li>
+        </ul>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Students in <strong>Classes 1 to 12</strong> (including Intermediate) in government, aided and recognised private schools and colleges in Andhra Pradesh.</li>
+          <li>The family must meet the government's income and eligibility conditions (usually a rice card holding household).</li>
+          <li>Students are expected to keep at least <strong>75% attendance</strong>; low attendance or dropping out can affect the next year's benefit.</li>
+        </ul>
+
+        <h2>What you need</h2>
+        <ul>
+          <li>Mother's Aadhaar-linked bank account enabled for DBT</li>
+          <li>Child's Aadhaar and school details updated correctly</li>
+          <li>Rice card / household details in the state's records</li>
+        </ul>
+
+        <h2>How to check or correct</h2>
+        <ol>
+          <li>Check the beneficiary list displayed at your village or ward secretariat.</li>
+          <li>If your child's name is missing, contact the welfare/education assistant at the secretariat or the school headmaster with the child's and mother's Aadhaar.</li>
+          <li>Make sure the mother's bank account is linked to Aadhaar and active.</li>
+        </ol>
+        <div class="note">No one needs to pay any fee to be included. Report anyone asking for money to your secretariat.</div>
+
+        <div class="official">
+          <strong>Help:</strong> your village or ward secretariat, or the child's school<br>
+          <strong>Official state portal:</strong> <a href="https://www.ap.gov.in" target="_blank" rel="noopener">ap.gov.in</a>
+        </div>
+''',
+    faqs=[
+        ("How much money is given under Thalliki Vandanam?", "₹15,000 per child per year: ₹13,000 is credited to the mother's account and ₹2,000 goes to school maintenance."),
+        ("When was Thalliki Vandanam 2026-27 released?", "On 22 July 2026, for about 67.47 lakh students. New admissions were to be covered by 30 August 2026."),
+        ("Is Thalliki Vandanam given for all children in a family?", "Yes. The benefit is given for every eligible school-going child, not just one."),
+        ("Do private school students get Thalliki Vandanam?", "Students in recognised private schools are covered along with government and aided schools, subject to the family meeting the eligibility conditions."),
+        ("What if my child's name is not in the list?", "Contact your village or ward secretariat or the school with the child's and mother's Aadhaar to check and correct the details."),
+    ],
+    sources=[
+        ("Deccan Chronicle: AP Govt to release Thalliki Vandanam funds on July 22 (2026)", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-govt-to-release-thalliki-vandanam-funds-on-july-22-1971425"),
+        ("Government of Andhra Pradesh portal", "https://www.ap.gov.in"),
+    ]))
+
+# ---- TS: Rythu Bharosa
+s = BY_SLUG["ts-rythu-bharosa"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Rythu Bharosa is the Telangana government's investment support for farmers. Farmers get ₹12,000 per acre every year, paid as ₹6,000 per acre for each crop season, directly into their bank accounts.",
+    description="Rythu Bharosa (Telangana) explained: ₹12,000 per acre per year in two seasons, who is eligible, which land is excluded, latest release and how to check.",
+    facts=[("Per acre / year", "₹12,000"), ("Per season", "₹6,000 / acre"), ("Seasons", "Kharif + Rabi"), ("Paid by", "DBT to bank")],
+    body='''
+        <h2>What is Rythu Bharosa?</h2>
+        <p>Rythu Bharosa replaced the earlier Rythu Bandhu scheme. It gives farmers money for each crop season to meet cultivation costs like seeds, fertiliser and labour, without needing a loan.</p>
+
+        <h2>Latest update</h2>
+        <p>The Telangana government released Rythu Bharosa funds for the <strong>2026 Kharif season</strong> from 30 June 2026. A ₹500 per quintal bonus for notified fine rice varieties was also approved for the Kharif season.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>₹12,000 per acre per year</strong>.</li>
+          <li>Paid in two parts: <strong>₹6,000 per acre</strong> for Kharif (monsoon) and ₹6,000 per acre for Rabi (winter).</li>
+          <li>Money goes directly to the farmer's bank account (DBT).</li>
+        </ul>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Farmers in Telangana whose <strong>cultivable land</strong> is recorded in the state's land records (Bhu Bharati).</li>
+          <li>Payment is for land that is actually suitable for farming.</li>
+        </ul>
+        <h3>Land that is excluded</h3>
+        <ul>
+          <li>Non-agricultural land such as real-estate layouts, industrial areas and mining land.</li>
+          <li>Land that is not cultivable, and lands the government has excluded after verification.</li>
+        </ul>
+
+        <h2>What you need</h2>
+        <ul>
+          <li>Land recorded in your name (pattadar passbook)</li>
+          <li>Aadhaar-linked bank account</li>
+          <li>Correct details with your Agriculture Extension Officer (AEO)</li>
+        </ul>
+
+        <h2>How to get it or fix problems</h2>
+        <ol>
+          <li>Eligible farmers are identified from land records, so you usually don't need to apply each season.</li>
+          <li>If money hasn't come, contact your <strong>Agriculture Extension Officer (AEO)</strong> or Mandal Agriculture Officer with your passbook, Aadhaar and bank details.</li>
+          <li>New land owners (after purchase or inheritance) should get their records updated in Bhu Bharati and inform the AEO.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://www.rythubharosa.telangana.gov.in" target="_blank" rel="noopener">rythubharosa.telangana.gov.in</a><br>
+          <strong>Help:</strong> Agriculture Extension Officer (AEO) or Mandal Agriculture Office
+        </div>
+''',
+    faqs=[
+        ("How much is Rythu Bharosa per acre?", "₹12,000 per acre per year, paid as ₹6,000 per acre for each of the Kharif and Rabi seasons."),
+        ("When was Rythu Bharosa released for Kharif 2026?", "The Telangana government began releasing Kharif 2026 Rythu Bharosa funds from 30 June 2026."),
+        ("Is Rythu Bharosa paid for non-agricultural land?", "No. Real-estate layouts, industrial and mining lands and non-cultivable land are excluded."),
+        ("Do I need to apply every season for Rythu Bharosa?", "Usually not. Farmers are identified from land records. If payment is missing, contact your Agriculture Extension Officer."),
+        ("Is Rythu Bharosa the same as Rythu Bandhu?", "Rythu Bharosa replaced Rythu Bandhu, with a higher amount and changes in which lands qualify."),
+    ],
+    sources=[
+        ("Suryapet district (telangana.gov.in): Rythu Bharosa", "https://suryapet.telangana.gov.in/scheme/rythu-bharosa/"),
+        ("Siasat: Revanth Reddy to release Rythu Bharosa funds on June 30 (2026)", "https://www.siasat.com/revanth-reddy-to-release-rythu-bharosa-funds-on-june-30-3491822/"),
+    ]))
+
+# ---- TS: Mahalakshmi
+s = BY_SLUG["ts-mahalakshmi"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Mahalakshmi is a Telangana government scheme for women. Its two main benefits now running are free travel for women and girls in TGSRTC buses across the state, and LPG cooking gas cylinders at ₹500 for eligible families.",
+    description="Mahalakshmi scheme (Telangana) explained: free bus travel for women in TGSRTC buses, Mahalakshmi smart card, ₹500 gas cylinder eligibility, and status of the ₹2,500 monthly assistance.",
+    facts=[("Bus travel", "Free in TGSRTC"), ("Gas cylinder", "₹500 each"), ("Smart card fee", "₹50"), ("₹2,500 / month", "Not yet started")],
+    body='''
+        <h2>What is Mahalakshmi?</h2>
+        <p>Mahalakshmi is one of the Telangana government's guarantees for women, launched in December 2023. Two parts are running today. A third part, ₹2,500 per month for women, has been announced but has <strong>not been started</strong> as of 2026.</p>
+
+        <h2>1. Free bus travel</h2>
+        <ul>
+          <li>Women, girls and transgender persons who live in Telangana can travel <strong>free in TGSRTC buses</strong> within the state.</li>
+          <li>Free travel applies to ordinary services such as Palle Velugu, Express and city ordinary/express buses. AC, luxury and similar premium services are generally not included.</li>
+          <li>Show your <strong>original Aadhaar card</strong> or another government ID with a Telangana address to the conductor to get a zero-fare ticket. Photocopies are not accepted.</li>
+        </ul>
+        <h3>Mahalakshmi smart card</h3>
+        <p>From 2 June 2026, the government began issuing <strong>Mahalakshmi smart cards</strong> for free travel, first on a pilot basis in one mandal per district before expanding statewide. Until the card reaches you, Aadhaar or other government ID continues to work.</p>
+        <ul>
+          <li>Apply at <strong>MeeSeva centres</strong> or <strong>TGSRTC bus pass counters</strong>.</li>
+          <li>Bring your Aadhaar card, a passport-size photo and your mobile number.</li>
+          <li>A nominal fee of <strong>₹50</strong> is charged for the card.</li>
+        </ul>
+
+        <h2>2. LPG cylinder at ₹500</h2>
+        <ul>
+          <li>Eligible families pay an effective price of <strong>₹500 per domestic LPG cylinder</strong>. The state government pays the rest as a subsidy credited to the bank account.</li>
+          <li>To be eligible, you should have applied under <strong>Praja Palana</strong>, hold a <strong>white ration card (food security card)</strong>, and have an <strong>active domestic gas connection in your name</strong>.</li>
+          <li>The number of subsidised cylinders per year is based on your household's <strong>average use over the last three years</strong>.</li>
+        </ul>
+
+        <h2>3. ₹2,500 per month for women</h2>
+        <p>This part of Mahalakshmi was promised but, according to news reports up to 2026, it <strong>has not been implemented yet</strong>. Be careful of anyone asking you to "register" or pay for it. We will update this page if the government starts it.</p>
+
+        <div class="official">
+          <strong>Bus travel:</strong> <a href="https://www.tgsrtc.telangana.gov.in" target="_blank" rel="noopener">TGSRTC</a> · smart card at MeeSeva or TGSRTC bus pass counters<br>
+          <strong>Gas subsidy:</strong> your LPG distributor, or your mandal/municipal office for Praja Palana applications
+        </div>
+''',
+    faqs=[
+        ("Is bus travel free for women in Telangana?", "Yes. Women, girls and transgender persons who live in Telangana can travel free in ordinary TGSRTC buses within the state by showing Aadhaar or a Mahalakshmi smart card."),
+        ("How do I get a Mahalakshmi smart card?", "Apply at a MeeSeva centre or TGSRTC bus pass counter with Aadhaar, a photo and your mobile number. The fee is ₹50."),
+        ("Who gets the ₹500 gas cylinder in Telangana?", "Families who applied under Praja Palana, hold a white ration card and have an active domestic LPG connection in their name."),
+        ("Has the ₹2,500 per month Mahalakshmi assistance started?", "As of 2026, news reports say this part has not been implemented yet. Free bus travel and the ₹500 gas cylinder are running."),
+        ("Can women from other states travel free in Telangana buses?", "No. Free travel is for women who are residents of Telangana."),
+    ],
+    sources=[
+        ("Wanaparthy district (telangana.gov.in): Maha Lakshmi Scheme", "https://wanaparthy.telangana.gov.in/scheme/mahalakshmi-scheme/"),
+        ("Deccan Chronicle: Mahalakshmi smart cards from June 2 (2026)", "https://www.deccanchronicle.com/southern-states/telangana/telangana-rtc-mahalakshmi-smart-cards-for-free-bus-travel-how-and-where-to-apply-1959859"),
+        ("Telangana Today: Who is eligible for subsidised LPG cylinders", "https://telanganatoday.com/telangana-who-is-eligible-for-subsidised-lpg-cylinders-under-mahalakshmi-scheme"),
+        ("The Hans India: Women's cash transfer scheme in spotlight (2026)", "https://www.thehansindia.com/telangana/telangana-womens-cash-transfer-scheme-in-spotlight-ahead-of-budget-1058039"),
+    ]))
+
+# ---- TS: Indiramma Indlu
+s = BY_SLUG["ts-indiramma-indlu"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Indiramma Indlu is the Telangana government's housing scheme for poor families without a house. Eligible families get up to ₹5 lakh to build a pucca house, paid in stages directly to their bank account as construction progresses.",
+    description="Indiramma Indlu (Telangana housing) explained: ₹5 lakh assistance, who is eligible, how beneficiaries are selected, stage-wise payment and how to check status online.",
+    facts=[("Assistance", "Up to ₹5 lakh"), ("Paid", "In 4 stages"), ("Income limit", "Below ₹2 lakh / year"), ("Helpline", "040-29390057")],
+    body='''
+        <h2>What is Indiramma Indlu?</h2>
+        <p>Indiramma Indlu (Indiramma Houses) helps families who do not own a house to build one. In the first phase, the focus is on families who have their own plot but no pucca house. The government has said landless families will also be covered, including with house sites.</p>
+
+        <h2>Latest update</h2>
+        <p>As of September 2026, about <strong>4.5 lakh houses</strong> were sanctioned in the first phase and 2.5 lakh in the second phase. Payments are being credited to beneficiaries' bank accounts every Monday, based on the stage of construction.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li>Financial assistance of <strong>up to ₹5 lakh</strong> to build a house.</li>
+          <li>Paid in <strong>four stages</strong> (foundation, walls, roof slab and completion), each released after officials verify that stage with geo-tagged photos.</li>
+          <li>Houses are registered in the <strong>woman's name</strong> as a priority.</li>
+        </ul>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>A resident of Telangana from a poor (BPL) family with a <strong>ration card</strong>.</li>
+          <li>Family income <strong>below ₹2 lakh per year</strong>.</li>
+          <li>Must <strong>not own a pucca house</strong>, and must not have received a house under an earlier government housing scheme.</li>
+          <li>Single women and widows are eligible. Priority goes to families living in huts or temporary shelters, and to SC, ST, minority and other weaker sections.</li>
+        </ul>
+
+        <h2>How beneficiaries are selected</h2>
+        <ol>
+          <li>Applications were collected through <strong>Praja Palana</strong>.</li>
+          <li>Officials survey applicants using a mobile app.</li>
+          <li>The list is finalised in <strong>Gram Sabhas</strong> (villages) and <strong>Ward Sabhas</strong> (towns) with village committees.</li>
+          <li>Selected families get a sanction letter and can start construction.</li>
+        </ol>
+
+        <h2>Check your status</h2>
+        <ol>
+          <li>Go to <a href="https://indirammaindlu.telangana.gov.in" target="_blank" rel="noopener">indirammaindlu.telangana.gov.in</a>.</li>
+          <li>Choose <strong>Application Status</strong>.</li>
+          <li>Search with your Aadhaar number, mobile number, ration card number or application number.</li>
+        </ol>
+
+        <div class="note">Selection and payments are free. Do not pay anyone who promises to get your house sanctioned. Report it to your MPDO or municipal office.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://indirammaindlu.telangana.gov.in" target="_blank" rel="noopener">indirammaindlu.telangana.gov.in</a><br>
+          <strong>Helpline:</strong> 040-29390057
+        </div>
+''',
+    faqs=[
+        ("How much money is given under Indiramma Indlu?", "Up to ₹5 lakh per house, paid in four stages as construction progresses."),
+        ("Who is eligible for Indiramma Indlu?", "Poor families in Telangana with a ration card, income below ₹2 lakh a year, who do not own a pucca house and haven't received a house under an earlier scheme."),
+        ("How do I check my Indiramma house status?", "On indirammaindlu.telangana.gov.in, choose Application Status and search with Aadhaar, mobile, ration card or application number."),
+        ("How are Indiramma Indlu beneficiaries chosen?", "From Praja Palana applications, after a field survey, and finalised in Gram Sabhas and Ward Sabhas."),
+        ("When is the Indiramma Indlu money paid?", "After each construction stage is verified, payments are credited directly to the beneficiary's bank account, usually every Monday."),
+    ],
+    sources=[
+        ("Indiramma Indlu official portal", "https://indirammaindlu.telangana.gov.in"),
+        ("Mahabubnagar district (telangana.gov.in): Indiramma Indlu", "https://mahabubnagar.telangana.gov.in/scheme/indiramma-indlu/"),
+        ("The Hans India: How to check Indiramma Houses status (Sept 2026)", "https://www.thehansindia.com/telangana/here-is-how-to-check-the-status-of-the-telangana-indiramma-houses-scheme-1117422"),
+        ("Deccan Chronicle: 4.5 lakh Indiramma houses sanctioned (Sept 2026)", "https://www.deccanchronicle.com/southern-states/telangana/45-lakh-indiramma-houses-sanctioned-in-first-phase-1990852"),
+    ]))
+
+# ---- state hub pages
+def state_hub(key, intro, slug):
+    items = [x for x in DISPLAY if st(x) == key]
+    label = STATES[key]["label"]
+    write(f"schemes/{slug}/index.html",
+        head(f"{label} Government Schemes Explained Simply | Kramavriddhi",
+             f"Simple guides to {label} government schemes: eligibility, benefits, documents and how to apply. Updated regularly.",
+             f"/schemes/{slug}/")
+        + nav("schemes") + f"""
+    <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › {label}</p>
+    <header class="page-head">
+      <div class="eyebrow">State schemes</div>
+      <h1>{label} government schemes</h1>
+      <p>{intro}</p>
+    </header>
+    <div class="grid">
+{"".join(scheme_card(x) for x in items)}    </div>
+    <div class="note" style="margin-top:32px">State schemes change often. Each guide shows when it was last updated. Always confirm details at your village/ward secretariat or on the official portal before applying.</div>
+    <p style="margin:24px 0 48px">Looking for central schemes too? <a href="/schemes/?state=central">See all central government schemes →</a></p>
+""" + FOOTER)
+
+state_hub("ap", "Guides to Andhra Pradesh state schemes for farmers, pensioners, mothers and students, explained in simple language.", "andhra-pradesh")
+state_hub("ts", "Guides to Telangana state schemes for farmers, women and families, explained in simple language.", "telangana")
+
 # ---------------------------------------------------------------- tools
 # Official APY monthly contribution chart (jansuraksha.gov.in APY.pdf, Annex-1)
 # entry age: [[monthly, quarterly, half-yearly] for ₹1000, ₹2000, ₹3000, ₹4000, ₹5000]
@@ -1307,7 +1750,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/schemes/"] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/schemes/", "/schemes/andhra-pradesh/", "/schemes/telangana/"] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
