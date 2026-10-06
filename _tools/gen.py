@@ -2338,6 +2338,36 @@ write("te/schemes/index.html",
     <div style="height:40px"></div>
 ''' + footer("te"))
 
+# ---------------------------------------------------------------- games (added 6 Oct 2026)
+GAMES = [
+    dict(slug="rex-adventure", name="Rex's Big Adventure", emoji="🦖",
+         summary="Help Rex the T-Rex rescue his friends and grow bigger. Pick your dino buddy and play right in your browser.",
+         tags=["Adventure", "For kids", "Free"]),
+]
+def game_card(x):
+    tags = "".join(f'<span class="tag">{t}</span>' for t in x["tags"])
+    return f"""        <a class="card game" href="/games/{x["slug"]}/">
+          <div class="game-art" aria-hidden="true">{x["emoji"]}</div>
+          <h3>{x["name"]}</h3>
+          <p>{x["summary"]}</p>
+          <div class="tags">{tags}</div>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Play now →</span>
+        </a>
+"""
+write("games/index.html",
+    head("Free Online Games | Kramavriddhi", "Free games to play in your browser, made by Kramavriddhi. No download needed.", "/games/")
+    + nav("games") + f"""
+    <header class="page-head">
+      <div class="eyebrow">Games</div>
+      <h1>Play free games</h1>
+      <p>Simple, fun games made by Kramavriddhi. They run right in your browser on phone or computer, with no download or sign-up.</p>
+    </header>
+    <div class="grid">
+{"".join(game_card(x) for x in GAMES)}    </div>
+    <p class="soon-list"><strong>More games coming soon.</strong></p>
+    <div style="height:40px"></div>
+""" + FOOTER)
+
 # ---------------------------------------------------------------- simple pages
 def simple(path, title, desc, active, h1, eyebrow, body):
     write(path.strip("/") + "/index.html", head(f"{title} | Kramavriddhi", desc, path) + nav(active) + f'''
@@ -2433,7 +2463,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/schemes/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/schemes/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")

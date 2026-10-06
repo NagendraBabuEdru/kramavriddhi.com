@@ -199,3 +199,6 @@ html[lang="te"] body { line-height: 1.8; }
 .lang-switch { margin-top: 12px; font-size: 0.95rem; }
 .lang-switch a { color: var(--accent); font-weight: 600; text-decoration: none; }
 .lang-switch a:hover { text-decoration: underline; }
+
+/* Games */
+.game-art { width: 96px; height: 96px; border-radius: 22px; display: grid; place-items: center; font-size: 3.4rem; background: linear-gradient(135deg, #1f3d2b, #3f7a3a); }

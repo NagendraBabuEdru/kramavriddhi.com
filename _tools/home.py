@@ -62,6 +62,22 @@ html = head("Kramavriddhi — Government schemes explained, step by step",
       </div>
     </section>
 
+    <section id="games">
+      <div class="section-head">
+        <h2>Games</h2>
+        <p>Free games you can play right in your browser.</p>
+        <a class="more" href="/games/">See all games →</a>
+      </div>
+      <div class="grid">
+        <a class="card game" href="/games/rex-adventure/">
+          <div class="game-art" aria-hidden="true">🦖</div>
+          <h3>Rex's Big Adventure</h3>
+          <p>Help Rex the T-Rex rescue his friends and grow bigger.</p>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Play now →</span>
+        </a>
+      </div>
+    </section>
+
 ''' + products + "\n" + approach + '''
     <section id="about">
       <div class="about-grid">
