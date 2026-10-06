@@ -63,6 +63,18 @@ SCHEMES = [
     dict(slug="ts-indiramma-indlu", name="Indiramma Indlu (Telangana)", short="Indiramma Indlu",
          state="ts", cat="housing", cat_label="Housing", icon="🏘️",
          summary="Up to ₹5 lakh to build a pucca house for poor families who don't own one, paid in stages."),
+    dict(slug="ap-deepam-2", name="Deepam-2 Free Gas Cylinders (Andhra Pradesh)", short="Deepam-2",
+         state="ap", cat="women", cat_label="Women & Girls", icon="🔥",
+         summary="Three free LPG cylinders a year for rice card families, one every four months, refunded within 48 hours."),
+    dict(slug="ap-stree-shakti", name="Stree Shakti Free Bus Travel (Andhra Pradesh)", short="Stree Shakti",
+         state="ap", cat="women", cat_label="Women & Girls", icon="🚍",
+         summary="Free travel for women, girls and transgender persons in APSRTC ordinary and express buses across AP."),
+    dict(slug="ts-gruha-jyothi", name="Gruha Jyothi Free Electricity (Telangana)", short="Gruha Jyothi",
+         state="ts", cat="housing", cat_label="Housing", icon="💡",
+         summary="Zero electricity bill for eligible households that use up to 200 units a month."),
+    dict(slug="ts-rajiv-aarogyasri", name="Rajiv Aarogyasri (Telangana)", short="Rajiv Aarogyasri",
+         state="ts", cat="health", cat_label="Health", icon="🩺",
+         summary="Cashless treatment up to ₹10 lakh per family per year for 1,835 procedures, for white ration card families."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -1412,6 +1424,242 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Mahabubnagar district (telangana.gov.in): Indiramma Indlu", "https://mahabubnagar.telangana.gov.in/scheme/indiramma-indlu/"),
         ("The Hans India: How to check Indiramma Houses status (Sept 2026)", "https://www.thehansindia.com/telangana/here-is-how-to-check-the-status-of-the-telangana-indiramma-houses-scheme-1117422"),
         ("Deccan Chronicle: 4.5 lakh Indiramma houses sanctioned (Sept 2026)", "https://www.deccanchronicle.com/southern-states/telangana/45-lakh-indiramma-houses-sanctioned-in-first-phase-1990852"),
+    ]))
+
+# ---------------------------------------------------------------- state schemes batch 2 (added 6 Oct 2026)
+
+# ---- AP: Deepam-2
+s = BY_SLUG["ap-deepam-2"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Deepam-2 is the Andhra Pradesh government's free cooking gas scheme. Eligible families get three LPG cylinders free every year, one in each four-month period. You pay at delivery and the full amount comes back to your bank account within 48 hours.",
+    description="Deepam-2 (Andhra Pradesh) explained: 3 free LPG gas cylinders a year, booking periods, how the refund works, who is eligible and what to do if money doesn't come.",
+    facts=[("Free cylinders", "3 per year"), ("Refund", "Within 48 hours"), ("Launched", "1 November 2024"), ("Now booking", "Aug – Nov period")],
+    body='''
+        <h2>What is Deepam-2?</h2>
+        <p>Deepam-2 (Deepam 2.0) is one of the Andhra Pradesh government's welfare schemes for women. It was launched on 1 November 2024 to make cooking gas affordable for poor families. About 1.55 crore households were targeted when it started.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>Three free domestic LPG refills every year</strong>.</li>
+          <li>One cylinder in each four-month period.</li>
+          <li>The money you pay for the cylinder is refunded to your bank account within 48 hours of delivery.</li>
+        </ul>
+
+        <h2>Booking periods</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Free cylinder</th><th>Period</th><th>Book by</th></tr>
+          <tr><td>1st</td><td>December – March</td><td>31 March</td></tr>
+          <tr><td>2nd</td><td>April – July</td><td>31 July</td></tr>
+          <tr><td>3rd</td><td>August – November</td><td>30 November</td></tr>
+        </table>
+        </div>
+        <div class="note"><strong>Right now (October 2026)</strong> you are in the August–November period. If you haven't taken this period's free cylinder yet, book it before <strong>30 November</strong>. An unused free cylinder does not carry over to the next period.</div>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Families in Andhra Pradesh with a <strong>rice card</strong>.</li>
+          <li>An <strong>active domestic LPG connection</strong>.</li>
+          <li>The gas connection, rice card, Aadhaar and mobile number must be linked and verified.</li>
+          <li>An active bank account linked to Aadhaar, so the refund can be credited.</li>
+        </ul>
+
+        <h2>How it works</h2>
+        <ol>
+          <li>Book your cylinder with your gas agency as usual (phone, app or SMS).</li>
+          <li>Pay the cylinder price when it is delivered. Delivery is usually within 24 hours in towns and 48 hours in villages.</li>
+          <li>The full amount you paid is credited back to your bank account within about 48 hours.</li>
+        </ol>
+
+        <h2>If the money doesn't come</h2>
+        <ul>
+          <li>Check that your Aadhaar is linked to your bank account and the account is active for DBT.</li>
+          <li>Check that your gas connection and rice card are linked to the same Aadhaar.</li>
+          <li>Contact your gas agency, your village/ward secretariat, or the civil supplies toll-free number <strong>1967</strong>.</li>
+        </ul>
+
+        <div class="official">
+          <strong>Help:</strong> your gas agency, village/ward secretariat, or civil supplies toll-free <strong>1967</strong><br>
+          <strong>Official state portal:</strong> <a href="https://www.ap.gov.in" target="_blank" rel="noopener">ap.gov.in</a>
+        </div>
+''',
+    faqs=[
+        ("How many free gas cylinders do we get under Deepam-2?", "Three free LPG refills per year, one in each four-month period."),
+        ("Do I have to pay for the Deepam-2 cylinder?", "Yes, you pay the price at delivery, and the full amount is credited back to your bank account within about 48 hours."),
+        ("What are the Deepam-2 booking periods?", "December–March (by 31 March), April–July (by 31 July) and August–November (by 30 November)."),
+        ("Who is eligible for Deepam-2?", "Families with a rice card and an active domestic LPG connection, with Aadhaar, mobile and bank account linked."),
+        ("What if I miss a period?", "The free cylinder for that period is not carried forward, so book within each period."),
+    ],
+    sources=[
+        ("Siasat: Andhra CM launches free cooking gas cylinder scheme Deepam-2 (Nov 2024)", "https://www.siasat.com/andhra-cm-launches-free-cooking-gas-cylinder-scheme-deepam-2-3124093/"),
+        ("The Hans India: Free LPG scheme – booking for cylinders begins", "https://www.thehansindia.com/andhra-pradesh/free-lpg-scheme-booking-for-cylinders-begins-918080"),
+        ("Deccan Chronicle: Gas bookings under Deepam 2.0", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/gas-bookings-under-deepam-20-scheme-cross-8037-lakh-in-42-days-manohar-1845733"),
+    ]))
+
+# ---- AP: Stree Shakti
+s = BY_SLUG["ap-stree-shakti"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Stree Shakti is the Andhra Pradesh government's free bus travel scheme. Since 15 August 2025, women, girls and transgender persons who live in Andhra Pradesh can travel free in most APSRTC ordinary and express buses anywhere in the state.",
+    description="Stree Shakti (Andhra Pradesh) explained: free APSRTC bus travel for women, which bus types are free and which are not, ID needed, and who is eligible.",
+    facts=[("Bus fare", "Free"), ("Started", "15 August 2025"), ("Free bus types", "5"), ("Who", "Women, girls, transgender persons")],
+    body='''
+        <h2>What is Stree Shakti?</h2>
+        <p>Stree Shakti lets women in Andhra Pradesh travel without paying a fare in APSRTC buses. It was launched on Independence Day, 15 August 2025, and is expected to benefit about 2.62 crore women. Out of APSRTC's 11,449 buses, women can travel free in about 8,458.</p>
+
+        <h2>Who can travel free?</h2>
+        <ul>
+          <li>Women, girls and transgender persons who are <strong>residents of Andhra Pradesh</strong>.</li>
+          <li>Travel is allowed <strong>from anywhere to anywhere within the state</strong>.</li>
+        </ul>
+
+        <h2>Which buses are free?</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Free ✅</th><th>Not free ❌</th></tr>
+          <tr><td>Palle Velugu</td><td>Non-stop services</td></tr>
+          <tr><td>Ultra Palle Velugu</td><td>Super Luxury</td></tr>
+          <tr><td>City Ordinary</td><td>AC buses</td></tr>
+          <tr><td>Express</td><td>Services on ghat roads</td></tr>
+          <tr><td>Metro Express</td><td>Interstate services, contract carriage, charters and package tours</td></tr>
+        </table>
+        </div>
+
+        <h2>What to show the conductor</h2>
+        <p>Show any one valid ID with an Andhra Pradesh address, such as:</p>
+        <ul>
+          <li>Aadhaar card</li>
+          <li>Voter ID</li>
+          <li>Ration card</li>
+          <li>Driving licence</li>
+        </ul>
+        <p>The conductor issues a zero-fare ticket. Keep your ID with you during the journey.</p>
+
+        <div class="note">You don't need to apply or register for Stree Shakti. Anyone asking for money to "register" you is not from the government.</div>
+
+        <div class="official">
+          <strong>Official:</strong> <a href="https://www.apsrtc.ap.gov.in" target="_blank" rel="noopener">APSRTC</a> · <a href="https://www.ap.gov.in" target="_blank" rel="noopener">ap.gov.in</a>
+        </div>
+''',
+    faqs=[
+        ("Is bus travel free for women in Andhra Pradesh?", "Yes. Under Stree Shakti, women, girls and transgender persons who live in Andhra Pradesh travel free in Palle Velugu, Ultra Palle Velugu, City Ordinary, Express and Metro Express APSRTC buses."),
+        ("Which APSRTC buses are not free under Stree Shakti?", "Non-stop, Super Luxury and AC buses, ghat road services, interstate services, contract carriages, charters and package tours."),
+        ("What ID do I need for free bus travel in AP?", "Any valid ID with an Andhra Pradesh address, such as Aadhaar, voter ID, ration card or driving licence."),
+        ("Do I need to register for Stree Shakti?", "No. Just show your ID to the conductor to get a zero-fare ticket."),
+        ("When did Stree Shakti start?", "On 15 August 2025."),
+    ],
+    sources=[
+        ("Deccan Chronicle: AP CM launches Stree Shakti (Aug 2025)", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-cm-launches-stree-shakti-statewide-free-bus-travel-scheme-for-women-1897697"),
+        ("Deccan Chronicle: AP issues modalities for free bus travel", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/free-bus-travel-in-andhra-for-girls-women-transgenders-from-aug-15-1896807"),
+        ("The Hans India: Free travel in five categories of buses", "https://www.thehansindia.com/andhra-pradesh/under-stree-shakti-scheme-free-travel-facility-for-women-in-five-categories-of-buses-from-aug-15-995900"),
+    ]))
+
+# ---- TS: Gruha Jyothi
+s = BY_SLUG["ts-gruha-jyothi"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Gruha Jyothi is the Telangana government's free electricity scheme. Eligible households that use up to 200 units of electricity in a month get a zero bill for that month.",
+    description="Gruha Jyothi (Telangana) explained: zero electricity bill up to 200 units a month, who is eligible, tenants, what happens above 200 units, and how to get added.",
+    facts=[("Free up to", "200 units / month"), ("Bill", "Zero, if ≤ 200 units"), ("Started", "March 2024"), ("Connections", "1 per household")],
+    body='''
+        <h2>What is Gruha Jyothi?</h2>
+        <p>Gruha Jyothi is one of the Telangana government's guarantees. Under G.O.Ms.No.7 (Energy) dated 26 February 2024, eligible households get free domestic electricity of up to 200 units a month. Zero bills have been issued from March 2024. The government pays the electricity companies (DISCOMs) for these bills.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li>If your household uses <strong>200 units or less</strong> in a month, you get a <strong>zero bill</strong> for that month.</li>
+          <li>The benefit is for <strong>one domestic service connection</strong> per household.</li>
+        </ul>
+        <div class="note">If you use <strong>more than 200 units</strong> in a month, you get a normal bill for that month. Keep an eye on usage in summer when fans, coolers and ACs push consumption up.</div>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Households that applied through <strong>Praja Palana</strong> (or another approved channel) and are entered in the Praja Palana portal.</li>
+          <li>A valid <strong>Food Security Card (white ration card)</strong> linked with <strong>Aadhaar</strong>.</li>
+          <li>A <strong>domestic electricity service connection number</strong> linked to the application.</li>
+        </ul>
+        <h3>Tenants</h3>
+        <p>Tenants can also benefit. The bill stays in the name of the original connection holder (the electricity company does not change the name for this scheme), but the household's white ration card is linked to that connection.</p>
+
+        <h2>Important rules</h2>
+        <ul>
+          <li>Only for <strong>domestic</strong> use. Using it for a shop or business is an offence under the Electricity Act.</li>
+          <li>Only one connection per household gets the benefit.</li>
+        </ul>
+
+        <h2>Not getting a zero bill?</h2>
+        <ol>
+          <li>Check that your Praja Palana application included Gruha Jyothi and your service connection number.</li>
+          <li>Make sure your white ration card and Aadhaar are linked correctly.</li>
+          <li>Visit your <strong>mandal / municipal office</strong> or your electricity company's (DISCOM) section office with your ration card, Aadhaar and electricity bill to get it corrected.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Official order:</strong> <a href="http://www.tgerc.telangana.gov.in/file_upload/uploads/Tariff%20Orders/Current%20Year%20Orders/2024/Order%20regarding%20Gruha%20Jyothi%20Scheme.pdf" target="_blank" rel="noopener">TGERC order on Gruha Jyothi (PDF)</a><br>
+          <strong>Help:</strong> mandal/municipal office or your DISCOM section office
+        </div>
+''',
+    faqs=[
+        ("How many units are free under Gruha Jyothi?", "Up to 200 units per month. If your household uses 200 units or less, the bill for that month is zero."),
+        ("What if I use more than 200 units?", "You receive a normal bill for that month."),
+        ("Can tenants get Gruha Jyothi?", "Yes. The bill stays in the connection holder's name, but the tenant household's white ration card can be linked to the connection."),
+        ("Who is eligible for Gruha Jyothi?", "Households that applied through Praja Palana with a valid white ration card linked to Aadhaar and a domestic service connection."),
+        ("Can I use Gruha Jyothi for my shop?", "No. It is only for domestic use. Using it for non-domestic purposes is an offence."),
+    ],
+    sources=[
+        ("TGERC order on Gruha Jyothi, 16 March 2024 (PDF), quoting G.O.Ms.No.7", "http://www.tgerc.telangana.gov.in/file_upload/uploads/Tariff%20Orders/Current%20Year%20Orders/2024/Order%20regarding%20Gruha%20Jyothi%20Scheme.pdf"),
+        ("Wanaparthy district (telangana.gov.in): Gruha Jyothi", "https://wanaparthy.telangana.gov.in/scheme/gruha-jyothi-scheme/"),
+        ("Deccan Chronicle: 200 units of free power for tenants too", "https://www.deccanchronicle.com/nation/current-affairs/200-units-of-free-power-gruha-jyoti-for-tenants-too-881341"),
+    ]))
+
+# ---- TS: Rajiv Aarogyasri
+s = BY_SLUG["ts-rajiv-aarogyasri"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Rajiv Aarogyasri is the Telangana government's health scheme for poor families. It covers cashless treatment worth up to ₹10 lakh per family per year in government and private network hospitals, for more than 1,800 procedures.",
+    description="Rajiv Aarogyasri (Telangana) explained: ₹10 lakh health cover per family, 1,835 procedures, who is eligible, how to get treatment through Aarogyamithra, helpline 104.",
+    facts=[("Cover", "₹10 lakh / family / year"), ("Procedures", "1,835"), ("Treatment", "Cashless"), ("Helpline", "104")],
+    body='''
+        <h2>What is Rajiv Aarogyasri?</h2>
+        <p>Rajiv Aarogyasri is run by the Aarogyasri Health Care Trust of the Government of Telangana. The cover was raised from ₹5 lakh to <strong>₹10 lakh per family per year</strong>. In July 2024, 163 new procedures were added, bringing the total to <strong>1,835 procedures</strong>, including costly treatments like organ transplants and cochlear implants. In Telangana it works together with the Centre's <a href="/schemes/ayushman-bharat-pm-jay/">Ayushman Bharat PM-JAY</a>.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li>Cashless treatment up to <strong>₹10 lakh per family per year</strong>.</li>
+          <li>Covers surgeries and treatments for <strong>1,835 listed procedures</strong>, including cancer, heart, kidney, neuro and many other conditions.</li>
+          <li>Available in government hospitals and private <strong>network hospitals</strong> across Telangana.</li>
+        </ul>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Poor (BPL) families in Telangana with a valid <strong>white ration card</strong> (including Annapurna and Antyodaya cards) or an Aarogyasri health card.</li>
+          <li>Family members whose <strong>name and photo</strong> appear on the card are covered.</li>
+          <li>The treatment must be one of the listed procedures.</li>
+        </ul>
+        <p class="muted" style="font-size:0.9rem">The government has discussed widening eligibility beyond the white ration card and issuing new health cards. We will update this page when new rules are notified.</p>
+
+        <h2>How to get treatment</h2>
+        <ol>
+          <li>Go to a <strong>network hospital</strong>, or first visit a PHC, CHC, area or district hospital, where doctors can refer you.</li>
+          <li>Meet the <strong>Aarogyamithra</strong> (help desk) at the hospital and register.</li>
+          <li>Carry your <strong>white ration card or health card</strong>, Aadhaar and any medical records.</li>
+          <li>After pre-authorisation, treatment is given without you paying for covered procedures.</li>
+        </ol>
+        <div class="note">You should not be asked to pay for a covered procedure at a network hospital. If you are, call <strong>104</strong> to complain.</div>
+
+        <div class="official">
+          <strong>Official website:</strong> <a href="https://www.rajivaarogyasri.telangana.gov.in" target="_blank" rel="noopener">rajivaarogyasri.telangana.gov.in</a><br>
+          <strong>Toll-free (24×7, Telugu &amp; English):</strong> 104
+        </div>
+''',
+    faqs=[
+        ("How much cover does Rajiv Aarogyasri give?", "Up to ₹10 lakh per family per year for listed procedures."),
+        ("How many procedures are covered under Aarogyasri?", "1,835 procedures, after 163 new ones were added in July 2024."),
+        ("Who is eligible for Aarogyasri in Telangana?", "BPL families with a valid white ration card (including Annapurna and Antyodaya cards) or an Aarogyasri health card."),
+        ("How do I use Aarogyasri at a hospital?", "Go to a network hospital and register with the Aarogyamithra help desk, carrying your white ration card or health card and Aadhaar."),
+        ("What is the Aarogyasri helpline number?", "Toll-free 104, available round the clock in Telugu and English."),
+    ],
+    sources=[
+        ("Aarogyasri Health Care Trust: FAQs", "http://www.aarogyasri.telangana.gov.in/faqs"),
+        ("Suryapet district (telangana.gov.in): Arogya Sri", "https://suryapet.telangana.gov.in/arogya-sri/"),
+        ("Telangana Today: 163 new procedures included in Rajiv Aarogyasri (July 2024)", "https://telanganatoday.com/telangana-163-new-procedures-included-in-rajiv-aarogyasri-scheme"),
     ]))
 
 # ---- state hub pages
