@@ -36,6 +36,7 @@ def nav(active=""):
       </a>
       <ul>
         {li("/schemes/", "Schemes", "schemes")}
+        {li("/tools/", "Tools", "tools")}
         {li("/#products", "Products", "products", "hide-sm")}
         {li("/about/", "About", "about", "hide-sm")}
         {li("/contact/", "Contact", "contact")}
@@ -49,6 +50,7 @@ FOOTER = '''
         <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
         <ul>
           <li><a href="/schemes/">Schemes</a></li>
+          <li><a href="/tools/">Tools</a></li>
           <li><a href="/about/">About</a></li>
           <li><a href="/contact/">Contact</a></li>
           <li><a href="/privacy-policy/">Privacy Policy</a></li>

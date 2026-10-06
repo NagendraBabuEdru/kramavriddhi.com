@@ -148,3 +148,17 @@ footer.site .disclaimer { margin-top: 18px; font-size: 0.82rem; max-width: 760px
   .about-grid { grid-template-columns: 1fr; }
   .hero { padding: 40px 0 56px; }
 }
+
+/* Calculators */
+.calc { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin: 28px 0 16px; }
+.calc label { display: flex; flex-direction: column; justify-content: space-between; gap: 6px; font-weight: 600; font-size: 0.92rem; }
+.calc input, .calc select { padding: 11px 12px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; font-weight: 400; font-size: 1rem; }
+.calc input:focus, .calc select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.result { background: var(--accent-soft); border-radius: 14px; padding: 20px 22px; margin-bottom: 24px; }
+.result .big { font-family: "Fraunces", Georgia, serif; font-size: 2.2rem; color: var(--accent); line-height: 1.1; margin-bottom: 8px; }
+.result .big small { font-family: "Inter", system-ui, sans-serif; font-size: 1rem; color: var(--muted); }
+.result ul { margin: 8px 0 0; }
+table.simple tr.hl td { background: var(--accent-soft); font-weight: 600; }
+.cta { display: flex; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; margin: 20px 0; text-decoration: none; }
+.cta:hover { border-color: var(--accent); }
+.cta span { font-size: 1.5rem; }

@@ -29,6 +29,28 @@ html = head("Kramavriddhi — Government schemes explained, step by step",
 ''' + cards + '''      </div>
     </section>
 
+    <section id="tools">
+      <div class="section-head">
+        <h2>Free calculators</h2>
+        <p>Plan your pension and savings in seconds.</p>
+        <a class="more" href="/tools/">See all tools →</a>
+      </div>
+      <div class="grid">
+        <a class="card" href="/tools/atal-pension-calculator/">
+          <div class="icon" aria-hidden="true">👴</div>
+          <h3>Atal Pension Calculator</h3>
+          <p>Your monthly contribution for a ₹1,000 to ₹5,000 pension, by age.</p>
+          <span class="tag">Calculator</span>
+        </a>
+        <a class="card" href="/tools/sukanya-samriddhi-calculator/">
+          <div class="icon" aria-hidden="true">👧</div>
+          <h3>Sukanya Samriddhi Calculator</h3>
+          <p>How much your daughter's SSY account could grow to by maturity.</p>
+          <span class="tag">Calculator</span>
+        </a>
+      </div>
+    </section>
+
 ''' + products + "\n" + approach + '''
     <section id="about">
       <div class="about-grid">

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sukanya Samriddhi Yojana Calculator: Maturity Amount | Kramavriddhi</title>
+  <meta name="description" content="SSY calculator: enter your yearly deposit to see the maturity amount, total interest and year-by-year growth of a Sukanya Samriddhi account at the current 8.2% rate.">
+  <link rel="canonical" href="https://kramavriddhi.com/tools/sukanya-samriddhi-calculator/">
+  <meta property="og:title" content="Sukanya Samriddhi Yojana Calculator: Maturity Amount | Kramavriddhi">
+  <meta property="og:description" content="SSY calculator: enter your yearly deposit to see the maturity amount, total interest and year-by-year growth of a Sukanya Samriddhi account at the current 8.2% rate.">
+  <meta property="og:url" content="https://kramavriddhi.com/tools/sukanya-samriddhi-calculator/">
+  <meta property="og:site_name" content="Kramavriddhi">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top">
+      <a class="brand" href="/">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Kramavriddhi
+      </a>
+      <ul>
+        <li><a href="/schemes/">Schemes</a></li>
+        <li><a href="/tools/" aria-current="page">Tools</a></li>
+        <li class="hide-sm"><a href="/#products">Products</a></li>
+        <li class="hide-sm"><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="narrow">
+      <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Sukanya Samriddhi Calculator</p>
+      <article>
+        <div class="eyebrow">👧 Calculator</div>
+        <h1>Sukanya Samriddhi Yojana Calculator</h1>
+        <p class="lede">See how much a Sukanya Samriddhi account could grow to when it matures after 21 years.</p>
+
+        <div class="calc">
+          <label>Yearly deposit (₹250 to ₹1,50,000)
+            <input type="number" id="dep" min="250" max="150000" step="50" value="60000" inputmode="numeric">
+          </label>
+          <label>Year you open the account
+            <input type="number" id="start" min="2015" max="2040" value="2026" inputmode="numeric">
+          </label>
+          <label>Interest rate (% per year)
+            <input type="number" id="rate" min="1" max="15" step="0.1" value="8.2" inputmode="decimal">
+          </label>
+        </div>
+        <p class="muted" style="font-size:0.9rem">8.2% is the official rate for October–December 2026. The government reviews it every quarter.</p>
+
+        <div class="result" id="result" aria-live="polite"></div>
+
+        <details>
+          <summary>Show year-by-year growth</summary>
+          <div class="table-wrap"><table class="simple" id="years"></table></div>
+        </details>
+
+        <div class="note">This is an estimate. It assumes you deposit the same amount at the start of every financial year for 15 years and that the interest rate stays the same for all 21 years. The real amount will change with future interest rates and the timing of your deposits. Interest and maturity amount are tax-free.</div>
+        <p>New to SSY? Read our <a href="/schemes/sukanya-samriddhi-yojana/">Sukanya Samriddhi Yojana guide</a>.</p>
+      </article>
+    </div>
+    <script>
+      (function () {
+        var dep = document.getElementById('dep'), start = document.getElementById('start'), rate = document.getElementById('rate');
+        var out = document.getElementById('result'), yrs = document.getElementById('years');
+        function inr(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+        function render() {
+          var d = parseFloat(dep.value), r = parseFloat(rate.value) / 100, s = parseInt(start.value, 10);
+          if (isNaN(d) || d < 250 || d > 150000) {
+            out.innerHTML = '<strong>Enter a yearly deposit between ₹250 and ₹1,50,000.</strong>';
+            yrs.innerHTML = ''; return;
+          }
+          if (isNaN(r) || r <= 0 || isNaN(s)) { out.innerHTML = '<strong>Check the year and interest rate.</strong>'; yrs.innerHTML = ''; return; }
+          var bal = 0, paid = 0, rows = '<tr><th>Year</th><th>Deposit</th><th>Interest</th><th>Balance</th></tr>';
+          for (var y = 0; y < 21; y++) {
+            var add = y < 15 ? d : 0; bal += add; paid += add;
+            var intr = bal * r; bal += intr;
+            rows += '<tr><td>' + (y + 1) + ' (' + (s + y) + '-' + String(s + y + 1).slice(2) + ')</td><td>' + (add ? inr(add) : '—') + '</td><td>' + inr(intr) + '</td><td>' + inr(bal) + '</td></tr>';
+          }
+          out.innerHTML =
+            '<div class="big">' + inr(bal) + ' <small>at maturity</small></div>' +
+            '<ul><li>You deposit: <strong>' + inr(paid) + '</strong> over 15 years</li>' +
+            '<li>Interest earned: <strong>' + inr(bal - paid) + '</strong></li>' +
+            '<li>Account matures in: <strong>' + (s + 21) + '</strong></li></ul>';
+          yrs.innerHTML = rows;
+        }
+        [dep, start, rate].forEach(function (el) { el.addEventListener('input', render); });
+        render();
+      })();
+    </script>
+
+    <footer class="site">
+      <div class="cols">
+        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <ul>
+          <li><a href="/schemes/">Schemes</a></li>
+          <li><a href="/tools/">Tools</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/disclaimer/">Disclaimer</a></li>
+        </ul>
+      </div>
+      <p class="disclaimer">Kramavriddhi is an independent information website. It is not a government website and is not affiliated with the Government of India or any state government. Always confirm details on the official portal before applying.</p>
+    </footer>
+  </div>
+</body>
+</html>

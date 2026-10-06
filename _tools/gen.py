@@ -388,6 +388,8 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </div>
         <p class="muted" style="font-size:0.9rem">This is only an illustration. The real amount depends on future interest rates, which change every quarter, and on when you deposit.</p>
 
+        <a class="cta" href="/tools/sukanya-samriddhi-calculator/"><span>🧮</span><div><strong>Sukanya Samriddhi Calculator</strong><br><span class="muted" style="font-size:0.9rem">Try your own yearly amount and see the year-by-year growth.</span></div></a>
+
         <h2>Withdrawal and closure</h2>
         <ul>
           <li><strong>For education:</strong> up to 50% of the balance (as at the end of the previous financial year) can be withdrawn once the girl turns 18 or passes Class 10, whichever is earlier. It can be taken in one go or yearly, for up to five years.</li>
@@ -718,6 +720,8 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </div>
         <p>You can also pay quarterly or half-yearly. The full chart for every age from 18 to 40 is in the official scheme document linked below.</p>
 
+        <a class="cta" href="/tools/atal-pension-calculator/"><span>🧮</span><div><strong>Atal Pension Calculator</strong><br><span class="muted" style="font-size:0.9rem">Enter your age and see your exact monthly, quarterly or half-yearly amount.</span></div></a>
+
         <h2>How payment works</h2>
         <ul>
           <li>Contributions are taken by <strong>auto-debit</strong> from your savings account (monthly, quarterly or half-yearly).</li>
@@ -988,6 +992,223 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Jan Suraksha portal", "https://jansuraksha.gov.in"),
     ]))
 
+# ---------------------------------------------------------------- tools
+# Official APY monthly contribution chart (jansuraksha.gov.in APY.pdf, Annex-1)
+# entry age: [[monthly, quarterly, half-yearly] for ₹1000, ₹2000, ₹3000, ₹4000, ₹5000]
+APY_CHART = {
+    18: [[42, 125, 248], [84, 250, 496], [126, 376, 744], [168, 501, 991], [210, 626, 1239]],
+    19: [[46, 137, 271], [92, 274, 543], [138, 411, 814], [183, 545, 1080], [228, 679, 1346]],
+    20: [[50, 149, 295], [100, 298, 590], [150, 447, 885], [198, 590, 1169], [248, 739, 1464]],
+    21: [[54, 161, 319], [108, 322, 637], [162, 483, 956], [215, 641, 1269], [269, 802, 1588]],
+    22: [[59, 176, 348], [117, 349, 690], [177, 527, 1045], [234, 697, 1381], [292, 870, 1723]],
+    23: [[64, 191, 378], [127, 378, 749], [192, 572, 1133], [254, 757, 1499], [318, 948, 1877]],
+    24: [[70, 209, 413], [139, 414, 820], [208, 620, 1228], [277, 826, 1635], [346, 1031, 2042]],
+    25: [[76, 226, 449], [151, 450, 891], [226, 674, 1334], [301, 897, 1776], [376, 1121, 2219]],
+    26: [[82, 244, 484], [164, 489, 968], [246, 733, 1452], [327, 975, 1930], [409, 1219, 2414]],
+    27: [[90, 268, 531], [178, 530, 1050], [268, 799, 1582], [356, 1061, 2101], [446, 1329, 2632]],
+    28: [[97, 289, 572], [194, 578, 1145], [292, 870, 1723], [388, 1156, 2290], [485, 1445, 2862]],
+    29: [[106, 316, 626], [212, 632, 1251], [318, 948, 1877], [423, 1261, 2496], [529, 1577, 3122]],
+    30: [[116, 346, 685], [231, 688, 1363], [347, 1034, 2048], [462, 1377, 2727], [577, 1720, 3405]],
+    31: [[126, 376, 744], [252, 751, 1487], [379, 1129, 2237], [504, 1502, 2974], [630, 1878, 3718]],
+    32: [[138, 411, 814], [276, 823, 1629], [414, 1234, 2443], [551, 1642, 3252], [689, 2053, 4066]],
+    33: [[151, 450, 891], [302, 900, 1782], [453, 1350, 2673], [602, 1794, 3553], [752, 2241, 4438]],
+    34: [[165, 492, 974], [330, 983, 1948], [495, 1475, 2921], [659, 1964, 3889], [824, 2456, 4863]],
+    35: [[181, 539, 1068], [362, 1079, 2136], [543, 1618, 3205], [722, 2152, 4261], [902, 2688, 5323]],
+    36: [[198, 590, 1169], [396, 1180, 2337], [594, 1770, 3506], [792, 2360, 4674], [990, 2950, 5843]],
+    37: [[218, 650, 1287], [436, 1299, 2573], [654, 1949, 3860], [870, 2593, 5134], [1087, 3239, 6415]],
+    38: [[240, 715, 1416], [480, 1430, 2833], [720, 2146, 4249], [957, 2852, 5648], [1196, 3564, 7058]],
+    39: [[264, 787, 1558], [528, 1574, 3116], [792, 2360, 4674], [1054, 3141, 6220], [1318, 3928, 7778]],
+    40: [[291, 867, 1717], [582, 1734, 3435], [873, 2602, 5152], [1164, 3469, 6869], [1454, 4333, 8581]],
+}
+
+TOOLS = [
+    dict(slug="atal-pension-calculator", name="Atal Pension Yojana Calculator", icon="👴",
+         summary="Enter your age and see how much you need to pay each month for a ₹1,000 to ₹5,000 pension."),
+    dict(slug="sukanya-samriddhi-calculator", name="Sukanya Samriddhi Calculator", icon="👧",
+         summary="See how much your daughter's SSY account could grow to by maturity, year by year."),
+]
+
+def tool_card(t):
+    return f'''        <a class="card" href="/tools/{t["slug"]}/">
+          <div class="icon" aria-hidden="true">{t["icon"]}</div>
+          <h3>{t["name"]}</h3>
+          <p>{t["summary"]}</p>
+          <span class="tag">Calculator</span>
+        </a>
+'''
+
+write("tools/index.html",
+    head("Free Calculators for Government Schemes | Kramavriddhi",
+         "Free, simple calculators for Indian government schemes: Atal Pension Yojana contribution and Sukanya Samriddhi maturity.",
+         "/tools/")
+    + nav("tools") + f'''
+    <header class="page-head">
+      <div class="eyebrow">Tools</div>
+      <h1>Simple calculators</h1>
+      <p>Free tools to plan your savings and pension under government schemes. Nothing you enter leaves your device.</p>
+    </header>
+    <div class="grid">
+{"".join(tool_card(t) for t in TOOLS)}    </div>
+    <p class="soon-list"><strong>Coming soon:</strong> PMJJBY premium checker, PM-KISAN instalment tracker, home-loan subsidy (PMAY) estimator.</p>
+    <div style="height:48px"></div>
+''' + FOOTER)
+
+# ---- APY calculator
+apy_rows = "\n".join(
+    f'          <tr><td>{a}</td>' + "".join(f"<td>₹{v[0]:,}</td>" for v in vals) + "</tr>" for a, vals in APY_CHART.items())
+write("tools/atal-pension-calculator/index.html",
+    head("Atal Pension Yojana Calculator: Monthly Contribution by Age | Kramavriddhi",
+         "APY calculator: enter your age to see the monthly, quarterly and half-yearly contribution for a ₹1,000 to ₹5,000 pension, based on the official chart.",
+         "/tools/atal-pension-calculator/")
+    + nav("tools") + f'''
+    <div class="narrow">
+      <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Atal Pension Calculator</p>
+      <article>
+        <div class="eyebrow">👴 Calculator</div>
+        <h1>Atal Pension Yojana Calculator</h1>
+        <p class="lede">Find out how much you need to pay to get a guaranteed pension of ₹1,000 to ₹5,000 a month after 60. Based on the official APY contribution chart.</p>
+
+        <div class="calc">
+          <label>Your age today
+            <input type="number" id="age" min="18" max="40" value="25" inputmode="numeric">
+          </label>
+          <label>Pension you want after 60
+            <select id="pension">
+              <option value="0">₹1,000 / month</option>
+              <option value="1">₹2,000 / month</option>
+              <option value="2">₹3,000 / month</option>
+              <option value="3">₹4,000 / month</option>
+              <option value="4" selected>₹5,000 / month</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="result" id="result" aria-live="polite"></div>
+
+        <h2>All pension options for your age</h2>
+        <div class="table-wrap">
+        <table class="simple" id="compare"></table>
+        </div>
+
+        <h2>Full official chart (monthly contribution)</h2>
+        <details>
+          <summary>Show chart for ages 18 to 40</summary>
+          <div class="table-wrap">
+          <table class="simple">
+            <tr><th>Age</th><th>₹1,000</th><th>₹2,000</th><th>₹3,000</th><th>₹4,000</th><th>₹5,000</th></tr>
+{apy_rows}
+          </table>
+          </div>
+        </details>
+
+        <div class="note">This calculator uses the official monthly contribution chart. The pension amount is guaranteed by the Central Government. Income-tax payers cannot join APY from 1 October 2022.</div>
+        <p>Want to know more about the scheme? Read our <a href="/schemes/atal-pension-yojana/">Atal Pension Yojana guide</a>.</p>
+      </article>
+    </div>
+    <script>
+      (function () {{
+        var CHART = {json.dumps(APY_CHART)};
+        var PENSIONS = [1000, 2000, 3000, 4000, 5000];
+        var CORPUS = ["₹1.7 lakh", "₹3.4 lakh", "₹5.1 lakh", "₹6.8 lakh", "₹8.5 lakh"];
+        var ageEl = document.getElementById('age'), penEl = document.getElementById('pension');
+        var out = document.getElementById('result'), cmp = document.getElementById('compare');
+        function inr(n) {{ return '₹' + Math.round(n).toLocaleString('en-IN'); }}
+        function render() {{
+          var age = parseInt(ageEl.value, 10);
+          if (isNaN(age) || age < 18 || age > 40) {{
+            out.innerHTML = '<strong>Enter an age between 18 and 40.</strong> APY can only be joined in this age range.';
+            cmp.innerHTML = '';
+            return;
+          }}
+          var i = parseInt(penEl.value, 10), m = CHART[age][i][0], years = 60 - age;
+          out.innerHTML =
+            '<div class="big">' + inr(m) + ' <small>per month</small></div>' +
+            '<p>Pay this every month for <strong>' + years + ' years</strong> (age ' + age + ' to 60) to get <strong>' + inr(PENSIONS[i]) + ' a month</strong> for life.</p>' +
+            '<ul><li>Total you pay: about <strong>' + inr(m * 12 * years) + '</strong></li>' +
+            '<li>Your spouse gets the same pension after you.</li>' +
+            '<li>After both of you, your nominee gets <strong>' + CORPUS[i] + '</strong>.</li></ul>';
+          var h = '<tr><th>Pension</th><th>Monthly</th><th>Quarterly</th><th>Half-yearly</th></tr>';
+          for (var k = 0; k < 5; k++) {{
+            var v = CHART[age][k];
+            h += '<tr' + (k === i ? ' class="hl"' : '') + '><td>' + inr(PENSIONS[k]) + '</td><td>' + inr(v[0]) + '</td><td>' + inr(v[1]) + '</td><td>' + inr(v[2]) + '</td></tr>';
+          }}
+          cmp.innerHTML = h;
+        }}
+        ageEl.addEventListener('input', render);
+        penEl.addEventListener('change', render);
+        render();
+      }})();
+    </script>
+''' + FOOTER)
+
+# ---- SSY calculator
+write("tools/sukanya-samriddhi-calculator/index.html",
+    head("Sukanya Samriddhi Yojana Calculator: Maturity Amount | Kramavriddhi",
+         "SSY calculator: enter your yearly deposit to see the maturity amount, total interest and year-by-year growth of a Sukanya Samriddhi account at the current 8.2% rate.",
+         "/tools/sukanya-samriddhi-calculator/")
+    + nav("tools") + '''
+    <div class="narrow">
+      <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Sukanya Samriddhi Calculator</p>
+      <article>
+        <div class="eyebrow">👧 Calculator</div>
+        <h1>Sukanya Samriddhi Yojana Calculator</h1>
+        <p class="lede">See how much a Sukanya Samriddhi account could grow to when it matures after 21 years.</p>
+
+        <div class="calc">
+          <label>Yearly deposit (₹250 to ₹1,50,000)
+            <input type="number" id="dep" min="250" max="150000" step="50" value="60000" inputmode="numeric">
+          </label>
+          <label>Year you open the account
+            <input type="number" id="start" min="2015" max="2040" value="2026" inputmode="numeric">
+          </label>
+          <label>Interest rate (% per year)
+            <input type="number" id="rate" min="1" max="15" step="0.1" value="8.2" inputmode="decimal">
+          </label>
+        </div>
+        <p class="muted" style="font-size:0.9rem">8.2% is the official rate for October–December 2026. The government reviews it every quarter.</p>
+
+        <div class="result" id="result" aria-live="polite"></div>
+
+        <details>
+          <summary>Show year-by-year growth</summary>
+          <div class="table-wrap"><table class="simple" id="years"></table></div>
+        </details>
+
+        <div class="note">This is an estimate. It assumes you deposit the same amount at the start of every financial year for 15 years and that the interest rate stays the same for all 21 years. The real amount will change with future interest rates and the timing of your deposits. Interest and maturity amount are tax-free.</div>
+        <p>New to SSY? Read our <a href="/schemes/sukanya-samriddhi-yojana/">Sukanya Samriddhi Yojana guide</a>.</p>
+      </article>
+    </div>
+    <script>
+      (function () {
+        var dep = document.getElementById('dep'), start = document.getElementById('start'), rate = document.getElementById('rate');
+        var out = document.getElementById('result'), yrs = document.getElementById('years');
+        function inr(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+        function render() {
+          var d = parseFloat(dep.value), r = parseFloat(rate.value) / 100, s = parseInt(start.value, 10);
+          if (isNaN(d) || d < 250 || d > 150000) {
+            out.innerHTML = '<strong>Enter a yearly deposit between ₹250 and ₹1,50,000.</strong>';
+            yrs.innerHTML = ''; return;
+          }
+          if (isNaN(r) || r <= 0 || isNaN(s)) { out.innerHTML = '<strong>Check the year and interest rate.</strong>'; yrs.innerHTML = ''; return; }
+          var bal = 0, paid = 0, rows = '<tr><th>Year</th><th>Deposit</th><th>Interest</th><th>Balance</th></tr>';
+          for (var y = 0; y < 21; y++) {
+            var add = y < 15 ? d : 0; bal += add; paid += add;
+            var intr = bal * r; bal += intr;
+            rows += '<tr><td>' + (y + 1) + ' (' + (s + y) + '-' + String(s + y + 1).slice(2) + ')</td><td>' + (add ? inr(add) : '—') + '</td><td>' + inr(intr) + '</td><td>' + inr(bal) + '</td></tr>';
+          }
+          out.innerHTML =
+            '<div class="big">' + inr(bal) + ' <small>at maturity</small></div>' +
+            '<ul><li>You deposit: <strong>' + inr(paid) + '</strong> over 15 years</li>' +
+            '<li>Interest earned: <strong>' + inr(bal - paid) + '</strong></li>' +
+            '<li>Account matures in: <strong>' + (s + 21) + '</strong></li></ul>';
+          yrs.innerHTML = rows;
+        }
+        [dep, start, rate].forEach(function (el) { el.addEventListener('input', render); });
+        render();
+      })();
+    </script>
+''' + FOOTER)
+
 # ---------------------------------------------------------------- simple pages
 def simple(path, title, desc, active, h1, eyebrow, body):
     write(path.strip("/") + "/index.html", head(f"{title} | Kramavriddhi", desc, path) + nav(active) + f'''
@@ -1083,7 +1304,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/schemes/"] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/schemes/"] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
