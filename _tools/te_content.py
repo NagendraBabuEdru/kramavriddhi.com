@@ -233,3 +233,7 @@ TE["ts-mahalakshmi"] = dict(
         ("ఇతర రాష్ట్రాల మహిళలు తెలంగాణ బస్సుల్లో ఉచితంగా ప్రయాణించవచ్చా?", "లేదు. ఉచిత ప్రయాణం తెలంగాణ నివాసితులైన మహిళలకు మాత్రమే."),
     ],
 )
+
+# Batch 2: remaining state guides
+from te_content2 import TE2
+TE.update(TE2)
