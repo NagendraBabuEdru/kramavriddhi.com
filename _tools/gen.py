@@ -155,7 +155,7 @@ write("schemes/index.html",
       <div class="eyebrow">Government schemes</div>
       <h1>Government schemes, explained simply</h1>
       <p>Clear guides to central schemes and Andhra Pradesh and Telangana state schemes: who can apply, what you get, which documents you need, and how to apply on the official portal.</p>
-      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a></p>
+      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a> &nbsp;·&nbsp; <a href="/updates/">⏰ Latest updates &amp; deadlines →</a></p>
     </header>
 
     <div class="filters" role="group" aria-label="Filter by government">
@@ -3019,6 +3019,84 @@ write("games/index.html",
     <div style="height:40px"></div>
 """ + FOOTER)
 
+# ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
+# Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
+UPDATES = [
+    dict(kind="deadline", date="8 Oct 2026", until="2026-10-31",
+         title="Pragati Scholarship for girls: apply by 31 October",
+         text="Girls in AICTE degree and diploma courses can get ₹50,000 a year. 2026-27 applications on the National Scholarship Portal close on 31 October 2026.",
+         link="/schemes/aicte-pragati-scholarship/"),
+    dict(kind="expected", date="8 Oct 2026",
+         title="PM-KISAN 24th instalment expected in October–November",
+         text="No official date yet. The '20 October' date on social media is not confirmed. Make sure your eKYC, land seeding and Aadhaar bank link are done.",
+         link="/schemes/pm-kisan/"),
+    dict(kind="expected", date="8 Oct 2026",
+         title="Annadata Sukhibhava 2nd instalment expected around November",
+         text="AP farmers should get ₹7,000 (₹5,000 state + ₹2,000 PM-KISAN). The date is not announced yet.",
+         link="/schemes/ap-annadata-sukhibhava/"),
+    dict(kind="deadline", date="8 Oct 2026", until="2026-11-30",
+         title="Deepam-2: book your free gas cylinder by 30 November",
+         text="AP families are in the August–November period. An unused free cylinder does not carry over to the next period.",
+         link="/schemes/ap-deepam-2/"),
+    dict(kind="rate", date="1 Oct 2026",
+         title="Sukanya Samriddhi interest stays at 8.2% for Oct–Dec 2026",
+         text="The rate is reviewed every quarter. The next announcement is expected at the end of December.",
+         link="/schemes/sukanya-samriddhi-yojana/"),
+    dict(kind="news", date="31 Jul 2026",
+         title="PM-KISAN continued until 2030-31",
+         text="The Union Cabinet approved continuing PM-KISAN from 2026-27 to 2030-31 with ₹3.15 lakh crore.",
+         link="/schemes/pm-kisan/"),
+    dict(kind="news", date="8 May 2026",
+         title="Telangana: interest-free SHG loans raised to ₹10 lakh",
+         text="Under Indira Mahila Shakti, the government now pays interest on SHG bank loans up to ₹10 lakh (earlier ₹5 lakh).",
+         link="/schemes/ts-indira-mahila-shakti/"),
+    dict(kind="news", date="22 Apr 2026",
+         title="PM Internship: final-year students can now apply",
+         text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
+         link="/schemes/pm-internship-scheme/"),
+]
+KIND_LABEL = {"deadline": "⏰ Deadline", "expected": "📅 Expected", "news": "📰 News", "rate": "📈 Rate"}
+
+def update_item(u):
+    until = f' data-until="{u["until"]}"' if u.get("until") else ""
+    return f"""        <a class="update {u["kind"]}" href="{u["link"]}"{until}>
+          <div class="update-top"><span class="update-kind">{KIND_LABEL[u["kind"]]}</span><span class="update-date">{u["date"]}</span></div>
+          <h3>{u["title"]}</h3>
+          <p>{u["text"]}</p>
+        </a>
+"""
+
+UPDATES_JS = """
+    <script>
+      (function () {
+        var today = new Date().toISOString().slice(0, 10);
+        document.querySelectorAll('.update[data-until]').forEach(function (el) {
+          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = '✔ Closed'; }
+        });
+      })();
+    </script>
+"""
+
+write("updates/index.html",
+    head("Latest Scheme Updates, Deadlines & Instalment Dates | Kramavriddhi",
+         "Latest government scheme news: application deadlines, expected instalment dates, interest rate changes and new rules for central, Andhra Pradesh and Telangana schemes.",
+         "/updates/")
+    + nav("schemes") + f"""
+    <header class="page-head">
+      <div class="eyebrow">Updates</div>
+      <h1>Latest updates &amp; deadlines</h1>
+      <p>Important dates, expected payments and new rules for the schemes on Kramavriddhi. We check official sources regularly and update this page.</p>
+      <p class="muted" style="font-size:0.9rem">Last checked: 8 October 2026</p>
+    </header>
+    <div class="updates">
+{"".join(update_item(u) for u in UPDATES)}    </div>
+    <div class="note" style="margin-top:28px">Dates marked "Expected" are based on past patterns and news reports, not official announcements. Always confirm on the official portal linked in each guide.</div>
+    <div style="height:40px"></div>
+{UPDATES_JS}""" + FOOTER)
+
+with open(os.path.join(os.path.dirname(__file__), "home_updates.html"), "w", encoding="utf-8") as f:
+    f.write("".join(update_item(u) for u in UPDATES[:4]) + "    </div>\n" + UPDATES_JS)
+
 # ---------------------------------------------------------------- simple pages
 def simple(path, title, desc, active, h1, eyebrow, body):
     write(path.strip("/") + "/index.html", head(f"{title} | Kramavriddhi", desc, path) + nav(active) + f'''
@@ -3114,7 +3192,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")

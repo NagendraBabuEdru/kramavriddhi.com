@@ -5,6 +5,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 old = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
 products = re.search(r'(    <section id="products">.*?</section>\n)', old, re.S).group(1)
 approach = re.search(r'(    <section id="approach">.*?</section>\n)', old, re.S).group(1)
+updates = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "home_updates.html"), encoding="utf-8").read()
 cards = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "home_cards.html"), encoding="utf-8").read()
 html = head("Kramavriddhi — Government schemes explained, step by step",
             "Kramavriddhi explains Indian government schemes in simple language: eligibility, benefits, documents and how to apply. Growth, step by step.",
@@ -18,6 +19,16 @@ html = head("Kramavriddhi — Government schemes explained, step by step",
         <a class="btn ghost" href="#products">Our products</a>
       </div>
     </header>
+
+    <section id="updates">
+      <div class="section-head">
+        <h2>Latest updates &amp; deadlines</h2>
+        <p>Don't miss important dates for scholarships, instalments and bookings.</p>
+        <a class="more" href="/updates/">See all updates →</a>
+      </div>
+      <div class="updates">
+''' + updates + '''
+    </section>
 
     <section id="schemes">
       <div class="section-head">

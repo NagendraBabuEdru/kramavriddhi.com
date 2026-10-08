@@ -202,3 +202,16 @@ html[lang="te"] body { line-height: 1.8; }
 
 /* Games */
 .game-art { width: 96px; height: 96px; border-radius: 22px; display: grid; place-items: center; font-size: 3.4rem; background: linear-gradient(135deg, #1f3d2b, #3f7a3a); }
+
+/* Updates & deadlines */
+.updates { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.update { display: flex; flex-direction: column; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px 18px; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+.update:hover { transform: translateY(-2px); border-color: var(--accent); }
+.update.deadline { border-left-color: #d97706; }
+.update.expected { border-left-color: #2563eb; }
+.update.rate { border-left-color: #7c3aed; }
+.update-top { display: flex; justify-content: space-between; gap: 8px; font-size: 0.8rem; color: var(--muted); }
+.update-kind { font-weight: 700; color: var(--text); }
+.update h3 { font-size: 1.02rem; line-height: 1.35; }
+.update p { color: var(--muted); font-size: 0.9rem; }
+.update.past { opacity: 0.55; }

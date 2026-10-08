@@ -1,0 +1,30 @@
+        <a class="update deadline" href="/schemes/aicte-pragati-scholarship/" data-until="2026-10-31">
+          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">8 Oct 2026</span></div>
+          <h3>Pragati Scholarship for girls: apply by 31 October</h3>
+          <p>Girls in AICTE degree and diploma courses can get ₹50,000 a year. 2026-27 applications on the National Scholarship Portal close on 31 October 2026.</p>
+        </a>
+        <a class="update expected" href="/schemes/pm-kisan/">
+          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">8 Oct 2026</span></div>
+          <h3>PM-KISAN 24th instalment expected in October–November</h3>
+          <p>No official date yet. The '20 October' date on social media is not confirmed. Make sure your eKYC, land seeding and Aadhaar bank link are done.</p>
+        </a>
+        <a class="update expected" href="/schemes/ap-annadata-sukhibhava/">
+          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">8 Oct 2026</span></div>
+          <h3>Annadata Sukhibhava 2nd instalment expected around November</h3>
+          <p>AP farmers should get ₹7,000 (₹5,000 state + ₹2,000 PM-KISAN). The date is not announced yet.</p>
+        </a>
+        <a class="update deadline" href="/schemes/ap-deepam-2/" data-until="2026-11-30">
+          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">8 Oct 2026</span></div>
+          <h3>Deepam-2: book your free gas cylinder by 30 November</h3>
+          <p>AP families are in the August–November period. An unused free cylinder does not carry over to the next period.</p>
+        </a>
+    </div>
+
+    <script>
+      (function () {
+        var today = new Date().toISOString().slice(0, 10);
+        document.querySelectorAll('.update[data-until]').forEach(function (el) {
+          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = '✔ Closed'; }
+        });
+      })();
+    </script>

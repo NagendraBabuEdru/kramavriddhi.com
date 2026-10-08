@@ -14,8 +14,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css">
-  <script src="/assets/site.js" defer></script>
+  <link rel="stylesheet" href="/assets/style.css?v=08203842">
+  <script src="/assets/site.js?v=08203842" defer></script>
 </head>
 <body>
   <div class="wrap">
@@ -42,6 +42,46 @@
         <a class="btn ghost" href="#products">Our products</a>
       </div>
     </header>
+
+    <section id="updates">
+      <div class="section-head">
+        <h2>Latest updates &amp; deadlines</h2>
+        <p>Don't miss important dates for scholarships, instalments and bookings.</p>
+        <a class="more" href="/updates/">See all updates →</a>
+      </div>
+      <div class="updates">
+        <a class="update deadline" href="/schemes/aicte-pragati-scholarship/" data-until="2026-10-31">
+          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">8 Oct 2026</span></div>
+          <h3>Pragati Scholarship for girls: apply by 31 October</h3>
+          <p>Girls in AICTE degree and diploma courses can get ₹50,000 a year. 2026-27 applications on the National Scholarship Portal close on 31 October 2026.</p>
+        </a>
+        <a class="update expected" href="/schemes/pm-kisan/">
+          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">8 Oct 2026</span></div>
+          <h3>PM-KISAN 24th instalment expected in October–November</h3>
+          <p>No official date yet. The '20 October' date on social media is not confirmed. Make sure your eKYC, land seeding and Aadhaar bank link are done.</p>
+        </a>
+        <a class="update expected" href="/schemes/ap-annadata-sukhibhava/">
+          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">8 Oct 2026</span></div>
+          <h3>Annadata Sukhibhava 2nd instalment expected around November</h3>
+          <p>AP farmers should get ₹7,000 (₹5,000 state + ₹2,000 PM-KISAN). The date is not announced yet.</p>
+        </a>
+        <a class="update deadline" href="/schemes/ap-deepam-2/" data-until="2026-11-30">
+          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">8 Oct 2026</span></div>
+          <h3>Deepam-2: book your free gas cylinder by 30 November</h3>
+          <p>AP families are in the August–November period. An unused free cylinder does not carry over to the next period.</p>
+        </a>
+    </div>
+
+    <script>
+      (function () {
+        var today = new Date().toISOString().slice(0, 10);
+        document.querySelectorAll('.update[data-until]').forEach(function (el) {
+          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = '✔ Closed'; }
+        });
+      })();
+    </script>
+
+    </section>
 
     <section id="schemes">
       <div class="section-head">
@@ -227,6 +267,7 @@
         <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
         <ul>
           <li><a href="/schemes/">Schemes</a></li>
+          <li><a href="/updates/">Updates</a></li>
           <li><a href="/te/schemes/">తెలుగు</a></li>
           <li><a href="/tools/">Tools</a></li>
           <li><a href="/games/">Games</a></li>

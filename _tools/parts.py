@@ -2,6 +2,10 @@
 LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"
 
+import hashlib, os
+_ASSETS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets")
+ASSET_VERSION = hashlib.md5(b"".join(open(os.path.join(_ASSETS, n), "rb").read() for n in ("style.css", "site.js"))).hexdigest()[:8]
+
 FONTS = {
     "en": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600",
     "te": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&family=Noto+Sans+Telugu:wght@400;600;700",
@@ -29,8 +33,8 @@ def head(title, desc, path, extra="", lang="en", alternates=None):
   <link rel="icon" href="{FAVICON}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?{FONTS[lang]}&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css">
-  <script src="/assets/site.js" defer></script>{extra}
+  <link rel="stylesheet" href="/assets/style.css?v={ASSET_VERSION}">
+  <script src="/assets/site.js?v={ASSET_VERSION}" defer></script>{extra}
 </head>
 <body>
   <div class="wrap">
@@ -75,6 +79,7 @@ def footer(lang="en"):
         note = "క్రమవృద్ధి ఒక స్వతంత్ర సమాచార వెబ్‌సైట్. ఇది ప్రభుత్వ వెబ్‌సైట్ కాదు, భారత ప్రభుత్వం లేదా ఏ రాష్ట్ర ప్రభుత్వంతోనూ సంబంధం లేదు. దరఖాస్తు చేసే ముందు అధికారిక పోర్టల్‌లో వివరాలు తప్పకుండా సరిచూసుకోండి."
     else:
         links = '''          <li><a href="/schemes/">Schemes</a></li>
+          <li><a href="/updates/">Updates</a></li>
           <li><a href="/te/schemes/">తెలుగు</a></li>
           <li><a href="/tools/">Tools</a></li>
           <li><a href="/games/">Games</a></li>
