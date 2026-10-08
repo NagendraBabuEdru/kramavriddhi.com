@@ -90,6 +90,21 @@ SCHEMES = [
     dict(slug="ts-indira-mahila-shakti", name="Indira Mahila Shakti (Telangana)", short="Indira Mahila Shakti",
          state="ts", cat="business", cat_label="Business & Self-employment", icon="🏪",
          summary="Interest-free loans up to ₹10 lakh for SHGs, and women-run canteens, buses, petrol bunks and solar plants."),
+    dict(slug="pm-internship-scheme", name="PM Internship Scheme", short="PM Internship Scheme",
+         cat="jobs", cat_label="Jobs & Internships", icon="🧑‍💼",
+         summary="Paid internships in top companies for ages 18–25: at least ₹9,000 a month plus ₹6,000 one-time."),
+    dict(slug="pm-kaushal-vikas-yojana", name="PM Kaushal Vikas Yojana (PMKVY)", short="PM Kaushal Vikas Yojana",
+         cat="education", cat_label="Education & Skills", icon="🛠️",
+         summary="Free short skill-training courses with a government certificate, for anyone aged 15 to 59."),
+    dict(slug="agnipath-agniveer", name="Agnipath Scheme (Agniveer)", short="Agnipath / Agniveer",
+         cat="jobs", cat_label="Jobs & Internships", icon="🎖️",
+         summary="Four years in the Army, Navy or Air Force: ₹30,000–₹40,000 a month and about ₹11.71 lakh tax-free at exit."),
+    dict(slug="pm-vishwakarma", name="PM Vishwakarma", short="PM Vishwakarma",
+         cat="business", cat_label="Business & Self-employment", icon="🔨",
+         summary="For carpenters, tailors, barbers and other artisans: paid training, ₹15,000 toolkit and loans up to ₹3 lakh at 5%."),
+    dict(slug="ts-rajiv-yuva-vikasam", name="Rajiv Yuva Vikasam (Telangana)", short="Rajiv Yuva Vikasam",
+         state="ts", cat="business", cat_label="Business & Self-employment", icon="🚀",
+         summary="Announced ₹50,000–₹4 lakh self-employment support for SC/ST/BC/minority youth. Not yet implemented (2026)."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -102,6 +117,7 @@ CATEGORIES = [
     ("women", "👧 Women & Girls"),
     ("banking", "🏦 Banking"),
     ("education", "🎓 Education & Skills"),
+    ("jobs", "🧑‍💼 Jobs & Internships"),
 ]
 
 STATES = {
@@ -149,7 +165,8 @@ write("schemes/index.html",
 {chips}
     </div>
     <input class="search" type="search" placeholder="Search schemes…" aria-label="Search schemes">
-    <a class="cta" href="/schemes/for-women/" style="margin-top:-8px;margin-bottom:12px"><span>👩</span><div><strong>Schemes for girls &amp; women</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, business loans, SHG support and more, in one place.</span></div></a>
+    <a class="cta" href="/schemes/for-youth/" style="margin-top:-8px;margin-bottom:12px"><span>🧑‍💼</span><div><strong>Opportunities for youth</strong><br><span class="muted" style="font-size:0.9rem">Paid internships, Agniveer, free skill training and business loans.</span></div></a>
+    <a class="cta" href="/schemes/for-women/" style="margin-bottom:12px"><span>👩</span><div><strong>Schemes for girls &amp; women</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, business loans, SHG support and more, in one place.</span></div></a>
     <a class="cta" href="/tools/scheme-eligibility-checker/" style="margin-bottom:12px"><span>✅</span><div><strong>Not sure which schemes are for you?</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions and see the schemes that may suit you.</span></div></a>
     <a class="cta" href="/tools/" style="margin-bottom:28px"><span>🧮</span><div><strong>Free calculators</strong><br><span class="muted" style="font-size:0.9rem">Atal Pension contribution by age · Sukanya Samriddhi maturity amount</span></div></a>
 
@@ -2043,6 +2060,324 @@ write("schemes/for-women/index.html",
     + """    <div style="height:24px"></div>
 """ + FOOTER)
 
+# ---------------------------------------------------------------- youth batch (added 8 Oct 2026)
+
+# ---- PM Internship Scheme
+s = BY_SLUG["pm-internship-scheme"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="The PM Internship Scheme gives young people aged 18–25 paid internships in top companies across India. Interns get at least ₹9,000 a month plus a one-time grant of ₹6,000, and since April 2026 final-year degree students can apply too.",
+    description="PM Internship Scheme explained: ₹9,000 a month stipend, ₹6,000 one-time grant, age 18–25, who can apply, final-year students, how to apply on pminternship.mca.gov.in.",
+    facts=[("Stipend", "₹9,000+ / month"), ("One-time grant", "₹6,000"), ("Age", "18 – 25"), ("Family income", "Up to ₹8 lakh")],
+    body='''
+        <h2>What is the PM Internship Scheme?</h2>
+        <p>The Prime Minister Internship Scheme (PMIS), run by the Ministry of Corporate Affairs, started in October 2024 to give youth real work experience in leading companies. More than 300 companies have taken part, with internships across 25+ sectors in over 730 districts. The pilot phase is in its third round, and companies post new openings on an ongoing basis.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li>Monthly financial assistance of <strong>at least ₹9,000</strong> (shared by the government and the company).</li>
+          <li>A <strong>one-time grant of ₹6,000</strong> for incidental expenses.</li>
+          <li>Insurance cover during the internship.</li>
+          <li>Real work experience and a certificate from a well-known company.</li>
+        </ul>
+
+        <h2>Who can apply?</h2>
+        <ul>
+          <li>Indian citizens aged <strong>18 to 25</strong>.</li>
+          <li>Have passed Class 10, Class 12, ITI, a diploma or a degree.</li>
+          <li><strong>Not in a full-time job</strong> and not in a full-time regular course, <strong>except final-year UG and PG students</strong>, who can now apply with a No Objection Certificate (NOC) from their college.</li>
+          <li>Family income <strong>not more than ₹8 lakh a year</strong>.</li>
+          <li>No family member should be a permanent government employee.</li>
+          <li>Graduates of some top institutes and holders of certain professional qualifications are excluded. The portal shows the full list.</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Register on <a href="https://pminternship.mca.gov.in" target="_blank" rel="noopener">pminternship.mca.gov.in</a> with your mobile number and Aadhaar (eKYC). There is also an official PMIS mobile app.</li>
+          <li>The portal builds your resume from your details.</li>
+          <li>Browse internships by sector, location and qualification, and apply.</li>
+          <li>If you are a final-year student, upload the NOC signed by your HoD, Dean, Principal or Training &amp; Placement Officer.</li>
+          <li>Companies shortlist candidates, and you accept the offer on the portal.</li>
+        </ol>
+        <div class="note">Applying is free. There is no single last date: new internships open in rounds through the year, so check the portal regularly.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://pminternship.mca.gov.in" target="_blank" rel="noopener">pminternship.mca.gov.in</a> (Ministry of Corporate Affairs)
+        </div>
+''',
+    faqs=[
+        ("How much is the PM Internship Scheme stipend?", "At least ₹9,000 a month, plus a one-time grant of ₹6,000."),
+        ("What is the age limit for PM Internship?", "18 to 25 years."),
+        ("Can college students apply for the PM Internship Scheme?", "Final-year UG and PG students can apply since April 2026, with a No Objection Certificate from their college."),
+        ("Is there an income limit?", "Yes. Family income must not be more than ₹8 lakh a year, and no family member should be a permanent government employee."),
+        ("What is the last date for PM Internship?", "There is no single last date. Companies post internships in rounds, so keep checking pminternship.mca.gov.in."),
+    ],
+    sources=[
+        ("PIB: MCA expands PMIS eligibility to final-year students (22 Apr 2026)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2254498"),
+        ("PIB: A pathway to professional growth – PM's Internship Scheme", "https://www.pib.gov.in/PressNoteDetails.aspx?NoteId=153275&ModuleId=3"),
+        ("PM Internship Scheme portal", "https://pminternship.mca.gov.in"),
+    ]))
+
+# ---- PMKVY
+s = BY_SLUG["pm-kaushal-vikas-yojana"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Pradhan Mantri Kaushal Vikas Yojana (PMKVY) gives free, short skill-training courses with a government certificate, so young people can get jobs or start working on their own. Anyone aged 15 to 59 can join.",
+    description="PM Kaushal Vikas Yojana (PMKVY 4.0) explained: free skill training and certificate, age 15–59, courses, how to find a training centre on Skill India Digital Hub.",
+    facts=[("Training fee", "Free"), ("Age", "15 – 59"), ("Certificate", "Govt-recognised (NSQF)"), ("Trained in 2024-25", "20 lakh+")],
+    body='''
+        <h2>What is PMKVY?</h2>
+        <p>PMKVY is the Government of India's flagship skill-training scheme, run by the Ministry of Skill Development and Entrepreneurship. The current version, <strong>PMKVY 4.0</strong>, is part of the <strong>Skill India Programme</strong>, together with apprenticeships (PM-NAPS) and Jan Shikshan Sansthans. Over 20 lakh people were trained under PMKVY in 2024-25, and the Skill India Programme has ₹2,800 crore in the 2026-27 budget.</p>
+
+        <h2>What you get</h2>
+        <ul>
+          <li><strong>Free short-term training</strong> in job-ready skills, with on-the-job training built into many courses.</li>
+          <li>A <strong>government-recognised certificate</strong> (NSQF-aligned, QR-coded and digital) after you pass the assessment.</li>
+          <li><strong>Recognition of Prior Learning (RPL):</strong> if you already have skills, for example as an electrician or tailor, you can get them assessed and certified.</li>
+          <li>Guidance on jobs, apprenticeships or self-employment after training.</li>
+        </ul>
+
+        <h2>Popular course areas</h2>
+        <ul>
+          <li>Electronics, mobile repair, electrician, plumbing</li>
+          <li>IT, data entry, digital skills</li>
+          <li>Retail, logistics, hospitality, beauty and wellness</li>
+          <li>Healthcare support, tailoring and apparel</li>
+          <li>New areas like drones, solar, AI and EV technology</li>
+        </ul>
+
+        <h2>Who can join?</h2>
+        <ul>
+          <li>Indian citizens aged <strong>15 to 59</strong>.</li>
+          <li>School or college dropouts, unemployed youth and people who want to reskill can all join.</li>
+          <li>Aadhaar is needed for eKYC. Attendance is recorded with face authentication.</li>
+        </ul>
+
+        <h2>How to join</h2>
+        <ol>
+          <li>Go to the <a href="https://www.skillindiadigital.gov.in" target="_blank" rel="noopener">Skill India Digital Hub</a> and register with your mobile number and Aadhaar.</li>
+          <li>Search for courses and training centres near you.</li>
+          <li>Enrol in a batch at an accredited centre. Training is free under PMKVY.</li>
+          <li>Attend classes, complete the assessment and download your digital certificate.</li>
+        </ol>
+        <div class="note">PMKVY training is free. If a centre asks you to pay a "PMKVY fee," report it on the Skill India Digital Hub. PMKVY 4.0 runs under the Skill India Programme. A new version (PMKVY 5.0) is being discussed, and we will update this page when it is announced.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://www.skillindiadigital.gov.in" target="_blank" rel="noopener">skillindiadigital.gov.in</a> · <a href="https://www.msde.gov.in" target="_blank" rel="noopener">msde.gov.in</a>
+        </div>
+''',
+    faqs=[
+        ("Is PMKVY training free?", "Yes. Training under PMKVY is free, and you get a government-recognised certificate after passing the assessment."),
+        ("What is the age limit for PMKVY?", "15 to 59 years."),
+        ("How do I find a PMKVY training centre near me?", "Register on the Skill India Digital Hub (skillindiadigital.gov.in) and search for courses and centres in your area."),
+        ("Does PMKVY give a job?", "PMKVY gives skills and a certificate, and helps connect you to jobs and apprenticeships, but a job is not guaranteed."),
+        ("I already know a skill. Can I get certified?", "Yes. Under Recognition of Prior Learning (RPL), your existing skills can be assessed and certified."),
+    ],
+    sources=[
+        ("PIB: Restructuring of the Skill India Programme (Feb 2026)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2222122"),
+        ("PIB: 10 years of Pradhan Mantri Kaushal Vikas Yojana", "https://www.pib.gov.in/PressNoteDetails.aspx?NoteId=154880&ModuleId=3"),
+        ("MSDE: PMKVY 4.0 guidelines (PDF)", "https://www.msde.gov.in/static/uploads/2024/02/PMKVY-4.0-Guidelines_final-copy.pdf"),
+    ]))
+
+# ---- Agnipath
+s = BY_SLUG["agnipath-agniveer"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Under the Agnipath scheme, young men and women join the Army, Navy or Air Force as Agniveers for four years. They get a monthly salary of ₹30,000 to ₹40,000, about ₹11.71 lakh tax-free when they leave, and up to 25% are kept on as regular soldiers.",
+    description="Agnipath / Agniveer explained: age 17½–21, 4-year service, salary ₹30,000–₹40,000, Seva Nidhi ₹11.71 lakh, retention, insurance, how to apply for Army, Navy and Air Force.",
+    facts=[("Service", "4 years"), ("Age", "17½ – 21"), ("Salary", "₹30,000 – ₹40,000 / month"), ("Seva Nidhi", "About ₹11.71 lakh")],
+    body='''
+        <h2>What is Agnipath?</h2>
+        <p>Agnipath is the recruitment scheme for soldiers, sailors and airmen below officer rank in the Indian Army, Navy and Air Force, started in 2022. Recruits are called <strong>Agniveers</strong> and serve for <strong>four years</strong>, including training. The first batch completes its four years in 2026.</p>
+
+        <h2>Pay and benefits</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Year</th><th>Monthly package</th></tr>
+          <tr><td>1st year</td><td>₹30,000</td></tr>
+          <tr><td>2nd year</td><td>₹33,000</td></tr>
+          <tr><td>3rd year</td><td>₹36,500</td></tr>
+          <tr><td>4th year</td><td>₹40,000</td></tr>
+        </table>
+        </div>
+        <ul>
+          <li>30% of the monthly package goes into a <strong>Seva Nidhi</strong> fund, and the government adds an equal amount.</li>
+          <li>On leaving after four years, Agniveers get about <strong>₹11.71 lakh</strong> (with interest), <strong>tax-free</strong>. There is no pension.</li>
+          <li><strong>Life insurance</strong> cover during service, without paying a premium.</li>
+          <li>A skill certificate and credits that count toward further education.</li>
+        </ul>
+
+        <h2>After four years</h2>
+        <ul>
+          <li>Up to <strong>25%</strong> of each batch are selected to continue as regular soldiers. The armed forces have proposed raising this, and we will update this page if the rule changes.</li>
+          <li>Former Agniveers get reservation and age relaxation in recruitment to Central Armed Police Forces and some state police and government jobs.</li>
+        </ul>
+
+        <h2>Who can apply?</h2>
+        <ul>
+          <li>Age <strong>17½ to 21 years</strong> (relaxation is sometimes announced for a particular recruitment year).</li>
+          <li>Unmarried men and women (for posts open to women).</li>
+          <li>Education: Class 10 or Class 12, depending on the post (for example General Duty, Technical, Clerk, or Navy and Air Force trades), with the minimum marks given in each notification.</li>
+          <li>Must meet the medical and physical fitness standards of the service.</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Watch for the recruitment notification of the service you want.</li>
+          <li>Apply online on the official site: <a href="https://joinindianarmy.nic.in" target="_blank" rel="noopener">Army</a>, <a href="https://www.joinindiannavy.gov.in" target="_blank" rel="noopener">Navy</a> or <a href="https://agnipathvayu.cdac.in" target="_blank" rel="noopener">Air Force</a>.</li>
+          <li>Take the online common entrance exam.</li>
+          <li>Selected candidates go through physical tests, document checks and a medical exam.</li>
+        </ol>
+        <div class="note">Recruitment is free and based only on merit. Anyone promising selection for money is a fraud. Report them to the recruitment office.</div>
+
+        <div class="official">
+          <strong>Official sites:</strong> <a href="https://joinindianarmy.nic.in" target="_blank" rel="noopener">joinindianarmy.nic.in</a> · <a href="https://www.joinindiannavy.gov.in" target="_blank" rel="noopener">joinindiannavy.gov.in</a> · <a href="https://agnipathvayu.cdac.in" target="_blank" rel="noopener">agnipathvayu.cdac.in</a>
+        </div>
+''',
+    faqs=[
+        ("What is the Agniveer salary?", "₹30,000 a month in the first year, rising to ₹40,000 in the fourth year. Part of it goes into the Seva Nidhi fund."),
+        ("How much do Agniveers get after four years?", "About ₹11.71 lakh from the Seva Nidhi, tax-free. There is no pension."),
+        ("What is the age limit for Agniveer?", "17½ to 21 years, with relaxation sometimes announced for a particular year."),
+        ("How many Agniveers become permanent?", "Up to 25% of each batch are selected as regular soldiers. The armed forces have proposed increasing this."),
+        ("Can girls join as Agniveers?", "Yes, in posts that are open to women in the Army, Navy and Air Force."),
+    ],
+    sources=[
+        ("Indian Army: Join Indian Army", "https://joinindianarmy.nic.in"),
+        ("Vajiram & Ravi: Forces seek higher Agniveer retention (2026)", "https://vajiramandravi.com/current-affairs/agnipath-scheme-higher-retention-of-agniveers/"),
+    ]))
+
+# ---- PM Vishwakarma
+s = BY_SLUG["pm-vishwakarma"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Vishwakarma supports traditional artisans like carpenters, tailors, barbers, potters and goldsmiths. You get free training with ₹500 a day, ₹15,000 for modern tools, and cheap loans of up to ₹3 lakh at 5% interest without collateral.",
+    description="PM Vishwakarma explained: 18 trades, ₹15,000 toolkit, ₹500/day training stipend, collateral-free loans ₹1 lakh + ₹2 lakh at 5%, eligibility and how to register at a CSC.",
+    facts=[("Loans", "₹1 lakh + ₹2 lakh"), ("Interest", "5%"), ("Toolkit", "₹15,000"), ("Training", "₹500 / day")],
+    body='''
+        <h2>What is PM Vishwakarma?</h2>
+        <p>PM Vishwakarma is a Central Government scheme for artisans and craftspeople who work with their hands and tools, often in a family trade. It was launched on 17 September 2023 and runs until 2027-28. Its target of <strong>30 lakh registrations</strong> has been reached.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>PM Vishwakarma certificate and ID card.</strong></li>
+          <li><strong>Training:</strong> basic training of 5–7 days and advanced training of 15 days or more, with a <strong>stipend of ₹500 per day</strong>.</li>
+          <li><strong>Toolkit incentive</strong> of up to <strong>₹15,000</strong> (e-voucher) to buy modern tools.</li>
+          <li><strong>Collateral-free loans:</strong> up to <strong>₹1 lakh</strong> first (repay in 18 months), then up to <strong>₹2 lakh</strong> (repay in 30 months), at just <strong>5% interest</strong>. The government pays up to 8% of the interest.</li>
+          <li>Incentives for digital payments, and help with marketing your products.</li>
+        </ul>
+
+        <h2>The 18 trades covered</h2>
+        <p>Carpenter, boat maker, armourer, blacksmith, hammer and tool kit maker, locksmith, goldsmith, potter, sculptor / stone carver / stone breaker, cobbler (cobbler / shoe-smith / footwear artisan), mason, basket / mat / broom maker and coir weaver, traditional doll and toy maker, barber, garland maker, washerman, tailor, and fishing net maker.</p>
+
+        <h2>Who can apply?</h2>
+        <ul>
+          <li>Age <strong>18 or above</strong>, working with hands and tools in one of the 18 trades on a self-employed basis.</li>
+          <li><strong>One member per family</strong> can register.</li>
+          <li>Should not have taken a loan under a similar central or state self-employment scheme (such as PMEGP, PM SVANidhi or Mudra) in the last five years, unless it has been fully repaid.</li>
+          <li>People in government service and their family members are not eligible.</li>
+        </ul>
+
+        <h2>How to register</h2>
+        <ol>
+          <li>Visit your nearest <strong>Common Service Centre (CSC)</strong> with Aadhaar, your mobile number and bank details.</li>
+          <li>Register on the PM Vishwakarma portal through the CSC (Aadhaar-based eKYC).</li>
+          <li>Your application is verified by the gram panchayat or urban local body, then by the district committee.</li>
+          <li>After approval, you get your certificate and ID, and can attend training and apply for the toolkit and loan.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://pmvishwakarma.gov.in" target="_blank" rel="noopener">pmvishwakarma.gov.in</a> (Ministry of MSME)
+        </div>
+''',
+    faqs=[
+        ("How much loan do I get under PM Vishwakarma?", "Up to ₹3 lakh without collateral: ₹1 lakh first and then ₹2 lakh, at 5% interest."),
+        ("Which trades are covered?", "18 traditional trades, including carpenter, tailor, barber, goldsmith, potter, mason, cobbler, blacksmith, washerman and garland maker."),
+        ("How much is the PM Vishwakarma toolkit amount?", "Up to ₹15,000 as an e-voucher to buy modern tools."),
+        ("Do I get paid during training?", "Yes. Trainees get a stipend of ₹500 per day."),
+        ("Where do I register for PM Vishwakarma?", "At your nearest Common Service Centre (CSC) with Aadhaar, mobile number and bank details."),
+    ],
+    sources=[
+        ("PIB: Union Cabinet approves PM Vishwakarma (Aug 2023)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1949411"),
+        ("PIB: PM Vishwakarma Scheme – honouring heritage", "https://www.pib.gov.in/PressNoteDetails.aspx?NoteId=155216&ModuleId=3"),
+        ("PM Vishwakarma scheme document (PDF)", "https://pmvishwakarma.gov.in/CDN/MiscFiles/PM_Vishwakarma_Scheme.pdf"),
+    ]))
+
+# ---- TS: Rajiv Yuva Vikasam
+s = BY_SLUG["ts-rajiv-yuva-vikasam"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Rajiv Yuva Vikasam is a Telangana scheme announced in 2025 to give SC, ST, BC and minority youth ₹50,000 to ₹4 lakh with a large subsidy to start their own business. About 16 lakh people applied, but as of 2026 the scheme has not been implemented.",
+    description="Rajiv Yuva Vikasam (Telangana) explained: self-employment support ₹50,000–₹4 lakh, subsidy slabs, eligibility, and current status in 2026.",
+    facts=[("Support", "₹50,000 – ₹4 lakh"), ("Subsidy", "70% – 100%"), ("Applications", "About 16 lakh"), ("Status (2026)", "Not yet implemented")],
+    body='''
+        <h2>What is Rajiv Yuva Vikasam?</h2>
+        <p>Rajiv Yuva Vikasam was announced by the Telangana government in 2025 to help unemployed youth from SC, ST, BC and minority communities set up self-employment units, with the government paying most of the cost.</p>
+
+        <div class="note"><strong>Current status:</strong> About <strong>16 lakh</strong> applications were received and nearly 5 lakh beneficiaries were shortlisted. Sanction letters were announced for June 2025, but according to news reports in <strong>April 2026</strong>, the scheme has <strong>not been implemented</strong> and officials said they were awaiting the government's decision. We will update this page as soon as there is official news.</div>
+
+        <h2>Support that was announced</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Unit cost</th><th>Subsidy</th></tr>
+          <tr><td>Up to ₹50,000</td><td>100%</td></tr>
+          <tr><td>Up to ₹1 lakh</td><td>90%</td></tr>
+          <tr><td>Up to ₹2 lakh</td><td>80%</td></tr>
+          <tr><td>Up to ₹4 lakh</td><td>70%</td></tr>
+        </table>
+        </div>
+        <p>The rest of the unit cost was to be covered by a bank loan.</p>
+
+        <h2>Who was eligible?</h2>
+        <ul>
+          <li>Unemployed youth from <strong>SC, ST, BC and minority</strong> communities in Telangana.</li>
+          <li>Annual family income below <strong>₹1.5 lakh in rural areas</strong> and <strong>₹2 lakh in urban areas</strong>.</li>
+          <li>Age <strong>21 to 55</strong> for non-agricultural units (up to 60 for agriculture-related units).</li>
+        </ul>
+
+        <h2>What applicants can do now</h2>
+        <ul>
+          <li>Keep your application number and acknowledgement safe.</li>
+          <li>Watch for official announcements from the Telangana government and your district's SC/ST/BC/Minority welfare offices.</li>
+          <li>Never pay anyone who promises to get your unit sanctioned.</li>
+          <li>Meanwhile, look at schemes that are open now: <a href="/schemes/pm-mudra-yojana/">PM Mudra loans</a>, <a href="/schemes/pm-vishwakarma/">PM Vishwakarma</a> (for traditional trades) and <a href="/schemes/pm-kaushal-vikas-yojana/">free skill training under PMKVY</a>.</li>
+        </ul>
+
+        <div class="official">
+          <strong>Help:</strong> your district SC / ST / BC / Minority welfare office
+        </div>
+''',
+    faqs=[
+        ("Has Rajiv Yuva Vikasam started?", "As of April 2026, news reports say the scheme had not been implemented, although about 16 lakh people applied. We will update this page when there is official news."),
+        ("How much support was announced under Rajiv Yuva Vikasam?", "₹50,000 to ₹4 lakh per unit, with a subsidy of 100% for units up to ₹50,000, falling to 70% for units up to ₹4 lakh."),
+        ("Who could apply for Rajiv Yuva Vikasam?", "Unemployed SC, ST, BC and minority youth in Telangana with family income below ₹1.5 lakh (rural) or ₹2 lakh (urban), aged 21 to 55."),
+        ("What can I do while waiting?", "Keep your application number safe, and consider schemes open now such as PM Mudra loans, PM Vishwakarma and free PMKVY skill training."),
+    ],
+    sources=[
+        ("Telangana Today: One year on, Rajiv Yuva Vikasam yet to take off (Apr 2026)", "https://telanganatoday.com/one-year-on-rajiv-yuva-vikasam-scheme-yet-to-take-off-in-telangana"),
+        ("Kamareddy district (telangana.gov.in): Rajiv Yuva Vikasam Scheme", "https://kamareddy.telangana.gov.in/scheme/rajiv-yuva-vikasam-scheme/"),
+    ]))
+
+# ---- Collection: For youth
+write("schemes/for-youth/index.html",
+    head("Government Schemes for Youth: Jobs, Internships, Skills & Business | Kramavriddhi",
+         "Government opportunities for young men and women: paid internships, Agniveer jobs, free skill training, artisan and business loans, plus savings and insurance. Central, AP and Telangana.",
+         "/schemes/for-youth/")
+    + nav("schemes") + f"""
+    <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For youth</p>
+    <header class="page-head">
+      <div class="eyebrow">Collection</div>
+      <h1>Opportunities for youth</h1>
+      <p>Paid internships, defence jobs, free skill training and help to start your own work: government opportunities for young people, all in one place.</p>
+    </header>
+    <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
+""" + coll_group("🧑‍💼 Jobs & internships", "Earn while you learn, or serve the country.",
+        ["pm-internship-scheme", "agnipath-agniveer"])
+    + coll_group("🛠️ Skills & education", "Free training and scholarships to build your career.",
+        ["pm-kaushal-vikas-yojana", "aicte-pragati-scholarship"])
+    + coll_group("💼 Start your own work", "Loans and support for your own business or trade.",
+        ["pm-mudra-yojana", "pm-vishwakarma", "ts-rajiv-yuva-vikasam"])
+    + """
+    <div class="note"><strong>Being relaunched:</strong> <strong>Stand-Up India</strong> and <strong>PMEGP</strong> (subsidised loans for new businesses) are being renewed by the government. We will add guides when the new rules are announced. <a href="/schemes/for-women/">See schemes for girls &amp; women →</a></div>
+""" + coll_group("🛡️ Secure your future", "Low-cost savings, pension and insurance to start early.",
+        ["pm-jan-dhan-yojana", "atal-pension-yojana", "pm-jeevan-jyoti-bima-yojana", "pm-suraksha-bima-yojana"])
+    + """    <div style="height:24px"></div>
+""" + FOOTER)
+
 # ---- state hub pages
 def state_hub(key, intro, slug):
     items = [x for x in DISPLAY if st(x) == key]
@@ -2144,6 +2479,8 @@ CHECKER_TEXT = {
             ("school", "We have children studying in Classes 1–12"),
             ("techstudent", "I am in (or joining) a degree or diploma course like engineering, pharmacy or polytechnic"),
             ("business", "I want a loan to start or grow a small business"),
+            ("artisan", "I work in a traditional trade (tailor, carpenter, barber, potter, mason, goldsmith…)"),
+            ("nojob", "I am looking for a job or internship"),
             ("widow", "I am a widow or single woman"),
             ("disabled", "I or a family member have a disability"),
         ],
@@ -2185,6 +2522,10 @@ CHECKER_TEXT = {
             pragati="Girls in AICTE degree or diploma courses with family income below ₹8 lakh can get ₹50,000 a year.",
             lakhpati="Women in rural self-help groups get low-cost loans and training to earn ₹1 lakh+ a year.",
             tsMahilaShakti="Telangana SHG women get interest-free loans up to ₹10 lakh per group.",
+            pmis="You are 18–25 and looking for work: paid internships with at least ₹9,000 a month.",
+            agnipath="You are 17½–21: join the Army, Navy or Air Force as an Agniveer for four years.",
+            pmkvy="Free skill training with a government certificate to help you get a job.",
+            vishwakarma="Traditional artisans get paid training, a ₹15,000 toolkit and loans up to ₹3 lakh at 5%.",
         ),
     ),
     "te": dict(
@@ -2213,6 +2554,8 @@ CHECKER_TEXT = {
             ("school", "మా పిల్లలు 1–12 తరగతుల్లో చదువుతున్నారు"),
             ("techstudent", "నేను ఇంజినీరింగ్, ఫార్మసీ, పాలిటెక్నిక్ వంటి డిగ్రీ లేదా డిప్లొమా కోర్సులో చదువుతున్నాను (లేదా చేరబోతున్నాను)"),
             ("business", "చిన్న వ్యాపారం ప్రారంభించడానికి లేదా పెంచడానికి నాకు రుణం కావాలి"),
+            ("artisan", "నేను సంప్రదాయ వృత్తిలో పనిచేస్తాను (దర్జీ, వడ్రంగి, క్షురకుడు, కుమ్మరి, మేస్త్రీ, స్వర్ణకారుడు…)"),
+            ("nojob", "నేను ఉద్యోగం లేదా ఇంటర్న్‌షిప్ కోసం చూస్తున్నాను"),
             ("widow", "నేను వితంతువు లేదా ఒంటరి మహిళను"),
             ("disabled", "నాకు లేదా మా కుటుంబ సభ్యులకు వైకల్యం ఉంది"),
         ],
@@ -2254,6 +2597,10 @@ CHECKER_TEXT = {
             pragati="కుటుంబ ఆదాయం ₹8 లక్షల లోపు ఉండి AICTE డిగ్రీ/డిప్లొమా కోర్సుల్లో చదివే బాలికలకు ఏడాదికి ₹50,000.",
             lakhpati="గ్రామీణ స్వయం సహాయక సంఘాల మహిళలకు తక్కువ వడ్డీ రుణాలు, శిక్షణ: ఏడాదికి ₹1 లక్ష+ సంపాదించేలా.",
             tsMahilaShakti="తెలంగాణ స్వయం సహాయక సంఘాలకు ఒక్కో సంఘానికి ₹10 లక్షల వరకు వడ్డీ లేని రుణాలు.",
+            pmis="మీ వయసు 18–25, పని కోసం చూస్తున్నారు: నెలకు కనీసం ₹9,000తో పెయిడ్ ఇంటర్న్‌షిప్‌లు.",
+            agnipath="మీ వయసు 17½–21: అగ్నివీర్‌గా నాలుగేళ్ళు ఆర్మీ, నేవీ లేదా ఎయిర్ ఫోర్స్‌లో చేరవచ్చు.",
+            pmkvy="ఉద్యోగం పొందడానికి ప్రభుత్వ సర్టిఫికెట్‌తో ఉచిత నైపుణ్య శిక్షణ.",
+            vishwakarma="సంప్రదాయ వృత్తి కళాకారులకు స్టైపెండ్‌తో శిక్షణ, ₹15,000 టూల్‌కిట్, 5% వడ్డీకి ₹3 లక్షల వరకు రుణాలు.",
         ),
     ),
 }
@@ -2342,6 +2689,10 @@ def checker_page(lang):
           if (age >= 18 && age <= 70) add('pm-suraksha-bima-yojana', 'pmsby');
           if (woman && f.techstudent && inc <= 9) add('aicte-pragati-scholarship', 'pragati');
           if (woman && rural && age >= 18 && (poor || inc <= 1)) add('lakhpati-didi', 'lakhpati');
+          if (age >= 18 && age <= 25 && f.nojob && !f.govtjob && inc <= 6) add('pm-internship-scheme', 'pmis');
+          if (age >= 17 && age <= 21) add('agnipath-agniveer', 'agnipath');
+          if (age >= 15 && age <= 35 && (f.nojob || f.business)) add('pm-kaushal-vikas-yojana', 'pmkvy');
+          if (f.artisan && age >= 18 && !f.govtjob) add('pm-vishwakarma', 'vishwakarma');
 
           // Andhra Pradesh
           if (state === 'ap') {{
@@ -2763,7 +3114,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/schemes/", "/schemes/for-women/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
