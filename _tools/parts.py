@@ -6,6 +6,16 @@ import hashlib, os
 _ASSETS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets")
 ASSET_VERSION = hashlib.md5(b"".join(open(os.path.join(_ASSETS, n), "rb").read() for n in ("style.css", "site.js"))).hexdigest()[:8]
 
+GA_ID = "G-S6RF0STQM2"  # Google Analytics 4 measurement ID
+GA_TAG = f'''
+  <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', '{GA_ID}');
+  </script>'''
+
 FONTS = {
     "en": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600",
     "te": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&family=Noto+Sans+Telugu:wght@400;600;700",
@@ -21,7 +31,7 @@ def head(title, desc, path, extra="", lang="en", alternates=None):
 <html lang="{lang}">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">{GA_TAG}
   <title>{title}</title>
   <meta name="description" content="{desc}">
   <link rel="canonical" href="https://kramavriddhi.com{path}">{alt}
