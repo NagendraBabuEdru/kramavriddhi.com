@@ -28,6 +28,7 @@ html = head("Kramavriddhi — Government schemes explained, step by step",
           <a class="chip" href="/schemes/?state=central" style="text-decoration:none">🇮🇳 Central</a>
           <a class="chip" href="/schemes/andhra-pradesh/" style="text-decoration:none">Andhra Pradesh</a>
           <a class="chip" href="/schemes/telangana/" style="text-decoration:none">Telangana</a>
+          <a class="chip" href="/schemes/for-women/" style="text-decoration:none">👩 For girls &amp; women</a>
         </div>
       </div>
       <div class="grid">

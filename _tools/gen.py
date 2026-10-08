@@ -78,6 +78,18 @@ SCHEMES = [
     dict(slug="ts-cheyutha-pension", name="Cheyutha Pension (Telangana)", short="Cheyutha Pension",
          state="ts", cat="pension", cat_label="Pension & Insurance", icon="👵",
          summary="Monthly pensions for poor elderly people, widows, single women, persons with disabilities and other groups."),
+    dict(slug="aicte-pragati-scholarship", name="AICTE Pragati Scholarship for Girls", short="Pragati Scholarship",
+         cat="education", cat_label="Education & Skills", icon="🎓",
+         summary="₹50,000 a year for girls in AICTE-approved degree and diploma courses. 2026-27 last date: 31 October."),
+    dict(slug="cbse-single-girl-child-scholarship", name="CBSE Single Girl Child Scholarship", short="CBSE Single Girl Child",
+         cat="education", cat_label="Education & Skills", icon="👩‍🎓",
+         summary="₹1,000 a month in Class 11–12 for an only daughter who scored 70%+ in CBSE Class 10."),
+    dict(slug="lakhpati-didi", name="Lakhpati Didi (SHG women)", short="Lakhpati Didi",
+         cat="women", cat_label="Women & Girls", icon="💪",
+         summary="Loans, training and business help so rural self-help group women earn ₹1 lakh+ a year."),
+    dict(slug="ts-indira-mahila-shakti", name="Indira Mahila Shakti (Telangana)", short="Indira Mahila Shakti",
+         state="ts", cat="business", cat_label="Business & Self-employment", icon="🏪",
+         summary="Interest-free loans up to ₹10 lakh for SHGs, and women-run canteens, buses, petrol bunks and solar plants."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -137,7 +149,8 @@ write("schemes/index.html",
 {chips}
     </div>
     <input class="search" type="search" placeholder="Search schemes…" aria-label="Search schemes">
-    <a class="cta" href="/tools/scheme-eligibility-checker/" style="margin-top:-8px;margin-bottom:12px"><span>✅</span><div><strong>Not sure which schemes are for you?</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions and see the schemes that may suit you.</span></div></a>
+    <a class="cta" href="/schemes/for-women/" style="margin-top:-8px;margin-bottom:12px"><span>👩</span><div><strong>Schemes for girls &amp; women</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, business loans, SHG support and more, in one place.</span></div></a>
+    <a class="cta" href="/tools/scheme-eligibility-checker/" style="margin-bottom:12px"><span>✅</span><div><strong>Not sure which schemes are for you?</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions and see the schemes that may suit you.</span></div></a>
     <a class="cta" href="/tools/" style="margin-bottom:28px"><span>🧮</span><div><strong>Free calculators</strong><br><span class="muted" style="font-size:0.9rem">Atal Pension contribution by age · Sukanya Samriddhi maturity amount</span></div></a>
 
     <div class="grid" id="scheme-list">
@@ -255,6 +268,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 
         <h2>Latest update</h2>
         <p>The <strong>23rd instalment</strong> was released on <strong>20 June 2026</strong>. Instalments usually come about every four months, so the 24th instalment is expected around October–November 2026. The government has not announced an official date yet. We will update this page when it does.</p>
+        <p>On <strong>31 July 2026</strong>, the Union Cabinet approved <strong>continuing PM-KISAN from 2026-27 to 2030-31</strong> with an outlay of ₹3.15 lakh crore, so the ₹6,000 a year support will continue.</p>
 
         <h2>Benefits</h2>
         <ul>
@@ -329,6 +343,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     sources=[
         ("PM-KISAN official portal", "https://pmkisan.gov.in"),
         ("PIB: Eligibility criteria of PM-KISAN", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2146932"),
+        ("PIB: Cabinet approves continuation of PM-KISAN from 2026-27 to 2030-31", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2292437"),
     ]))
 
 # ---------------------------------------------------------------- PM-JAY
@@ -1754,6 +1769,280 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Telangana Today: Senior citizens still await ₹4,000 pension promise (1 Oct 2026)", "https://telanganatoday.com/three-years-on-telangana-senior-citizens-still-await-congress-rs-4000-pension-promise"),
     ]))
 
+# ---------------------------------------------------------------- girls & women batch (added 8 Oct 2026)
+
+# ---- AICTE Pragati Scholarship
+s = BY_SLUG["aicte-pragati-scholarship"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="The AICTE Pragati Scholarship gives ₹50,000 a year to girl students in technical courses such as engineering, pharmacy and polytechnic diplomas, to help with fees, books and a computer. For 2026-27, applications on the National Scholarship Portal close on 31 October 2026.",
+    description="AICTE Pragati Scholarship for girls explained: ₹50,000 a year for degree and diploma students, eligibility, income limit, documents, how to apply on NSP, 2026-27 last date.",
+    facts=[("Scholarship", "₹50,000 / year"), ("For", "Girls in AICTE courses"), ("Family income", "Below ₹8 lakh"), ("2026-27 last date", "31 Oct 2026")],
+    body='''
+        <h2>What is the Pragati Scholarship?</h2>
+        <p>The All India Council for Technical Education (AICTE) has run the Pragati Scholarship since 2014-15 to encourage girls to study technical subjects. Every year about <strong>10,000 scholarships</strong> are given (5,000 for degree and 5,000 for diploma students) in most states, and in some states and union territories, including the North-East and Jammu &amp; Kashmir, <strong>all eligible girls</strong> get it.</p>
+
+        <div class="note"><strong>2026-27 applications are open now.</strong> The window on the National Scholarship Portal opened on 1 June 2026 and closes on <strong>31 October 2026</strong>. Apply early, because your college must also verify your application.</div>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>₹50,000 per year</strong>, paid directly to the student's bank account.</li>
+          <li>Can be used for college fees, books, a computer, equipment, software and similar study costs.</li>
+          <li>Renewed every year of the course on promotion to the next year.</li>
+        </ul>
+
+        <h2>Who can apply?</h2>
+        <ul>
+          <li>Girl students admitted to the <strong>1st year of a degree or diploma</strong> course in an <strong>AICTE-approved</strong> institution, or the <strong>2nd year through lateral entry</strong>.</li>
+          <li>Total family income <strong>less than ₹8 lakh per year</strong>.</li>
+          <li>A maximum of <strong>two girls per family</strong>.</li>
+          <li>Selection is on merit: Class 12 marks for degree, Class 10 marks for diploma.</li>
+          <li>Reservation: 15% SC, 7.5% ST and 27% OBC.</li>
+        </ul>
+
+        <h2>Documents usually needed</h2>
+        <ul>
+          <li>Class 10 and/or Class 12 marks memo</li>
+          <li>Admission letter and fee receipt</li>
+          <li>Income certificate issued by the state government</li>
+          <li>Caste certificate (SC/ST/OBC-NCL), if applicable</li>
+          <li>Aadhaar and an Aadhaar-seeded bank account in the student's name</li>
+          <li>Bonafide certificate from the institution</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Go to the <a href="https://scholarships.gov.in" target="_blank" rel="noopener">National Scholarship Portal (scholarships.gov.in)</a> and register (One Time Registration with Aadhaar).</li>
+          <li>Choose the <strong>AICTE Pragati Scholarship</strong> (degree or diploma).</li>
+          <li>Fill in the form and upload your documents.</li>
+          <li>Your <strong>college verifies</strong> the application, then the state's technical education department checks it.</li>
+          <li>Selected students receive the money by DBT. Apply for renewal each year with your promotion certificate.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Apply at:</strong> <a href="https://scholarships.gov.in" target="_blank" rel="noopener">scholarships.gov.in</a><br>
+          <strong>Scheme details:</strong> <a href="https://www.aicte-india.org/schemes/students-development-schemes" target="_blank" rel="noopener">AICTE Student Development Schemes</a>
+        </div>
+''',
+    faqs=[
+        ("How much is the Pragati Scholarship?", "₹50,000 per year for each year of the course, paid by DBT."),
+        ("What is the last date for Pragati Scholarship 2026-27?", "31 October 2026 on the National Scholarship Portal (the window opened on 1 June 2026)."),
+        ("Can two sisters get the Pragati Scholarship?", "Yes. A maximum of two girls per family can get it."),
+        ("What is the income limit for Pragati?", "Total family income must be less than ₹8 lakh per year."),
+        ("Is Pragati only for engineering?", "It is for girls in AICTE-approved technical degree and diploma courses, such as engineering, pharmacy, architecture and polytechnic diplomas."),
+    ],
+    sources=[
+        ("PIB: Scholarship scheme under AICTE to encourage girl students (Pragati)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1779333"),
+        ("AICTE: Pragati – General Instructions", "https://www.aicte-india.org/schemes/students-development-schemes/Pragati/General-Instructions"),
+        ("National Scholarship Portal", "https://scholarships.gov.in"),
+    ]))
+
+# ---- CBSE Single Girl Child Scholarship
+s = BY_SLUG["cbse-single-girl-child-scholarship"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="The CBSE Merit Scholarship for Single Girl Child gives ₹1,000 a month to girls who are the only child of their parents and scored 70% or more in the CBSE Class 10 exam, for their Class 11 and 12 studies.",
+    description="CBSE Single Girl Child Scholarship explained: ₹1,000 a month for Class 11-12, 70% in Class 10, only-child rule, fee and income limits, renewal and how to apply.",
+    facts=[("Scholarship", "₹1,000 / month"), ("For", "Classes 11 & 12"), ("Class 10 marks", "70% or more"), ("Family income", "Up to ₹8 lakh")],
+    body='''
+        <h2>What is this scholarship?</h2>
+        <p>The Central Board of Secondary Education (CBSE) rewards parents who support their only daughter's education. Every single girl child who meets the conditions gets the scholarship. There is no fixed number of awards.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>₹1,000 per month</strong> during Class 11 and Class 12 (up to two years).</li>
+          <li>You can also keep other fee concessions from your school or other organisations.</li>
+        </ul>
+
+        <h2>Who can apply?</h2>
+        <ul>
+          <li>A girl who is the <strong>only child</strong> of her parents. Twins or triplets who are all girls are also treated as single girl children.</li>
+          <li>Passed the <strong>CBSE Class 10</strong> exam with <strong>70% or more</strong> marks.</li>
+          <li>Studying Class 11 and 12 in a <strong>CBSE-affiliated school</strong>.</li>
+          <li>Tuition fee: not more than <strong>₹2,500 per month</strong> in Class 10, and not more than <strong>₹3,000 per month</strong> in Class 11 and 12 (₹6,000 for NRI students).</li>
+          <li>Gross family income up to <strong>₹8 lakh per year</strong>.</li>
+          <li>Indian nationals (NRI students of CBSE can apply).</li>
+        </ul>
+
+        <h2>Renewal for Class 12</h2>
+        <p>To continue in Class 12, the student must be promoted with <strong>70% or more</strong> marks in Class 11 and apply for renewal. Good conduct and regular attendance are required. Changing school or stream needs CBSE's approval.</p>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Watch for the CBSE notice. Applications usually open a few months after the Class 10 results.</li>
+          <li>Apply online on the <a href="https://www.cbse.gov.in/cbsenew/scholar.html" target="_blank" rel="noopener">CBSE scholarship page</a>.</li>
+          <li>Upload the affidavit that she is the only child (in the format CBSE gives), the fee certificate, income details and bank details.</li>
+          <li>The school verifies the application.</li>
+        </ol>
+        <div class="note">The marks requirement was raised from 60% to <strong>70%</strong> in recent years. Always check the latest CBSE notice for the current year's rules and dates.</div>
+
+        <div class="official">
+          <strong>Official page:</strong> <a href="https://www.cbse.gov.in/cbsenew/scholar.html" target="_blank" rel="noopener">CBSE Scholarships</a><br>
+          <strong>Email:</strong> scholarship.cbse@nic.in
+        </div>
+''',
+    faqs=[
+        ("How much is the CBSE Single Girl Child Scholarship?", "₹1,000 per month for Class 11 and Class 12."),
+        ("How many marks are needed?", "70% or more in the CBSE Class 10 exam, and 70% or more in Class 11 to renew for Class 12."),
+        ("Are twin girls eligible?", "Yes. All girl children born together are treated as single girl children of their parents."),
+        ("What is the fee limit?", "Tuition fee up to ₹3,000 per month in Class 11 and 12 (₹2,500 in Class 10; ₹6,000 for NRIs)."),
+        ("Is there an income limit?", "Yes. Gross family income must be up to ₹8 lakh per year."),
+    ],
+    sources=[
+        ("CBSE: Guidelines for Single Girl Child Merit Scholarship (PDF)", "https://www.cbse.gov.in/cbsenew/scholar/Guidelines_SGC_2025.pdf"),
+        ("CBSE Scholarships page", "https://www.cbse.gov.in/cbsenew/scholar.html"),
+    ]))
+
+# ---- Lakhpati Didi
+s = BY_SLUG["lakhpati-didi"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Lakhpati Didi helps women in rural self-help groups (SHGs) earn at least ₹1 lakh a year for their family, through low-cost loans, training and help to start or grow small businesses. Over 3 crore women had become Lakhpati Didis by May 2026.",
+    description="Lakhpati Didi scheme explained: who is a Lakhpati Didi, how SHG women get loans, revolving fund and training, how to join a self-help group, AP and Telangana details.",
+    facts=[("Goal", "₹1 lakh+ income / year"), ("For", "Rural SHG women"), ("Achieved", "3.07 crore (May 2026)"), ("Run under", "DAY-NRLM")],
+    body='''
+        <h2>What is Lakhpati Didi?</h2>
+        <p>A <strong>Lakhpati Didi</strong> is a self-help group (SHG) member whose household earns <strong>₹1 lakh or more a year</strong> on a sustained basis. The initiative, started in 2023, works through the government's rural livelihood mission, <strong>DAY-NRLM</strong> (Deendayal Antyodaya Yojana – National Rural Livelihoods Mission). By May 2026, <strong>3.07 crore</strong> rural women had become Lakhpati Didis.</p>
+
+        <h2>What support do women get?</h2>
+        <ul>
+          <li><strong>Revolving Fund</strong> of ₹20,000–₹30,000 per eligible SHG, to start lending within the group.</li>
+          <li><strong>Community Investment Fund</strong> of up to ₹2.5 lakh per SHG, through village and cluster federations, for members' income activities.</li>
+          <li><strong>Bank loans</strong> to SHGs at low interest, with interest subvention in many districts.</li>
+          <li><strong>Training</strong> in business, money management and digital skills. A National Campaign on Entrepreneurship started in January 2026 to train 50 lakh SHG members.</li>
+          <li>Help to start livelihoods such as dairy, poultry, tailoring, food processing, shops, and services like <strong>Drone Didi</strong> (farm drones) and <strong>Bank Sakhi</strong>.</li>
+        </ul>
+
+        <h2>Who can join?</h2>
+        <ul>
+          <li>Women from poor rural households can join a <strong>self-help group</strong> of usually 10–20 women in their village.</li>
+          <li>SHG members who are active and want to start or grow an income activity get the Lakhpati Didi support.</li>
+        </ul>
+
+        <h2>How to join</h2>
+        <ol>
+          <li>Ask your village's SHG leader, Village Organisation, or the <strong>Community Resource Person (CRP)</strong> to add you to an SHG.</li>
+          <li>Attend weekly meetings, save small amounts regularly and keep records.</li>
+          <li>After the SHG is graded, it can get the revolving fund and bank loans.</li>
+          <li>Make a simple business plan with the CRP's help to use the loan for an income activity.</li>
+        </ol>
+
+        <h3>In Andhra Pradesh and Telangana</h3>
+        <ul>
+          <li><strong>Andhra Pradesh:</strong> SHGs are supported by SERP (rural) and MEPMA (towns). Ask at your village/ward secretariat.</li>
+          <li><strong>Telangana:</strong> SHGs are supported by SERP and MEPMA, and also get interest-free loans up to ₹10 lakh under <a href="/schemes/ts-indira-mahila-shakti/">Indira Mahila Shakti</a>.</li>
+        </ul>
+
+        <div class="official">
+          <strong>Official:</strong> <a href="https://aajeevika.gov.in" target="_blank" rel="noopener">aajeevika.gov.in</a> (DAY-NRLM, Ministry of Rural Development)
+        </div>
+''',
+    faqs=[
+        ("Who is a Lakhpati Didi?", "A self-help group member whose household earns ₹1 lakh or more a year on a sustained basis."),
+        ("How many Lakhpati Didis are there?", "Over 3.07 crore rural women had become Lakhpati Didis by May 2026."),
+        ("Do I get ₹1 lakh directly from the government?", "No. The scheme helps you earn ₹1 lakh a year through SHG loans, training and business support. It is not a direct cash payment."),
+        ("How do I join a self-help group?", "Contact your village SHG leader, Village Organisation or Community Resource Person (CRP), or ask at your village/ward secretariat."),
+        ("What businesses can Lakhpati Didis do?", "Dairy, poultry, tailoring, food processing, small shops, services such as drone spraying (Drone Didi) and banking help (Bank Sakhi), and more."),
+    ],
+    sources=[
+        ("PIB: Lakhpati Didi scheme", "https://www.pib.gov.in/PressNoteDetails.aspx?NoteId=152064&ModuleId=3"),
+        ("PIB: Key interventions for women's economic advancement (Mar 2026, PDF)", "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/mar/doc202636813101.pdf"),
+        ("PIB: Department of Rural Development Year Ender 2025", "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2210378"),
+    ]))
+
+# ---- TS: Indira Mahila Shakti
+s = BY_SLUG["ts-indira-mahila-shakti"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Indira Mahila Shakti is the Telangana government's programme to make women in self-help groups into business owners. SHGs get interest-free bank loans of up to ₹10 lakh, and help to run businesses like canteens, RTC buses, petrol bunks and solar plants.",
+    description="Indira Mahila Shakti (Telangana) explained: interest-free SHG loans up to ₹10 lakh (Vaddi Leni Runalu), women-run canteens, buses, petrol bunks, solar plants, how to join.",
+    facts=[("Interest-free loan", "Up to ₹10 lakh / SHG"), ("Women covered", "About 63 lakh"), ("Raised from", "₹5 lakh (May 2026)"), ("Goal", "1 crore women crorepatis")],
+    body='''
+        <h2>What is Indira Mahila Shakti?</h2>
+        <p>Indira Mahila Shakti is the Telangana government's umbrella programme for women's self-help groups (SHGs). Its aim is to turn SHG women into entrepreneurs. The government has said it wants to give <strong>₹1 lakh crore in interest-free loans</strong> to women's groups over five years and make <strong>one crore women "crorepatis."</strong></p>
+
+        <h2>Interest-free loans (Vaddi Leni Runalu)</h2>
+        <ul>
+          <li>The state government <strong>pays the interest</strong> on bank loans taken by SHGs, so the loan is interest-free for the women.</li>
+          <li>In May 2026 the limit was <strong>raised from ₹5 lakh to ₹10 lakh per SHG</strong>. About <strong>63 lakh women</strong> in SHGs are expected to benefit.</li>
+          <li>The group must repay the loan on time to keep getting the interest-free benefit.</li>
+        </ul>
+
+        <h2>Businesses run by women's groups</h2>
+        <p>Under Indira Mahila Shakti, SHGs have been helped to run:</p>
+        <ul>
+          <li><strong>Indira Mahila Shakti canteens</strong></li>
+          <li><strong>RTC buses</strong> hired out to TGSRTC, with the hire charges paid to the women's groups</li>
+          <li><strong>Petrol bunks</strong></li>
+          <li><strong>Solar power plants</strong></li>
+          <li>Dairy and poultry units, Mahila Marts and warehouses</li>
+        </ul>
+
+        <h2>Who can benefit?</h2>
+        <ul>
+          <li>Women who are members of a <strong>self-help group</strong> in Telangana, in villages (SERP) or towns (MEPMA).</li>
+          <li>SHGs that save regularly, keep records and repay loans on time.</li>
+        </ul>
+
+        <h2>How to join</h2>
+        <ol>
+          <li>Join or form a self-help group through your village SHG leader, Village Organisation or Community Resource Person.</li>
+          <li>In towns, contact the MEPMA staff at your municipality.</li>
+          <li>Once your SHG is active, the group can apply for a bank loan through the SHG federation. The interest is reimbursed by the government.</li>
+          <li>For business units like canteens or buses, watch for announcements from your district's DRDA/SERP office and apply through your federation.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Help:</strong> your Village Organisation / Mandal Samakhya (SERP) in villages, MEPMA office in towns<br>
+          <strong>Related:</strong> <a href="/schemes/lakhpati-didi/">Lakhpati Didi</a> (central support for SHG women)
+        </div>
+''',
+    faqs=[
+        ("What is the interest-free loan limit for SHGs in Telangana?", "Up to ₹10 lakh per SHG. The limit was raised from ₹5 lakh in May 2026, and the government pays the interest."),
+        ("Who can get Indira Mahila Shakti benefits?", "Women who are members of active self-help groups in Telangana, through SERP in villages and MEPMA in towns."),
+        ("What businesses do women's groups run under Indira Mahila Shakti?", "Canteens, RTC buses hired to TGSRTC, petrol bunks, solar plants, dairy and poultry units, Mahila Marts and warehouses."),
+        ("Do individual women get the loan?", "The loan goes to the self-help group, which lends to its members for income activities."),
+        ("How do I join a self-help group in Telangana?", "Contact your village SHG leader, Village Organisation or Community Resource Person, or the MEPMA office in your town."),
+    ],
+    sources=[
+        ("The Hans India: State raises interest-free loan limit for SHGs to ₹10 lakh (May 2026)", "https://www.thehansindia.com/telangana/state-govt-raises-interest-free-loan-limit-for-shgs-to-rs-10l-1073333"),
+        ("Deccan Chronicle: ₹1 lakh crore interest-free loans to women's groups in five years", "https://www.deccanchronicle.com/southern-states/telangana/govt-to-give-rs1lakh-cr-interest-free-loans-to-womens-groups-in-five-years-bhatti-1833503"),
+        ("Deccan Chronicle: Indira Mahila Shakti canteen launched in Hyderabad", "https://www.deccanchronicle.com/southern-states/telangana/ponnam-launches-indira-mahila-shakti-canteen-in-hyderabad-1991183"),
+    ]))
+
+# ---- Collection: For girls & women
+def coll_group(title, intro, slugs):
+    cards = "".join(scheme_card(BY_SLUG[x]) for x in slugs if x in BY_SLUG)
+    return f"""
+    <section style="padding:40px 0">
+      <div class="section-head">
+        <h2>{title}</h2>
+        <p>{intro}</p>
+      </div>
+      <div class="grid">
+{cards}      </div>
+    </section>
+"""
+
+write("schemes/for-women/index.html",
+    head("Government Schemes for Girls and Women: Education, Business & Support | Kramavriddhi",
+         "All government schemes for girls and women in one place: scholarships, savings for daughters, self-employment loans, SHG support, free bus travel, gas and pensions. Central, AP and Telangana.",
+         "/schemes/for-women/")
+    + nav("schemes") + f"""
+    <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For girls &amp; women</p>
+    <header class="page-head">
+      <div class="eyebrow">Collection</div>
+      <h1>Schemes for girls &amp; women</h1>
+      <p>Scholarships, savings, business loans and everyday support for girls and women, from the Central Government, Andhra Pradesh and Telangana, all in one place.</p>
+    </header>
+    <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
+""" + coll_group("🎓 Education", "Help for girls to study, from school to technical degrees.",
+        ["sukanya-samriddhi-yojana", "cbse-single-girl-child-scholarship", "aicte-pragati-scholarship", "ap-thalliki-vandanam"])
+    + coll_group("💼 Self-employment & business", "Loans, training and support for women who want to earn.",
+        ["lakhpati-didi", "ts-indira-mahila-shakti", "pm-mudra-yojana"])
+    + """
+    <div class="note"><strong>Being relaunched:</strong> <strong>Stand-Up India</strong> (bank loans of ₹10 lakh–₹1 crore for women and SC/ST entrepreneurs) ended in March 2025 and the government announced in March 2026 that a revamped version is being prepared. <strong>PMEGP</strong> (subsidy for new businesses, with a higher subsidy for women) ran until 31 March 2026, and its extension is under consideration. We will add full guides when the new rules are announced.</div>
+""" + coll_group("🛡️ Everyday support", "Travel, cooking gas, pensions and housing support for women and their families.",
+        ["ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana"])
+    + """    <div style="height:24px"></div>
+""" + FOOTER)
+
 # ---- state hub pages
 def state_hub(key, intro, slug):
     items = [x for x in DISPLAY if st(x) == key]
@@ -1853,6 +2142,7 @@ CHECKER_TEXT = {
             ("lpg", "We have an LPG gas connection"),
             ("daughter", "I have a daughter below 10 years"),
             ("school", "We have children studying in Classes 1–12"),
+            ("techstudent", "I am in (or joining) a degree or diploma course like engineering, pharmacy or polytechnic"),
             ("business", "I want a loan to start or grow a small business"),
             ("widow", "I am a widow or single woman"),
             ("disabled", "I or a family member have a disability"),
@@ -1892,6 +2182,9 @@ CHECKER_TEXT = {
             tsCheyDis="Persons with disabilities from white ration card families can get a monthly pension.",
             tsCheyWidow="Widows and single women from white ration card families can get a monthly pension.",
             tsCheyOld="Elderly people from white ration card families get a monthly pension (new enrolment for seniors was not open in 2026).",
+            pragati="Girls in AICTE degree or diploma courses with family income below ₹8 lakh can get ₹50,000 a year.",
+            lakhpati="Women in rural self-help groups get low-cost loans and training to earn ₹1 lakh+ a year.",
+            tsMahilaShakti="Telangana SHG women get interest-free loans up to ₹10 lakh per group.",
         ),
     ),
     "te": dict(
@@ -1918,6 +2211,7 @@ CHECKER_TEXT = {
             ("lpg", "మాకు ఎల్పీజీ గ్యాస్ కనెక్షన్ ఉంది"),
             ("daughter", "నాకు 10 ఏళ్ళ లోపు కూతురు ఉంది"),
             ("school", "మా పిల్లలు 1–12 తరగతుల్లో చదువుతున్నారు"),
+            ("techstudent", "నేను ఇంజినీరింగ్, ఫార్మసీ, పాలిటెక్నిక్ వంటి డిగ్రీ లేదా డిప్లొమా కోర్సులో చదువుతున్నాను (లేదా చేరబోతున్నాను)"),
             ("business", "చిన్న వ్యాపారం ప్రారంభించడానికి లేదా పెంచడానికి నాకు రుణం కావాలి"),
             ("widow", "నేను వితంతువు లేదా ఒంటరి మహిళను"),
             ("disabled", "నాకు లేదా మా కుటుంబ సభ్యులకు వైకల్యం ఉంది"),
@@ -1957,6 +2251,9 @@ CHECKER_TEXT = {
             tsCheyDis="తెల్ల రేషన్ కార్డు కుటుంబాల దివ్యాంగులకు నెలవారీ పింఛన్ వస్తుంది.",
             tsCheyWidow="తెల్ల రేషన్ కార్డు కుటుంబాల వితంతువులు, ఒంటరి మహిళలకు నెలవారీ పింఛన్ వస్తుంది.",
             tsCheyOld="తెల్ల రేషన్ కార్డు కుటుంబాల వృద్ధులకు నెలవారీ పింఛన్ వస్తుంది (2026లో వృద్ధులకు కొత్త నమోదు తెరవలేదు).",
+            pragati="కుటుంబ ఆదాయం ₹8 లక్షల లోపు ఉండి AICTE డిగ్రీ/డిప్లొమా కోర్సుల్లో చదివే బాలికలకు ఏడాదికి ₹50,000.",
+            lakhpati="గ్రామీణ స్వయం సహాయక సంఘాల మహిళలకు తక్కువ వడ్డీ రుణాలు, శిక్షణ: ఏడాదికి ₹1 లక్ష+ సంపాదించేలా.",
+            tsMahilaShakti="తెలంగాణ స్వయం సహాయక సంఘాలకు ఒక్కో సంఘానికి ₹10 లక్షల వరకు వడ్డీ లేని రుణాలు.",
         ),
     ),
 }
@@ -2043,6 +2340,8 @@ def checker_page(lang):
           if (!f.bank && age >= 10) add('pm-jan-dhan-yojana', 'jdy');
           if (age >= 18 && age <= 50) add('pm-jeevan-jyoti-bima-yojana', 'pmjjby');
           if (age >= 18 && age <= 70) add('pm-suraksha-bima-yojana', 'pmsby');
+          if (woman && f.techstudent && inc <= 9) add('aicte-pragati-scholarship', 'pragati');
+          if (woman && rural && age >= 18 && (poor || inc <= 1)) add('lakhpati-didi', 'lakhpati');
 
           // Andhra Pradesh
           if (state === 'ap') {{
@@ -2057,6 +2356,7 @@ def checker_page(lang):
             if (f.farmland) add('ts-rythu-bharosa', 'tsRythu');
             if (woman || trans || (poor && f.lpg)) add('ts-mahalakshmi', (woman || trans) ? (poor && f.lpg ? 'tsMahaBusGas' : 'tsMahaBus') : 'tsMahaGas');
             if (poor && !f.pucca && inc <= 1) add('ts-indiramma-indlu', 'tsIndiramma');
+            if (woman && age >= 18 && poor) add('ts-indira-mahila-shakti', 'tsMahilaShakti');
             if (poor) add('ts-gruha-jyothi', 'tsGruha');
             if (poor) add('ts-rajiv-aarogyasri', 'tsAarogya');
             if (poor && (f.widow || f.disabled)) add('ts-cheyutha-pension', f.disabled ? 'tsCheyDis' : 'tsCheyWidow');
@@ -2463,7 +2763,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/schemes/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/schemes/", "/schemes/for-women/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
