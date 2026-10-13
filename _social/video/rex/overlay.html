@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rex promo overlay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;800;900&display=block" rel="stylesheet">
+<style>
+  /* Overlay layer for the Rex promo videos. The page is transparent where gameplay shows through;
+     make_rex.js screenshots it per frame (with alpha) and ffmpeg lays it over the gameplay. */
+  :root { --teal: #0f766e; --teal-dark: #0b4f4a; --cream: #f7f7f4; --ink: #14201e; --gold: #f5b83d; --leaf: #9fdc6e; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: transparent; overflow: hidden; }
+  body { font-family: 'Nunito', 'Segoe UI', sans-serif; color: var(--cream); }
+  .te { font-family: 'Nirmala UI', 'Noto Sans Telugu', sans-serif; font-weight: 700; }
+  .disp { font-family: 'Lilita One', 'Segoe UI', sans-serif; font-weight: 400; letter-spacing: .5px; }
+  #root { position: absolute; left: 0; top: 0; overflow: hidden; }
+  .abs { position: absolute; }
+  .bgfill { position: absolute; inset: 0; background: linear-gradient(165deg, #0b4f4a 0%, #0f766e 62%, #12806f 100%); }
+  .dots i { position: absolute; border-radius: 50%; background: rgba(255,255,255,.06); }
+  .logo { display: inline-block; }
+  .logo svg { width: 100%; height: 100%; display: block; }
+  .brand { display: flex; align-items: center; gap: 18px; font-family: 'Segoe UI', sans-serif; font-weight: 700; color: var(--cream); }
+  .pill { display: inline-block; border-radius: 999px; padding: .18em .7em; }
+  .gold { color: var(--gold); }
+  .card { position: absolute; inset: 0; }
+  .flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+  .shadow { text-shadow: 0 4px 0 rgba(0,0,0,.25), 0 10px 30px rgba(0,0,0,.35); }
+  img { display: block; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="overlay.js"></script>
+</body>
+</html>
