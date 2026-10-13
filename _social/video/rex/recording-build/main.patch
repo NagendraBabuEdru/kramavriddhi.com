@@ -1,0 +1,20 @@
+--- lib/main.dart	2026-10-06 15:53:27.480381800 +0530
++++ lib/main.dart	2026-10-13 13:09:49.615171900 +0530
+@@ -8,6 +8,7 @@
+ import 'game/painters.dart';
+ import 'game/rex_game.dart';
+ import 'game/story.dart';
++import 'story/story_view.dart';
+ 
+ Future<void> main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+@@ -20,7 +21,8 @@
+     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+   }
+-  runApp(const RexApp());
++  // recording-only: ?story opens the puppet theatre used for the story videos
++  runApp(Uri.base.queryParameters.containsKey('story') ? const StoryApp() : const RexApp());
+ }
+ 
+ class Palette {
