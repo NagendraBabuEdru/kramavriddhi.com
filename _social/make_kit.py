@@ -1,8 +1,9 @@
 """Builds the Kramavriddhi social media kit (profile picture, YouTube banner, Instagram posts).
 Each image is an HTML page rendered to PNG with headless Microsoft Edge, so Telugu text shapes correctly.
-Run: python _social/make_kit.py
+Run: python _social/make_kit.py            (all images)
+     python _social/make_kit.py post-6-csss (only the named images)
 """
-import os, subprocess
+import os, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "images")
@@ -16,6 +17,8 @@ LOGO = f'<svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="{TEA
 FONT = "font-family:'Segoe UI','Nirmala UI',system-ui,sans-serif;"
 
 def render(name, w, h, body, bg=CREAM):
+    if sys.argv[1:] and name not in sys.argv[1:]:
+        return
     html = f"""<!doctype html><html><head><meta charset="utf-8"><style>
     *{{margin:0;padding:0;box-sizing:border-box}}
     html,body{{width:{w}px;height:{h}px;overflow:hidden;background:{bg};{FONT}color:{INK}}}
@@ -98,3 +101,8 @@ post("post-5-checker", "✅ Free tool", "#7c3aed",
      "1 నిమిషం", "కొన్ని ప్రశ్నలకు సమాధానం ఇవ్వండి",
      ["కేంద్ర, ఏపీ, తెలంగాణ పథకాలు", "తెలుగు & ఇంగ్లీష్‌లో", "పూర్తిగా ఉచితం · మీ వివరాలు ఎక్కడికీ వెళ్ళవు"],
      "ఇప్పుడే చెక్ చేయండి 👉")
+post("post-6-csss", "⏰ Last date 31 Oct", "#d97706",
+     "కాలేజీ విద్యార్థులకు సెంట్రల్ సెక్టార్ స్కాలర్‌షిప్", "Central Sector Scholarship (CSSS) 2026-27",
+     '<span style="font-size:96px">₹12,000–₹20,000</span>', "ప్రతి సంవత్సరం · నేరుగా బ్యాంకు ఖాతాలోకి (DBT)",
+     ["12వ తరగతిలో టాప్ 20%", "కుటుంబ ఆదాయం ₹4.5 లక్షల లోపు", "అబ్బాయిలకు 50%, అమ్మాయిలకు 50%", "scholarships.gov.in లో దరఖాస్తు"],
+     "పూర్తి వివరాలు 👉")

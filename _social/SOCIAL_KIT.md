@@ -7,6 +7,7 @@ Images are in the `images` folder. Rebuild them anytime with `python _social/mak
 | `profile-picture.png` | Profile photo for YouTube and Instagram (shows as a circle) |
 | `youtube-banner.png` | YouTube channel banner (2560×1440) |
 | `post-1-pragati.png` … `post-5-checker.png` | First 5 Instagram posts (1080×1350) |
+| `post-6-csss.png` | Central Sector Scholarship post (1080×1350) |
 
 ---
 
@@ -129,6 +130,21 @@ AICTE Pragati Scholarship 🎓
 ఇప్పుడే ట్రై చేయండి 👉 link in bio
 
 #GovtSchemes #SarkariYojana #APSchemes #TelanganaSchemes #Telugu #Kramavriddhi
+```
+
+**Post 6 – Central Sector Scholarship** (`post-6-csss.png`)
+```
+🎓 కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000 స్కాలర్‌షిప్! ⏰ చివరి తేదీ 31 అక్టోబర్ 2026
+
+✅ డిగ్రీ 1–3 సంవత్సరాలు: ₹12,000 / ఏడాది · పీజీ, B.Tech 4వ సంవత్సరం: ₹20,000 / ఏడాది
+✅ 12వ తరగతిలో టాప్ 20% (మీ స్ట్రీమ్‌లో 80th percentile పైన)
+✅ కుటుంబ ఆదాయం ₹4.5 లక్షల లోపు · రెగ్యులర్ డిగ్రీ కోర్సు
+👦 అబ్బాయిలకు 50% · 👧 అమ్మాయిలకు 50%
+📝 scholarships.gov.in లో మాత్రమే దరఖాస్తు చేయండి
+
+పూర్తి వివరాలు 👉 link in bio
+
+#CentralSectorScholarship #CSSS #Scholarship2026 #NationalScholarshipPortal #PMUSP #CollegeStudents #APStudents #TelanganaStudents #Kramavriddhi
 ```
 
 ---
