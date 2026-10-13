@@ -25,5 +25,21 @@ Almost every HTML page is **generated**. Edit the generator, not the HTML:
 2. Commit with the trailer `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`, push, then confirm live with `curl`.
 3. Never delete `google12eb8119c9ff72ef.html` (Search Console verification) or `CNAME`.
 
+## Sessions and who owns what
+The owner runs several Claude sessions. Each has one job and only edits its own paths. Message other sessions by name with SendMessage, and report finished work to **"Kramavriddhi – Main"** (the coordinator).
+
+| Session | Job | Owns (may edit and commit) |
+|---|---|---|
+| **Kramavriddhi – Main** | Coordinator: plans work, answers the owner, checks results, keeps memory notes, final publishing checks | Anything, when needed |
+| **Kramavriddhi – Website & Schemes** | Scheme guides, Telugu pages, updates page, eligibility checker, tools, apps/games listing pages, SEO, weekly fact checks | `_tools/`, `assets/`, all generated HTML pages, `sitemap.xml`, `robots.txt` |
+| **Rex – Game Updates** | Develops Rex's Big Adventure in `S:\Rex_adventure` and publishes new builds | `games/rex-adventure/` in this repo, plus the private Rex_adventure repo |
+| **Make promo videos for Rex's Big Adventure game** (Rex videos) | Rex promo videos and story episodes | `_social/video/rex/`, `_social/videos/rex/` |
+| **Create animated YouTube Shorts for Kramavriddhi** (scheme videos) | Scheme Shorts and Instagram posts | `_social/video/` (except `rex/`), `_social/videos/` (except `rex/`), `_social/images/`, `make_kit.py`, `SOCIAL_KIT.md`, `YOUTUBE_PLAYLISTS.md` |
+
+Rules for working together:
+- Before committing: `git pull --rebase`, then `git add` **only your own paths** (never `git add -A`), commit with the Co-Authored-By trailer, and push. Don't amend or rewrite commits that are already pushed.
+- Only the Website & Schemes session runs `_tools/gen.py` / `home.py`. Others ask it (or Main) for changes to generated pages, e.g. the Games/Apps listing.
+- Handoffs: Website & Schemes tells the scheme videos session about new deadlines or schemes worth a Short; Rex – Game Updates tells the Rex videos session when gameplay or characters change; everyone reports to Main when a task is done.
+
 ## Social
 `_social/` holds the brand kit: `make_kit.py` (renders images with headless Edge so Telugu shapes correctly; PIL here has no raqm), `SOCIAL_KIT.md` (captions, Shorts scripts), `YOUTUBE_PLAYLISTS.md`, and `video/` + `videos/` for YouTube Shorts. YouTube: youtube.com/@kramavriddhi.
