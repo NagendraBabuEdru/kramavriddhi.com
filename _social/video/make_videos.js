@@ -43,8 +43,13 @@ async function capture(browser, id) {
   const wav = path.join(OUT, `${s.file}.wav`), mp4 = path.join(OUT, `${s.file}.mp4`);
   synth(wav, s.duration, s.music.root, s.music.seed);
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-c:v', 'mjpeg', '-framerate', String(FPS), '-i', '-',
-    '-i', wav, '-map', '0:v', '-map', '1:a', '-vf', 'scale=in_range=full:out_range=tv,format=yuv420p', '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', '-color_range', 'tv',
-    '-profile:v', 'high', '-r', String(FPS), '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', mp4],
+    // High@4.1, BT.709, limited range, 48 kHz AAC: plays on phones, Windows, browsers and YouTube
+    '-i', wav, '-map', '0:v', '-map', '1:a',
+    '-vf', 'scale=in_range=full:out_range=tv:in_color_matrix=bt601:out_color_matrix=bt709,format=yuv420p',
+    '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-level:v', '4.1',
+    '-x264-params', 'ref=4', '-g', '60', '-bf', '2',
+    '-color_range', 'tv', '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709',
+    '-r', String(FPS), '-c:a', 'aac', '-b:a', '160k', '-ar', '48000', '-shortest', '-movflags', '+faststart', mp4],
     { stdio: ['pipe', 'inherit', 'inherit'] });
   const done = new Promise((ok, fail) => ff.on('close', c => (c ? fail(new Error('ffmpeg exit ' + c)) : ok())));
   const frames = Math.round(s.duration * FPS);
