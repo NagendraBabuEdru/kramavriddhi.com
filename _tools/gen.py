@@ -105,6 +105,24 @@ SCHEMES = [
     dict(slug="ts-rajiv-yuva-vikasam", name="Rajiv Yuva Vikasam (Telangana)", short="Rajiv Yuva Vikasam",
          state="ts", cat="business", cat_label="Business & Self-employment", icon="🚀",
          summary="Announced ₹50,000–₹4 lakh self-employment support for SC/ST/BC/minority youth. Not yet implemented (2026)."),
+    dict(slug="central-sector-scholarship", name="Central Sector Scholarship for College Students (CSSS)", short="Central Sector Scholarship",
+         cat="education", cat_label="Education & Skills", icon="🎓",
+         summary="₹12,000–₹20,000 a year for college students in the top 20% of their Class 12 board. 2026-27 last date: 31 October."),
+    dict(slug="pm-viksit-bharat-rozgar-yojana", name="PM Viksit Bharat Rozgar Yojana (First Job)", short="PM Viksit Bharat Rozgar Yojana",
+         cat="jobs", cat_label="Jobs & Internships", icon="🧾",
+         summary="Up to ₹15,000 for first-time employees who join a job with PF (EPFO) between Aug 2025 and Jul 2027."),
+    dict(slug="e-shram-card", name="e-Shram Card for Unorganised Workers", short="e-Shram Card",
+         cat="jobs", cat_label="Jobs & Internships", icon="👷",
+         summary="Free national ID for daily-wage, gig and other unorganised workers aged 16–59, linking them to welfare schemes."),
+    dict(slug="pm-shram-yogi-maandhan", name="PM Shram Yogi Maandhan (Pension for Workers)", short="PM Shram Yogi Maandhan",
+         cat="pension", cat_label="Pension & Insurance", icon="🧓",
+         summary="₹3,000 monthly pension at 60 for workers earning up to ₹15,000 a month. Join at 18–40; the government matches your payment."),
+    dict(slug="pm-svanidhi", name="PM SVANidhi (Loans for Street Vendors)", short="PM SVANidhi",
+         cat="business", cat_label="Business & Self-employment", icon="🛒",
+         summary="Collateral-free loans of ₹15,000, ₹25,000 and ₹50,000 for street vendors, with a 7% interest subsidy. Open until 2030."),
+    dict(slug="ap-auto-drivers-sevalo", name="Auto Drivers Sevalo (Andhra Pradesh)", short="Auto Drivers Sevalo",
+         state="ap", cat="business", cat_label="Business & Self-employment", icon="🛺",
+         summary="₹15,000 a year for auto, taxi and maxi-cab owner-drivers in AP. 2026 payment date not yet announced."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -165,7 +183,8 @@ write("schemes/index.html",
 {chips}
     </div>
     <input class="search" type="search" placeholder="Search schemes…" aria-label="Search schemes">
-    <a class="cta" href="/schemes/for-youth/" style="margin-top:-8px;margin-bottom:12px"><span>🧑‍💼</span><div><strong>Opportunities for youth</strong><br><span class="muted" style="font-size:0.9rem">Paid internships, Agniveer, free skill training and business loans.</span></div></a>
+    <a class="cta" href="/schemes/for-men/" style="margin-top:-8px;margin-bottom:12px"><span>👨</span><div><strong>Schemes for boys &amp; men</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, first-job reward, workers&#39; pension, vendor loans and more.</span></div></a>
+    <a class="cta" href="/schemes/for-youth/" style="margin-bottom:12px"><span>🧑‍💼</span><div><strong>Opportunities for youth</strong><br><span class="muted" style="font-size:0.9rem">Paid internships, Agniveer, free skill training and business loans.</span></div></a>
     <a class="cta" href="/schemes/for-women/" style="margin-bottom:12px"><span>👩</span><div><strong>Schemes for girls &amp; women</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, business loans, SHG support and more, in one place.</span></div></a>
     <a class="cta" href="/tools/scheme-eligibility-checker/" style="margin-bottom:12px"><span>✅</span><div><strong>Not sure which schemes are for you?</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions and see the schemes that may suit you.</span></div></a>
     <a class="cta" href="/tools/" style="margin-bottom:28px"><span>🧮</span><div><strong>Free calculators</strong><br><span class="muted" style="font-size:0.9rem">Atal Pension contribution by age · Sukanya Samriddhi maturity amount</span></div></a>
@@ -2378,6 +2397,408 @@ write("schemes/for-youth/index.html",
     + """    <div style="height:24px"></div>
 """ + FOOTER)
 
+# ---------------------------------------------------------------- boys & men batch (added 13 Oct 2026)
+
+# ---- Central Sector Scholarship (CSSS / PM-USP)
+s = BY_SLUG["central-sector-scholarship"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="The Central Sector Scholarship gives college students ₹12,000 a year (₹20,000 in PG and later years of technical courses) if they scored in the top 20% of their Class 12 board and their family earns up to ₹4.5 lakh a year. Half of the scholarships go to boys and half to girls.",
+    description="Central Sector Scholarship (CSSS / PM-USP) explained: ₹12,000–₹20,000 a year for college students, 80th percentile in Class 12, income up to ₹4.5 lakh, how to apply on NSP, 2026-27 last date.",
+    facts=[("Degree (yrs 1–3)", "₹12,000 / year"), ("PG / later tech years", "₹20,000 / year"), ("Family income", "Up to ₹4.5 lakh"), ("2026-27 last date", "31 Oct 2026")],
+    body='''
+        <h2>What is this scholarship?</h2>
+        <p>The <strong>Central Sector Scheme of Scholarship for College and University Students</strong> (now under PM-USP, the Pradhan Mantri Uchchatar Shiksha Protsahan Yojana) is a merit-cum-means scholarship run by the Ministry of Education since 2008. It helps bright students from lower-income families continue to college.</p>
+
+        <div class="note"><strong>2026-27 applications are open</strong> on the National Scholarship Portal (from 1 June 2026). The closing date for students is <strong>31 October 2026</strong>; your college must then verify the application.</div>
+
+        <h2>How much?</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Course stage</th><th>Scholarship</th></tr>
+          <tr><td>Degree, years 1 to 3</td><td>₹12,000 per year</td></tr>
+          <tr><td>Post-graduation</td><td>₹20,000 per year</td></tr>
+          <tr><td>Technical courses, 4th and 5th year</td><td>₹20,000 per year</td></tr>
+          <tr><td>B.Tech / BE</td><td>₹12,000 for years 1–3, ₹20,000 in year 4</td></tr>
+        </table>
+        </div>
+        <p>The total period is up to 5 years. Money is paid directly to the student's bank account.</p>
+
+        <h2>Who can apply?</h2>
+        <ul>
+          <li>Scored <strong>above the 80th percentile</strong> of successful students in your stream in your <strong>Class 12 board</strong> exam.</li>
+          <li>Family income <strong>up to ₹4.5 lakh per year</strong>.</li>
+          <li>Studying a <strong>regular degree course</strong> (not distance or correspondence, and not a diploma) at a recognised college.</li>
+          <li>Not getting another scholarship, state scholarship, fee waiver or fee reimbursement (check the current guidelines, as the wording varies).</li>
+        </ul>
+        <p>Selection is <strong>50% boys and 50% girls</strong>, with reservation of 15% SC, 7.5% ST, 27% OBC and 5% for students with disabilities.</p>
+
+        <h2>Renewal every year</h2>
+        <ul>
+          <li>Get at least <strong>50% marks</strong> and keep <strong>75% attendance</strong>.</li>
+          <li>Apply for renewal on NSP each year. If you miss one year, you can apply for renewal the next year.</li>
+        </ul>
+
+        <h2>Documents usually needed</h2>
+        <ul>
+          <li>Class 12 marks memo</li>
+          <li>Income certificate (fresh applicants)</li>
+          <li>Caste certificate, if applicable</li>
+          <li>Aadhaar and an Aadhaar-seeded bank account in the student's name</li>
+          <li>College admission details / bonafide certificate</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Register on the <a href="https://scholarships.gov.in" target="_blank" rel="noopener">National Scholarship Portal</a> with One Time Registration (Aadhaar).</li>
+          <li>Choose the <strong>PM-USP Central Sector Scheme of Scholarship (CSSS)</strong>.</li>
+          <li>Fill in the form and upload documents before 31 October 2026.</li>
+          <li>Your college verifies it, then the state board/department checks it.</li>
+        </ol>
+
+        <div class="official">
+          <strong>Apply at:</strong> <a href="https://scholarships.gov.in" target="_blank" rel="noopener">scholarships.gov.in</a><br>
+          <strong>Scheme page:</strong> <a href="https://www.education.gov.in/en/central-sector-scheme-scholarship-college-and-university-students" target="_blank" rel="noopener">Ministry of Education</a>
+        </div>
+''',
+    faqs=[
+        ("How much is the Central Sector Scholarship?", "₹12,000 a year for the first three years of a degree, and ₹20,000 a year at PG level and in the 4th and 5th years of technical courses."),
+        ("What marks are needed?", "You must be above the 80th percentile of successful students in your stream in your Class 12 board exam."),
+        ("What is the income limit?", "Family income up to ₹4.5 lakh a year."),
+        ("What is the last date for 2026-27?", "31 October 2026 for students on the National Scholarship Portal."),
+        ("Is it only for boys?", "No. Scholarships are split equally, 50% for boys and 50% for girls."),
+    ],
+    sources=[
+        ("Ministry of Education: CSSS scheme page", "https://www.education.gov.in/en/central-sector-scheme-scholarship-college-and-university-students"),
+        ("NSP: CSSS FAQ (PDF)", "https://scholarships.gov.in/public/schemeGuidelines/FAQ_DOHE_CSSS.pdf"),
+        ("NSP: PM-USP guidelines (PDF)", "https://scholarships.gov.in/public/schemeGuidelines/Guidelines_DOHE_CSSS.pdf"),
+    ]))
+
+# ---- PM Viksit Bharat Rozgar Yojana
+s = BY_SLUG["pm-viksit-bharat-rozgar-yojana"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Viksit Bharat Rozgar Yojana rewards young people who get their first formal job with PF (EPFO). First-time employees get up to ₹15,000 (one month's PF wage) in two instalments, straight to their bank account, with no separate application.",
+    description="PM Viksit Bharat Rozgar Yojana (PM-VBRY) explained: up to ₹15,000 for first-time EPFO employees, who qualifies, UAN face authentication, instalments, how to get paid.",
+    facts=[("Incentive", "Up to ₹15,000"), ("Paid in", "2 instalments"), ("Jobs joined", "1 Aug 2025 – 31 Jul 2027"), ("Wage limit", "Up to ₹1 lakh / month")],
+    body='''
+        <h2>What is PM-VBRY?</h2>
+        <p>The Pradhan Mantri Viksit Bharat Rozgar Yojana is the Government of India's employment-linked incentive scheme, run through EPFO. It started on <strong>1 August 2025</strong> and covers jobs created up to <strong>31 July 2027</strong>. Part A rewards <strong>first-time employees</strong>; Part B rewards employers who create new jobs.</p>
+
+        <h2>Latest update</h2>
+        <p>On <strong>19 June 2026</strong>, about <strong>₹2,400 crore</strong> was released under the scheme. According to an August 2026 government release, over 72 lakh first-time employees have joined the formal workforce since August 2025, and more than 15 lakh have already received the incentive.</p>
+
+        <h2>How much do first-time employees get?</h2>
+        <ul>
+          <li><strong>One month's EPF wage, up to ₹15,000.</strong></li>
+          <li><strong>1st instalment</strong> (up to ₹7,500): after <strong>6 months</strong> of continuous work.</li>
+          <li><strong>2nd instalment:</strong> after <strong>12 months</strong> of work <strong>and</strong> completing a short Financial Literacy Programme.</li>
+          <li>A part of the incentive may be kept in a savings instrument for a fixed period, which you can withdraw later.</li>
+        </ul>
+
+        <h2>Who qualifies?</h2>
+        <ul>
+          <li>Your <strong>first ever</strong> PF contribution is for <strong>August 2025 or later</strong> (you were never an EPF member before).</li>
+          <li>You joined between <strong>1 August 2025 and 31 July 2027</strong>.</li>
+          <li>Gross wage at joining <strong>up to ₹1 lakh a month</strong>.</li>
+          <li>You complete <strong>6 months with the same employer</strong>.</li>
+        </ul>
+
+        <h2>What you must do to get paid</h2>
+        <ol>
+          <li><strong>No application needed.</strong> The incentive is based on the PF returns your employer files every month.</li>
+          <li><strong>Verify your UAN with Face Authentication</strong> in the <strong>UMANG app</strong>. Without this, no payment is processed.</li>
+          <li><strong>Link Aadhaar to your bank account and enable DBT.</strong> Payment is made through the Aadhaar Payment Bridge.</li>
+          <li>Stay with the same employer for 6 months, and make sure your employer files PF returns on time.</li>
+          <li>If face authentication fails, visit your nearest <strong>EPFO regional office</strong>.</li>
+        </ol>
+        <div class="note">There is no fee and no agent involved. Payment comes only from the government to your Aadhaar-linked bank account.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://pmvbry.epfindia.gov.in" target="_blank" rel="noopener">pmvbry.epfindia.gov.in</a> (EPFO, Ministry of Labour &amp; Employment)
+        </div>
+''',
+    faqs=[
+        ("How much do first-time employees get under PM-VBRY?", "One month's EPF wage, up to ₹15,000, in two instalments: after 6 months and after 12 months plus a financial literacy course."),
+        ("Do I need to apply for PM Viksit Bharat Rozgar Yojana?", "No. It is based on your employer's PF filings. You must complete UAN face authentication in the UMANG app and have an Aadhaar-linked, DBT-enabled bank account."),
+        ("Who is a first-time employee?", "Someone whose first EPF contribution is for August 2025 or later, who joined between 1 August 2025 and 31 July 2027, with gross wage up to ₹1 lakh a month."),
+        ("What if I change jobs before 6 months?", "The 6 months must be with the same employer for the first instalment."),
+        ("Where do I get help?", "Ask your employer's HR or payroll team, check pmvbry.epfindia.gov.in, or visit the nearest EPFO regional office."),
+    ],
+    sources=[
+        ("PIB: PM-VBRY to come into effect from 1 August 2025", "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2148270"),
+        ("PIB: PM disburses ₹2,400 crore under PM-VBRY (June 2026)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2275419"),
+        ("PIB: PM-VBRY (Aug 2026)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2292862"),
+        ("PM-VBRY portal and FAQ", "https://pmvbry.epfindia.gov.in/faq/"),
+    ]))
+
+# ---- e-Shram
+s = BY_SLUG["e-shram-card"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="The e-Shram card is a free national ID for unorganised workers: daily-wage labourers, construction workers, drivers, vendors, gig and platform workers, farm workers and more. Registering puts you in the government's database so you can reach social security schemes more easily.",
+    description="e-Shram card explained: free registration for unorganised workers aged 16–59, benefits, accident cover, linked schemes, documents and how to register on eshram.gov.in.",
+    facts=[("Cost", "Free"), ("Age", "16 – 59"), ("Registered", "31 crore+ workers"), ("Renewal", "Not needed")],
+    body='''
+        <h2>What is e-Shram?</h2>
+        <p>e-Shram is the Ministry of Labour &amp; Employment's national database of unorganised workers. Each registered worker gets an <strong>e-Shram card</strong> with a <strong>Universal Account Number (UAN)</strong> that works across India. More than <strong>31 crore</strong> workers had registered by January 2026.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li>A <strong>one-stop link</strong> to social security and welfare schemes. Many central schemes are linked to the portal, such as <a href="/schemes/pm-shram-yogi-maandhan/">PM Shram Yogi Maandhan pension</a>, <a href="/schemes/pm-suraksha-bima-yojana/">PMSBY accident insurance</a>, <a href="/schemes/pm-svanidhi/">PM SVANidhi</a> and more.</li>
+          <li><strong>Accident cover:</strong> through PMSBY, ₹2 lakh for accidental death or permanent disability and ₹1 lakh for partial disability. The portal also handles ex-gratia claims for eligible accident cases. Check the current terms on the portal before claiming.</li>
+          <li>Helps the government reach workers quickly during emergencies and with new schemes, including social security for <strong>gig and platform workers</strong> under the Code on Social Security (in force from 21 November 2025).</li>
+          <li>The card has <strong>no expiry</strong>. Keep your details (mobile, occupation, bank) updated.</li>
+        </ul>
+
+        <h2>Who can register?</h2>
+        <ul>
+          <li>Age <strong>16 to 59</strong>.</li>
+          <li>Working in the <strong>unorganised sector</strong>: self-employed, daily-wage, home-based, gig or platform worker, agricultural labourer, domestic worker, construction worker, driver, vendor and similar.</li>
+          <li><strong>Not</strong> a member of EPFO or ESIC, and not in the government-funded NPS.</li>
+        </ul>
+
+        <h2>Documents needed</h2>
+        <ul>
+          <li>Aadhaar card</li>
+          <li>Mobile number linked to Aadhaar</li>
+          <li>Bank account details</li>
+        </ul>
+
+        <h2>How to register (free)</h2>
+        <ol>
+          <li>Go to <a href="https://eshram.gov.in" target="_blank" rel="noopener">eshram.gov.in</a> and choose <strong>Register on e-Shram</strong>, or use the <strong>UMANG app</strong>.</li>
+          <li>Enter your Aadhaar-linked mobile number and verify with OTP.</li>
+          <li>Fill in your address, education, occupation and bank details.</li>
+          <li>Download your e-Shram card.</li>
+        </ol>
+        <p>If you don't have an Aadhaar-linked mobile, register at a <strong>Common Service Centre (CSC)</strong> with fingerprint authentication.</p>
+        <div class="note">Registration is completely free. Don't pay anyone who offers an "e-Shram card for money," and be careful of messages promising cash payments for registering.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://eshram.gov.in" target="_blank" rel="noopener">eshram.gov.in</a> (Ministry of Labour &amp; Employment)
+        </div>
+''',
+    faqs=[
+        ("Is the e-Shram card free?", "Yes. Registration on eshram.gov.in, the UMANG app or at a CSC is free."),
+        ("Who can get an e-Shram card?", "Unorganised workers aged 16 to 59 who are not EPFO, ESIC or government NPS members."),
+        ("Does the e-Shram card give money every month?", "No. It is a registration and ID that links you to social security schemes. Be careful of messages promising monthly cash for e-Shram."),
+        ("Does the e-Shram card expire?", "No, but keep your mobile, occupation and bank details updated."),
+        ("What accident cover is linked to e-Shram?", "Accident insurance through PMSBY: ₹2 lakh for death or permanent disability and ₹1 lakh for partial disability. Check the current terms on the portal."),
+    ],
+    sources=[
+        ("PIB: Benefits under e-Shram card", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2079858"),
+        ("PIB: e-Shram cards for unorganised workers (2026)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2222263"),
+        ("e-Shram FAQs", "https://eshram.gov.in/faqs"),
+    ]))
+
+# ---- PM Shram Yogi Maandhan
+PMSYM_ROWS = [(18, 55), (20, 61), (25, 80), (30, 105), (35, 150), (40, 200)]
+pmsym_table = "\n".join(f"          <tr><td>{a} years</td><td>₹{c}</td><td>₹{c}</td><td>₹{2*c}</td></tr>" for a, c in PMSYM_ROWS)
+s = BY_SLUG["pm-shram-yogi-maandhan"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Shram Yogi Maandhan is a pension scheme for unorganised workers earning up to ₹15,000 a month. You pay a small amount every month from age 18–40, the government adds the same amount, and you get a guaranteed pension of ₹3,000 a month after 60.",
+    description="PM Shram Yogi Maandhan (PM-SYM) explained: ₹3,000 monthly pension at 60 for unorganised workers, age 18–40, income up to ₹15,000, contribution chart, how to join at a CSC.",
+    facts=[("Pension", "₹3,000 / month"), ("Join at age", "18 – 40"), ("Income limit", "₹15,000 / month"), ("Govt adds", "Equal amount")],
+    body=f'''
+        <h2>What is PM-SYM?</h2>
+        <p>Pradhan Mantri Shram Yogi Maan-dhan (PM-SYM) is a voluntary, contributory pension scheme of the Ministry of Labour &amp; Employment, started in February 2019. Over <strong>54 lakh</strong> workers had enrolled by July 2026.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li>A guaranteed pension of <strong>₹3,000 per month</strong> from age 60.</li>
+          <li>The <strong>Central Government matches</strong> your contribution rupee for rupee.</li>
+          <li>If the pensioner dies, the <strong>spouse gets 50%</strong> of the pension as family pension.</li>
+        </ul>
+
+        <h2>Who can join?</h2>
+        <ul>
+          <li>Unorganised workers aged <strong>18 to 40</strong> (for example daily-wage workers, drivers, vendors, domestic workers, construction and farm workers).</li>
+          <li>Monthly income <strong>₹15,000 or less</strong>.</li>
+          <li><strong>Not</strong> covered by EPF, ESIC or NPS, <strong>not</strong> an income-tax payer, and not getting another government pension.</li>
+        </ul>
+
+        <h2>How much do you pay?</h2>
+        <p>You pay the same amount every month until 60. Some examples from the official chart:</p>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Age when joining</th><th>You pay / month</th><th>Govt adds</th><th>Total</th></tr>
+{pmsym_table}
+        </table>
+        </div>
+        <p>Payment is usually by monthly auto-debit from your savings or Jan Dhan account. If you miss payments, you can bring the account up to date by paying the dues with a small penalty.</p>
+
+        <h2>Documents needed</h2>
+        <ul>
+          <li>Aadhaar card</li>
+          <li>Savings bank or Jan Dhan account (with IFSC)</li>
+          <li>Mobile number</li>
+        </ul>
+
+        <h2>How to join</h2>
+        <ol>
+          <li>Visit your nearest <strong>Common Service Centre (CSC)</strong> with Aadhaar and bank details, or enrol yourself on <a href="https://maandhan.in" target="_blank" rel="noopener">maandhan.in</a>.</li>
+          <li>Pay the first contribution in cash at the CSC; later payments are auto-debited.</li>
+          <li>You get a <strong>Shram Yogi card</strong> with your pension account number.</li>
+        </ol>
+        <p>The portal also shows your account statement and claim status. Being registered on <a href="/schemes/e-shram-card/">e-Shram</a> helps too.</p>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://maandhan.in" target="_blank" rel="noopener">maandhan.in</a> (Ministry of Labour &amp; Employment)
+        </div>
+''',
+    faqs=[
+        ("How much pension does PM Shram Yogi Maandhan give?", "₹3,000 a month from age 60, with 50% family pension for the spouse."),
+        ("How much do I have to pay?", "₹55 a month if you join at 18, up to ₹200 a month if you join at 40. The government adds the same amount."),
+        ("Who can join PM-SYM?", "Unorganised workers aged 18–40 with monthly income up to ₹15,000, who are not EPF/ESIC/NPS members or income-tax payers."),
+        ("Where do I join?", "At a Common Service Centre with Aadhaar and a savings or Jan Dhan account, or on maandhan.in."),
+        ("Is PM-SYM the same as Atal Pension Yojana?", "No. PM-SYM is for unorganised workers earning up to ₹15,000 and gives a fixed ₹3,000; APY lets you choose ₹1,000–₹5,000 and is open to anyone 18–40 who is not an income-tax payer."),
+    ],
+    sources=[
+        ("PIB: Pradhan Mantri Shram Yogi Maandhan (2026)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2293891"),
+        ("PIB: PM-SYM details", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2108082"),
+        ("Maandhan portal: PM-SYM", "https://maandhan.in/scheme/pmsym"),
+    ]))
+
+# ---- PM SVANidhi
+s = BY_SLUG["pm-svanidhi"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM SVANidhi gives street vendors small working-capital loans without collateral: ₹15,000 first, then ₹25,000 and ₹50,000 as you repay, with a 7% interest subsidy and cashback for digital payments. The scheme has been extended until March 2030.",
+    description="PM SVANidhi explained: collateral-free loans ₹15,000, ₹25,000 and ₹50,000 for street vendors, 7% interest subsidy, UPI-linked RuPay credit card, eligibility and how to apply.",
+    facts=[("1st loan", "₹15,000"), ("2nd loan", "₹25,000"), ("3rd loan", "₹50,000"), ("Open until", "31 March 2030")],
+    body='''
+        <h2>What is PM SVANidhi?</h2>
+        <p>PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) is run by the Ministry of Housing and Urban Affairs. In August 2025 the Union Cabinet restructured it and <strong>extended lending until 31 March 2030</strong>, with bigger loans and a new credit card.</p>
+
+        <h2>Benefits</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Loan</th><th>Amount</th><th>When</th></tr>
+          <tr><td>1st</td><td>Up to ₹15,000</td><td>Any eligible vendor</td></tr>
+          <tr><td>2nd</td><td>Up to ₹25,000</td><td>After repaying the 1st loan</td></tr>
+          <tr><td>3rd</td><td>Up to ₹50,000</td><td>After repaying the 2nd loan</td></tr>
+        </table>
+        </div>
+        <ul>
+          <li><strong>No collateral</strong> needed.</li>
+          <li><strong>7% interest subsidy</strong> for paying on time or early.</li>
+          <li><strong>Cashback</strong> for using digital (UPI) payments in your business.</li>
+          <li>A <strong>UPI-linked RuPay credit card</strong> for vendors who have repaid the 2nd loan (launched January 2026).</li>
+        </ul>
+
+        <h2>Who can apply?</h2>
+        <ul>
+          <li><strong>Street vendors</strong> selling goods or services in towns and cities, including seasonal and mobile vendors. Coverage is being extended to census towns and peri-urban areas.</li>
+          <li>Should have a <strong>Certificate of Vending / ID card</strong> from the urban local body (municipality), or a <strong>Letter of Recommendation</strong> from the municipality or Town Vending Committee if not yet identified.</li>
+        </ul>
+
+        <h2>Documents usually needed</h2>
+        <ul>
+          <li>Aadhaar (linked to mobile)</li>
+          <li>Vending certificate / ID card, or Letter of Recommendation</li>
+          <li>Bank account details</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Apply online on the <a href="https://pmsvanidhi.mohua.gov.in" target="_blank" rel="noopener">PM SVANidhi portal</a>, or at a CSC, or through your municipality office.</li>
+          <li>Choose a bank or lender and submit the application with Aadhaar eKYC.</li>
+          <li>After approval, the loan is credited to your account. Repay in monthly instalments to unlock the next, bigger loan.</li>
+        </ol>
+        <div class="note">Applying is free. Don't pay agents. Repaying on time gets you the interest subsidy and the next loan.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://pmsvanidhi.mohua.gov.in" target="_blank" rel="noopener">pmsvanidhi.mohua.gov.in</a> (Ministry of Housing and Urban Affairs)
+        </div>
+''',
+    faqs=[
+        ("How much loan does PM SVANidhi give?", "₹15,000 first, then ₹25,000 after repaying, and then ₹50,000. No collateral is needed."),
+        ("Is PM SVANidhi still open?", "Yes. In August 2025 it was extended until 31 March 2030."),
+        ("What is the interest subsidy?", "7% interest subsidy for vendors who repay on time or early."),
+        ("Who can apply for PM SVANidhi?", "Street vendors in urban areas with a vending certificate or ID from the municipality, or a Letter of Recommendation."),
+        ("What is the SVANidhi credit card?", "A UPI-linked RuPay credit card for vendors who have repaid their second loan, launched in January 2026."),
+    ],
+    sources=[
+        ("PIB: PM SVANidhi – advancing financial inclusion (May 2026, PDF)", "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/may/doc2026530879701.pdf"),
+        ("PIB: Improvement under PM SVANidhi", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2225510"),
+        ("MoHUA: PM SVANidhi guidelines (2026, PDF)", "https://www.mohua.gov.in/static/uploads/2026/01/bde957bc3a87fb001c05ddd09484edda.pdf"),
+    ]))
+
+# ---- AP: Auto Drivers Sevalo
+s = BY_SLUG["ap-auto-drivers-sevalo"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Auto Drivers Sevalo is an Andhra Pradesh scheme that gives ₹15,000 a year to auto-rickshaw, taxi (motor cab) and maxi-cab drivers who own and drive their own vehicle. It was started in October 2025 to support drivers after free bus travel for women began.",
+    description="Auto Drivers Sevalo (Andhra Pradesh) explained: ₹15,000 a year for auto, taxi and maxi-cab owner-drivers, eligibility, and 2026-27 status.",
+    facts=[("Per year", "₹15,000"), ("Launched", "4 October 2025"), ("Drivers paid (2025)", "About 2.9 lakh"), ("2026 payment", "Date not announced")],
+    body='''
+        <h2>What is Auto Drivers Sevalo?</h2>
+        <p>The Andhra Pradesh government launched <strong>Auto Drivers Sevalo</strong> on <strong>4 October 2025</strong> in Vijayawada. About <strong>2.9 lakh drivers</strong> received <strong>₹15,000 each</strong> (about ₹436 crore in total) directly in their bank accounts. The government said the scheme supports drivers whose income was affected by <a href="/schemes/ap-stree-shakti/">Stree Shakti</a> free bus travel for women.</p>
+
+        <div class="note"><strong>2026-27 status:</strong> news reports say funds have been earmarked for Auto Drivers Sevalo in 2026-27, but as of 13 October 2026 we have not found an official date for the second year's payment. We will update this page when it is announced.</div>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Drivers of <strong>auto-rickshaws, motor cabs (taxis) and maxi cabs</strong>.</li>
+          <li>You must <strong>own the vehicle and drive it yourself</strong>.</li>
+          <li>A valid <strong>driving licence</strong> and <strong>vehicle registration in Andhra Pradesh</strong>.</li>
+          <li>Other welfare conditions set by the government apply (for example household and income checks done by the secretariat).</li>
+        </ul>
+
+        <h2>Documents usually needed</h2>
+        <ul>
+          <li>Driving licence</li>
+          <li>Vehicle RC (registration certificate) in your name</li>
+          <li>Aadhaar and an Aadhaar-linked bank account</li>
+          <li>Rice card / household details, if asked</li>
+        </ul>
+
+        <h2>Missed the payment?</h2>
+        <p>Eligible drivers who did not get the money were told they could apply, and the government would check their eligibility. Contact your <strong>village or ward secretariat</strong> with your licence, RC and Aadhaar.</p>
+
+        <div class="official">
+          <strong>Help:</strong> your village/ward secretariat or the district transport office<br>
+          <strong>Official state portal:</strong> <a href="https://www.ap.gov.in" target="_blank" rel="noopener">ap.gov.in</a>
+        </div>
+''',
+    faqs=[
+        ("How much do auto drivers get in Andhra Pradesh?", "₹15,000 a year under Auto Drivers Sevalo, paid directly to the bank account."),
+        ("Who is eligible for Auto Drivers Sevalo?", "Auto, taxi and maxi-cab drivers who own and drive their own vehicle, with a valid licence and AP registration."),
+        ("When will the 2026 Auto Drivers Sevalo money come?", "As of 13 October 2026, no official date has been announced for the second year, though funds are reported as earmarked for 2026-27."),
+        ("Can I apply if I drive someone else's auto?", "According to the government's clarification, the scheme is only for drivers who own and personally drive their vehicle."),
+        ("I didn't get the money last year. What can I do?", "Contact your village or ward secretariat with your licence, RC and Aadhaar to have your eligibility checked."),
+    ],
+    sources=[
+        ("Deccan Chronicle: AP CM to distribute ₹15,000 each to 2.90 lakh auto drivers (Oct 2025)", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/driver-sevalo-ap-cm-to-distribute-rs-15000-each-to-290-lakh-auto-drivers-today-1907860"),
+        ("The Hans India: AP govt launches Auto Drivers Sevalo", "https://www.thehansindia.com/andhra-pradesh/ap-govt-launches-auto-drivers-sevalo-scheme-1011877"),
+        ("Siasat: Andhra cabinet approves ₹15,000 aid for auto, cab drivers", "https://www.siasat.com/andhra-cabinet-approves-rs-15000-financial-aid-for-auto-cab-drivers-3279468/"),
+        ("The Hans India: Welfare and development balanced (2026-27 allocations)", "https://www.thehansindia.com/andhra-pradesh/welfare-development-balanced-amid-fiscal-challenges-ramanaidu-1062119"),
+    ]))
+
+# ---- Collection: For boys & men
+write("schemes/for-men/index.html",
+    head("Government Schemes for Boys and Men: Scholarships, Jobs, Workers & Business | Kramavriddhi",
+         "Government schemes useful for boys and men: college scholarships, first-job incentive, internships, Agniveer, e-Shram, pension for workers, street vendor loans, artisan support, and AP driver support.",
+         "/schemes/for-men/")
+    + nav("schemes") + f"""
+    <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For boys &amp; men</p>
+    <header class="page-head">
+      <div class="eyebrow">Collection</div>
+      <h1>Schemes for boys &amp; men</h1>
+      <p>Most government schemes are open to everyone. This page brings together the ones most useful for boys and men at each stage of life: studies, first job, work, business and family.</p>
+    </header>
+    <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
+""" + coll_group("🎓 Studies & skills", "Scholarships and free training for students and young people.",
+        ["central-sector-scholarship", "pm-kaushal-vikas-yojana", "pm-internship-scheme"])
+    + coll_group("💼 First job & career", "Paid internships, first-job rewards and defence careers.",
+        ["pm-viksit-bharat-rozgar-yojana", "agnipath-agniveer"])
+    + coll_group("👷 Workers & labourers", "Registration, pension and insurance for daily-wage and unorganised workers.",
+        ["e-shram-card", "pm-shram-yogi-maandhan", "atal-pension-yojana", "pm-suraksha-bima-yojana", "pm-jeevan-jyoti-bima-yojana"])
+    + coll_group("🛒 Own business, trades & drivers", "Loans and support for vendors, artisans, drivers and small business owners.",
+        ["pm-svanidhi", "pm-mudra-yojana", "pm-vishwakarma", "ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam"])
+    + coll_group("🌾 Farmers", "Income support for farmer families.",
+        ["pm-kisan", "ap-annadata-sukhibhava", "ts-rythu-bharosa"])
+    + coll_group("🏥 Health & family", "Free treatment and savings for your family.",
+        ["ayushman-bharat-pm-jay", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana"])
+    + """    <p style="margin:8px 0 40px">See also: <a href="/schemes/for-youth/">Opportunities for youth</a> · <a href="/schemes/for-women/">Schemes for girls &amp; women</a></p>
+""" + FOOTER)
+
 # ---- state hub pages
 def state_hub(key, intro, slug):
     items = [x for x in DISPLAY if st(x) == key]
@@ -2481,6 +2902,11 @@ CHECKER_TEXT = {
             ("business", "I want a loan to start or grow a small business"),
             ("artisan", "I work in a traditional trade (tailor, carpenter, barber, potter, mason, goldsmith…)"),
             ("nojob", "I am looking for a job or internship"),
+            ("college", "I am in (or joining) a college degree course"),
+            ("firstjob", "I got my first job with PF (EPFO) after August 2025"),
+            ("labourer", "I work as a daily-wage, gig or other unorganised worker"),
+            ("vendor", "I am a street vendor"),
+            ("driver", "I own and drive an auto, taxi or maxi-cab"),
             ("widow", "I am a widow or single woman"),
             ("disabled", "I or a family member have a disability"),
         ],
@@ -2526,6 +2952,12 @@ CHECKER_TEXT = {
             agnipath="You are 17½–21: join the Army, Navy or Air Force as an Agniveer for four years.",
             pmkvy="Free skill training with a government certificate to help you get a job.",
             vishwakarma="Traditional artisans get paid training, a ₹15,000 toolkit and loans up to ₹3 lakh at 5%.",
+            csss="College students in the top 20% of their Class 12 board with family income up to ₹4.5 lakh get ₹12,000–₹20,000 a year.",
+            pmvbry="First-time PF employees get up to ₹15,000. Complete UAN face authentication in the UMANG app.",
+            eshram="Free e-Shram card for unorganised workers aged 16–59, linking you to welfare schemes.",
+            pmsym="Workers earning up to ₹15,000 a month can get a ₹3,000 pension at 60; the government matches your payment.",
+            svanidhi="Street vendors get collateral-free loans of ₹15,000, ₹25,000 and ₹50,000 with a 7% interest subsidy.",
+            apAuto="AP auto, taxi and maxi-cab owner-drivers got ₹15,000 a year (2026 payment date not announced yet).",
         ),
     ),
     "te": dict(
@@ -2556,6 +2988,11 @@ CHECKER_TEXT = {
             ("business", "చిన్న వ్యాపారం ప్రారంభించడానికి లేదా పెంచడానికి నాకు రుణం కావాలి"),
             ("artisan", "నేను సంప్రదాయ వృత్తిలో పనిచేస్తాను (దర్జీ, వడ్రంగి, క్షురకుడు, కుమ్మరి, మేస్త్రీ, స్వర్ణకారుడు…)"),
             ("nojob", "నేను ఉద్యోగం లేదా ఇంటర్న్‌షిప్ కోసం చూస్తున్నాను"),
+            ("college", "నేను కాలేజీ డిగ్రీ కోర్సులో చదువుతున్నాను (లేదా చేరబోతున్నాను)"),
+            ("firstjob", "ఆగస్టు 2025 తర్వాత PF (EPFO) ఉన్న నా మొదటి ఉద్యోగంలో చేరాను"),
+            ("labourer", "నేను రోజువారీ కూలీ, గిగ్ లేదా అసంఘటిత కార్మికుడిని"),
+            ("vendor", "నేను వీధి వ్యాపారిని"),
+            ("driver", "నాకు సొంత ఆటో, ట్యాక్సీ లేదా మ్యాక్సీ క్యాబ్ ఉంది, నేనే నడుపుతాను"),
             ("widow", "నేను వితంతువు లేదా ఒంటరి మహిళను"),
             ("disabled", "నాకు లేదా మా కుటుంబ సభ్యులకు వైకల్యం ఉంది"),
         ],
@@ -2601,6 +3038,12 @@ CHECKER_TEXT = {
             agnipath="మీ వయసు 17½–21: అగ్నివీర్‌గా నాలుగేళ్ళు ఆర్మీ, నేవీ లేదా ఎయిర్ ఫోర్స్‌లో చేరవచ్చు.",
             pmkvy="ఉద్యోగం పొందడానికి ప్రభుత్వ సర్టిఫికెట్‌తో ఉచిత నైపుణ్య శిక్షణ.",
             vishwakarma="సంప్రదాయ వృత్తి కళాకారులకు స్టైపెండ్‌తో శిక్షణ, ₹15,000 టూల్‌కిట్, 5% వడ్డీకి ₹3 లక్షల వరకు రుణాలు.",
+            csss="12వ తరగతిలో టాప్ 20%లో ఉండి, కుటుంబ ఆదాయం ₹4.5 లక్షల లోపు ఉన్న కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000.",
+            pmvbry="PF ఉన్న మొదటి ఉద్యోగులకు ₹15,000 వరకు. UMANG యాప్‌లో UAN ఫేస్ ఆథెంటికేషన్ పూర్తి చేయండి.",
+            eshram="16–59 ఏళ్ళ అసంఘటిత కార్మికులకు ఉచిత ఈ-శ్రమ్ కార్డు: సంక్షేమ పథకాలకు లింక్.",
+            pmsym="నెలకు ₹15,000 లోపు సంపాదించే కార్మికులకు 60 ఏళ్ళ తర్వాత నెలకు ₹3,000 పింఛన్; మీరు కట్టినంత ప్రభుత్వం కలుపుతుంది.",
+            svanidhi="వీధి వ్యాపారులకు హామీ లేకుండా ₹15,000, ₹25,000, ₹50,000 రుణాలు, 7% వడ్డీ రాయితీ.",
+            apAuto="ఏపీలో సొంత ఆటో, ట్యాక్సీ, మ్యాక్సీ క్యాబ్ నడిపేవారికి ఏడాదికి ₹15,000 (2026 చెల్లింపు తేదీ ఇంకా ప్రకటించలేదు).",
         ),
     ),
 }
@@ -2693,6 +3136,11 @@ def checker_page(lang):
           if (age >= 17 && age <= 21) add('agnipath-agniveer', 'agnipath');
           if (age >= 15 && age <= 35 && (f.nojob || f.business)) add('pm-kaushal-vikas-yojana', 'pmkvy');
           if (f.artisan && age >= 18 && !f.govtjob) add('pm-vishwakarma', 'vishwakarma');
+          if (f.college && inc <= 6) add('central-sector-scholarship', 'csss');
+          if (f.firstjob) add('pm-viksit-bharat-rozgar-yojana', 'pmvbry');
+          if ((f.labourer || f.vendor || f.driver) && age >= 16 && age <= 59 && notRich) add('e-shram-card', 'eshram');
+          if ((f.labourer || f.vendor || f.driver) && age >= 18 && age <= 40 && notRich && inc <= 1) add('pm-shram-yogi-maandhan', 'pmsym');
+          if (f.vendor) add('pm-svanidhi', 'svanidhi');
 
           // Andhra Pradesh
           if (state === 'ap') {{
@@ -2701,6 +3149,7 @@ def checker_page(lang):
             if (poor && f.school) add('ap-thalliki-vandanam', 'apThalliki');
             if (poor && f.lpg) add('ap-deepam-2', 'apDeepam');
             if (woman || trans) add('ap-stree-shakti', 'apStree');
+            if (f.driver) add('ap-auto-drivers-sevalo', 'apAuto');
           }}
           // Telangana
           if (state === 'ts') {{
@@ -3022,6 +3471,10 @@ write("games/index.html",
 # ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
 # Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
 UPDATES = [
+    dict(kind="deadline", date="13 Oct 2026", until="2026-10-31",
+         title="Central Sector Scholarship: apply by 31 October",
+         text="College students in the top 20% of their Class 12 board with family income up to ₹4.5 lakh can get ₹12,000–₹20,000 a year. Apply on the National Scholarship Portal.",
+         link="/schemes/central-sector-scholarship/"),
     dict(kind="deadline", date="8 Oct 2026", until="2026-10-31",
          title="Pragati Scholarship for girls: apply by 31 October",
          text="Girls in AICTE degree and diploma courses can get ₹50,000 a year. 2026-27 applications on the National Scholarship Portal close on 31 October 2026.",
@@ -3086,7 +3539,7 @@ write("updates/index.html",
       <div class="eyebrow">Updates</div>
       <h1>Latest updates &amp; deadlines</h1>
       <p>Important dates, expected payments and new rules for the schemes on Kramavriddhi. We check official sources regularly and update this page.</p>
-      <p class="muted" style="font-size:0.9rem">Last checked: 8 October 2026</p>
+      <p class="muted" style="font-size:0.9rem">Last checked: 13 October 2026</p>
     </header>
     <div class="updates">
 {"".join(update_item(u) for u in UPDATES)}    </div>
@@ -3267,7 +3720,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
