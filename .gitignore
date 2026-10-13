@@ -1,3 +1,7 @@
 _tools/home_cards.html
 _tools/__pycache__/
 _social/_html/
+
+# Shorts: rendered videos are large; node deps for the renderer
+_social/videos/
+node_modules/

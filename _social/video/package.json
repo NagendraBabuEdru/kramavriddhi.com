@@ -1,0 +1,12 @@
+{
+  "name": "kramavriddhi-shorts",
+  "private": true,
+  "description": "Renders the Kramavriddhi YouTube Shorts (see make_videos.js)",
+  "scripts": {
+    "videos": "node make_videos.js",
+    "stills": "node make_videos.js --stills"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}
