@@ -17,6 +17,7 @@ Two kinds of videos, both built from the game itself:
 | `make_rex.js` | Promos: gameplay clips + overlay + audio → MP4s and thumbnail (ffmpeg). |
 | `stories/engine.js` | Story engine: actors with keyframes, camera, speech bubbles (Telugu + English), captions, comic effects, sound cues. |
 | `stories/episodes.js` | The story scripts (scenes are shared by the Shorts and the long episode). |
+| `stories/classic.js` | The "Little Rex" Shorts in the black-and-white book style (Wren Can't See, Hide and Seek, Fire Sneeze). |
 | `stories/make_stories.js` | Records the stories frame by frame (`--stills` for preview frames). `timeline.js` prints lengths and chapter times; `sheet.py` tiles preview stills. |
 | `recording-build/` | What is added to a **copy** of the game for recording: `demo_hook.dart` + `rex_game.patch` (autopilot hook), `story_view.dart` + `main.patch` (the puppet theatre opened with `?story`). |
 

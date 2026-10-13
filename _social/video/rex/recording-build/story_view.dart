@@ -4,6 +4,7 @@
 // the four stage backgrounds, and the ink book's Little Rex, Nix, Flick and props.
 // On top it can add simple expressions (happy / wide / sleepy / sad eyes, blush, sweat, tears).
 import 'dart:convert';
+import 'dart:math' as math;
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
@@ -11,9 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../classic/adventure_painters.dart' as adv;
 import '../classic/baby_rex.dart' as baby;
 import '../classic/ink.dart' as ink;
 import '../classic/ink_painters.dart' as inkp;
+import '../classic/level_painters.dart' as lvl;
 import '../classic/more_painters.dart' as more;
 import '../classic/nix.dart' as nix;
 import '../classic/tasks.dart' as tasks;
@@ -190,7 +193,46 @@ class _Puppets extends CustomPainter {
       case 'starBall':
         inkp.drawStarBall(c, 0, 0, rot: _n(it['spin']), shadow: !_b(it['noShadow']));
       case 'inkWren':
-        more.drawInkWren(c, 0, 0, s, t, umbrella: false, happy: _b(it['happy']));
+        more.drawInkWren(c, 0, 0, s, t, umbrella: _b(it['umbrella']), glasses: _b(it['glasses']), happy: _b(it['happy']));
+      case 'babyStella':
+        more.drawBabyStella(c, 0, 0, s, t, crying: _b(it['crying']), happy: _b(it['happy']));
+      case 'babyMomo':
+        lvl.drawBabyMomo(c, 0, 0, s, t, crying: _b(it['crying']), happy: _b(it['happy']), faceLeft: _b(it['faceLeft']));
+      case 'glasses':
+        c.scale(s);
+        more.drawGlasses(c, 0, 0, heart: !_b(it['plain']));
+      case 'partyHat':
+        c.scale(s);
+        lvl.drawPartyHat(c, 0, 0);
+      case 'present':
+        c.scale(s);
+        lvl.drawPresent(c, 0, 0);
+      case 'teacup':
+        c.scale(s);
+        more.drawTeacup(c, 0, 0);
+      case 'cupcake':
+        c.scale(s);
+        lvl.drawCupcake(c, 0, 0);
+        // the book draws the flame in ink; unlit = paper over it, lit = Star Quest's one accent colour (fire)
+        c.drawRect(const Rect.fromLTWH(-7, -59, 14, 12.6), Paint()..color = ink.Pal.paper);
+        if (_b(it['lit'])) {
+          final f = 1 + math.sin(t * 22) * 0.12;
+          final flame = Path()
+            ..moveTo(0, -46 - 12 * f)
+            ..quadraticBezierTo(6, -52, 0, -47)
+            ..quadraticBezierTo(-6, -52, 0, -46 - 12 * f);
+          c.drawPath(flame, Paint()..color = ink.Pal.glow);
+          c.drawPath(flame, Paint()
+            ..color = ink.Pal.ink
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 1.2);
+        }
+      case 'breath':
+        adv.drawBreath(c, Offset.zero, Offset(_n(it['dx'], 1), _n(it['dy'])), _n(it['prog'], 1), t);
+      case 'rain':
+        more.drawRain(c, t);
+      case 'goblin':
+        adv.drawGoblin(c, 0, 0, s, t, faceLeft: _b(it['faceLeft']), sleeping: _b(it['sleeping']));
       case 'thing':
         inkp.drawThing(c, tasks.Thing(id: 'x', kind: it['kind'] as String, x: 0, y: 0, seed: _n(it['seed'], 3).toInt()), t);
       case 'critter':

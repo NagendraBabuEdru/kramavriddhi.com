@@ -87,7 +87,7 @@ function music(out, seconds, opts = {}) {
       chord.forEach((m, j) => pluck(ts + j * 0.012, m, 0.16, 0.35 + 0.1 * j, 0.6));
     }
     // drums
-    if (!intro) {
+    if (!intro && opts.drums !== false) {
       kick(t0, 0.5); kick(t0 + BEAT * 2, 0.45); if (b % 2) kick(t0 + BEAT * 2.75, 0.25);
       noiseHit(t0 + BEAT, 0.16, 0.18, 22, 0.25); noiseHit(t0 + BEAT * 3, 0.16, 0.18, 22, 0.25);
       for (let k = 0; k < 8; k++) noiseHit(t0 + k * BEAT / 2, k % 2 ? 0.05 : 0.03, 0.06, 70, 0.9, 0.7);
@@ -158,6 +158,12 @@ function music(out, seconds, opts = {}) {
       case 'twinkle': [84, 88, 91, 96].forEach((m, j) => marimba(t + j * 0.06, m, 0.08)); break;
       case 'wobble': for (let i = 0; i < 6; i++) sweep(t + i * 0.08, 300 + (i % 2) * 120, 300 + ((i + 1) % 2) * 120, 0.08, 0.08); break;
       case 'clink': marimba(t, 96, 0.08); marimba(t + 0.03, 101, 0.06); break;
+      case 'achoo': sweep(t, 900, 1500, 0.12, 0.08); noiseHit(t + 0.12, 0.35, 0.45, 7, 0.35); sweep(t + 0.12, 700, 160, 0.35, 0.14, 'square'); break;
+      case 'aah': sweep(t, 500 * (e.pitch || 1), 640 * (e.pitch || 1), e.dur || 0.5, 0.07); break;
+      case 'sigh': noiseHit(t, 0.07, 0.8, 2.5, 0.6); sweep(t, 420, 260, 0.8, 0.04); break;
+      case 'tiptoe': blip(t, 980, 0.05, 0.05); blip(t + 0.18, 1170, 0.05, 0.05); break;
+      case 'leaves': noiseHit(t, 0.12, 0.5, 6, 0.8); break;
+      case 'fwoosh': noiseHit(t, 0.28, 0.9, 3, 0.15); sweep(t, 120, 260, 0.6, 0.12, 'square'); break;
     }
   }
   // music mutes (comic pauses), with 80 ms ramps

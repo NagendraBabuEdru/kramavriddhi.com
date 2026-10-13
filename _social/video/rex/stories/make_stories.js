@@ -13,7 +13,7 @@ const OUT = path.join(__dirname, '..', '..', '..', 'videos', 'rex', 'stories');
 const FPS = 30;
 const args = process.argv.slice(2), stills = args.includes('--stills');
 const ids = args.filter(a => !a.startsWith('--'));
-const EPISODES = Object.keys(require('./episodes_list'));
+const EPISODES = Object.entries(require('./episodes_list')).filter(([, m]) => !m.dev).map(([k]) => k);
 
 async function render(id) {
   const meta = require('./episodes_list')[id];
@@ -30,15 +30,24 @@ async function render(id) {
     for (let i = 0; i < 400 && !(await page.evaluate(() => !!window.storyReady)); i++) await pump(5);
     await page.addScriptTag({ path: path.join(__dirname, 'engine.js') });
     await page.addScriptTag({ path: path.join(__dirname, 'episodes.js') });
+    await page.addScriptTag({ path: path.join(__dirname, 'classic.js') });
     const info = await page.evaluate((id, W, H) => {
       const s = window.EPISODES[id]({ W, H });
       window.storyUse(s);
-      return { duration: s.duration, endDur: s.endDur || 0, cues: s.cues, mutes: s.mutes || [], seed: s.seed || 5, musicVol: s.musicVol ?? 0.8 };
+      return { duration: s.duration, endDur: s.endDur || 0, cues: s.cues, mutes: s.mutes || [], seed: s.seed || 5, musicVol: s.musicVol ?? 0.8, drums: s.drums };
     }, id, meta.W, meta.H);
     await page.evaluate(() => document.fonts.ready);
     await pump(30);
+    let stalled = 0;
     const frame = async T => {
-      await page.evaluate(async (T, fps) => { window.__T = T; window.__step(1000 / fps); await window.renderOverlay(T); }, T, FPS);
+      // the theatre must draw every frame; if WebGL is lost the picture would silently go blank
+      const drew = await page.evaluate(async (T, fps) => {
+        const before = window.__drawn || 0;
+        window.__T = T; window.__step(1000 / fps); await window.renderOverlay(T);
+        return (window.__drawn || 0) > before;
+      }, T, FPS);
+      stalled = drew ? 0 : stalled + 1;
+      if (stalled > 5) throw new Error(`the game art stopped drawing at ${T.toFixed(2)} s (render one video at a time)`);
       await page.evaluate(() => new Promise(r => setTimeout(r, 0)));
       return page.screenshot({ type: 'jpeg', quality: 93, optimizeForSpeed: true });
     };
@@ -77,7 +86,7 @@ async function render(id) {
       return;
     }
     const wav = path.join(OUT, `${id}.wav`), mp4 = path.join(OUT, meta.file);
-    music(wav, info.duration, { events: info.cues, mutes: info.mutes, endAt: info.duration - info.endDur + 0.3, seed: info.seed, musicVol: info.musicVol });
+    music(wav, info.duration, { events: info.cues, mutes: info.mutes, endAt: info.duration - info.endDur + 0.3, seed: info.seed, musicVol: info.musicVol, drums: info.drums });
     const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-c:v', 'mjpeg', '-framerate', String(FPS), '-i', '-', '-i', wav,
       '-map', '0:v', '-map', '1:a', '-vf', 'scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p',
       '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-profile:v', 'high', '-level:v', meta.H > 1080 || meta.W > 1920 ? '4.2' : '4.1', '-g', '60', '-bf', '2',

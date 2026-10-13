@@ -37,6 +37,7 @@
   const HEAD = {
     rex: [44, -88], tri: [34, -50], stego: [34, -52], ankylo: [34, -48], ptera: [18, -42], wren: [18, -42],
     raptor: [-30, -72], boss: [-30, -78], baby: [8, -84], mama: [8, -84], nix: [10, -96], babyTiko: [-6, -58], flick: [0, -14],
+    inkWren: [-6, -66], babyStella: [6, -50], babyMomo: [-8, -48], goblin: [0, -66],
   };
 
   class Actor {
@@ -67,12 +68,20 @@
     }
     item(T) {
       const it = { k: this.k };
-      const skip = new Set(['dy', 'dx', 'move', 'shk', 'z', 'bob', 'voice', 'hidden']);
+      const skip = new Set(['dy', 'dx', 'move', 'shk', 'z', 'bob', 'voice', 'hidden', 'attach', 'flyUp']);
       for (const p of new Set([...Object.keys(this.base), ...Object.keys(this.tracks)])) if (!skip.has(p)) it[p] = this.v(p, T);
       const shk = this.v('shk', T);
       it.x = it.x + this.v('dx', T) + (shk ? Math.sin(T * 70) * shk : 0);
       it.y = it.y + this.v('dy', T) + Math.sin(T * 3 + (this.base.tOff || 0)) * this.v('bob', T);
       it.t = T + (this.base.tOff || 0);
+      const at = this.base.attach;   // ride on another actor (a party hat on a head); flyUp lifts it off
+      if (at) {
+        const o = at.a, s = o.v('s', T), sg = (o.v('faceLeft', T) ? -1 : 1) * (o.v('flip', T) ? -1 : 1), fu = this.v('flyUp', T) || 0;
+        it.x = o.v('x', T) + o.v('dx', T) + at.ox * s * sg + fu * 30;
+        it.y = o.v('y', T) + o.v('dy', T) + at.oy * s * o.v('sy', T) - fu * 150;
+        it.rot = (it.rot || 0) + fu * 4 + o.v('rot', T);
+        it.alpha = Math.min(it.alpha ?? 1, o.v('alpha', T));
+      }
       if (this.k === 'rex' || this.k === 'friend' || this.k === 'raptor') {
         const flies = this.k === 'friend' && (this.base.kind === 'ptera' || this.base.kind === 'wren');
         it.still = !(this.v('move', T) || flies || this.v('air', T));
@@ -93,15 +102,16 @@
     rex(p) { return this.actor('rex', p); }
     friend(kind, p) { return this.actor('friend', { kind, ...p }); }
     // a line of dialogue: bubble over the actor, Telugu first, English below
-    say(t, a, te, en, dur) {
+    say(t, a, te, en, dur, o = {}) {
       const d = dur || clamp(1.6 + (te.length + en.length) * 0.028, 2.0, 4.6);
-      this.bubbles.push({ t0: t, t1: t + d, a, te, en });
+      this.bubbles.push({ t0: t, t1: t + d, a, te, en, ...o });
       this.cues.push({ t: t + 0.05, type: 'talk', voice: a.base.voice || a.k, n: Math.round(clamp((en.length) / 4, 3, 14)) });
       return t + d;
     }
     caption(t, dur, te, en) { this.caps.push({ t0: t, t1: t + dur, te, en }); }
     // real gameplay video (served next to the page) shown full-frame from t for dur seconds
     clip(t, dur, src, from = 0, frames) { this.clips.push({ t0: t, t1: t + dur, src, from, frames }); }
+    screen(t, dur, o = {}) { (this.screens || (this.screens = [])).push({ t0: t, t1: t + dur, ...o }); }
     effect(t, type, x, y, o = {}) { this.fx.push({ t0: t, type, x, y, ...o }); }
     sfx(t, type, o = {}) { this.cues.push({ t, type, ...o }); }
     camAt(t, cx, cy, z, dur = 0, ease = 'inout') { dur ? this.cam.to(t, { cx, cy, zz: z }, dur, ease) : this.cam.set(t, { cx, cy, zz: z }); }
@@ -141,13 +151,18 @@
       #sl .cap { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; background: rgba(20,32,30,.82); border-radius: 26px; padding: 12px 30px; color: #fff; }
       #sl .card { position: absolute; inset: 0; background: linear-gradient(165deg,#0b4f4a,#0f766e 62%,#12806f); display: flex; flex-direction: column; justify-content: center; }
       #sl .pill { display: inline-block; border-radius: 999px; padding: .18em .7em; }
+      #sl.ink .bub { background: #fbfbfb; border: 5px solid #222; border-radius: 30px 38px 32px 36px; box-shadow: 6px 8px 0 rgba(0,0,0,.12); }
+      #sl.ink .bub .t1 { color: #111; }
+      #sl.ink .bub .t2 { color: #555; font-family: 'Patrick Hand', 'Segoe Print', cursive; font-weight: 400; }
+      #sl.ink .cap { background: rgba(250,250,250,.94); color: #111; border: 4px solid #222; }
+      #sl.ink .cap div + div { color: #555 !important; font-family: 'Patrick Hand', cursive; font-weight: 400 !important; }
     `;
     document.head.appendChild(css);
     const fonts = document.createElement('link');
     fonts.rel = 'stylesheet';
-    fonts.href = 'https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;800;900&display=block';
+    fonts.href = 'https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;800;900&family=Patrick+Hand&display=block';
     document.head.appendChild(fonts);
-    layer = document.createElement('div'); layer.id = 'sl'; document.body.appendChild(layer);
+    layer = document.createElement('div'); layer.id = 'sl'; if (story.style === 'ink') layer.className = 'ink'; document.body.appendChild(layer);
     fxCanvas = document.createElement('canvas'); fxCanvas.width = story.W; fxCanvas.height = story.H;
     fxCanvas.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%';
     layer.appendChild(fxCanvas); ctx = fxCanvas.getContext('2d');
@@ -162,17 +177,17 @@
     // corner brand during the story
     const brandOp = S.title ? clamp((T - S.titleDur) / 0.4) * clamp((S.duration - S.endDur - T) / 0.3) : 1;
     if (brandOp > 0) {
-      html += `<div style="position:absolute;${P ? 'left:60px;top:96px' : 'left:36px;top:30px'};opacity:${brandOp * 0.92};display:flex;align-items:center;gap:12px;color:#fff;font:700 ${P ? 34 : 28}px 'Segoe UI';text-shadow:0 2px 8px rgba(0,0,0,.5)">
+      html += `<div style="position:absolute;${P ? 'left:60px;top:96px' : 'left:36px;top:30px'};opacity:${brandOp * 0.92};display:flex;align-items:center;gap:12px;color:${S.style === 'ink' ? '#222' : '#fff'};font:700 ${P ? 34 : 28}px 'Segoe UI';text-shadow:${S.style === 'ink' ? 'none' : '0 2px 8px rgba(0,0,0,.5)'}">
         <span style="width:${P ? 56 : 46}px;height:${P ? 56 : 46}px;display:block">${LOGO}</span>Kramavriddhi${S.series ? ` <span class="pill disp" style="background:#f5b83d;color:#14201e;font-size:${P ? 26 : 22}px;font-weight:400;text-shadow:none">${S.series}</span>` : ''}</div>`;
     }
     if (S.title && T < S.titleDur + 0.4) {
       const p = clamp(T / 0.5), out = clamp((S.titleDur + 0.4 - T) / 0.4);
       const sc = lerp(0.6, 1, EASE.back(p));
       html += `<div style="position:absolute;left:0;right:0;${P ? 'top:330px' : 'top:120px'};display:flex;justify-content:center;opacity:${Math.min(p * 2, 1) * out}">
-        <div style="transform:scale(${sc});background:rgba(11,79,74,.94);border:6px solid #f5b83d;border-radius:36px;padding:${P ? '26px 44px' : '20px 44px'};text-align:center;max-width:${P ? 880 : 1300}px;box-shadow:0 18px 50px rgba(0,0,0,.35)">
-          <div class="disp" style="font-size:${P ? 34 : 30}px;color:#9fdc6e;letter-spacing:2px">${S.kicker || "REX'S BIG ADVENTURE"}</div>
-          <div class="te" style="font-size:${P ? 66 : 58}px;color:#fff;line-height:1.35">${S.title.te}</div>
-          <div class="disp" style="font-size:${P ? 58 : 52}px;color:#f5b83d;line-height:1.1">${S.title.en}</div></div></div>`;
+        <div style="transform:scale(${sc});${S.style === 'ink' ? 'background:#fbfbfb;border:6px solid #222;border-radius:30px 40px 34px 38px;color:#111' : 'background:rgba(11,79,74,.94);border:6px solid #f5b83d;border-radius:36px'};padding:${P ? '26px 44px' : '20px 44px'};text-align:center;max-width:${P ? 880 : 1300}px;box-shadow:0 18px 50px rgba(0,0,0,.35)">
+          <div class="disp" style="font-size:${P ? 34 : 30}px;color:${S.style === 'ink' ? '#777' : '#9fdc6e'};letter-spacing:2px">${S.kicker || "REX'S BIG ADVENTURE"}</div>
+          <div class="te" style="font-size:${P ? 66 : 58}px;color:${S.style === 'ink' ? '#111' : '#fff'};line-height:1.35">${S.title.te}</div>
+          <div style="font-size:${P ? 64 : 56}px;line-height:1.1;${S.style === 'ink' ? "font-family:'Patrick Hand',cursive;color:#333" : "font-family:'Lilita One';color:#f5b83d"}">${S.title.en}</div></div></div>`;
     }
     if (S.endDur && T > S.duration - S.endDur) {
       const lt = T - (S.duration - S.endDur), p = clamp(lt / 0.4), q = k => EASE.back(clamp((lt - k) / 0.5));
@@ -204,7 +219,7 @@
         layer.appendChild(el); layer.appendChild(tail); el._tail = tail;
         bubbleEls.set(key, el);
       }
-      const [hx, hy] = b.a.head(T), [sx, sy] = S.toScreen(T, hx, hy);
+      const [hx, hy] = b.a.head(T), [sx, sy] = S.toScreen(T, hx + (b.ox || 0), hy + (b.oy || 0));
       const w = el.offsetWidth, h = el.offsetHeight;
       let left = clamp(sx - w / 2, minX, maxX - w), top = Math.max(minY, sy - h - 46);
       if (b.below) top = sy + 40;
@@ -215,7 +230,7 @@
       const tl = el._tail, tx = clamp(sx, left + 40, left + w - 40), tyTop = top + h - 6;
       const tipY = Math.min(sy - 8, tyTop + 60);
       tl.style.cssText = `position:absolute;left:0;top:0;width:${S.W}px;height:${S.H}px;opacity:${el.style.opacity}`;
-      tl.innerHTML = `<svg width="${S.W}" height="${S.H}" style="position:absolute;left:0;top:0;overflow:visible"><path d="M${tx - 22},${tyTop} L${tx + 22},${tyTop} L${lerp(tx, sx, 0.7)},${Math.max(tipY, tyTop + 26)} Z" fill="#fffdf4" stroke="#14201e" stroke-width="5" stroke-linejoin="round"/><rect x="${tx - 19}" y="${tyTop - 9}" width="38" height="10" fill="#fffdf4"/></svg>`;
+      tl.innerHTML = `<svg width="${S.W}" height="${S.H}" style="position:absolute;left:0;top:0;overflow:visible"><path d="M${tx - 22},${tyTop} L${tx + 22},${tyTop} L${lerp(tx, sx, 0.7)},${Math.max(tipY, tyTop + 26)} Z" fill="${S.style === 'ink' ? '#fbfbfb' : '#fffdf4'}" stroke="${S.style === 'ink' ? '#222' : '#14201e'}" stroke-width="5" stroke-linejoin="round"/><rect x="${tx - 19}" y="${tyTop - 9}" width="38" height="10" fill="${S.style === 'ink' ? '#fbfbfb' : '#fffdf4'}"/></svg>`;
     }
     for (const [k, el] of bubbleEls) if (!live.has(k)) { el._tail.remove(); el.remove(); bubbleEls.delete(k); }
   }
@@ -351,6 +366,30 @@
           }
           break;
         }
+        case 'fluff': {   // dandelion seeds drifting
+          for (let i = 0; i < (f.n || 7); i++) {
+            const q = clamp(p * 1.2 - i * 0.05), xx = x + (f.dx || 160) * q * sz + Math.sin(lt * 3 + i * 1.7) * 18 * sz, yy = y - 60 * q * sz + Math.cos(lt * 2 + i) * 14 * sz + i * 4;
+            ctx.globalAlpha = Math.sin(clamp(p * 1.1) * Math.PI); ctx.strokeStyle = '#444'; ctx.lineWidth = 1.5;
+            for (let r = 0; r < 6; r++) { const a = r * 1.05; ctx.beginPath(); ctx.moveTo(xx, yy); ctx.lineTo(xx + Math.cos(a) * 7 * sz, yy + Math.sin(a) * 7 * sz); ctx.stroke(); }
+          }
+          break;
+        }
+        case 'puff': {   // grey smoke puffs (a tiny fizzle of fire breath)
+          for (let i = 0; i < (f.n || 4); i++) {
+            const q = clamp(p * 1.3 - i * 0.1);
+            ctx.globalAlpha = (1 - q) * 0.85; ctx.fillStyle = f.color || '#9a9a9a'; ctx.strokeStyle = '#333'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(x + (f.dir || 1) * (20 + q * 60) * sz + i * 6, y - q * 50 * sz - i * 8, (8 + q * 16 + i * 3) * sz, 0, 7); ctx.fill(); ctx.stroke();
+          }
+          break;
+        }
+        case 'drops': {   // water drops on glasses / after a splash
+          for (let i = 0; i < (f.n || 10); i++) {
+            const a = i * 2.4, d = (10 + (i * 13) % 40) * sz;
+            ctx.globalAlpha = 1 - p * 0.6; ctx.fillStyle = '#cfe8ff'; ctx.strokeStyle = '#333'; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.ellipse(x + Math.cos(a) * d, y + Math.sin(a) * d * 0.6 + p * 20 * sz, 5 * sz, 7 * sz, 0, 0, 7); ctx.fill(); ctx.stroke();
+          }
+          break;
+        }
         case 'flash': { ctx.globalAlpha = (1 - p) * (f.a || 0.7); ctx.fillStyle = f.color || '#fff'; ctx.fillRect(0, 0, S.W, S.H); break; }
         case 'fade': { ctx.globalAlpha = Math.sin(p * Math.PI); ctx.fillStyle = f.color || '#071009'; ctx.fillRect(0, 0, S.W, S.H); break; }
       }
@@ -361,7 +400,7 @@
   window.StoryEngine = { Story, EASE, clamp, lerp };
   window.storyUse = s => { story = s; story.renderScale = story.renderScale || 1; buildOverlay(); };
   window.__T = 0;
-  window.storyFrame = () => JSON.stringify(story ? story.frame(window.__T) : {});
+  window.storyFrame = () => { window.__drawn = (window.__drawn || 0) + 1; return JSON.stringify(story ? story.frame(window.__T) : {}); };
   // real gameplay: a folder of numbered JPEG frames (30 fps) next to the page; one image per video frame
   const imgs = new Map();
   async function renderClips(T) {
@@ -381,6 +420,18 @@
       }
     }
   }
-  window.renderOverlay = async T => { await renderClips(T); renderBubbles(T); renderCaption(T); renderFx(T); renderChrome(T); };
+  function renderScreen(T) {
+    const fv = document.querySelector('flutter-view') || document.querySelector('flt-glass-pane');
+    if (!fv) return;
+    let blur = 0, wob = 0;
+    for (const s of story.screens || []) {
+      if (T < s.t0 || T > s.t1) continue;
+      const k = Math.min(clamp((T - s.t0) / 0.35), clamp((s.t1 - T) / 0.35));
+      blur = Math.max(blur, (s.blur || 0) * k); wob = Math.max(wob, (s.wobble || 0) * k);
+    }
+    fv.style.filter = blur ? `blur(${blur.toFixed(2)}px)` : '';
+    fv.style.transform = wob ? `rotate(${(Math.sin(T * 5) * wob).toFixed(3)}deg) scale(${(1 + wob * 0.012).toFixed(4)}) skewX(${(Math.sin(T * 3.3) * wob * 0.6).toFixed(3)}deg)` : '';
+  }
+  window.renderOverlay = async T => { await renderClips(T); renderScreen(T); renderBubbles(T); renderCaption(T); renderFx(T); renderChrome(T); };
   window.storyCues = () => story.cues;
 })();
