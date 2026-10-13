@@ -160,6 +160,56 @@ const SHORTS = {
       { start: 29, cls: 'end', html: endCard('ఇప్పుడే ట్రై చేయండి! 👆', 'Try it now: kramavriddhi.com/te/tools/') },
     ],
   },
+
+  // ---------------------------------------------------------------- Short 4: Central Sector Scholarship (CSSS)
+  4: {
+    file: 'short-4-csss', duration: 35, tag: '⏰ Last date 31 Oct', tagColor: '#d97706', music: { root: 58, seed: 1 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">కాలేజీ విద్యార్థులకు ఏడాదికి</div>
+        <div class="mega gold" data-in="0.25" data-fx="pop" data-pulse style="font-size:150px;line-height:1.15">₹12,000–<br>₹20,000</div>
+        <div class="h1" data-in="0.9">స్కాలర్‌షిప్!</div>
+        <div class="sub en" data-in="1.2">Scholarship for college students, every year</div>
+        <div class="pill" data-in="1.8" data-fx="pop">⏰ చివరి తేదీ: 31 అక్టోబర్</div>` },
+      { start: 4.5, html: `
+        <div class="label en" data-in="0.1">What is it?</div>
+        <div class="h2" data-in="0.2">సెంట్రల్ సెక్టార్ స్కాలర్‌షిప్</div>
+        <div class="sub en" data-in="0.5">Central Sector Scholarship (CSSS) · PM-USP, Ministry of Education</div>
+        <div class="chips">
+          ${chip('🎓', 'డిగ్రీ 1–3 సంవత్సరాలు: ₹12,000 / ఏడాది', 'Degree years 1–3: ₹12,000 a year', 1.4)}
+          ${chip('📚', 'పీజీ, B.Tech 4వ సంవత్సరం: ₹20,000 / ఏడాది', 'PG and 4th/5th year of technical courses: ₹20,000', 2.3)}
+          ${chip('🏦', 'నేరుగా మీ బ్యాంకు ఖాతాలోకి (DBT)', 'Paid by DBT to your bank account', 3.2)}
+        </div>` },
+      { start: 10, html: `
+        <div class="label en" data-in="0.1">Who can apply?</div>
+        <div class="h2" data-in="0.2">ఎవరు దరఖాస్తు చేయవచ్చు?</div>
+        ${point(1, '12వ తరగతిలో టాప్ 20%', 'Above the 80th percentile in your stream, Class 12 board', 0.9)}
+        ${point(2, 'కుటుంబ ఆదాయం ₹4.5 లక్షల లోపు', 'Family income up to ₹4.5 lakh a year', 2.6)}
+        ${point(3, 'రెగ్యులర్ డిగ్రీ కోర్సు', 'Regular degree course, not diploma or distance', 4.3)}
+        ${point(4, 'వేరే స్కాలర్‌షిప్ రాకూడదు', 'Not getting another scholarship or fee reimbursement', 5.8)}` },
+      { start: 17.5, dark: true, html: `
+        <div class="label en" data-in="0.1">For boys and girls</div>
+        <div class="split">
+          <div class="half" data-in="0.3" data-fx="pop"><div class="ic">👦</div><div class="pc">50%</div><div class="t">అబ్బాయిలకు</div><div class="e en">Boys</div></div>
+          <div class="half" data-in="0.7" data-fx="pop"><div class="ic">👧</div><div class="pc">50%</div><div class="t">అమ్మాయిలకు</div><div class="e en">Girls</div></div>
+        </div>
+        <div class="para" data-in="1.8">ప్రతి సంవత్సరం కొనసాగాలంటే: 50% మార్కులు + 75% హాజరు</div>
+        <div class="sub en" data-in="2.1">To renew each year: at least 50% marks and 75% attendance</div>` },
+      { start: 22.5, html: `
+        <div class="label en" data-in="0.1">How to apply</div>
+        <div class="h2" data-in="0.2">ఎక్కడ దరఖాస్తు చేయాలి?</div>
+        <div class="card white" data-in="0.8" data-fx="pop">
+          <div class="portal"><div class="ic">🎓</div><div><div class="t">National Scholarship Portal</div><div class="u">scholarships.gov.in</div></div></div>
+        </div>
+        <div class="row">
+          <div class="datecard" data-in="1.7" data-fx="pop" data-pulse>
+            <div class="top">LAST DATE</div><div class="day">31</div><div class="mon">అక్టోబర్ 2026</div>
+          </div>
+        </div>
+        <div class="sub" data-in="2.6">✔ తర్వాత మీ కాలేజీ వెరిఫై చేస్తుంది · అధికారిక పోర్టల్‌లో మాత్రమే దరఖాస్తు చేయండి<br><span class="en">Then your college verifies it. Apply only on the official portal</span></div>` },
+      { start: 28, cls: 'end', html: endCard('కాలేజీ ఫ్రెండ్స్‌కి షేర్ చేయండి! 🎓', 'Share with your college friends') },
+    ],
+  },
 };
 
 // Step 2 of the checker demo: fields fill in after each tap, then the button is pressed.
