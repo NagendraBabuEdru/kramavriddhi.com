@@ -51,8 +51,8 @@ def head(title, desc, path, extra="", lang="en", alternates=None):
 '''
 
 NAV_LABELS = {
-    "en": dict(schemes="Schemes", tools="Tools", games="Games", products="Products", about="About", contact="Contact"),
-    "te": dict(schemes="పథకాలు", tools="సాధనాలు", games="ఆటలు", products="ఉత్పత్తులు", about="మా గురించి", contact="సంప్రదించండి"),
+    "en": dict(schemes="Schemes", tools="Tools", games="Games", apps="Apps", products="Products", about="About", contact="Contact"),
+    "te": dict(schemes="పథకాలు", tools="సాధనాలు", games="ఆటలు", apps="యాప్‌లు", products="ఉత్పత్తులు", about="మా గురించి", contact="సంప్రదించండి"),
 }
 
 def nav(active="", lang="en"):
@@ -70,7 +70,7 @@ def nav(active="", lang="en"):
       <ul>
         {li(schemes_href, L["schemes"], "schemes")}
         {li("/tools/", L["tools"], "tools")}
-        {li("/games/", L["games"], "games")}
+        {li("/apps/", L["apps"], "apps")}
         {li("/about/", L["about"], "about", "hide-sm")}
         {li("/contact/", L["contact"], "contact")}
       </ul>
@@ -93,6 +93,7 @@ def footer(lang="en"):
         links = '''          <li><a href="/te/schemes/">తెలుగు పథకాలు</a></li>
           <li><a href="/schemes/">Schemes (English)</a></li>
           <li><a href="/tools/">సాధనాలు</a></li>
+          <li><a href="/apps/">యాప్‌లు</a></li>
           <li><a href="/games/">ఆటలు</a></li>
           <li><a href="/contact/">సంప్రదించండి</a></li>
           <li><a href="/privacy-policy/">Privacy Policy</a></li>
@@ -103,6 +104,7 @@ def footer(lang="en"):
           <li><a href="/updates/">Updates</a></li>
           <li><a href="/te/schemes/">తెలుగు</a></li>
           <li><a href="/tools/">Tools</a></li>
+          <li><a href="/apps/">Apps</a></li>
           <li><a href="/games/">Games</a></li>
           <li><a href="/about/">About</a></li>
           <li><a href="/contact/">Contact</a></li>

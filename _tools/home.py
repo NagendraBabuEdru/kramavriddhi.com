@@ -3,9 +3,9 @@ import re
 from parts import head, nav, FOOTER
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 old = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
-products = re.search(r'(    <section id="products">.*?</section>\n)', old, re.S).group(1)
 approach = re.search(r'(    <section id="approach">.*?</section>\n)', old, re.S).group(1)
 updates = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "home_updates.html"), encoding="utf-8").read()
+apps = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "home_apps.html"), encoding="utf-8").read()
 cards = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "home_cards.html"), encoding="utf-8").read()
 import json
 ORG_LD = '\n  <script type="application/ld+json">' + json.dumps({
@@ -21,7 +21,7 @@ html = head("Kramavriddhi — Government schemes explained, step by step",
       <p>Kramavriddhi helps people grow a little every day: with simple guides to government schemes, and apps for health, work and creativity.</p>
       <div class="btns">
         <a class="btn primary" href="/schemes/">Explore government schemes</a>
-        <a class="btn ghost" href="#products">Our products</a>
+        <a class="btn ghost" href="/apps/">Our apps &amp; games</a>
       </div>
     </header>
 
@@ -80,23 +80,17 @@ html = head("Kramavriddhi — Government schemes explained, step by step",
       </div>
     </section>
 
-    <section id="games">
+    <section id="apps">
       <div class="section-head">
-        <h2>Games</h2>
-        <p>Free games you can play right in your browser.</p>
-        <a class="more" href="/games/">See all games →</a>
+        <h2>Apps &amp; games</h2>
+        <p>Free learning apps and games you can open right in your browser.</p>
+        <a class="more" href="/apps/">See all apps →</a>
       </div>
       <div class="grid">
-        <a class="card game" href="/games/rex-adventure/">
-          <div class="game-art" aria-hidden="true">🦖</div>
-          <h3>Rex's Big Adventure</h3>
-          <p>Help Rex the T-Rex rescue his friends and grow bigger.</p>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Play now →</span>
-        </a>
-      </div>
+''' + apps + '''      </div>
     </section>
 
-''' + products + "\n" + approach + '''
+''' + approach + '''
     <section id="about">
       <div class="about-grid">
         <div>

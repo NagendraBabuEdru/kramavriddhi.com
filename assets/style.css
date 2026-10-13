@@ -221,3 +221,4 @@ html[lang="te"] body { line-height: 1.8; }
 .social a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--text); font-weight: 600; }
 .social a:hover { color: var(--accent); }
 .social svg { width: 22px; height: 22px; color: #ff0000; }
+.app-note { font-size: 0.82rem !important; color: var(--muted); background: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 8px; padding: 8px 10px; flex-grow: 0 !important; }

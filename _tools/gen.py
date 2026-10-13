@@ -3097,6 +3097,76 @@ write("updates/index.html",
 with open(os.path.join(os.path.dirname(__file__), "home_updates.html"), "w", encoding="utf-8") as f:
     f.write("".join(update_item(u) for u in UPDATES[:4]) + "    </div>\n" + UPDATES_JS)
 
+# ---------------------------------------------------------------- apps (added 13 Oct 2026)
+APPS_LIVE = [
+    dict(name="DevOps Academy", emoji="☁️", url="https://nagendrababuedru.github.io/DevOps/",
+         tags=["Learning", "Free", "Works offline"],
+         summary="Learn Cloud (Azure, AWS, GCP), AI & LLMs, DevOps and Data Engineering with hands-on terminal labs, real-world scenarios, 320+ interview questions with audio, and timed challenges."),
+    dict(name="GPAT Prep", emoji="💊", url="https://nagendrababuedru.github.io/GPAT/",
+         tags=["Exam prep", "Free", "No sign-up"],
+         summary="Revision and self-testing for the Graduate Pharmacy Aptitude Test: notes, topic-wise practice, mock tests, spaced revision and progress analytics. Progress stays on your device.",
+         note="Study material in this app is AI-generated and not reviewed by subject experts. Use it alongside your textbooks, never as clinical guidance."),
+    dict(name="Rex's Big Adventure", emoji="🦖", url="/games/rex-adventure/",
+         tags=["Game", "For kids", "Free"],
+         summary="Help Rex the T-Rex rescue his friends and grow bigger. Pick your dino buddy and play right in your browser."),
+]
+APPS_SOON = [
+    dict(name="VYAYAM", emoji="💪",
+         summary="A voice-guided fitness and wellness companion for every age: exercise routines, nutrition targets, gentle daily reminders, and yoga and mindfulness sessions that talk you through."),
+    dict(name="TaskFlow", emoji="✅",
+         summary="Task management for small teams: admins assign tasks, employees submit work with attachments, plus real-time chat, notifications and progress charts."),
+    dict(name="Video Editing", emoji="🎬",
+         summary="Simple tools to trim, edit and share your videos from your phone."),
+]
+
+def app_card(a, live=True):
+    tags = "".join(f'<span class="tag">{t}</span>' for t in a.get("tags", []))
+    note = f'<p class="app-note">⚠️ {a["note"]}</p>' if a.get("note") else ""
+    ext = a["url"].startswith("http") if live else False
+    target = ' target="_blank" rel="noopener"' if ext else ""
+    if live:
+        return f"""        <a class="card game" href="{a["url"]}"{target}>
+          <div class="game-art" aria-hidden="true">{a["emoji"]}</div>
+          <h3>{a["name"]}</h3>
+          <p>{a["summary"]}</p>
+          {note}
+          <div class="tags">{tags}</div>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open {"game" if "Game" in a.get("tags", []) else "app"} →</span>
+        </a>
+"""
+    return f"""        <div class="card game soon">
+          <div class="game-art" aria-hidden="true" style="opacity:.75">{a["emoji"]}</div>
+          <h3>{a["name"]}</h3>
+          <p>{a["summary"]}</p>
+          <span class="status">In development</span>
+        </div>
+"""
+
+write("apps/index.html",
+    head("Free Apps and Games by Kramavriddhi", "Free learning apps and games by Kramavriddhi: DevOps Academy, GPAT Prep, Rex's Big Adventure, and apps coming soon like VYAYAM and TaskFlow.", "/apps/")
+    + nav("apps") + f"""
+    <header class="page-head">
+      <div class="eyebrow">Apps &amp; games</div>
+      <h1>Apps that help you grow</h1>
+      <p>Free apps and games made by Kramavriddhi. They open right in your browser on phone or computer, with no download or sign-up.</p>
+    </header>
+    <section style="padding:8px 0 40px;border-top:0">
+      <div class="section-head"><h2>Try now</h2></div>
+      <div class="grid">
+{"".join(app_card(a) for a in APPS_LIVE)}      </div>
+    </section>
+    <section style="padding:40px 0">
+      <div class="section-head"><h2>Coming soon</h2><p>Apps we are building. Follow us on <a href="https://www.youtube.com/@kramavriddhi" target="_blank" rel="noopener">YouTube</a> for launch news.</p></div>
+      <div class="grid">
+{"".join(app_card(a, live=False) for a in APPS_SOON)}      </div>
+    </section>
+    <div style="height:24px"></div>
+""" + FOOTER)
+
+# cards for the home page "Apps & games" section (live apps only)
+with open(os.path.join(os.path.dirname(__file__), "home_apps.html"), "w", encoding="utf-8") as f:
+    f.write("".join(app_card(a) for a in APPS_LIVE))
+
 # ---------------------------------------------------------------- simple pages
 def simple(path, title, desc, active, h1, eyebrow, body):
     write(path.strip("/") + "/index.html", head(f"{title} | Kramavriddhi", desc, path) + nav(active) + f'''
@@ -3197,7 +3267,7 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
-urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
