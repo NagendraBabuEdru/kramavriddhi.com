@@ -215,3 +215,9 @@ html[lang="te"] body { line-height: 1.8; }
 .update h3 { font-size: 1.02rem; line-height: 1.35; }
 .update p { color: var(--muted); font-size: 0.9rem; }
 .update.past { opacity: 0.55; }
+
+/* Social links */
+.social { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; font-size: 0.9rem; }
+.social a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--text); font-weight: 600; }
+.social a:hover { color: var(--accent); }
+.social svg { width: 22px; height: 22px; color: #ff0000; }

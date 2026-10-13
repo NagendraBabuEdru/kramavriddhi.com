@@ -7,9 +7,14 @@ products = re.search(r'(    <section id="products">.*?</section>\n)', old, re.S)
 approach = re.search(r'(    <section id="approach">.*?</section>\n)', old, re.S).group(1)
 updates = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "home_updates.html"), encoding="utf-8").read()
 cards = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "home_cards.html"), encoding="utf-8").read()
+import json
+ORG_LD = '\n  <script type="application/ld+json">' + json.dumps({
+    "@context": "https://schema.org", "@type": "Organization", "name": "Kramavriddhi",
+    "url": "https://kramavriddhi.com", "email": "support@kramavriddhi.com",
+    "sameAs": ["https://www.youtube.com/@kramavriddhi"]}) + '</script>'
 html = head("Kramavriddhi — Government schemes explained, step by step",
             "Kramavriddhi explains Indian government schemes in simple language: eligibility, benefits, documents and how to apply. Growth, step by step.",
-            "/") + nav() + '''
+            "/", extra=ORG_LD) + nav() + '''
     <header class="hero">
       <div class="eyebrow" lang="sa">क्रमवृद्धिः · क्रमेण वर्धामहे</div>
       <h1>Small steps.<br>Steady growth.</h1>

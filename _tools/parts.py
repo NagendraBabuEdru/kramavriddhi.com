@@ -77,6 +77,17 @@ def nav(active="", lang="en"):
     </nav>
 '''
 
+# Official social profiles (shown in every footer). Add Instagram here when it is ready.
+SOCIAL = [
+    dict(name="YouTube", url="https://www.youtube.com/@kramavriddhi",
+         icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.8 15.1V8.9l5.4 3.1-5.4 3.1Z"/></svg>'),
+]
+
+def social_links(lang="en"):
+    label = "మమ్మల్ని ఫాలో అవ్వండి:" if lang == "te" else "Follow us:"
+    items = "".join(f'<a href="{s["url"]}" target="_blank" rel="noopener me">{s["icon"]}<span>{s["name"]}</span></a>' for s in SOCIAL)
+    return f'<div class="social"><span>{label}</span>{items}</div>'
+
 def footer(lang="en"):
     if lang == "te":
         links = '''          <li><a href="/te/schemes/">తెలుగు పథకాలు</a></li>
@@ -106,6 +117,7 @@ def footer(lang="en"):
 {links}
         </ul>
       </div>
+      {social_links(lang)}
       <p class="disclaimer">{note}</p>
     </footer>
   </div>

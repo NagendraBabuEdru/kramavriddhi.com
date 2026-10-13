@@ -3132,7 +3132,8 @@ simple("/contact/", "Contact Us", "Contact Kramavriddhi for corrections, suggest
     "contact", "Contact us", "Contact", '''
         <p class="lede">Found a mistake in a guide, want us to explain a scheme, or have a question? We'd love to hear from you.</p>
         <div class="official">
-          <strong>Email:</strong> <a href="mailto:support@kramavriddhi.com">support@kramavriddhi.com</a>
+          <strong>Email:</strong> <a href="mailto:support@kramavriddhi.com">support@kramavriddhi.com</a><br>
+          <strong>YouTube:</strong> <a href="https://www.youtube.com/@kramavriddhi" target="_blank" rel="noopener">youtube.com/@kramavriddhi</a>
         </div>
         <p>We usually reply within 2–3 working days.</p>
         <div class="note"><strong>Please note:</strong> Kramavriddhi is not a government office. We cannot check your application status, approve benefits or change your records. For that, please contact the official helpline listed in each scheme guide. Never share your Aadhaar number, OTP or bank details with anyone, including us.</div>
