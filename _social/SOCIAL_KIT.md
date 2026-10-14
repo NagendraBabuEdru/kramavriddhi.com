@@ -9,6 +9,7 @@ Images are in the `images` folder. Rebuild them anytime with `python _social/mak
 | `post-1-pragati.png` … `post-5-checker.png` | First 5 Instagram posts (1080×1350) |
 | `post-6-csss.png` | Central Sector Scholarship post (1080×1350) |
 | `post-7-thalliki-phase2.png` | Thalliki Vandanam phase 2 post (1080×1350) |
+| `post-8-farmer-ekyc.png` | Farmer checklist before the next PM-KISAN / Annadata instalment (1080×1350) |
 
 ---
 
@@ -160,6 +161,23 @@ AICTE Pragati Scholarship 🎓
 పూర్తి వివరాలు 👉 link in bio
 
 #ThallikiVandanam #TalliKiVandanam #APSchemes #AndhraPradesh #APGovt #Students #Kramavriddhi
+```
+
+**Post 8 – Farmer checklist** (`post-8-farmer-ekyc.png`)
+```
+🌾 పీఎం కిసాన్ / అన్నదాత సుఖీభవ తదుపరి విడత త్వరలో రావచ్చు. అధికారిక తేదీ ఇంకా లేదు. ఈలోగా ఈ 3 చెక్ చేయండి:
+
+✅ ఈకేవైసీ (eKYC) పూర్తి
+✅ ఆధార్–బ్యాంకు ఖాతా లింక్ (DBT)
+✅ ల్యాండ్ సీడింగ్ (భూమి వివరాలు)
+👉 పెండింగ్ ఉంటే రైతు సేవా కేంద్రం (RSK) లో అడగండి
+
+స్టేటస్: pmkisan.gov.in → Know Your Status · annadathasukhibhava.ap.gov.in → Know Your Status
+⚠️ ఆధార్ అధికారిక సైట్‌లో మాత్రమే ఇవ్వండి. OTP ఎవరికీ చెప్పకండి.
+
+స్టేటస్ ఎలా చూడాలి 👉 link in bio
+
+#PMKisan #AnnadataSukhibhava #Farmers #eKYC #Raithu #APFarmers #AndhraPradesh #Kramavriddhi
 ```
 
 ---

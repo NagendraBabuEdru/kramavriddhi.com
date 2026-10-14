@@ -250,6 +250,46 @@ const SHORTS = {
       { start: 27, cls: 'end', html: endCard('ఎదురుచూస్తున్న తల్లులకు షేర్ చేయండి! 💐', 'Share with mothers who are waiting') },
     ],
   },
+
+  // ---------------------------------------------------------------- Short 6: farmer checklist before the next instalment (no dates or amounts)
+  6: {
+    file: 'short-6-farmer-ekyc', duration: 34, tag: '🌾 Farmers', tagColor: '#15803d', music: { root: 55, seed: 3 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4" style="font-size:62px">పీఎం కిసాన్ · అన్నదాత సుఖీభవ</div>
+        <div class="h1" data-in="0.3">తదుపరి విడతకు ముందు</div>
+        <div class="row">
+          <div class="mega gold" data-in="0.7" data-fx="pop" data-pulse style="font-size:300px">3</div>
+          <div class="kicker" data-in="1.0">విషయాలు<br>చెక్ చేయండి!</div>
+        </div>
+        <div class="sub en" data-in="1.4">Before the next PM-KISAN / Annadata Sukhibhava instalment: check these 3 things</div>
+        <div class="pill" data-in="2.0" data-fx="pop">📅 అధికారిక తేదీ ఇంకా లేదు</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label en" data-in="0.1">The 3 checks</div>
+        <div class="h2" data-in="0.2">డబ్బు ఆగకుండా ఇవి పూర్తి చేయండి</div>
+        ${point(1, 'ఈకేవైసీ (eKYC) పూర్తి', 'eKYC completed', 1.0)}
+        ${point(2, 'ఆధార్–బ్యాంకు (DBT) లింక్', 'Bank account linked to Aadhaar and enabled for DBT', 2.8)}
+        ${point(3, 'ల్యాండ్ సీడింగ్', 'Land records verified and linked by the state', 4.6)}
+        <div class="warn" data-in="6.6" data-fx="pop">ఏదైనా పెండింగ్ ఉంటే రైతు సేవా కేంద్రం (RSK) లో అడగండి<div class="e en">Anything pending? Visit your Rythu Seva Kendram</div></div>` },
+      { start: 14.5, dark: true, cls: 'compact', html: `
+        <div class="label en" data-in="0.1">Check your status · PM-KISAN</div>
+        <div class="card white" data-in="0.3" data-fx="pop">
+          <div class="portal"><div class="ic">🌾</div><div><div class="t">PM-KISAN</div><div class="u">pmkisan.gov.in</div></div></div>
+        </div>
+        ${point(1, 'pmkisan.gov.in ఓపెన్ చేయండి', 'Open the official site', 1.0)}
+        ${point(2, "'Know Your Status' నొక్కండి", 'Tap Know Your Status', 2.2)}
+        ${point(3, 'రిజిస్ట్రేషన్ నంబర్ + captcha ఇవ్వండి', 'Enter your registration number and the captcha', 3.4)}` },
+      { start: 21, cls: 'compact', html: `
+        <div class="label en" data-in="0.1">Check your status · Annadata Sukhibhava (AP)</div>
+        <div class="card white" data-in="0.3" data-fx="pop">
+          <div class="portal"><div class="ic">🌱</div><div><div class="t">Annadata Sukhibhava</div><div class="u" style="font-size:38px">annadathasukhibhava.ap.gov.in</div></div></div>
+        </div>
+        ${point(1, "'Know Your Status' ఎంచుకోండి", 'Choose Know Your Status', 1.0)}
+        ${point(2, 'మీ ఆధార్ నంబర్ ఇవ్వండి', 'Enter your Aadhaar number, only on the official site', 2.2)}
+        <div class="warn" data-in="3.6" data-fx="pop">📅 త్వరలో రావచ్చు, అధికారిక తేదీ ఇంకా ప్రకటించలేదు<div class="e en">Expected soon. No official date yet</div></div>` },
+      { start: 27, cls: 'end', html: endCard('రైతు మిత్రులకు షేర్ చేయండి! 🌾', 'Share with farmer friends') },
+    ],
+  },
 };
 
 // Step 2 of the checker demo: fields fill in after each tap, then the button is pressed.
