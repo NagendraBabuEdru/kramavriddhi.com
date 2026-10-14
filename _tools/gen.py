@@ -1,6 +1,7 @@
 import os, sys, json
 sys.path.insert(0, os.path.dirname(__file__))
-from parts import head, nav, footer, FOOTER
+from parts import head, nav, footer, FOOTER, share_bar
+from og import card_url, build as build_og
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UPDATED = "6 October 2026"
@@ -19,6 +20,16 @@ GUIDE_UPDATED = {
 }
 MONTHS = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
           "te": ["జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్", "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్"]}
+# Link preview images (rendered by og.py at the end of this script)
+OG_CARDS = []
+def og_card(name, title, icon, tag, facts, lang="en", foot=None):
+    """foot: bottom line of the card; guides use the default "Who can apply · Benefits · How to apply"."""
+    card = dict(name=name, lang=lang, title=title, icon=icon, tag=tag, facts=[list(f) for f in facts])
+    if foot:
+        card["foot"] = foot
+    OG_CARDS.append(card)
+    return card_url(card)
+
 def guide_iso(slug):
     return GUIDE_UPDATED.get(slug, UPDATED_ISO)
 def nice_date(iso, lang="en"):
@@ -192,7 +203,7 @@ write("schemes/index.html",
       <div class="eyebrow">Government schemes</div>
       <h1>Government schemes, explained simply</h1>
       <p>Clear guides to central schemes and Andhra Pradesh and Telangana state schemes: who can apply, what you get, which documents you need, and how to apply on the official portal.</p>
-      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a> &nbsp;·&nbsp; <a href="/updates/">⏰ Latest updates &amp; deadlines →</a></p>
+      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a> &nbsp;·&nbsp; <a href="/updates/">⏰ Latest updates &amp; deadlines →</a></p>{share_bar("/schemes/", "Government schemes explained simply: who can apply, benefits, documents and how to apply. Central, Andhra Pradesh and Telangana.")}
     </header>
 
     <div class="filters" role="group" aria-label="Filter by government">
@@ -283,8 +294,11 @@ def article(s, lede, facts, body, faqs, sources, description):
     }
     extra = ('\n  <script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>'
              + '\n  <script type="application/ld+json">' + json.dumps(faq_ld, ensure_ascii=False) + '</script>')
+    img = og_card(s["slug"], s["short"], s["icon"], f'{STATES[st(s)]["short"]} scheme', facts[:3])
+    path = f'/schemes/{s["slug"]}/'
+    share_text = f'{s["short"]}: {s["summary"]}'
     return (head(f'{s["name"]}: Eligibility, Benefits & How to Apply | Kramavriddhi', description,
-                 f'/schemes/{s["slug"]}/', extra, alternates=alts)
+                 path, extra, alternates=alts, image=img, og_type="article")
         + nav("schemes") + f'''
     <div class="narrow">
       <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › {state_crumb}{s["short"]}</p>
@@ -296,10 +310,11 @@ def article(s, lede, facts, body, faqs, sources, description):
 
         <div class="facts">
 {facts_html}
-        </div>
+        </div>{share_bar(path, share_text)}
 {body}
         <h2>Frequently asked questions</h2>
 {faq_html}
+{share_bar(path, share_text, big=True)}
 
         <h2>Sources</h2>
         <ul class="sources">
@@ -2091,13 +2106,15 @@ def coll_group(title, intro, slugs):
 write("schemes/for-women/index.html",
     head("Government Schemes for Girls and Women: Education, Business & Support | Kramavriddhi",
          "All government schemes for girls and women in one place: scholarships, savings for daughters, self-employment loans, SHG support, free bus travel, gas and pensions. Central, AP and Telangana.",
-         "/schemes/for-women/")
+         "/schemes/for-women/",
+         image=og_card("for-women", "Schemes for girls & women", "👩", "Collection",
+                       [("Includes", "Scholarships, savings, loans"), ("Also", "SHG support, free bus"), ("From", "Central, AP & Telangana")], foot="Simple guides · Central, AP & Telangana"))
     + nav("schemes") + f"""
     <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For girls &amp; women</p>
     <header class="page-head">
       <div class="eyebrow">Collection</div>
       <h1>Schemes for girls &amp; women</h1>
-      <p>Scholarships, savings, business loans and everyday support for girls and women, from the Central Government, Andhra Pradesh and Telangana, all in one place.</p>
+      <p>Scholarships, savings, business loans and everyday support for girls and women, from the Central Government, Andhra Pradesh and Telangana, all in one place.</p>{share_bar("/schemes/for-women/", "Government schemes for girls and women in one place: scholarships, savings, business loans, SHG support and more.")}
     </header>
     <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
 """ + coll_group("🎓 Education", "Help for girls to study, from school to technical degrees.",
@@ -2407,13 +2424,15 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 write("schemes/for-youth/index.html",
     head("Government Schemes for Youth: Jobs, Internships, Skills & Business | Kramavriddhi",
          "Government opportunities for young men and women: paid internships, Agniveer jobs, free skill training, artisan and business loans, plus savings and insurance. Central, AP and Telangana.",
-         "/schemes/for-youth/")
+         "/schemes/for-youth/",
+         image=og_card("for-youth", "Opportunities for youth", "🧑‍💼", "Collection",
+                       [("Includes", "Paid internships, Agniveer"), ("Also", "Free skill training"), ("From", "Central, AP & Telangana")], foot="Simple guides · Central, AP & Telangana"))
     + nav("schemes") + f"""
     <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For youth</p>
     <header class="page-head">
       <div class="eyebrow">Collection</div>
       <h1>Opportunities for youth</h1>
-      <p>Paid internships, defence jobs, free skill training and help to start your own work: government opportunities for young people, all in one place.</p>
+      <p>Paid internships, defence jobs, free skill training and help to start your own work: government opportunities for young people, all in one place.</p>{share_bar("/schemes/for-youth/", "Government opportunities for young people: paid internships, Agniveer, free skill training and business loans.")}
     </header>
     <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
 """ + coll_group("🧑‍💼 Jobs & internships", "Earn while you learn, or serve the country.",
@@ -2807,13 +2826,15 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 write("schemes/for-men/index.html",
     head("Government Schemes for Boys and Men: Scholarships, Jobs, Workers & Business | Kramavriddhi",
          "Government schemes useful for boys and men: college scholarships, first-job incentive, internships, Agniveer, e-Shram, pension for workers, street vendor loans, artisan support, and AP driver support.",
-         "/schemes/for-men/")
+         "/schemes/for-men/",
+         image=og_card("for-men", "Schemes for boys & men", "👨", "Collection",
+                       [("Studies", "Scholarships, skills"), ("Work", "First job, e-Shram, pension"), ("Business", "Vendor & artisan loans")], foot="Simple guides · Central, AP & Telangana"))
     + nav("schemes") + f"""
     <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For boys &amp; men</p>
     <header class="page-head">
       <div class="eyebrow">Collection</div>
       <h1>Schemes for boys &amp; men</h1>
-      <p>Most government schemes are open to everyone. This page brings together the ones most useful for boys and men at each stage of life: studies, first job, work, business and family.</p>
+      <p>Most government schemes are open to everyone. This page brings together the ones most useful for boys and men at each stage of life: studies, first job, work, business and family.</p>{share_bar("/schemes/for-men/", "Government schemes for boys and men: college scholarships, first-job reward, workers' pension, vendor loans and more.")}
     </header>
     <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
 """ + coll_group("🎓 Studies & skills", "Scholarships and free training for students and young people.",
@@ -2845,7 +2866,7 @@ def state_hub(key, intro, slug):
       <div class="eyebrow">State schemes</div>
       <h1>{label} government schemes</h1>
       <p>{intro}</p>
-      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a></p>
+      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a></p>{share_bar(f"/schemes/{slug}/", f"{label} government schemes explained simply: who can apply, benefits and how to apply.")}
     </header>
     <div class="grid">
 {"".join(scheme_card(x) for x in items)}    </div>
@@ -3090,6 +3111,17 @@ def checker_data(lang):
             state=st(x), icon=x["icon"])
     return out
 
+CHECKER_SHARE = {
+    "en": dict(title="Which schemes can you get?", tag="Free tool",
+               facts=[("Takes", "1 minute"), ("Covers", "Central, AP & Telangana"), ("Cost", "Free, no sign-up")],
+               foot="Answer a few questions · See schemes for you",
+               text="Which government schemes can your family get? Check in 1 minute with this free eligibility checker (Central, AP and Telangana schemes)."),
+    "te": dict(title="మీకు ఏ పథకాలు వర్తిస్తాయి?", tag="ఉచిత సాధనం",
+               facts=[("సమయం", "1 నిమిషం"), ("పథకాలు", "కేంద్రం, ఏపీ, తెలంగాణ"), ("ఖర్చు", "ఉచితం, సైన్-అప్ లేదు")],
+               foot="కొన్ని ప్రశ్నలకు జవాబు ఇవ్వండి · మీ పథకాలు చూడండి",
+               text="మీ కుటుంబానికి ఏ ప్రభుత్వ పథకాలు వర్తిస్తాయి? ఈ ఉచిత అర్హత చెకర్‌తో ఒక్క నిమిషంలో తెలుసుకోండి (కేంద్ర, ఏపీ, తెలంగాణ పథకాలు)."),
+}
+
 def checker_page(lang):
     T = CHECKER_TEXT[lang]
     opts = lambda pairs: "".join(f'<option value="{v}">{l}</option>' for v, l in pairs)
@@ -3098,7 +3130,9 @@ def checker_page(lang):
     alts = {"en": CHECKER_TEXT["en"]["path"], "te": CHECKER_TEXT["te"]["path"]}
     js_cfg = dict(S=checker_data(lang), W=T["W"], tags=T["tags"], none=T["none"], one=T["count_one"],
                   many=T["count_many"], open_each=T["open_each"], why=T["why"])
-    return (head(T["title"], T["desc"], T["path"], lang=lang, alternates=alts)
+    C = CHECKER_SHARE[lang]
+    img = og_card("scheme-eligibility-checker", C["title"], "✅", C["tag"], C["facts"], lang=lang, foot=C["foot"])
+    return (head(T["title"], T["desc"], T["path"], lang=lang, alternates=alts, image=img)
         + nav("tools", lang=lang) + f'''
     <div class="narrow">
       <p class="crumbs">{T["crumbs"]}</p>
@@ -3106,7 +3140,7 @@ def checker_page(lang):
         <div class="eyebrow">{T["eyebrow"]}</div>
         <h1>{T["h1"]}</h1>
         <p class="lede">{T["lede"]}</p>
-        <p class="lang-switch">{T["switch"]}</p>
+        <p class="lang-switch">{T["switch"]}</p>{share_bar(T["path"], C["text"], lang)}
 
         <form id="checker" class="calc checker" onsubmit="return false">
           <label>{T["q_state"]}
@@ -3132,6 +3166,7 @@ def checker_page(lang):
         </form>
 
         <div id="out" aria-live="polite"></div>
+{share_bar(T["path"], C["text"], lang, big=True)}
 
         <div class="note">{T["note"]}</div>
       </article>
@@ -3238,14 +3273,16 @@ apy_rows = "\n".join(
 write("tools/atal-pension-calculator/index.html",
     head("Atal Pension Yojana Calculator: Monthly Contribution by Age | Kramavriddhi",
          "APY calculator: enter your age to see the monthly, quarterly and half-yearly contribution for a ₹1,000 to ₹5,000 pension, based on the official chart.",
-         "/tools/atal-pension-calculator/")
+         "/tools/atal-pension-calculator/",
+         image=og_card("atal-pension-calculator", "Atal Pension Calculator", "👴", "Free calculator",
+                       [("Pension", "₹1,000–₹5,000 / month"), ("Join at", "Age 18–40"), ("Based on", "Official APY chart")], foot="Free · No sign-up · Works on any phone"))
     + nav("tools") + f'''
     <div class="narrow">
       <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Atal Pension Calculator</p>
       <article>
         <div class="eyebrow">👴 Calculator</div>
         <h1>Atal Pension Yojana Calculator</h1>
-        <p class="lede">Find out how much you need to pay to get a guaranteed pension of ₹1,000 to ₹5,000 a month after 60. Based on the official APY contribution chart.</p>
+        <p class="lede">Find out how much you need to pay to get a guaranteed pension of ₹1,000 to ₹5,000 a month after 60. Based on the official APY contribution chart.</p>{share_bar("/tools/atal-pension-calculator/", "Atal Pension Yojana calculator: see how much you pay each month for a ₹1,000 to ₹5,000 pension after 60.")}
 
         <div class="calc">
           <label>Your age today
@@ -3324,14 +3361,16 @@ write("tools/atal-pension-calculator/index.html",
 write("tools/sukanya-samriddhi-calculator/index.html",
     head("Sukanya Samriddhi Yojana Calculator: Maturity Amount | Kramavriddhi",
          "SSY calculator: enter your yearly deposit to see the maturity amount, total interest and year-by-year growth of a Sukanya Samriddhi account at the current 8.2% rate.",
-         "/tools/sukanya-samriddhi-calculator/")
+         "/tools/sukanya-samriddhi-calculator/",
+         image=og_card("sukanya-samriddhi-calculator", "Sukanya Samriddhi Calculator", "👧", "Free calculator",
+                       [("Interest", "8.2% (Oct–Dec 2026)"), ("Deposit", "₹250–₹1.5 lakh / year"), ("Shows", "Maturity amount")], foot="Free · No sign-up · Works on any phone"))
     + nav("tools") + '''
     <div class="narrow">
       <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Sukanya Samriddhi Calculator</p>
       <article>
         <div class="eyebrow">👧 Calculator</div>
         <h1>Sukanya Samriddhi Yojana Calculator</h1>
-        <p class="lede">See how much a Sukanya Samriddhi account could grow to when it matures after 21 years.</p>
+        <p class="lede">See how much a Sukanya Samriddhi account could grow to when it matures after 21 years.</p>''' + share_bar("/tools/sukanya-samriddhi-calculator/", "Sukanya Samriddhi calculator: see how much your daughter's SSY account can grow to in 21 years.") + '''
 
         <div class="calc">
           <label>Yearly deposit (₹250 to ₹1,50,000)
@@ -3409,8 +3448,10 @@ def article_te(s, t):
     extra = ('\n  <script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>'
              + '\n  <script type="application/ld+json">' + json.dumps(faq_ld, ensure_ascii=False) + '</script>')
     alts = {"en": f"/schemes/{slug}/", "te": f"/te/schemes/{slug}/"}
+    img = og_card(slug, t["short"], s["icon"], TE_STATE[st(s)], t["facts"][:3], lang="te")
+    path = f"/te/schemes/{slug}/"
     return (head(f'{t["name"]}: అర్హత, లబ్ధి, దరఖాస్తు విధానం | Kramavriddhi', t["description"],
-                 f"/te/schemes/{slug}/", extra, lang="te", alternates=alts)
+                 path, extra, lang="te", alternates=alts, image=img, og_type="article")
         + nav("schemes", lang="te") + f'''
     <div class="narrow">
       <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › {t["short"]}</p>
@@ -3423,10 +3464,11 @@ def article_te(s, t):
 
         <div class="facts">
 {facts_html}
-        </div>
+        </div>{share_bar(path, t["description"], "te")}
 {t["body"]}
         <h2>తరచుగా అడిగే ప్రశ్నలు</h2>
 {faq_html}
+{share_bar(path, t["description"], "te", big=True)}
 
         <h2>మూలాలు (Sources)</h2>
         <ul class="sources">
@@ -3551,6 +3593,7 @@ UPDATES = [
          text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
          link="/schemes/pm-internship-scheme/"),
 ]
+UPDATES_CHECKED = "14 October 2026"  # change when you re-check the list
 KIND_LABEL = {"deadline": "⏰ Deadline", "expected": "📅 Expected", "news": "📰 News", "rate": "📈 Rate"}
 
 def update_item(u):
@@ -3576,13 +3619,15 @@ UPDATES_JS = """
 write("updates/index.html",
     head("Latest Scheme Updates, Deadlines & Instalment Dates | Kramavriddhi",
          "Latest government scheme news: application deadlines, expected instalment dates, interest rate changes and new rules for central, Andhra Pradesh and Telangana schemes.",
-         "/updates/")
+         "/updates/",
+         image=og_card("updates", "Latest updates & deadlines", "⏰", "Updates",
+                       [("Deadlines", "Scholarships, gas & more"), ("Expected", "Instalment dates"), ("Last checked", UPDATES_CHECKED)], foot="Deadlines · Expected payments · New rules"))
     + nav("schemes") + f"""
     <header class="page-head">
       <div class="eyebrow">Updates</div>
       <h1>Latest updates &amp; deadlines</h1>
       <p>Important dates, expected payments and new rules for the schemes on Kramavriddhi. We check official sources regularly and update this page.</p>
-      <p class="muted" style="font-size:0.9rem">Last checked: 14 October 2026</p>
+      <p class="muted" style="font-size:0.9rem">Last checked: {UPDATES_CHECKED}</p>{share_bar("/updates/", "Latest government scheme deadlines and expected payment dates (Central, AP and Telangana) in one place:")}
     </header>
     <div class="updates">
 {"".join(update_item(u) for u in UPDATES)}    </div>
@@ -3781,3 +3826,6 @@ write("robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://kramavriddhi.co
 # cards for the home page "Latest schemes" section
 with open(os.path.join(os.path.dirname(__file__), "home_cards.html"), "w", encoding="utf-8") as f:
     f.write("".join(scheme_card(s) for s in DISPLAY[:6]))
+
+# link preview images for every page that registered a card (only changed cards are re-rendered)
+build_og(OG_CARDS)

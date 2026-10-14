@@ -84,3 +84,42 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   setTimeout(show, 8000);
 })();
+
+/* Kramavriddhi — share bar.
+   WhatsApp works as a plain link. Here we show "Copy link" and the phone's own share sheet
+   when the browser supports them, and count shares in Google Analytics. */
+(function () {
+  function oldCopy(text) {
+    var t = document.createElement("textarea"), ok = false;
+    t.value = text; t.setAttribute("readonly", ""); t.style.position = "fixed"; t.style.opacity = "0";
+    document.body.appendChild(t); t.select();
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(t);
+    return ok;
+  }
+  document.querySelectorAll(".share").forEach(function (bar) {
+    var copy = bar.querySelector('[data-share="copy"]');
+    var more = bar.querySelector('[data-share="native"]');
+    if (copy) copy.hidden = false;
+    if (more && navigator.share) more.hidden = false;
+    bar.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-share]");
+      if (!b) return;
+      var method = b.getAttribute("data-share");
+      if (window.gtag) gtag("event", "share", { method: method, content_type: "page", item_id: location.pathname });
+      if (method === "copy") {
+        var url = bar.getAttribute("data-url");
+        var done = function () {
+          var s = b.querySelector("span"), old = s.textContent;
+          s.textContent = b.getAttribute("data-done");
+          setTimeout(function () { s.textContent = old; }, 2000);
+        };
+        // Some in-app browsers block the clipboard API: try the older copy command, then show the link.
+        var fallback = function () { if (oldCopy(url)) done(); else window.prompt("", url); };
+        if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, fallback); else fallback();
+      } else if (method === "native") {
+        navigator.share({ title: document.title, text: bar.getAttribute("data-text"), url: bar.getAttribute("data-url") }).catch(function () {});
+      }
+    });
+  });
+})();

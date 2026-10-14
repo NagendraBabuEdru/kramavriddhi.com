@@ -2,7 +2,9 @@
 LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"
 
-import hashlib, os
+import hashlib, html, os
+from urllib.parse import quote
+from og import DEFAULT_URL as OG_DEFAULT
 _ASSETS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets")
 ASSET_VERSION = hashlib.md5(b"".join(open(os.path.join(_ASSETS, n), "rb").read() for n in ("style.css", "site.js"))).hexdigest()[:8]
 
@@ -21,8 +23,9 @@ FONTS = {
     "te": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&family=Noto+Sans+Telugu:wght@400;600;700",
 }
 
-def head(title, desc, path, extra="", lang="en", alternates=None):
-    """alternates: {"en": "/path/", "te": "/te/path/"} when a page exists in both languages."""
+def head(title, desc, path, extra="", lang="en", alternates=None, image=None, og_type="website"):
+    """alternates: {"en": "/path/", "te": "/te/path/"} when a page exists in both languages.
+    image: absolute og:image URL (see og.py); pages without their own card use the site card."""
     alt = ""
     if alternates:
         alt = "".join(f'\n  <link rel="alternate" hreflang="{l}" href="https://kramavriddhi.com{p}">' for l, p in alternates.items())
@@ -38,6 +41,12 @@ def head(title, desc, path, extra="", lang="en", alternates=None):
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{desc}">
   <meta property="og:url" content="https://kramavriddhi.com{path}">
+  <meta property="og:type" content="{og_type}">
+  <meta property="og:image" content="{image or OG_DEFAULT}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{title}">
+  <meta name="twitter:card" content="summary_large_image">
   <meta property="og:site_name" content="Kramavriddhi">
   <meta property="og:locale" content="{"te_IN" if lang == "te" else "en_IN"}">
   <link rel="icon" href="{FAVICON}">
@@ -82,6 +91,36 @@ SOCIAL = [
     dict(name="YouTube", url="https://www.youtube.com/@kramavriddhi",
          icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.8 15.1V8.9l5.4 3.1-5.4 3.1Z"/></svg>'),
 ]
+
+# Share bar: WhatsApp link works without JavaScript; site.js shows "Copy link" and the phone's own share sheet.
+SHARE_LABELS = {
+    "en": dict(label="Share:", copy="Copy link", done="Link copied ✓", more="More",
+               ask="Know someone who needs this? Share it with family and friends on WhatsApp."),
+    "te": dict(label="షేర్ చేయండి:", copy="లింక్ కాపీ", done="కాపీ అయింది ✓", more="ఇంకా",
+               ask="ఈ సమాచారం ఎవరికైనా ఉపయోగపడుతుందా? కుటుంబం, స్నేహితులతో వాట్సాప్‌లో షేర్ చేయండి."),
+}
+WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path fill="#15803d" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg>'
+LINK_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>'
+SHARE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>'
+
+def share_bar(path, text, lang="en", big=False):
+    """path: page path like /schemes/pm-kisan/. text: one-line message sent before the link."""
+    L = SHARE_LABELS[lang]
+    url = "https://kramavriddhi.com" + path
+    wa = "https://wa.me/?text=" + quote(f"{text}\n{url}")
+    bar = f'''<div class="share" data-url="{url}" data-text="{html.escape(text)}">
+          <span class="share-label">{L["label"]}</span>
+          <a class="share-btn wa" href="{wa}" target="_blank" rel="noopener" data-share="whatsapp">{WA_ICON}<span>WhatsApp</span></a>
+          <button class="share-btn" type="button" data-share="copy" data-done="{L["done"]}" hidden>{LINK_ICON}<span>{L["copy"]}</span></button>
+          <button class="share-btn" type="button" data-share="native" hidden>{SHARE_ICON}<span>{L["more"]}</span></button>
+        </div>'''
+    if big:
+        return f'''
+        <div class="share-box">
+          <p>{L["ask"]}</p>
+          {bar}
+        </div>'''
+    return "\n        " + bar
 
 def social_links(lang="en"):
     label = "మమ్మల్ని ఫాలో అవ్వండి:" if lang == "te" else "Follow us:"

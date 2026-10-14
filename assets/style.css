@@ -185,7 +185,7 @@ table.simple tr.hl td { background: var(--accent-soft); font-weight: 600; }
 .checker { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .checker fieldset.checks { grid-column: 1 / -1; border: 0; padding: 0; margin: 4px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; }
 .checker legend { font-weight: 600; font-size: 0.92rem; margin-bottom: 8px; }
-.checker label.check { flex-direction: row; align-items: flex-start; gap: 10px; font-weight: 400; font-size: 0.95rem; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+.checker label.check { flex-direction: row; justify-content: flex-start; align-items: flex-start; gap: 10px; font-weight: 400; font-size: 0.95rem; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
 .checker label.check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; padding: 0; }
 .checker label.check:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
 .checker #go { grid-column: 1 / -1; justify-self: start; border: 0; cursor: pointer; font: inherit; font-weight: 600; padding: 12px 26px; }
@@ -222,3 +222,17 @@ html[lang="te"] body { line-height: 1.8; }
 .social a:hover { color: var(--accent); }
 .social svg { width: 22px; height: 22px; color: #ff0000; }
 .app-note { font-size: 0.82rem !important; color: var(--muted); background: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 8px; padding: 8px 10px; flex-grow: 0 !important; }
+
+/* Share bar: WhatsApp, copy link, phone share sheet */
+.share { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 18px 0 4px; font-size: 0.9rem; }
+.share-label { color: var(--muted); font-weight: 600; margin-right: 2px; }
+.share-btn { display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-weight: 600; line-height: 1.2; text-decoration: none; cursor: pointer; }
+.share-btn[hidden] { display: none; }
+.share-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.share-btn:hover { border-color: var(--accent); }
+.share-btn.wa { background: #15803d; border-color: #15803d; color: #fff; }
+.share-btn.wa:hover { background: #166534; border-color: #166534; }
+.share-box { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 28px 0 8px; }
+.share-box p { font-weight: 600; }
+.share-box .share { margin-top: 10px; }
+.page-head .share { margin-top: 14px; }
