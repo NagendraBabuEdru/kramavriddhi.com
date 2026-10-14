@@ -6,6 +6,25 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UPDATED = "6 October 2026"
 UPDATED_ISO = "2026-10-06"
 
+# Per-guide "Last updated" dates (ISO). Guides not listed here use UPDATED_ISO.
+# When you change a guide's facts, set its date here (English and Telugu pages share it).
+GUIDE_UPDATED = {
+    **dict.fromkeys(["aicte-pragati-scholarship", "cbse-single-girl-child-scholarship", "lakhpati-didi",
+                     "ts-indira-mahila-shakti", "pm-internship-scheme", "pm-kaushal-vikas-yojana",
+                     "agnipath-agniveer", "pm-vishwakarma", "ts-rajiv-yuva-vikasam"], "2026-10-08"),
+    **dict.fromkeys(["central-sector-scholarship", "pm-viksit-bharat-rozgar-yojana", "e-shram-card",
+                     "pm-shram-yogi-maandhan", "pm-svanidhi", "ap-auto-drivers-sevalo"], "2026-10-13"),
+    # 14 Oct 2026 fact check
+    **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava", "ap-thalliki-vandanam", "ts-rythu-bharosa"], "2026-10-14"),
+}
+MONTHS = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+          "te": ["జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్", "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్"]}
+def guide_iso(slug):
+    return GUIDE_UPDATED.get(slug, UPDATED_ISO)
+def nice_date(iso, lang="en"):
+    y, m, d = (int(x) for x in iso.split("-"))
+    return f"{d} {MONTHS[lang][m - 1]} {y}"
+
 def write(rel, html):
     p = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -252,7 +271,7 @@ def article(s, lede, facts, body, faqs, sources, description):
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": s["name"] + " explained",
-        "dateModified": UPDATED_ISO,
+        "dateModified": guide_iso(s["slug"]),
         "author": {"@type": "Organization", "name": "Kramavriddhi"},
         "publisher": {"@type": "Organization", "name": "Kramavriddhi"},
         "mainEntityOfPage": f"https://kramavriddhi.com/schemes/{s['slug']}/",
@@ -273,7 +292,7 @@ def article(s, lede, facts, body, faqs, sources, description):
         <div class="eyebrow">{s["icon"]} {s["cat_label"]}</div>
         <h1>{s["name"]}</h1>
         <p class="lede">{lede}</p>
-        <div class="meta"><span>Last updated: {UPDATED}</span><span>{STATES[st(s)]["label"]} scheme</span></div>{lang_switch}
+        <div class="meta"><span>Last updated: {nice_date(guide_iso(s["slug"]))}</span><span>{STATES[st(s)]["label"]} scheme</span></div>{lang_switch}
 
         <div class="facts">
 {facts_html}
@@ -303,7 +322,8 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <p>For the scheme, a <strong>farmer family</strong> means husband, wife and minor children who own cultivable land as per state land records.</p>
 
         <h2>Latest update</h2>
-        <p>The <strong>23rd instalment</strong> was released on <strong>20 June 2026</strong>. Instalments usually come about every four months, so the 24th instalment is expected around October–November 2026. The government has not announced an official date yet. We will update this page when it does.</p>
+        <p>The <strong>23rd instalment</strong> was released on <strong>20 June 2026</strong>. Instalments usually come about every four months, so the <strong>24th instalment</strong> (for August–November 2026) is expected in October–November 2026.</p>
+        <div class="note"><strong>No official date yet (14 October 2026).</strong> Some news reports say the 24th instalment may come around 17–18 October, and a "20 October" date is being shared on social media. None of these dates has been announced by the government. The real date is announced by the Ministry of Agriculture (PIB) and on pmkisan.gov.in a few days before the release. Until then, make sure your eKYC, land seeding and Aadhaar–bank link are done.</div>
         <p>On <strong>31 July 2026</strong>, the Union Cabinet approved <strong>continuing PM-KISAN from 2026-27 to 2030-31</strong> with an outlay of ₹3.15 lakh crore, so the ₹6,000 a year support will continue.</p>
 
         <h2>Benefits</h2>
@@ -374,6 +394,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Is eKYC compulsory for PM-KISAN?", "Yes. eKYC is mandatory for all registered farmers. It can be done by OTP on pmkisan.gov.in, by biometrics at a CSC, or by face authentication in the PM-KISAN app."),
         ("Can a tenant farmer get PM-KISAN?", "The scheme is for land-holding farmer families whose names are in the state land records. Tenant farmers who do not own land are generally not covered."),
         ("Can both husband and wife get PM-KISAN separately?", "No. The benefit is per farmer family (husband, wife and minor children), so only one member of the family receives it."),
+        ("When will the PM-KISAN 24th instalment come?", "It is expected in October–November 2026. As of 14 October 2026 the government has not announced a date. Dates seen on social media, such as 20 October, are not confirmed."),
         ("Why did my PM-KISAN instalment stop?", "Common reasons are pending eKYC, bank account not seeded with Aadhaar, land seeding not done, or the family falling into an exclusion category. Check 'Know Your Status' on pmkisan.gov.in."),
     ],
     sources=[
@@ -1121,13 +1142,14 @@ s = BY_SLUG["ap-annadata-sukhibhava"]
 write(f"schemes/{s['slug']}/index.html", article(s,
     lede="Annadata Sukhibhava is the Andhra Pradesh government's support scheme for farmers. Together with the Centre's PM-KISAN, each eligible farmer family gets ₹20,000 a year: ₹14,000 from the state and ₹6,000 from the Centre, paid in three instalments straight to the bank account.",
     description="Annadata Sukhibhava (Andhra Pradesh) explained: ₹20,000 a year for farmers with PM-KISAN, instalments, who is eligible, how to check status, latest release.",
-    facts=[("Per year", "₹20,000 / family"), ("From the state", "₹14,000"), ("From PM-KISAN", "₹6,000"), ("Latest", "1st instalment, June 2026")],
+    facts=[("Per year", "₹20,000 / family"), ("From the state", "₹14,000"), ("From PM-KISAN", "₹6,000"), ("2nd instalment", "Oct 2026 (not confirmed)")],
     body='''
         <h2>What is Annadata Sukhibhava?</h2>
         <p>Annadata Sukhibhava – PM KISAN is a farmer income-support scheme of the Government of Andhra Pradesh. It is run along with the Central Government's <a href="/schemes/pm-kisan/">PM-KISAN</a>, so farmers get both benefits together. The state adds ₹14,000 a year to PM-KISAN's ₹6,000, for a total of <strong>₹20,000 per farmer family per year</strong>.</p>
 
         <h2>Latest update</h2>
-        <p>The <strong>first instalment for 2026-27</strong> was released in June 2026: ₹7,000 per family (₹5,000 from the state and ₹2,000 from PM-KISAN), a total of ₹3,125.47 crore to about <strong>46.86 lakh farmer families</strong>, including cultivators under the Forest Rights Act. Further instalments are expected later in the year; we will update this page when dates are announced.</p>
+        <p>The <strong>first instalment for 2026-27</strong> was released in June 2026: ₹7,000 per family (₹5,000 from the state and ₹2,000 from PM-KISAN), a total of ₹3,125.47 crore to about <strong>46.86 lakh farmer families</strong>, including cultivators under the Forest Rights Act.</p>
+        <div class="note"><strong>2nd instalment (2026-27): not officially announced yet.</strong> News reports from late September and October 2026 say the state plans to pay it around Dasara, together with PM-KISAN's 24th instalment, and some name <strong>17 October</strong>. Some reports say this round will be <strong>₹6,000</strong> (₹4,000 from the state + ₹2,000 from PM-KISAN); last year the 2nd instalment was ₹7,000. The date and amount are confirmed only when the government releases the money. Complete your eKYC at the Rythu Seva Kendram so your payment is not held back.</div>
 
         <h2>How the ₹20,000 is paid</h2>
         <div class="table-wrap">
@@ -1139,7 +1161,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
           <tr><td><strong>Year</strong></td><td><strong>₹14,000</strong></td><td><strong>₹6,000</strong></td><td><strong>₹20,000</strong></td></tr>
         </table>
         </div>
-        <p class="muted" style="font-size:0.9rem">The state releases its share together with PM-KISAN instalments. Exact dates are announced by the government each time.</p>
+        <p class="muted" style="font-size:0.9rem">This is how the ₹14,000 was split in 2025-26. The state releases its share together with PM-KISAN instalments, and the exact amount and date are announced by the government each time.</p>
 
         <h2>Who is eligible?</h2>
         <ul>
@@ -1174,6 +1196,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much do farmers get under Annadata Sukhibhava?", "₹20,000 per farmer family per year: ₹14,000 from the Andhra Pradesh government and ₹6,000 from PM-KISAN."),
         ("When was the latest Annadata Sukhibhava instalment released?", "The first instalment for 2026-27 (₹7,000 per family) was released in June 2026 to about 46.86 lakh farmer families."),
+        ("When will the 2nd Annadata Sukhibhava instalment come?", "News reports say around Dasara in October 2026, together with PM-KISAN's 24th instalment (17 October has been mentioned). As of 14 October 2026 the government has not officially announced the date or amount."),
         ("Do I need PM-KISAN to get Annadata Sukhibhava?", "The two are paid together. Keeping your PM-KISAN registration and eKYC complete helps make sure you receive the full ₹20,000."),
         ("How do I check Annadata Sukhibhava status?", "On annadathasukhibhava.ap.gov.in, choose Know Your Status and enter your Aadhaar number, or ask at your Rythu Seva Kendram."),
         ("Are tenant farmers eligible?", "The government announced support for landless cultivators from the state budget, but payment status for tenant farmers has varied. Check with your Rythu Seva Kendram."),
@@ -1182,6 +1205,8 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Annadatha Sukhibhava – PM KISAN official portal", "https://annadathasukhibhava.ap.gov.in"),
         ("Tirupati district (ap.gov.in): Agriculture schemes", "https://tirupati.ap.gov.in/agriculture/"),
         ("Deccan Chronicle: CM releases ₹3,125 crore aid (June 2026)", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/farmers-natural-farming-take-centre-stage-as-cm-releases-3125-crore-aid-1965111"),
+        ("TV9 Telugu: Annadata Sukhibhava 2nd instalment expected around Dasara (9 Oct 2026)", "https://tv9telugu.com/andhra-pradesh/annadata-sukhibhava-2nd-installment-2026-ap-farmers-to-receive-6000-under-pm-kisan-and-state-scheme-check-eligibility-1930043.html"),
+        ("Vaartha: Annadata Sukhibhava and PM-KISAN likely on 17 October (Sept 2026)", "https://vaartha.com/andhra-pradesh/annadata-sukhibhava-pm-kisan-release-date-october-andhra-pradesh/781676/"),
     ]))
 
 # ---- AP: NTR Bharosa Pensions
@@ -1257,13 +1282,14 @@ s = BY_SLUG["ap-thalliki-vandanam"]
 write(f"schemes/{s['slug']}/index.html", article(s,
     lede="Thalliki Vandanam is the Andhra Pradesh government's education support scheme. For every school-going child in Classes 1 to 12, the mother gets ₹13,000 a year in her bank account, and ₹2,000 more goes to the school's maintenance.",
     description="Thalliki Vandanam (Andhra Pradesh) explained: ₹15,000 per child per year, ₹13,000 to mothers, eligibility, 75% attendance rule, 2026-27 release and how to check.",
-    facts=[("Per child", "₹15,000 / year"), ("To mother", "₹13,000"), ("To school upkeep", "₹2,000"), ("2026-27", "Released 22 July 2026")],
+    facts=[("Per child", "₹15,000 / year"), ("To mother", "₹13,000"), ("1st phase 2026-27", "Paid 22 July 2026"), ("2nd phase", "Expected before Dasara")],
     body='''
         <h2>What is Thalliki Vandanam?</h2>
         <p>Thalliki Vandanam (also written Talliki Vandanam) supports families so their children can keep going to school. The benefit is given <strong>for every eligible child</strong> in the family, with no limit on the number of children.</p>
 
         <h2>Latest update</h2>
-        <p>For the <strong>2026-27</strong> academic year, the government released ₹10,120.78 crore on <strong>22 July 2026</strong>, for about <strong>67.47 lakh students</strong>, credited to the accounts of about 42.70 lakh mothers. Beneficiary lists were displayed at village (Swarna Gramam) and ward offices. Newly admitted students in Classes 1–9 and Intermediate first year were to be covered by 30 August 2026.</p>
+        <p>For the <strong>2026-27</strong> academic year, the first phase was paid on <strong>22 July 2026</strong>: about <strong>64.77 lakh students</strong>, with the money credited to the accounts of about 42.70 lakh mothers. Beneficiary lists were displayed at village (Swarna Gramam) and ward offices.</p>
+        <p><strong>2nd phase (new admissions):</strong> students who newly joined <strong>Class 1</strong> or <strong>Intermediate first year</strong>, and students left out of the first phase because of incomplete records, are paid in a second phase. It was due on 30 August 2026 but was delayed. In early October the State Cabinet approved a revised sanction for <strong>3,29,201 second-phase students</strong>, raising the year's total to about 68.06 lakh students (₹10,208.69 crore), and on <strong>10 October 2026</strong> the School Education Department issued the order (G.O.Ms.No.26). News reports say the ₹13,000 will be credited <strong>before Dasara</strong>; no exact date has been announced.</p>
 
         <h2>Benefits</h2>
         <ul>
@@ -1301,13 +1327,16 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 ''',
     faqs=[
         ("How much money is given under Thalliki Vandanam?", "₹15,000 per child per year: ₹13,000 is credited to the mother's account and ₹2,000 goes to school maintenance."),
-        ("When was Thalliki Vandanam 2026-27 released?", "On 22 July 2026, for about 67.47 lakh students. New admissions were to be covered by 30 August 2026."),
+        ("When was Thalliki Vandanam 2026-27 released?", "The first phase was paid on 22 July 2026 to about 64.77 lakh students."),
+        ("When will new Class 1 and Inter first-year students get Thalliki Vandanam?", "In the second phase, for 3,29,201 students. The sanction order was issued on 10 October 2026 and news reports say the money will be credited before Dasara. No exact date has been announced."),
         ("Is Thalliki Vandanam given for all children in a family?", "Yes. The benefit is given for every eligible school-going child, not just one."),
         ("Do private school students get Thalliki Vandanam?", "Students in recognised private schools are covered along with government and aided schools, subject to the family meeting the eligibility conditions."),
         ("What if my child's name is not in the list?", "Contact your village or ward secretariat or the school with the child's and mother's Aadhaar to check and correct the details."),
     ],
     sources=[
         ("Deccan Chronicle: AP Govt to release Thalliki Vandanam funds on July 22 (2026)", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-govt-to-release-thalliki-vandanam-funds-on-july-22-1971425"),
+        ("Andhra Jyothy: 2nd phase of Thalliki Vandanam before Dasara, 3,29,201 students (10 Oct 2026)", "https://www.andhrajyothy.com/2026/andhra-pradesh/second-installment-of-thalliki-vandanam-to-be-paid-before-dasara-1566291.html"),
+        ("The Hans India: Cabinet gives revised sanction, Talliki Vandanam now covers 68.06 lakh students (Oct 2026)", "https://www.thehansindia.com/news/cities/amaravati/talliki-vandanam-expanded-the-scheme-now-covers-6806-lakh-students-1129947"),
         ("Government of Andhra Pradesh portal", "https://www.ap.gov.in"),
     ]))
 
@@ -1322,7 +1351,8 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <p>Rythu Bharosa replaced the earlier Rythu Bandhu scheme. It gives farmers money for each crop season to meet cultivation costs like seeds, fertiliser and labour, without needing a loan.</p>
 
         <h2>Latest update</h2>
-        <p>The Telangana government released Rythu Bharosa funds for the <strong>2026 Kharif season</strong> from 30 June 2026. A ₹500 per quintal bonus for notified fine rice varieties was also approved for the Kharif season.</p>
+        <p>The Telangana government released Rythu Bharosa funds for the <strong>2026 Kharif (Vanakalam) season</strong> from 30 June 2026. A ₹500 per quintal bonus for notified fine rice varieties was also approved for the Kharif season.</p>
+        <p><strong>Next: Rabi (Yasangi) 2026-27.</strong> As of 14 October 2026 the government has not announced when the Yasangi payment will be released. Last Yasangi, payments began on 22 March 2026 (Ugadi) and were released in phases by acreage. Dates on unofficial websites are guesses.</p>
 
         <h2>Benefits</h2>
         <ul>
@@ -1364,6 +1394,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much is Rythu Bharosa per acre?", "₹12,000 per acre per year, paid as ₹6,000 per acre for each of the Kharif and Rabi seasons."),
         ("When was Rythu Bharosa released for Kharif 2026?", "The Telangana government began releasing Kharif 2026 Rythu Bharosa funds from 30 June 2026."),
+        ("When will Rythu Bharosa for Yasangi (Rabi) 2026-27 come?", "Not announced yet (14 October 2026). Last Yasangi, payments started on 22 March 2026 and were released in phases."),
         ("Is Rythu Bharosa paid for non-agricultural land?", "No. Real-estate layouts, industrial and mining lands and non-cultivable land are excluded."),
         ("Do I need to apply every season for Rythu Bharosa?", "Usually not. Farmers are identified from land records. If payment is missing, contact your Agriculture Extension Officer."),
         ("Is Rythu Bharosa the same as Rythu Bandhu?", "Rythu Bharosa replaced Rythu Bandhu, with a higher amount and changes in which lands qualify."),
@@ -1371,6 +1402,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     sources=[
         ("Suryapet district (telangana.gov.in): Rythu Bharosa", "https://suryapet.telangana.gov.in/scheme/rythu-bharosa/"),
         ("Siasat: Revanth Reddy to release Rythu Bharosa funds on June 30 (2026)", "https://www.siasat.com/revanth-reddy-to-release-rythu-bharosa-funds-on-june-30-3491822/"),
+        ("ETV Bharat: Rythu Bharosa Yasangi funds credited from 22 March 2026", "https://www.etvbharat.com/te/state/cm-release-rythu-bharosa-funds-amount-to-be-credited-to-farmers-accounts-tomorrow-telangana-news-tgs26032201762"),
     ]))
 
 # ---- TS: Mahalakshmi
@@ -3359,7 +3391,6 @@ write("tools/sukanya-samriddhi-calculator/index.html",
 # ---------------------------------------------------------------- Telugu pages (added 6 Oct 2026)
 TE_STATE = {"central": "కేంద్ర ప్రభుత్వ పథకం", "ap": "ఆంధ్రప్రదేశ్ ప్రభుత్వ పథకం", "ts": "తెలంగాణ ప్రభుత్వ పథకం"}
 TE_STATE_SHORT = {"central": "కేంద్రం", "ap": "ఆంధ్రప్రదేశ్", "ts": "తెలంగాణ"}
-TE_UPDATED = "6 అక్టోబర్ 2026"
 
 def article_te(s, t):
     slug = s["slug"]
@@ -3368,7 +3399,7 @@ def article_te(s, t):
     src_html = "\n".join(f'        <li><a href="{u}" target="_blank" rel="noopener">{n}</a></li>' for n, u in SOURCES[slug])
     ld = {
         "@context": "https://schema.org", "@type": "Article", "inLanguage": "te",
-        "headline": t["name"], "dateModified": UPDATED_ISO,
+        "headline": t["name"], "dateModified": guide_iso(slug),
         "author": {"@type": "Organization", "name": "Kramavriddhi"},
         "publisher": {"@type": "Organization", "name": "Kramavriddhi"},
         "mainEntityOfPage": f"https://kramavriddhi.com/te/schemes/{slug}/",
@@ -3387,7 +3418,7 @@ def article_te(s, t):
         <div class="eyebrow">{s["icon"]} {t["cat_label"]}</div>
         <h1>{t["name"]}</h1>
         <p class="lede">{t["lede"]}</p>
-        <div class="meta"><span>చివరిగా అప్‌డేట్ చేసింది: {TE_UPDATED}</span><span>{TE_STATE[st(s)]}</span></div>
+        <div class="meta"><span>చివరిగా అప్‌డేట్ చేసింది: {nice_date(guide_iso(slug), "te")}</span><span>{TE_STATE[st(s)]}</span></div>
         <p class="lang-switch"><a href="/schemes/{slug}/" lang="en">Read in English →</a></p>
 
         <div class="facts">
@@ -3471,6 +3502,14 @@ write("games/index.html",
 # ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
 # Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
 UPDATES = [
+    dict(kind="expected", date="14 Oct 2026",
+         title="Annadata Sukhibhava 2nd instalment expected around Dasara",
+         text="News reports say AP will pay it with PM-KISAN's 24th instalment, and some mention 17 October. The date and amount are reported, not officially confirmed. Complete your eKYC at the Rythu Seva Kendram.",
+         link="/schemes/ap-annadata-sukhibhava/"),
+    dict(kind="expected", date="14 Oct 2026",
+         title="Thalliki Vandanam: ₹13,000 for new Class 1 and Inter students before Dasara",
+         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The sanction order was issued on 10 October; no exact payment date yet.",
+         link="/schemes/ap-thalliki-vandanam/"),
     dict(kind="deadline", date="13 Oct 2026", until="2026-10-31",
          title="Central Sector Scholarship: apply by 31 October",
          text="College students in the top 20% of their Class 12 board with family income up to ₹4.5 lakh can get ₹12,000–₹20,000 a year. Apply on the National Scholarship Portal.",
@@ -3479,18 +3518,22 @@ UPDATES = [
          title="Pragati Scholarship for girls: apply by 31 October",
          text="Girls in AICTE degree and diploma courses can get ₹50,000 a year. 2026-27 applications on the National Scholarship Portal close on 31 October 2026.",
          link="/schemes/aicte-pragati-scholarship/"),
-    dict(kind="expected", date="8 Oct 2026",
-         title="PM-KISAN 24th instalment expected in October–November",
-         text="No official date yet. The '20 October' date on social media is not confirmed. Make sure your eKYC, land seeding and Aadhaar bank link are done.",
+    dict(kind="expected", date="14 Oct 2026",
+         title="PM-KISAN 24th instalment: no official date yet",
+         text="Expected in October–November. Dates like 17 or 20 October in news and on social media are not confirmed by the government. Make sure your eKYC, land seeding and Aadhaar bank link are done.",
          link="/schemes/pm-kisan/"),
-    dict(kind="expected", date="8 Oct 2026",
-         title="Annadata Sukhibhava 2nd instalment expected around November",
-         text="AP farmers should get ₹7,000 (₹5,000 state + ₹2,000 PM-KISAN). The date is not announced yet.",
-         link="/schemes/ap-annadata-sukhibhava/"),
+    dict(kind="news", date="14 Oct 2026",
+         title="AP Auto Drivers Sevalo: 2026 payment date not announced",
+         text="Last year auto, taxi and maxi-cab owner-drivers got ₹15,000 on 4 October 2025. No official date has been given for this year's payment yet.",
+         link="/schemes/ap-auto-drivers-sevalo/"),
     dict(kind="deadline", date="8 Oct 2026", until="2026-11-30",
          title="Deepam-2: book your free gas cylinder by 30 November",
          text="AP families are in the August–November period. An unused free cylinder does not carry over to the next period.",
          link="/schemes/ap-deepam-2/"),
+    dict(kind="news", date="1 Oct 2026",
+         title="Telangana: senior citizens' pension still ₹2,016",
+         text="The promised increase to ₹4,000 has not been implemented for senior citizens, and they were not part of the 2026 Cheyutha enrolment round.",
+         link="/schemes/ts-cheyutha-pension/"),
     dict(kind="rate", date="1 Oct 2026",
          title="Sukanya Samriddhi interest stays at 8.2% for Oct–Dec 2026",
          text="The rate is reviewed every quarter. The next announcement is expected at the end of December.",
@@ -3539,7 +3582,7 @@ write("updates/index.html",
       <div class="eyebrow">Updates</div>
       <h1>Latest updates &amp; deadlines</h1>
       <p>Important dates, expected payments and new rules for the schemes on Kramavriddhi. We check official sources regularly and update this page.</p>
-      <p class="muted" style="font-size:0.9rem">Last checked: 13 October 2026</p>
+      <p class="muted" style="font-size:0.9rem">Last checked: 14 October 2026</p>
     </header>
     <div class="updates">
 {"".join(update_item(u) for u in UPDATES)}    </div>
@@ -3720,9 +3763,18 @@ write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404
     </div>
 ''' + FOOTER)
 
+SITE_ISO = max(GUIDE_UPDATED.values())  # pages that list guides or updates change whenever a guide does
+def lastmod(u):
+    slug = u.rstrip("/").split("/")[-1]
+    if u.startswith(("/schemes/", "/te/schemes/")) and slug in BY_SLUG:
+        return guide_iso(slug)
+    if u in ("/", "/updates/", "/schemes/", "/te/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/"):
+        return SITE_ISO
+    return UPDATED_ISO
+
 urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-      + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{UPDATED_ISO}</lastmod></url>\n" for u in urls)
+      + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{lastmod(u)}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
 write("robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://kramavriddhi.com/sitemap.xml\n")
 
