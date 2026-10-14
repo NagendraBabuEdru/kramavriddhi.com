@@ -8,6 +8,7 @@ Images are in the `images` folder. Rebuild them anytime with `python _social/mak
 | `youtube-banner.png` | YouTube channel banner (2560×1440) |
 | `post-1-pragati.png` … `post-5-checker.png` | First 5 Instagram posts (1080×1350) |
 | `post-6-csss.png` | Central Sector Scholarship post (1080×1350) |
+| `post-7-thalliki-phase2.png` | Thalliki Vandanam phase 2 post (1080×1350) |
 
 ---
 
@@ -145,6 +146,20 @@ AICTE Pragati Scholarship 🎓
 పూర్తి వివరాలు 👉 link in bio
 
 #CentralSectorScholarship #CSSS #Scholarship2026 #NationalScholarshipPortal #PMUSP #CollegeStudents #APStudents #TelanganaStudents #Kramavriddhi
+```
+
+**Post 7 – Thalliki Vandanam phase 2** (`post-7-thalliki-phase2.png`)
+```
+📚 తల్లికి వందనం రెండో విడత: ₹13,000 తల్లి ఖాతాలోకి!
+
+✅ 3,29,201 మంది విద్యార్థులకు: కొత్తగా 1వ తరగతిలో చేరిన పిల్లలు, ఇంటర్ మొదటి సంవత్సరం విద్యార్థులు, 22 జూలై చెల్లింపులో రాని పిల్లలు
+📜 ప్రభుత్వ ఉత్తర్వు G.O.Ms.No.26 (10 అక్టోబర్ 2026) జారీ అయింది
+📅 వార్తల ప్రకారం దసరా ముందు రావచ్చు, కచ్చితమైన తేదీ ఇంకా ప్రకటించలేదు
+👉 తల్లి బ్యాంకు ఖాతా ఆధార్ / NPCI తో లింక్ అయి, eKYC పూర్తి అయి ఉండాలి
+
+పూర్తి వివరాలు 👉 link in bio
+
+#ThallikiVandanam #TalliKiVandanam #APSchemes #AndhraPradesh #APGovt #Students #Kramavriddhi
 ```
 
 ---

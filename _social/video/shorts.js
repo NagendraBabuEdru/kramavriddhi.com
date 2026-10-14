@@ -210,6 +210,46 @@ const SHORTS = {
       { start: 28, cls: 'end', html: endCard('కాలేజీ ఫ్రెండ్స్‌కి షేర్ చేయండి! 🎓', 'Share with your college friends') },
     ],
   },
+
+  // ---------------------------------------------------------------- Short 5: Thalliki Vandanam phase 2 (AP)
+  5: {
+    file: 'short-5-thalliki-phase2', duration: 34, tag: '📅 Phase 2 · AP', tagColor: '#2563eb', music: { root: 57, seed: 2 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">తల్లికి వందనం రెండో విడత</div>
+        <div class="mega gold" data-in="0.25" data-fx="count" data-count="13000" data-prefix="₹" data-pulse>₹13,000</div>
+        <div class="h1" data-in="0.9">తల్లి ఖాతాలోకి!</div>
+        <div class="sub en" data-in="1.2">Thalliki Vandanam phase 2: ₹13,000 to the mother</div>
+        <div class="pill" data-in="1.8" data-fx="pop">📅 దసరా ముందు రావచ్చు</div>` },
+      { start: 4.5, html: `
+        <div class="label en" data-in="0.1">Who gets it now?</div>
+        <div class="h2" data-in="0.2">ఈ విడతలో ఎవరికి?</div>
+        <div class="mega teal" data-in="0.6" data-fx="count" data-count="329201" style="font-size:150px">3,29,201</div>
+        <div class="para" data-in="1.2" style="margin-top:0">మంది విద్యార్థులకు <span class="en" style="color:var(--muted);font-size:40px">students</span></div>
+        <div class="chips">
+          ${chip('🎒', 'కొత్తగా 1వ తరగతిలో చేరిన పిల్లలు', 'New Class 1 admissions', 2.0)}
+          ${chip('📘', 'ఇంటర్ మొదటి సంవత్సరం విద్యార్థులు', 'Inter first-year students', 2.8)}
+          ${chip('🔁', '22 జూలై చెల్లింపులో రాని పిల్లలు', 'Children left out of the 22 July payment', 3.6)}
+        </div>` },
+      { start: 11, dark: true, cls: 'compact', html: `
+        <div class="label en" data-in="0.1">When?</div>
+        <div class="h2" data-in="0.2">ఎప్పుడు వస్తుంది?</div>
+        <div class="chips">
+          ${chip('📜', 'ఉత్తర్వు G.O.Ms.No.26 జారీ', 'Government order issued 10 October 2026', 0.8)}
+          ${chip('🏛️', 'క్యాబినెట్ ఆమోదం', 'Revised sanction: 68.06 lakh students, ₹10,208.69 crore', 1.8)}
+          ${chip('📅', 'దసరా ముందు రావచ్చు', 'Expected before Dasara, as per news reports', 2.8)}
+        </div>
+        <div class="warn" data-in="4.0" data-fx="pop">కచ్చితమైన తేదీ ఇంకా ప్రకటించలేదు<div class="e en">No exact date has been announced yet</div></div>` },
+      { start: 18, cls: 'compact', html: `
+        <div class="label en" data-in="0.1">Check this now</div>
+        <div class="h2" data-in="0.2">డబ్బు ఆగకుండా ఇవి చూసుకోండి</div>
+        ${point('✓', 'తల్లి ఖాతా ఆధార్ / NPCI లింక్', "Mother's bank account linked to Aadhaar (NPCI)", 1.0)}
+        ${point('✓', 'eKYC పూర్తి చేయండి', 'Complete eKYC', 2.7)}
+        ${point('✓', 'పేరు లేదా? సచివాలయంలో అడగండి', 'Name missing? Ask at your village / ward secretariat', 4.4)}
+        <div class="warn" data-in="6.2" data-fx="pop">⚠️ OTP ఎవరికీ చెప్పకండి<div class="e en">Never share your OTP with callers</div></div>` },
+      { start: 27, cls: 'end', html: endCard('ఎదురుచూస్తున్న తల్లులకు షేర్ చేయండి! 💐', 'Share with mothers who are waiting') },
+    ],
+  },
 };
 
 // Step 2 of the checker demo: fields fill in after each tap, then the button is pressed.
