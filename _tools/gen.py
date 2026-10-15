@@ -2,6 +2,7 @@ import os, sys, json
 sys.path.insert(0, os.path.dirname(__file__))
 from parts import head, nav, footer, FOOTER, share_bar
 from og import card_url, build as build_og
+from seo import SEO, SEO_TE, page_title
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UPDATED = "6 October 2026"
@@ -209,7 +210,7 @@ chips = "\n".join(
     f'        <button class="chip" type="button" data-filter="{k}" aria-pressed="{"true" if k=="all" else "false"}">{v}</button>'
     for k, v in CATEGORIES)
 write("schemes/index.html",
-    head("Government Schemes Explained Simply: Central, Andhra Pradesh & Telangana | Kramavriddhi",
+    head(page_title("Government Schemes 2026: Central, AP & Telangana Guides"),
          "Simple, step-by-step guides to central government schemes and Andhra Pradesh and Telangana state schemes: who can apply, benefits, documents and how to apply.",
          "/schemes/")
     + nav("schemes") + f"""
@@ -311,7 +312,8 @@ def article(s, lede, facts, body, faqs, sources, description):
     img = og_card(s["slug"], s["short"], s["icon"], f'{STATES[st(s)]["short"]} scheme', facts[:3])
     path = f'/schemes/{s["slug"]}/'
     share_text = f'{s["short"]}: {s["summary"]}'
-    return (head(f'{s["name"]}: Eligibility, Benefits & How to Apply | Kramavriddhi', description,
+    seo_title, description = SEO.get(s["slug"], (f'{s["name"]}: Eligibility, Benefits & How to Apply', description))
+    return (head(page_title(seo_title), description,
                  path, extra, alternates=alts, image=img, og_type="article")
         + nav("schemes") + f'''
     <div class="narrow">
@@ -2118,7 +2120,7 @@ def coll_group(title, intro, slugs):
 """
 
 write("schemes/for-women/index.html",
-    head("Government Schemes for Girls and Women: Education, Business & Support | Kramavriddhi",
+    head(page_title("Government Schemes for Women & Girls: AP, TS, Central"),
          "All government schemes for girls and women in one place: scholarships, savings for daughters, self-employment loans, SHG support, free bus travel, gas and pensions. Central, AP and Telangana.",
          "/schemes/for-women/",
          image=og_card("for-women", "Schemes for girls & women", "👩", "Collection",
@@ -2436,7 +2438,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 
 # ---- Collection: For youth
 write("schemes/for-youth/index.html",
-    head("Government Schemes for Youth: Jobs, Internships, Skills & Business | Kramavriddhi",
+    head(page_title("Government Schemes for Youth: Jobs, Internships, Skills"),
          "Government opportunities for young men and women: paid internships, Agniveer jobs, free skill training, artisan and business loans, plus savings and insurance. Central, AP and Telangana.",
          "/schemes/for-youth/",
          image=og_card("for-youth", "Opportunities for youth", "🧑‍💼", "Collection",
@@ -3137,7 +3139,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 
 # ---- Collection: For boys & men
 write("schemes/for-men/index.html",
-    head("Government Schemes for Boys and Men: Scholarships, Jobs, Workers & Business | Kramavriddhi",
+    head(page_title("Government Schemes for Men: Scholarships, Jobs, Loans"),
          "Government schemes useful for boys and men: college scholarships, first-job incentive, internships, Agniveer, e-Shram, pension for workers, street vendor loans, artisan support, and AP driver support.",
          "/schemes/for-men/",
          image=og_card("for-men", "Schemes for boys & men", "👨", "Collection",
@@ -3170,7 +3172,7 @@ def state_hub(key, intro, slug):
     items = [x for x in DISPLAY if st(x) == key]
     label = STATES[key]["label"]
     write(f"schemes/{slug}/index.html",
-        head(f"{label} Government Schemes Explained Simply | Kramavriddhi",
+        head(page_title(f"{label} Schemes 2026: Simple Guides"),
              f"Simple guides to {label} government schemes: eligibility, benefits, documents and how to apply. Updated regularly.",
              f"/schemes/{slug}/")
         + nav("schemes") + f"""
@@ -3242,7 +3244,7 @@ TOOLS.insert(0, dict(slug="scheme-eligibility-checker", name="Which Schemes Am I
 CHECKER_TEXT = {
     "en": dict(
         path="/tools/scheme-eligibility-checker/",
-        title="Which Government Schemes Am I Eligible For? Free Checker | Kramavriddhi",
+        title=page_title("Scheme Eligibility Checker: Which Schemes Can I Get?"),
         desc="Free scheme eligibility checker: answer a few questions to find central, Andhra Pradesh and Telangana government schemes that may suit you, with simple guides.",
         crumbs='<a href="/">Home</a> › <a href="/tools/">Tools</a> › Scheme Eligibility Checker',
         eyebrow="✅ Free tool", h1="Which schemes am I eligible for?",
@@ -3337,7 +3339,7 @@ CHECKER_TEXT = {
     ),
     "te": dict(
         path="/te/tools/scheme-eligibility-checker/",
-        title="నాకు ఏ ప్రభుత్వ పథకాలు వర్తిస్తాయి? ఉచిత చెకర్ | Kramavriddhi",
+        title=page_title("నాకు ఏ ప్రభుత్వ పథకాలు వర్తిస్తాయి? ఉచిత చెకర్"),
         desc="ఉచిత పథకాల అర్హత చెకర్: కొన్ని ప్రశ్నలకు సమాధానం ఇచ్చి మీకు వర్తించే కేంద్ర, ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాలు తెలుసుకోండి.",
         crumbs='<a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › అర్హత చెకర్',
         eyebrow="✅ ఉచిత సాధనం", h1="నాకు ఏ పథకాలు వర్తిస్తాయి?",
@@ -3606,7 +3608,7 @@ write("tools/index.html",
 apy_rows = "\n".join(
     f'          <tr><td>{a}</td>' + "".join(f"<td>₹{v[0]:,}</td>" for v in vals) + "</tr>" for a, vals in APY_CHART.items())
 write("tools/atal-pension-calculator/index.html",
-    head("Atal Pension Yojana Calculator: Monthly Contribution by Age | Kramavriddhi",
+    head(page_title("Atal Pension Calculator: Contribution by Age"),
          "APY calculator: enter your age to see the monthly, quarterly and half-yearly contribution for a ₹1,000 to ₹5,000 pension, based on the official chart.",
          "/tools/atal-pension-calculator/",
          image=og_card("atal-pension-calculator", "Atal Pension Calculator", "👴", "Free calculator",
@@ -3694,7 +3696,7 @@ write("tools/atal-pension-calculator/index.html",
 
 # ---- SSY calculator
 write("tools/sukanya-samriddhi-calculator/index.html",
-    head("Sukanya Samriddhi Yojana Calculator: Maturity Amount | Kramavriddhi",
+    head(page_title("Sukanya Samriddhi Calculator: Maturity Amount"),
          "SSY calculator: enter your yearly deposit to see the maturity amount, total interest and year-by-year growth of a Sukanya Samriddhi account at the current 8.2% rate.",
          "/tools/sukanya-samriddhi-calculator/",
          image=og_card("sukanya-samriddhi-calculator", "Sukanya Samriddhi Calculator", "👧", "Free calculator",
@@ -3785,7 +3787,7 @@ def article_te(s, t):
     alts = {"en": f"/schemes/{slug}/", "te": f"/te/schemes/{slug}/"}
     img = og_card(slug, t["short"], s["icon"], TE_STATE[st(s)], t["facts"][:3], lang="te")
     path = f"/te/schemes/{slug}/"
-    return (head(f'{t["name"]}: అర్హత, లబ్ధి, దరఖాస్తు విధానం | Kramavriddhi', t["description"],
+    return (head(page_title(SEO_TE.get(slug, f'{t["name"]}: అర్హత, లబ్ధి, దరఖాస్తు విధానం')), t["description"],
                  path, extra, lang="te", alternates=alts, image=img, og_type="article")
         + nav("schemes", lang="te") + f'''
     <div class="narrow">
@@ -3828,7 +3830,7 @@ def te_card(s, t):
 
 te_items = [x for x in DISPLAY if x["slug"] in TE]
 write("te/schemes/index.html",
-    head("తెలుగులో ప్రభుత్వ పథకాలు: ఆంధ్రప్రదేశ్, తెలంగాణ | Kramavriddhi",
+    head(page_title("తెలుగులో ప్రభుత్వ పథకాలు: ఆంధ్రప్రదేశ్, తెలంగాణ"),
          "ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాల సులభమైన తెలుగు గైడ్‌లు: అర్హత, లబ్ధి, పత్రాలు, దరఖాస్తు విధానం.",
          "/te/schemes/", lang="te", alternates={"en": "/schemes/", "te": "/te/schemes/"})
     + nav("schemes", lang="te") + f'''
@@ -3968,7 +3970,7 @@ UPDATES_JS = """
 """
 
 write("updates/index.html",
-    head("Latest Scheme Updates, Deadlines & Instalment Dates | Kramavriddhi",
+    head(page_title("Scheme Deadlines & Instalment Dates 2026"),
          "Latest government scheme news: application deadlines, expected instalment dates, interest rate changes and new rules for central, Andhra Pradesh and Telangana schemes.",
          "/updates/",
          image=og_card("updates", "Latest updates & deadlines", "⏰", "Updates",
