@@ -15,6 +15,8 @@ GUIDE_UPDATED = {
                      "agnipath-agniveer", "pm-vishwakarma", "ts-rajiv-yuva-vikasam"], "2026-10-08"),
     **dict.fromkeys(["central-sector-scholarship", "pm-viksit-bharat-rozgar-yojana", "e-shram-card",
                      "pm-shram-yogi-maandhan", "pm-svanidhi", "ap-auto-drivers-sevalo"], "2026-10-13"),
+    # batch A (added 15 Oct 2026)
+    **dict.fromkeys(["ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ts-kalyana-lakshmi-shaadi-mubarak", "pm-fasal-bima-yojana"], "2026-10-15"),
     # 14 Oct 2026 fact check
     **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava", "ap-thalliki-vandanam", "ts-rythu-bharosa"], "2026-10-14"),
 }
@@ -153,6 +155,18 @@ SCHEMES = [
     dict(slug="ap-auto-drivers-sevalo", name="Auto Drivers Sevalo (Andhra Pradesh)", short="Auto Drivers Sevalo",
          state="ap", cat="business", cat_label="Business & Self-employment", icon="🛺",
          summary="₹15,000 a year for auto, taxi and maxi-cab owner-drivers in AP. 2026 payment date not yet announced."),
+    dict(slug="ap-nethanna-sevalo", name="Nethanna Sevalo for Handloom Weavers (Andhra Pradesh)", short="Nethanna Sevalo",
+         state="ap", cat="business", cat_label="Business & Self-employment", icon="🧵",
+         summary="₹25,000 a year for BPL handloom weaver families who own a loom. 2nd phase payment date not yet announced."),
+    dict(slug="ap-matsyakarula-sevalo", name="Matsyakarula Sevalo for Fishermen (Andhra Pradesh)", short="Matsyakarula Sevalo",
+         state="ap", cat="farmers", cat_label="Farmers & Agriculture", icon="🐟",
+         summary="₹20,000 a year for sea fishermen families during the 15 April–14 June fishing ban. 2026 paid in May."),
+    dict(slug="ts-kalyana-lakshmi-shaadi-mubarak", name="Kalyana Lakshmi & Shaadi Mubarak (Telangana)", short="Kalyana Lakshmi / Shaadi Mubarak",
+         state="ts", cat="women", cat_label="Women & Girls", icon="💍",
+         summary="₹1,00,116 once for the marriage of a girl from a poor SC, ST, BC, EBC or minority family, paid to her mother."),
+    dict(slug="pm-fasal-bima-yojana", name="PM Fasal Bima Yojana (Crop Insurance)", short="PM Fasal Bima Yojana",
+         cat="farmers", cat_label="Farmers & Agriculture", icon="🌦️",
+         summary="Low-cost crop insurance against drought, floods, pests and unseasonal rain. AP Rabi 2026-27: enrol by 15 Dec (paddy 31 Dec)."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -223,7 +237,7 @@ write("schemes/index.html",
 {"".join(scheme_card(s) for s in DISPLAY)}    </div>
     <p class="empty" id="empty">No schemes match yet. New guides are added every week.</p>
 
-    <p class="soon-list"><strong>Coming soon:</strong> PM Vishwakarma, PM Fasal Bima Yojana, PM Kaushal Vikas Yojana, National Scholarship Portal, PM Ujjwala Yojana, Stand-Up India, and more Andhra Pradesh and Telangana schemes.</p>
+    <p class="soon-list"><strong>Coming soon:</strong> National Scholarship Portal, PM Ujjwala Yojana, PM Surya Ghar (rooftop solar), Kisan Credit Card, and more Andhra Pradesh and Telangana schemes.</p>
 
     <div class="note" style="margin-top:32px">Kramavriddhi is an independent information website, not a government website. We never ask for your Aadhaar, bank details or any fee. Always apply only on the official portal linked in each guide.</div>
 
@@ -2123,8 +2137,8 @@ write("schemes/for-women/index.html",
         ["lakhpati-didi", "ts-indira-mahila-shakti", "pm-mudra-yojana"])
     + """
     <div class="note"><strong>Being relaunched:</strong> <strong>Stand-Up India</strong> (bank loans of ₹10 lakh–₹1 crore for women and SC/ST entrepreneurs) ended in March 2025 and the government announced in March 2026 that a revamped version is being prepared. <strong>PMEGP</strong> (subsidy for new businesses, with a higher subsidy for women) ran until 31 March 2026, and its extension is under consideration. We will add full guides when the new rules are announced.</div>
-""" + coll_group("🛡️ Everyday support", "Travel, cooking gas, pensions and housing support for women and their families.",
-        ["ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana"])
+""" + coll_group("🛡️ Everyday support", "Travel, cooking gas, marriage help, pensions and housing support for women and their families.",
+        ["ts-kalyana-lakshmi-shaadi-mubarak", "ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana"])
     + """    <div style="height:24px"></div>
 """ + FOOTER)
 
@@ -2822,6 +2836,305 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("The Hans India: Welfare and development balanced (2026-27 allocations)", "https://www.thehansindia.com/andhra-pradesh/welfare-development-balanced-amid-fiscal-challenges-ramanaidu-1062119"),
     ]))
 
+# ---------------------------------------------------------------- batch A: weavers, fishermen, marriage aid, crop insurance (added 15 Oct 2026)
+
+# ---- AP: Nethanna Sevalo (handloom weavers)
+s = BY_SLUG["ap-nethanna-sevalo"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Nethanna Sevalo (also written Nethannala Sevalo) is the Andhra Pradesh government's support for handloom weavers. The head of every eligible weaver family that owns a handloom gets ₹25,000 a year, paid directly into the bank account.",
+    description="Nethanna Sevalo (Andhra Pradesh) explained: ₹25,000 a year for handloom weaver families, who is eligible under GO 187, how beneficiaries are selected, and the 2nd phase status.",
+    facts=[("Per family / year", "₹25,000"), ("For", "BPL handloom weaver families"), ("Launched", "7 August 2026"), ("2nd phase", "Payment pending")],
+    body='''
+        <h2>What is Nethanna Sevalo?</h2>
+        <p>The Andhra Pradesh government started <strong>Nethanna Sevalo</strong> on <strong>7 August 2026</strong> (National Handloom Day) at Chirala in Bapatla district. It gives <strong>₹25,000 a year</strong> to each eligible handloom weaver family, up from ₹24,000 under the earlier Nethanna Nestham scheme. The rules are in <strong>G.O.Ms.No.187</strong> (29 July 2026) of the Industries and Commerce (Handlooms and Textiles) Department.</p>
+
+        <h2>Latest update</h2>
+        <ul>
+          <li><strong>1st phase:</strong> on 7 August 2026 the government released about <strong>₹179 crore</strong> for <strong>71,536 handloom families</strong>.</li>
+          <li><strong>2nd phase:</strong> <strong>36,632 applications</strong> were received from weavers left out of the first list. Handloom officials are checking them with home visits, and the deadline for finalising the list was extended to <strong>3 October 2026</strong>.</li>
+        </ul>
+        <div class="note"><strong>2nd phase payment: date not announced (15 October 2026).</strong> The Handlooms Minister has said it will be paid "shortly" to all eligible weavers. We will update this page when the money is released.</div>
+
+        <h2>Who is eligible?</h2>
+        <p>According to G.O.Ms.No.187:</p>
+        <ul>
+          <li>The money goes to the <strong>head of the weaver family who owns a handloom</strong>, <strong>whatever their age</strong>.</li>
+          <li><strong>One benefit per family</strong>, however many looms the family owns.</li>
+          <li>The family must be <strong>below the poverty line (BPL)</strong>, usually a rice card family.</li>
+          <li>The family must <strong>actually weave on the handloom for a living</strong> and be in the Handlooms Department's database.</li>
+          <li>You must live in Andhra Pradesh.</li>
+        </ul>
+
+        <h2>How are weavers selected?</h2>
+        <ol>
+          <li>The Handlooms and Textiles Department prepares the list from its weaver database, re-verified through the village and ward secretariats.</li>
+          <li>The list is displayed at your <strong>Swarna Grama / Swarna Ward secretariat</strong> for a social audit, so you can check your name.</li>
+          <li>If your name is missing or wrong, ask at the secretariat or the Assistant Director (Handlooms and Textiles) office. Officials may visit your home to see your loom.</li>
+          <li>After the District Collector approves the final list, ₹25,000 is credited by DBT to your Aadhaar-linked bank account.</li>
+        </ol>
+
+        <h2>Keep these ready</h2>
+        <ul>
+          <li>Aadhaar card and rice card</li>
+          <li>Bank account linked with Aadhaar (and NPCI-mapped for DBT)</li>
+          <li>Your loom: officials check that it is a working handloom in your house</li>
+        </ul>
+        <div class="note">No one needs to pay any fee or "commission" to be added to the list. Report anyone asking for money to your secretariat.</div>
+
+        <h2>Other help for weavers</h2>
+        <ul>
+          <li><strong>Free power:</strong> 200 units a month for handloom families and 500 units for power loom units, announced at the launch.</li>
+          <li><strong>Pension:</strong> weavers can also get the ₹4,000 monthly <a href="/schemes/ap-ntr-bharosa-pension/">NTR Bharosa pension</a> (age and other rules apply).</li>
+          <li><strong>Loans and tools:</strong> see <a href="/schemes/pm-vishwakarma/">PM Vishwakarma</a> and <a href="/schemes/pm-mudra-yojana/">PM Mudra Yojana</a>.</li>
+        </ul>
+
+        <div class="official">
+          <strong>Help:</strong> your village or ward secretariat, or the Assistant Director (Handlooms and Textiles) office in your district<br>
+          <strong>Official state portal:</strong> <a href="https://www.ap.gov.in" target="_blank" rel="noopener">ap.gov.in</a>
+        </div>
+''',
+    faqs=[
+        ("How much do weavers get under Nethanna Sevalo?", "₹25,000 a year for each eligible handloom weaver family, paid to the head of the family by DBT."),
+        ("Who is eligible for Nethanna Sevalo?", "BPL handloom weaver families in Andhra Pradesh who own a handloom, actually weave for a living and are in the Handlooms Department database. There is no age limit."),
+        ("Do families with more than one loom get more money?", "No. Each weaver family gets only one benefit, however many looms it owns."),
+        ("When will the 2nd phase of Nethanna Sevalo be paid?", "No date has been announced as of 15 October 2026. 36,632 applications were received and the list was to be finalised by 3 October."),
+        ("Is Nethanna Sevalo for power loom weavers?", "The ₹25,000 is for handloom weavers who own a handloom. Power loom units get separate free power support."),
+    ],
+    sources=[
+        ("AP Handlooms Dept: G.O.Ms.No.187 guidelines (29 Jul 2026), via GSWS Info", "https://www.gsws.info/2026/07/ap-nethannala-sevalo-scheme-rs25000.html"),
+        ("Deccan Chronicle: Naidu launches Nethanna Sevalo, ₹25,000 to handloom families (7 Aug 2026)", "https://www.deccanchronicle.com/amp/southern-states/andhra-pradesh/naidu-launches-nethanna-sevalo-scheme-offering-rs25000-to-handloom-families-1977332"),
+        ("Telangana Today: AP weavers get ₹25,000 aid (7 Aug 2026)", "https://telanganatoday.com/ap-weavers-get-rs-25000-aid-as-naidu-launches-nethanna-sevalo-scheme"),
+        ("Deccan Chronicle: one member per family, loom owners only (Jul 2026)", "https://www.deccanchronicle.com/amp/southern-states/andhra-pradesh/ap-govt-to-roll-out-nethanna-bharosa-scheme-for-weavers-on-august-7-1971325"),
+        ("Deccan Chronicle: Nethannala Sevalo 2nd phase deadline extended to 3 Oct (1 Oct 2026)", "https://www.deccanchronicle.com/amp/southern-states/andhra-pradesh/nethannala-sevalo-deadline-extended-to-oct-3-1992349"),
+    ]))
+
+# ---- AP: Matsyakarula Sevalo (fishermen, fishing ban relief)
+s = BY_SLUG["ap-matsyakarula-sevalo"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Matsyakarula Sevalo is the Andhra Pradesh government's support for sea fishermen families. Each eligible family gets ₹20,000 a year to make up for lost income during the 61-day sea fishing ban from 15 April to 14 June.",
+    description="Matsyakarula Sevalo (Andhra Pradesh) explained: ₹20,000 fishing ban relief for sea fishermen families, 2026 payment, who is eligible, how the list is made and other help.",
+    facts=[("Per family / year", "₹20,000"), ("For", "Fishing ban, 15 Apr–14 Jun"), ("2026 paid", "19 May 2026"), ("Families (2026)", "1,34,298")],
+    body='''
+        <h2>What is Matsyakarula Sevalo?</h2>
+        <p>Every year, fishing in the sea is banned for <strong>61 days, from 15 April to 14 June</strong>, so that fish can breed. Fishermen families lose their income during this time. Under <strong>Matsyakarula Sevalo</strong> (the fishing ban relief, earlier called Matsyakara Bharosa), the Andhra Pradesh government pays <strong>₹20,000</strong> to each eligible family. The amount was ₹10,000 under the previous government and was doubled by the present government.</p>
+
+        <h2>Latest update</h2>
+        <ul>
+          <li>On <strong>19 May 2026</strong>, at Thummalapenta in Kavali (Nellore district), the Chief Minister released <strong>₹261.50 crore</strong> for <strong>1,30,796 fishermen families</strong>.</li>
+          <li>On <strong>14 July 2026</strong>, another <strong>5,910 families</strong> who were left out for technical reasons got ₹20,000 each (₹11.82 crore).</li>
+          <li>In total, <strong>1,34,298 families</strong> received ₹268.59 crore for 2026-27.</li>
+        </ul>
+        <p>The next payment is for the 2027 fishing ban. It is usually paid during the ban period, but the date is announced by the government each year.</p>
+
+        <h2>Who is eligible?</h2>
+        <p>The Fisheries Department decides eligibility. In general:</p>
+        <ul>
+          <li>Fishermen families in Andhra Pradesh who <strong>depend on sea fishing</strong> for a living.</li>
+          <li>You should be registered with the <strong>Fisheries Department</strong>, as a boat owner or as a worker on a mechanised, motorised or traditional boat.</li>
+          <li>People with a government job, a regular salary or a pension are generally not eligible.</li>
+          <li>An Aadhaar-linked bank account is needed for the payment.</li>
+        </ul>
+
+        <h2>How the list is made</h2>
+        <ol>
+          <li>Fisheries Department staff check applications in the field and identify eligible families.</li>
+          <li>The list of selected families is displayed at the <strong>village or ward secretariat</strong>.</li>
+          <li>If your name is missing, contact the <strong>Fisheries Development Officer</strong> or your secretariat with your Aadhaar, boat or fishing details and bank passbook.</li>
+          <li>After the final list is approved, ₹20,000 is credited to the bank account.</li>
+        </ol>
+        <div class="note">No one needs to pay any fee to be added to the list. Report anyone asking for money to the Fisheries Department or your secretariat.</div>
+
+        <h2>Other help for fishermen</h2>
+        <ul>
+          <li><strong>Diesel subsidy</strong> for motorised boats (₹50 crore in the 2026-27 budget).</li>
+          <li><strong>Mechanised boats:</strong> 200 boats to be sanctioned with a <strong>60% subsidy</strong> and the rest as a bank loan (announced May 2026).</li>
+          <li><strong>Pension:</strong> fishermen can also get the ₹4,000 monthly <a href="/schemes/ap-ntr-bharosa-pension/">NTR Bharosa pension</a> (age and other rules apply).</li>
+          <li><strong>Accident cover:</strong> <a href="/schemes/pm-suraksha-bima-yojana/">PMSBY</a> gives ₹2 lakh accident insurance for ₹20 a year.</li>
+        </ul>
+
+        <div class="official">
+          <strong>Help:</strong> Fisheries Development Officer, district Fisheries office, or your village/ward secretariat<br>
+          <strong>Official state portal:</strong> <a href="https://www.ap.gov.in" target="_blank" rel="noopener">ap.gov.in</a>
+        </div>
+''',
+    faqs=[
+        ("How much do fishermen get during the fishing ban in AP?", "₹20,000 per eligible fishermen family under Matsyakarula Sevalo, for the ban from 15 April to 14 June."),
+        ("When was Matsyakarula Sevalo 2026 paid?", "On 19 May 2026 for 1,30,796 families, and on 14 July 2026 for 5,910 more families who were left out."),
+        ("Who is eligible for Matsyakarula Sevalo?", "Sea fishermen families registered with the Fisheries Department who depend on fishing. People with government jobs, regular salaries or pensions are generally not eligible."),
+        ("My name is not in the list. What should I do?", "Contact the Fisheries Development Officer or your village/ward secretariat with your Aadhaar, fishing details and bank passbook."),
+        ("When will the next Matsyakarula Sevalo payment come?", "The next payment is for the 2027 fishing ban (15 April to 14 June 2027). The date will be announced by the government."),
+    ],
+    sources=[
+        ("UNI: AP govt releases ₹261.5 crore aid to fishermen families (19 May 2026)", "https://test.uniindia.com/ap-govt-releases-rs-261-5-crore-aid-to-fishermen-families-during-fishing-ban/south/news/3848680.html"),
+        ("Andhra Jyothy: CM's announcements for fishermen at Thummalapenta (May 2026)", "https://www.andhrajyothy.com/2026/andhra-pradesh/chandrababu-warns-against-illegal-fishing-boats-announces-subsidy-scheme-and-satellite-surveillance-in-andhra-pradesh-1524875.html"),
+        ("Oneindia Telugu: ₹20,000 each to 5,910 more fishermen (14 Jul 2026)", "https://telugu.oneindia.com/news/andhra-pradesh/ap-govt-good-news-released-rs-20-000-each-to-5-910-fishermen-under-matsyakara-sevalo-scheme-2026-497015.html"),
+        ("Deccan Chronicle: AP imposes seasonal marine fishing ban", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/andhra-government-imposes-seasonal-marine-fishing-ban-for-resource-conservation-1950199"),
+    ]))
+
+# ---- TS: Kalyana Lakshmi / Shaadi Mubarak
+s = BY_SLUG["ts-kalyana-lakshmi-shaadi-mubarak"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Kalyana Lakshmi and Shaadi Mubarak are Telangana government schemes that give ₹1,00,116 once for the marriage of a girl from a poor family. Kalyana Lakshmi is for SC, ST, BC and EBC families, and Shaadi Mubarak is for minority families. The money is paid to the bride's mother's bank account.",
+    description="Kalyana Lakshmi and Shaadi Mubarak (Telangana) explained: ₹1,00,116 marriage help, income limits, bride's age, how to apply on ePASS, documents, status check, the 2026 court case and the tola gold promise.",
+    facts=[("One-time help", "₹1,00,116"), ("Bride's age", "18+ at marriage"), ("Income limit", "₹2 lakh (BC/EBC village ₹1.5 lakh)"), ("Apply on", "Telangana ePASS")],
+    body='''
+        <h2>What are Kalyana Lakshmi and Shaadi Mubarak?</h2>
+        <p>Telangana started these schemes on 2 October 2014 so that poor families don't fall into debt for a daughter's wedding. Both give the same amount, <strong>₹1,00,116</strong>, once per bride:</p>
+        <ul>
+          <li><strong>Kalyana Lakshmi</strong>: for brides from <strong>SC, ST, BC and EBC</strong> families.</li>
+          <li><strong>Shaadi Mubarak</strong>: for brides from <strong>minority</strong> families.</li>
+        </ul>
+        <p>As per the latest government order, the money is credited to the <strong>bride's mother's bank account</strong>.</p>
+
+        <h2>Latest update (2026)</h2>
+        <ul>
+          <li>In August 2026, a single judge of the Telangana High Court put the schemes on hold on a petition questioning them. On <strong>1 September 2026</strong>, a Division Bench headed by the Chief Justice <strong>stayed that order</strong>, so the schemes <strong>continue</strong>.</li>
+          <li>MLAs were still handing over Kalyana Lakshmi and Shaadi Mubarak cheques in October 2026, but many families report long waits. Opposition leaders say about two lakh applications are pending; the government has not given an official figure.</li>
+        </ul>
+        <div class="note"><strong>About "1 tola gold":</strong> before the 2023 elections, Congress promised one tola of gold to brides along with Kalyana Lakshmi. As of October 2026, this <strong>has not been implemented</strong>, and there is no government order for it. Don't pay anyone who offers to "register" you for the gold.</div>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>The bride's family must live in Telangana.</li>
+          <li>The bride must be <strong>18 or older on the wedding day</strong> (the groom 21 or older).</li>
+          <li>It is for the bride's <strong>first marriage</strong>, and each bride can get it only once.</li>
+          <li>Family income limits, from the official ePASS portal:</li>
+        </ul>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Scheme</th><th>Community</th><th>Family income per year</th></tr>
+          <tr><td>Kalyana Lakshmi</td><td>SC, ST</td><td>Up to ₹2,00,000</td></tr>
+          <tr><td>Kalyana Lakshmi</td><td>BC, EBC</td><td>Towns: up to ₹2,00,000 · Villages: up to ₹1,50,000</td></tr>
+          <tr><td>Shaadi Mubarak</td><td>Minorities</td><td>Up to ₹2,00,000</td></tr>
+        </table>
+        </div>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Open the official <a href="https://telanganaepass.cgg.gov.in" target="_blank" rel="noopener">Telangana ePASS portal</a> and choose <strong>Kalyana Lakshmi / Shaadi Mubarak</strong>.</li>
+          <li>Click <strong>Registration</strong> under your scheme, fill in the bride's, mother's and marriage details, and upload the documents.</li>
+          <li>Enter the <strong>bride's mother's bank account</strong> details correctly (Aadhaar-linked). If you applied earlier, use the <strong>Edit/Uploads</strong> link to update them.</li>
+          <li>Print the application and submit it with the original documents as instructed, usually at your <strong>Tahsildar (MRO) office</strong>.</li>
+          <li>Revenue officials verify the details (sometimes with a home visit), and the RDO sanctions the amount.</li>
+          <li>Check progress any time with <strong>Print/Status</strong> on the ePASS page.</li>
+        </ol>
+        <p><strong>Apply soon after the wedding.</strong> Late applications are often rejected; ask your Tahsildar office about the current time limit.</p>
+
+        <h2>Documents usually needed</h2>
+        <ul>
+          <li>Aadhaar of the bride, her mother and the groom</li>
+          <li>Caste certificate (Kalyana Lakshmi) or minority proof (Shaadi Mubarak)</li>
+          <li>Income certificate from MeeSeva, within the limit and not expired</li>
+          <li>Bride's age proof: SSC certificate or birth certificate</li>
+          <li>Marriage proof: wedding card and photo, and a marriage certificate or certificate from the VRO / Panchayat Secretary</li>
+          <li>Bank passbook of the bride's mother, linked with Aadhaar</li>
+        </ul>
+        <div class="note">Applying is free. Kramavriddhi is not a government website. Apply only on telanganaepass.cgg.gov.in or through your Tahsildar office, and never pay an agent.</div>
+
+        <div class="official">
+          <strong>Apply / check status:</strong> <a href="https://telanganaepass.cgg.gov.in" target="_blank" rel="noopener">telanganaepass.cgg.gov.in</a> → Kalyana Lakshmi Shaadi Mubarak<br>
+          <strong>Technical help:</strong> 040-23120311 (10:30 am – 5 pm, working days) · <strong>Verification:</strong> your Tahsildar (MRO) office
+        </div>
+''',
+    faqs=[
+        ("How much is Kalyana Lakshmi in Telangana?", "₹1,00,116, given once for the marriage of an eligible bride. Shaadi Mubarak gives the same amount for minority brides."),
+        ("What is the income limit for Kalyana Lakshmi?", "₹2 lakh a year for SC and ST families and for BC/EBC families in towns; ₹1.5 lakh for BC/EBC families in villages. Shaadi Mubarak's limit is ₹2 lakh."),
+        ("Whose account gets the Kalyana Lakshmi money?", "As per the latest government order, the amount is credited to the bride's mother's bank account."),
+        ("Is the 1 tola gold given with Kalyana Lakshmi?", "No. The promise of one tola gold has not been implemented as of October 2026, and there is no government order for it."),
+        ("Are Kalyana Lakshmi and Shaadi Mubarak stopped by the High Court?", "No. A single judge's order in August 2026 put them on hold, but the Division Bench stayed that order on 1 September 2026, so the schemes continue."),
+    ],
+    sources=[
+        ("Telangana ePASS: Kalyana Lakshmi & Shaadi Mubarak services and income limits (official)", "https://telanganaepass.cgg.gov.in"),
+        ("Telangana Today: HC stays single judge order halting the schemes (2 Sep 2026)", "https://telanganatoday.com/telangana-hc-stays-single-judge-order-halting-kalyana-lakshmi-shaadi-mubarak-schemes"),
+        ("UNI: High Court vacates stay on Kalyana Lakshmi, Shaadi Mubarak (1 Sep 2026)", "https://test.uniindia.com/telangana-high-court-vacates-stay-on-kalyana-lakshmi-shaadi-mubarak-schemes/south/news/3960941.html"),
+        ("Telangana Today: Harish Rao demands clearance of pending applications (Oct 2026)", "https://telanganatoday.com/harish-rao-demands-clearance-of-pending-kalyana-lakshmi-applications"),
+        ("The Hans India: MLA distributes Kalyana Lakshmi cheques (Oct 2026)", "https://www.thehansindia.com/telangana/veerlapalli-distributes-kalyana-lakshmi-cheques-to-beneficiaries-1129654"),
+    ]))
+
+# ---- PM Fasal Bima Yojana (crop insurance)
+s = BY_SLUG["pm-fasal-bima-yojana"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Fasal Bima Yojana (PMFBY) is the Central Government's crop insurance scheme. If your crop is damaged by drought, flood, cyclone, unseasonal rain, pests or disease, you get compensation. Farmers pay a small premium, at most 1.5% of the sum insured for Rabi food and oilseed crops, and the governments pay the rest.",
+    description="PM Fasal Bima Yojana explained: premium (1.5% Rabi, 2% Kharif, 5% commercial), what is covered, how to enrol, claims, and Rabi 2026-27 last dates in Andhra Pradesh and Telangana status.",
+    facts=[("Your premium", "1.5% Rabi · 2% Kharif"), ("Commercial / horticulture", "Up to 5%"), ("AP Rabi 2026-27", "Enrol by 15 Dec (paddy 31 Dec)"), ("Helpline", "14447")],
+    body='''
+        <h2>What is PM Fasal Bima Yojana?</h2>
+        <p>PMFBY was launched on 18 February 2016. It protects farmers against crop loss from natural calamities, pests and diseases, from sowing to just after harvest. The Centre has allocated <strong>₹12,200 crore</strong> for it in 2026-27, and it is run by 25 states and union territories. Claims are paid directly into the farmer's bank account.</p>
+
+        <h2>Latest update: Rabi 2026-27</h2>
+        <ul>
+          <li><strong>Andhra Pradesh</strong> is continuing PMFBY (and the weather-based scheme RWBCIS) for Kharif 2026 and <strong>Rabi 2026-27</strong>. Last dates to enrol:
+            <ul>
+              <li>Rabi crops other than paddy: <strong>15 December 2026</strong></li>
+              <li>Paddy: <strong>31 December 2026</strong></li>
+              <li>RWBCIS: cashew by 15 November, tomato by 15 December</li>
+            </ul>
+          </li>
+          <li>In AP the state paid the full premium for farmers in 2023 and 2024, but stopped this in 2025. Farmers now pay their own small share.</li>
+          <li><strong>Telangana</strong> left PMFBY in 2019-20. In late September 2026 the state said it plans to bring back crop insurance from the <strong>Yasangi 2026-27</strong> season, but no official notification with dates has been issued yet (15 October 2026). Check with your Agriculture Extension Officer before relying on it.</li>
+        </ul>
+        <div class="note"><strong>Don't wait for the last week.</strong> If you miss the cut-off date, your crop is not covered for the whole season.</div>
+
+        <h2>How much is the premium?</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Crop</th><th>Farmer pays (maximum)</th></tr>
+          <tr><td>Kharif food grains and oilseeds</td><td>2% of the sum insured</td></tr>
+          <tr><td>Rabi food grains and oilseeds</td><td>1.5% of the sum insured</td></tr>
+          <tr><td>Commercial and horticulture crops</td><td>5% of the sum insured</td></tr>
+        </table>
+        </div>
+        <p>The rest of the premium is paid by the Central and State governments, 50:50. Example: if the sum insured for your crop is ₹50,000 per hectare, your Rabi premium is at most ₹750 per hectare.</p>
+
+        <h2>What is covered?</h2>
+        <ul>
+          <li><strong>Yield loss</strong> in standing crops from drought, dry spells, floods, inundation, cyclones, hailstorms, lightning, pests and diseases (assessed for your notified area).</li>
+          <li><strong>Prevented sowing</strong>: if bad weather stops you from sowing after spending money, up to 25% of the sum insured.</li>
+          <li><strong>Post-harvest loss</strong>: crops left to dry in the field are covered for up to 14 days after harvest against cyclones and unseasonal rain.</li>
+          <li><strong>Localised calamities</strong> on your own field: hailstorm, landslide, inundation, cloudburst and natural fire.</li>
+        </ul>
+        <p><strong>Not covered:</strong> war, nuclear risks, riots, theft, and losses that could have been prevented, or crops and areas that are not notified.</p>
+
+        <h2>Who can enrol?</h2>
+        <ul>
+          <li>All farmers growing <strong>notified crops in notified areas</strong>, including <strong>tenant farmers and sharecroppers</strong> with the documents the state asks for.</li>
+          <li><strong>Loanee farmers</strong> (with a crop loan or KCC) are enrolled by the bank, and the premium is deducted from the loan. In AP you can opt out by giving a declaration at least 7 days before the cut-off date.</li>
+          <li><strong>Non-loanee farmers</strong> can join voluntarily.</li>
+        </ul>
+
+        <h2>How to enrol</h2>
+        <ol>
+          <li>Go to your <strong>bank branch</strong> or PACS, a <strong>Common Service Centre (CSC)</strong> (no extra fee), or use the farmer corner on <a href="https://pmfby.gov.in" target="_blank" rel="noopener">pmfby.gov.in</a> or the Crop Insurance app.</li>
+          <li>Give your land record (pattadar passbook / 1-B / Adangal) or tenancy agreement or sowing certificate, Aadhaar, bank passbook and the crop you have sown.</li>
+          <li>In AP, a valid <strong>Agristack farmer ID</strong> is also required.</li>
+          <li>Pay your premium share and keep the receipt or application number. You can check it on pmfby.gov.in.</li>
+        </ol>
+
+        <h2>If your crop is damaged</h2>
+        <ul>
+          <li>For damage to your own field (hailstorm, inundation, post-harvest rain), report it <strong>within 72 hours</strong> to the insurance company through the helpline <strong>14447</strong>, the Crop Insurance app, your bank or the agriculture officer.</li>
+          <li>For widespread loss, claims are worked out from crop cutting experiments and yield data for your area, and paid to your bank account.</li>
+        </ul>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://pmfby.gov.in" target="_blank" rel="noopener">pmfby.gov.in</a> · <strong>Helpline:</strong> 14447 (Krishi Rakshak)<br>
+          <strong>Help:</strong> your bank, CSC, Rythu Seva Kendram (AP) or Agriculture Extension Officer (Telangana)
+        </div>
+''',
+    faqs=[
+        ("How much premium do farmers pay under PMFBY?", "At most 2% of the sum insured for Kharif food and oilseed crops, 1.5% for Rabi food and oilseed crops, and 5% for commercial and horticulture crops."),
+        ("What is the last date for PMFBY Rabi 2026-27 in Andhra Pradesh?", "15 December 2026 for notified Rabi crops other than paddy, and 31 December 2026 for paddy."),
+        ("Is PM Fasal Bima Yojana available in Telangana?", "Telangana left PMFBY in 2019-20. In September 2026 it said it plans to bring back crop insurance from Yasangi 2026-27, but no official notification had been issued as of 15 October 2026."),
+        ("Can tenant farmers get crop insurance?", "Yes. Tenant farmers and sharecroppers can enrol with the documents the state asks for, such as a tenancy agreement or sowing certificate."),
+        ("How do I report crop damage?", "For damage on your own field, report within 72 hours to the insurance company through helpline 14447, the Crop Insurance app, your bank or the agriculture officer."),
+    ],
+    sources=[
+        ("PIB: Pradhan Mantri Fasal Bima Yojana, affordable crop insurance (29 Aug 2026)", "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc_9735_20260829_18493301.pdf"),
+        ("PMFBY official portal", "https://pmfby.gov.in"),
+        ("The Hans India: AP extends PMFBY and RWBCIS by one year, Rabi dates (8 Jul 2026)", "https://www.thehansindia.com/andhra-pradesh/two-crop-insurance-schemes-extended-by-one-year-1094903"),
+        ("Eenadu: Telangana to bring crop insurance from Yasangi (29 Sep 2026)", "https://www.eenadu.net/telugu-news/telangana/general/1899/126176012"),
+    ]))
+
 # ---- Collection: For boys & men
 write("schemes/for-men/index.html",
     head("Government Schemes for Boys and Men: Scholarships, Jobs, Workers & Business | Kramavriddhi",
@@ -2843,10 +3156,10 @@ write("schemes/for-men/index.html",
         ["pm-viksit-bharat-rozgar-yojana", "agnipath-agniveer"])
     + coll_group("👷 Workers & labourers", "Registration, pension and insurance for daily-wage and unorganised workers.",
         ["e-shram-card", "pm-shram-yogi-maandhan", "atal-pension-yojana", "pm-suraksha-bima-yojana", "pm-jeevan-jyoti-bima-yojana"])
-    + coll_group("🛒 Own business, trades & drivers", "Loans and support for vendors, artisans, drivers and small business owners.",
-        ["pm-svanidhi", "pm-mudra-yojana", "pm-vishwakarma", "ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam"])
-    + coll_group("🌾 Farmers", "Income support for farmer families.",
-        ["pm-kisan", "ap-annadata-sukhibhava", "ts-rythu-bharosa"])
+    + coll_group("🛒 Own business, trades & drivers", "Loans and support for vendors, artisans, weavers, fishermen, drivers and small business owners.",
+        ["pm-svanidhi", "pm-mudra-yojana", "pm-vishwakarma", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam"])
+    + coll_group("🌾 Farmers", "Income support and crop insurance for farmer families.",
+        ["pm-kisan", "pm-fasal-bima-yojana", "ap-annadata-sukhibhava", "ts-rythu-bharosa"])
     + coll_group("🏥 Health & family", "Free treatment and savings for your family.",
         ["ayushman-bharat-pm-jay", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana"])
     + """    <p style="margin:8px 0 40px">See also: <a href="/schemes/for-youth/">Opportunities for youth</a> · <a href="/schemes/for-women/">Schemes for girls &amp; women</a></p>
@@ -2960,6 +3273,9 @@ CHECKER_TEXT = {
             ("labourer", "I work as a daily-wage, gig or other unorganised worker"),
             ("vendor", "I am a street vendor"),
             ("driver", "I own and drive an auto, taxi or maxi-cab"),
+            ("weaver", "I am a handloom weaver and own a loom"),
+            ("fisher", "Our family lives by sea fishing"),
+            ("marriage", "A daughter in our family (18+) is getting married or married recently"),
             ("widow", "I am a widow or single woman"),
             ("disabled", "I or a family member have a disability"),
         ],
@@ -3011,6 +3327,12 @@ CHECKER_TEXT = {
             pmsym="Workers earning up to ₹15,000 a month can get a ₹3,000 pension at 60; the government matches your payment.",
             svanidhi="Street vendors get collateral-free loans of ₹15,000, ₹25,000 and ₹50,000 with a 7% interest subsidy.",
             apAuto="AP auto, taxi and maxi-cab owner-drivers got ₹15,000 a year (2026 payment date not announced yet).",
+            pmfby="Farmers can insure notified crops for a small premium: at most 1.5% for Rabi food and oilseed crops.",
+            pmfbyAp="Insure your Rabi crop for a small premium. AP last date: 15 December (paddy 31 December).",
+            pmfbyTs="Telangana plans crop insurance from Yasangi 2026-27, but it is not notified yet. Ask your AEO.",
+            apNethanna="BPL handloom weaver families who own a loom get ₹25,000 a year.",
+            apMatsya="Sea fishermen families get ₹20,000 during the April–June fishing ban.",
+            tsKalyana="₹1,00,116 for the marriage of a girl from a poor SC, ST, BC, EBC or minority family (income limit ₹2 lakh; BC/EBC in villages ₹1.5 lakh).",
         ),
     ),
     "te": dict(
@@ -3046,6 +3368,9 @@ CHECKER_TEXT = {
             ("labourer", "నేను రోజువారీ కూలీ, గిగ్ లేదా అసంఘటిత కార్మికుడిని"),
             ("vendor", "నేను వీధి వ్యాపారిని"),
             ("driver", "నాకు సొంత ఆటో, ట్యాక్సీ లేదా మ్యాక్సీ క్యాబ్ ఉంది, నేనే నడుపుతాను"),
+            ("weaver", "నేను చేనేత కార్మికుడిని, నాకు సొంత మగ్గం ఉంది"),
+            ("fisher", "మా కుటుంబం సముద్ర చేపల వేటపై ఆధారపడి జీవిస్తుంది"),
+            ("marriage", "మా కుటుంబంలో 18 ఏళ్ళు నిండిన అమ్మాయికి పెళ్ళి జరగబోతోంది లేదా ఇటీవలే జరిగింది"),
             ("widow", "నేను వితంతువు లేదా ఒంటరి మహిళను"),
             ("disabled", "నాకు లేదా మా కుటుంబ సభ్యులకు వైకల్యం ఉంది"),
         ],
@@ -3097,6 +3422,12 @@ CHECKER_TEXT = {
             pmsym="నెలకు ₹15,000 లోపు సంపాదించే కార్మికులకు 60 ఏళ్ళ తర్వాత నెలకు ₹3,000 పింఛన్; మీరు కట్టినంత ప్రభుత్వం కలుపుతుంది.",
             svanidhi="వీధి వ్యాపారులకు హామీ లేకుండా ₹15,000, ₹25,000, ₹50,000 రుణాలు, 7% వడ్డీ రాయితీ.",
             apAuto="ఏపీలో సొంత ఆటో, ట్యాక్సీ, మ్యాక్సీ క్యాబ్ నడిపేవారికి ఏడాదికి ₹15,000 (2026 చెల్లింపు తేదీ ఇంకా ప్రకటించలేదు).",
+            pmfby="నోటిఫై చేసిన పంటలకు తక్కువ ప్రీమియంతో బీమా: రబీ ఆహార, నూనెగింజల పంటలకు గరిష్ఠంగా 1.5%.",
+            pmfbyAp="తక్కువ ప్రీమియంతో మీ రబీ పంటకు బీమా. ఏపీలో చివరి తేదీ: 15 డిసెంబర్ (వరికి 31 డిసెంబర్).",
+            pmfbyTs="యాసంగి 2026-27 నుంచి పంటల బీమా తెస్తామని తెలంగాణ ప్రకటించింది, కానీ ఇంకా నోటిఫై చేయలేదు. మీ AEOను అడగండి.",
+            apNethanna="సొంత మగ్గం ఉన్న BPL చేనేత కుటుంబాలకు ఏడాదికి ₹25,000.",
+            apMatsya="సముద్ర వేటపై ఆధారపడిన మత్స్యకార కుటుంబాలకు ఏప్రిల్–జూన్ వేట నిషేధ సమయంలో ₹20,000.",
+            tsKalyana="పేద ఎస్సీ, ఎస్టీ, బీసీ, ఈబీసీ, మైనారిటీ కుటుంబాల అమ్మాయి పెళ్ళికి ₹1,00,116 (ఆదాయ పరిమితి ₹2 లక్షలు; గ్రామాల్లో బీసీ/ఈబీసీలకు ₹1.5 లక్షలు).",
         ),
     ),
 }
@@ -3187,6 +3518,7 @@ def checker_page(lang):
 
           // Central schemes
           if (f.farmland && notRich && !f.govtjob) add('pm-kisan', 'kisan');
+          if (f.farmland) add('pm-fasal-bima-yojana', state === 'ap' ? 'pmfbyAp' : (state === 'ts' ? 'pmfbyTs' : 'pmfby'));
           if (age >= 70) add('ayushman-bharat-pm-jay', 'jay70');
           else if (poor) add('ayushman-bharat-pm-jay', 'jayPoor');
           if (f.daughter) add('sukanya-samriddhi-yojana', 'ssy');
@@ -3217,6 +3549,8 @@ def checker_page(lang):
             if (poor && f.lpg) add('ap-deepam-2', 'apDeepam');
             if (woman || trans) add('ap-stree-shakti', 'apStree');
             if (f.driver) add('ap-auto-drivers-sevalo', 'apAuto');
+            if (f.weaver && poor) add('ap-nethanna-sevalo', 'apNethanna');
+            if (f.fisher) add('ap-matsyakarula-sevalo', 'apMatsya');
           }}
           // Telangana
           if (state === 'ts') {{
@@ -3224,6 +3558,7 @@ def checker_page(lang):
             if (woman || trans || (poor && f.lpg)) add('ts-mahalakshmi', (woman || trans) ? (poor && f.lpg ? 'tsMahaBusGas' : 'tsMahaBus') : 'tsMahaGas');
             if (poor && !f.pucca && inc <= 1) add('ts-indiramma-indlu', 'tsIndiramma');
             if (woman && age >= 18 && poor) add('ts-indira-mahila-shakti', 'tsMahilaShakti');
+            if (f.marriage && inc <= 1) add('ts-kalyana-lakshmi-shaadi-mubarak', 'tsKalyana');
             if (poor) add('ts-gruha-jyothi', 'tsGruha');
             if (poor) add('ts-rajiv-aarogyasri', 'tsAarogya');
             if (poor && (f.widow || f.disabled)) add('ts-cheyutha-pension', f.disabled ? 'tsCheyDis' : 'tsCheyWidow');
@@ -3544,6 +3879,10 @@ write("games/index.html",
 # ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
 # Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
 UPDATES = [
+    dict(kind="deadline", date="15 Oct 2026", until="2026-12-31",
+         title="AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)",
+         text="Under PM Fasal Bima Yojana, farmers pay at most 1.5% premium for Rabi food and oilseed crops. Enrol through your bank, CSC or Rythu Seva Kendram; an Agristack farmer ID is needed.",
+         link="/schemes/pm-fasal-bima-yojana/"),
     dict(kind="expected", date="14 Oct 2026",
          title="Annadata Sukhibhava 2nd instalment expected around Dasara",
          text="News reports say AP will pay it with PM-KISAN's 24th instalment, and some mention 17 October. The date and amount are reported, not officially confirmed. Complete your eKYC at the Rythu Seva Kendram.",
@@ -3568,6 +3907,10 @@ UPDATES = [
          title="AP Auto Drivers Sevalo: 2026 payment date not announced",
          text="Last year auto, taxi and maxi-cab owner-drivers got ₹15,000 on 4 October 2025. No official date has been given for this year's payment yet.",
          link="/schemes/ap-auto-drivers-sevalo/"),
+    dict(kind="expected", date="15 Oct 2026",
+         title="Nethanna Sevalo 2nd phase: ₹25,000 for weavers, date awaited",
+         text="36,632 handloom weavers applied for the 2nd phase and the list was to be finalised by 3 October. No payment date has been announced yet.",
+         link="/schemes/ap-nethanna-sevalo/"),
     dict(kind="deadline", date="8 Oct 2026", until="2026-11-30",
          title="Deepam-2: book your free gas cylinder by 30 November",
          text="AP families are in the August–November period. An unused free cylinder does not carry over to the next period.",
@@ -3576,10 +3919,18 @@ UPDATES = [
          title="Telangana: senior citizens' pension still ₹2,016",
          text="The promised increase to ₹4,000 has not been implemented for senior citizens, and they were not part of the 2026 Cheyutha enrolment round.",
          link="/schemes/ts-cheyutha-pension/"),
+    dict(kind="news", date="29 Sep 2026",
+         title="Telangana plans crop insurance from Yasangi 2026-27",
+         text="The state said it will bring back crop insurance from the Yasangi season. No official notification or last date has been issued yet.",
+         link="/schemes/pm-fasal-bima-yojana/"),
     dict(kind="rate", date="1 Oct 2026",
          title="Sukanya Samriddhi interest stays at 8.2% for Oct–Dec 2026",
          text="The rate is reviewed every quarter. The next announcement is expected at the end of December.",
          link="/schemes/sukanya-samriddhi-yojana/"),
+    dict(kind="news", date="1 Sep 2026",
+         title="Kalyana Lakshmi and Shaadi Mubarak continue after High Court order",
+         text="A Division Bench stayed a single judge's order that had put the marriage-aid schemes on hold. The 1 tola gold promise is still not implemented.",
+         link="/schemes/ts-kalyana-lakshmi-shaadi-mubarak/"),
     dict(kind="news", date="31 Jul 2026",
          title="PM-KISAN continued until 2030-31",
          text="The Union Cabinet approved continuing PM-KISAN from 2026-27 to 2030-31 with ₹3.15 lakh crore.",
@@ -3593,7 +3944,7 @@ UPDATES = [
          text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
          link="/schemes/pm-internship-scheme/"),
 ]
-UPDATES_CHECKED = "14 October 2026"  # change when you re-check the list
+UPDATES_CHECKED = "15 October 2026"  # change when you re-check the list
 KIND_LABEL = {"deadline": "⏰ Deadline", "expected": "📅 Expected", "news": "📰 News", "rate": "📈 Rate"}
 
 def update_item(u):

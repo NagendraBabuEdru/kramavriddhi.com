@@ -243,3 +243,7 @@ TE["ts-mahalakshmi"] = dict(
 # Batch 2: remaining state guides
 from te_content2 import TE2
 TE.update(TE2)
+
+# Batch 3: weavers, fishermen, marriage aid, crop insurance
+from te_content3 import TE3
+TE.update(TE3)
