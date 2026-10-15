@@ -2107,6 +2107,29 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     ]))
 
 # ---- Collection: For girls & women
+# Scheme lists for the collection pages (shared by the English and Telugu versions)
+COLL = {
+    "for-women": [
+        ["sukanya-samriddhi-yojana", "cbse-single-girl-child-scholarship", "aicte-pragati-scholarship", "ap-thalliki-vandanam"],
+        ["lakhpati-didi", "ts-indira-mahila-shakti", "pm-mudra-yojana"],
+        ["ts-kalyana-lakshmi-shaadi-mubarak", "ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana"],
+    ],
+    "for-youth": [
+        ["pm-internship-scheme", "agnipath-agniveer"],
+        ["pm-kaushal-vikas-yojana", "aicte-pragati-scholarship"],
+        ["pm-mudra-yojana", "pm-vishwakarma", "ts-rajiv-yuva-vikasam"],
+        ["pm-jan-dhan-yojana", "atal-pension-yojana", "pm-jeevan-jyoti-bima-yojana", "pm-suraksha-bima-yojana"],
+    ],
+    "for-men": [
+        ["central-sector-scholarship", "pm-kaushal-vikas-yojana", "pm-internship-scheme"],
+        ["pm-viksit-bharat-rozgar-yojana", "agnipath-agniveer"],
+        ["e-shram-card", "pm-shram-yogi-maandhan", "atal-pension-yojana", "pm-suraksha-bima-yojana", "pm-jeevan-jyoti-bima-yojana"],
+        ["pm-svanidhi", "pm-mudra-yojana", "pm-vishwakarma", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam"],
+        ["pm-kisan", "pm-fasal-bima-yojana", "ap-annadata-sukhibhava", "ts-rythu-bharosa"],
+        ["ayushman-bharat-pm-jay", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana"],
+    ],
+}
+
 def coll_group(title, intro, slugs):
     cards = "".join(scheme_card(BY_SLUG[x]) for x in slugs if x in BY_SLUG)
     return f"""
@@ -2123,7 +2146,7 @@ def coll_group(title, intro, slugs):
 write("schemes/for-women/index.html",
     head(page_title("Government Schemes for Women & Girls: AP, TS, Central"),
          "All government schemes for girls and women in one place: scholarships, savings for daughters, self-employment loans, SHG support, free bus travel, gas and pensions. Central, AP and Telangana.",
-         "/schemes/for-women/",
+         "/schemes/for-women/", alternates={"en": "/schemes/for-women/", "te": "/te/schemes/for-women/"},
          image=og_card("for-women", "Schemes for girls & women", "👩", "Collection",
                        [("Includes", "Scholarships, savings, loans"), ("Also", "SHG support, free bus"), ("From", "Central, AP & Telangana")], foot="Simple guides · Central, AP & Telangana"))
     + nav("schemes") + f"""
@@ -2131,17 +2154,18 @@ write("schemes/for-women/index.html",
     <header class="page-head">
       <div class="eyebrow">Collection</div>
       <h1>Schemes for girls &amp; women</h1>
-      <p>Scholarships, savings, business loans and everyday support for girls and women, from the Central Government, Andhra Pradesh and Telangana, all in one place.</p>{share_bar("/schemes/for-women/", "Government schemes for girls and women in one place: scholarships, savings, business loans, SHG support and more.")}
+      <p>Scholarships, savings, business loans and everyday support for girls and women, from the Central Government, Andhra Pradesh and Telangana, all in one place.</p>
+      <p class="lang-switch"><a href="/te/schemes/for-women/" lang="te">తెలుగులో చదవండి →</a></p>{share_bar("/schemes/for-women/", "Government schemes for girls and women in one place: scholarships, savings, business loans, SHG support and more.")}
     </header>
     <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
 """ + coll_group("🎓 Education", "Help for girls to study, from school to technical degrees.",
-        ["sukanya-samriddhi-yojana", "cbse-single-girl-child-scholarship", "aicte-pragati-scholarship", "ap-thalliki-vandanam"])
+        COLL["for-women"][0])
     + coll_group("💼 Self-employment & business", "Loans, training and support for women who want to earn.",
-        ["lakhpati-didi", "ts-indira-mahila-shakti", "pm-mudra-yojana"])
+        COLL["for-women"][1])
     + """
     <div class="note"><strong>Being relaunched:</strong> <strong>Stand-Up India</strong> (bank loans of ₹10 lakh–₹1 crore for women and SC/ST entrepreneurs) ended in March 2025 and the government announced in March 2026 that a revamped version is being prepared. <strong>PMEGP</strong> (subsidy for new businesses, with a higher subsidy for women) ran until 31 March 2026, and its extension is under consideration. We will add full guides when the new rules are announced.</div>
 """ + coll_group("🛡️ Everyday support", "Travel, cooking gas, marriage help, pensions and housing support for women and their families.",
-        ["ts-kalyana-lakshmi-shaadi-mubarak", "ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana"])
+        COLL["for-women"][2])
     + """    <div style="height:24px"></div>
 """ + FOOTER)
 
@@ -2444,7 +2468,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 write("schemes/for-youth/index.html",
     head(page_title("Government Schemes for Youth: Jobs, Internships, Skills"),
          "Government opportunities for young men and women: paid internships, Agniveer jobs, free skill training, artisan and business loans, plus savings and insurance. Central, AP and Telangana.",
-         "/schemes/for-youth/",
+         "/schemes/for-youth/", alternates={"en": "/schemes/for-youth/", "te": "/te/schemes/for-youth/"},
          image=og_card("for-youth", "Opportunities for youth", "🧑‍💼", "Collection",
                        [("Includes", "Paid internships, Agniveer"), ("Also", "Free skill training"), ("From", "Central, AP & Telangana")], foot="Simple guides · Central, AP & Telangana"))
     + nav("schemes") + f"""
@@ -2452,19 +2476,20 @@ write("schemes/for-youth/index.html",
     <header class="page-head">
       <div class="eyebrow">Collection</div>
       <h1>Opportunities for youth</h1>
-      <p>Paid internships, defence jobs, free skill training and help to start your own work: government opportunities for young people, all in one place.</p>{share_bar("/schemes/for-youth/", "Government opportunities for young people: paid internships, Agniveer, free skill training and business loans.")}
+      <p>Paid internships, defence jobs, free skill training and help to start your own work: government opportunities for young people, all in one place.</p>
+      <p class="lang-switch"><a href="/te/schemes/for-youth/" lang="te">తెలుగులో చదవండి →</a></p>{share_bar("/schemes/for-youth/", "Government opportunities for young people: paid internships, Agniveer, free skill training and business loans.")}
     </header>
     <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
 """ + coll_group("🧑‍💼 Jobs & internships", "Earn while you learn, or serve the country.",
-        ["pm-internship-scheme", "agnipath-agniveer"])
+        COLL["for-youth"][0])
     + coll_group("🛠️ Skills & education", "Free training and scholarships to build your career.",
-        ["pm-kaushal-vikas-yojana", "aicte-pragati-scholarship"])
+        COLL["for-youth"][1])
     + coll_group("💼 Start your own work", "Loans and support for your own business or trade.",
-        ["pm-mudra-yojana", "pm-vishwakarma", "ts-rajiv-yuva-vikasam"])
+        COLL["for-youth"][2])
     + """
     <div class="note"><strong>Being relaunched:</strong> <strong>Stand-Up India</strong> and <strong>PMEGP</strong> (subsidised loans for new businesses) are being renewed by the government. We will add guides when the new rules are announced. <a href="/schemes/for-women/">See schemes for girls &amp; women →</a></div>
 """ + coll_group("🛡️ Secure your future", "Low-cost savings, pension and insurance to start early.",
-        ["pm-jan-dhan-yojana", "atal-pension-yojana", "pm-jeevan-jyoti-bima-yojana", "pm-suraksha-bima-yojana"])
+        COLL["for-youth"][3])
     + """    <div style="height:24px"></div>
 """ + FOOTER)
 
@@ -3145,7 +3170,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 write("schemes/for-men/index.html",
     head(page_title("Government Schemes for Men: Scholarships, Jobs, Loans"),
          "Government schemes useful for boys and men: college scholarships, first-job incentive, internships, Agniveer, e-Shram, pension for workers, street vendor loans, artisan support, and AP driver support.",
-         "/schemes/for-men/",
+         "/schemes/for-men/", alternates={"en": "/schemes/for-men/", "te": "/te/schemes/for-men/"},
          image=og_card("for-men", "Schemes for boys & men", "👨", "Collection",
                        [("Studies", "Scholarships, skills"), ("Work", "First job, e-Shram, pension"), ("Business", "Vendor & artisan loans")], foot="Simple guides · Central, AP & Telangana"))
     + nav("schemes") + f"""
@@ -3153,21 +3178,22 @@ write("schemes/for-men/index.html",
     <header class="page-head">
       <div class="eyebrow">Collection</div>
       <h1>Schemes for boys &amp; men</h1>
-      <p>Most government schemes are open to everyone. This page brings together the ones most useful for boys and men at each stage of life: studies, first job, work, business and family.</p>{share_bar("/schemes/for-men/", "Government schemes for boys and men: college scholarships, first-job reward, workers' pension, vendor loans and more.")}
+      <p>Most government schemes are open to everyone. This page brings together the ones most useful for boys and men at each stage of life: studies, first job, work, business and family.</p>
+      <p class="lang-switch"><a href="/te/schemes/for-men/" lang="te">తెలుగులో చదవండి →</a></p>{share_bar("/schemes/for-men/", "Government schemes for boys and men: college scholarships, first-job reward, workers' pension, vendor loans and more.")}
     </header>
     <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
 """ + coll_group("🎓 Studies & skills", "Scholarships and free training for students and young people.",
-        ["central-sector-scholarship", "pm-kaushal-vikas-yojana", "pm-internship-scheme"])
+        COLL["for-men"][0])
     + coll_group("💼 First job & career", "Paid internships, first-job rewards and defence careers.",
-        ["pm-viksit-bharat-rozgar-yojana", "agnipath-agniveer"])
+        COLL["for-men"][1])
     + coll_group("👷 Workers & labourers", "Registration, pension and insurance for daily-wage and unorganised workers.",
-        ["e-shram-card", "pm-shram-yogi-maandhan", "atal-pension-yojana", "pm-suraksha-bima-yojana", "pm-jeevan-jyoti-bima-yojana"])
+        COLL["for-men"][2])
     + coll_group("🛒 Own business, trades & drivers", "Loans and support for vendors, artisans, weavers, fishermen, drivers and small business owners.",
-        ["pm-svanidhi", "pm-mudra-yojana", "pm-vishwakarma", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam"])
+        COLL["for-men"][3])
     + coll_group("🌾 Farmers", "Income support and crop insurance for farmer families.",
-        ["pm-kisan", "pm-fasal-bima-yojana", "ap-annadata-sukhibhava", "ts-rythu-bharosa"])
+        COLL["for-men"][4])
     + coll_group("🏥 Health & family", "Free treatment and savings for your family.",
-        ["ayushman-bharat-pm-jay", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana"])
+        COLL["for-men"][5])
     + """    <p style="margin:8px 0 40px">See also: <a href="/schemes/for-youth/">Opportunities for youth</a> · <a href="/schemes/for-women/">Schemes for girls &amp; women</a></p>
 """ + FOOTER)
 
@@ -3832,6 +3858,85 @@ def te_card(s, t):
         </a>
 '''
 
+# ---- Telugu collection pages (added 15 Oct 2026). Scheme lists come from COLL, shared with the English pages.
+TE_COLL = {
+    "for-women": dict(
+        title="బాలికలు, మహిళలకు ప్రభుత్వ పథకాలు: ఏపీ, తెలంగాణ",
+        desc="బాలికలు, మహిళల కోసం ప్రభుత్వ పథకాలన్నీ ఒకే చోట: స్కాలర్‌షిప్‌లు, కూతుళ్ళ కోసం పొదుపు, స్వయం ఉపాధి రుణాలు, SHG సాయం, ఉచిత బస్సు, గ్యాస్, పెళ్ళి సాయం, పింఛన్లు. కేంద్రం, ఏపీ, తెలంగాణ.",
+        crumb="బాలికలు & మహిళలకు", icon="👩", h1="బాలికలు & మహిళలకు పథకాలు",
+        lede="కేంద్ర ప్రభుత్వం, ఆంధ్రప్రదేశ్, తెలంగాణ ఇచ్చే స్కాలర్‌షిప్‌లు, పొదుపు, వ్యాపార రుణాలు, రోజువారీ సాయం, అన్నీ ఒకే చోట.",
+        share="బాలికలు, మహిళల కోసం ప్రభుత్వ పథకాలు ఒకే చోట: స్కాలర్‌షిప్‌లు, పొదుపు, వ్యాపార రుణాలు, SHG సాయం, ఇంకా.",
+        og=("బాలికలు, మహిళలకు పథకాలు", [("ఇందులో", "స్కాలర్‌షిప్‌లు, పొదుపు, రుణాలు"), ("ఇంకా", "SHG సాయం, ఉచిత బస్సు"), ("ఎక్కడివి", "కేంద్రం, ఏపీ, తెలంగాణ")]),
+        groups=[("🎓 చదువు", "బడి నుంచి సాంకేతిక డిగ్రీల వరకు అమ్మాయిల చదువుకు సాయం."),
+                ("💼 స్వయం ఉపాధి & వ్యాపారం", "సంపాదించాలనుకునే మహిళలకు రుణాలు, శిక్షణ, సహాయం."),
+                ("🛡️ రోజువారీ సాయం", "మహిళలు, వారి కుటుంబాలకు ప్రయాణం, వంట గ్యాస్, పెళ్ళి సాయం, పింఛన్లు, ఇళ్ళ సాయం.")],
+        notes={1: '<div class="note"><strong>మళ్ళీ ప్రారంభిస్తున్నారు:</strong> <strong>స్టాండ్-అప్ ఇండియా</strong> (మహిళలు, ఎస్సీ/ఎస్టీ వ్యాపారవేత్తలకు ₹10 లక్షలు–₹1 కోటి బ్యాంకు రుణాలు) మార్చి 2025తో ముగిసింది, కొత్త రూపంలో సిద్ధం చేస్తున్నట్లు మార్చి 2026లో ప్రభుత్వం ప్రకటించింది. <strong>PMEGP</strong> (కొత్త వ్యాపారాలకు సబ్సిడీ, మహిళలకు ఎక్కువ సబ్సిడీ) 31 మార్చి 2026 వరకు నడిచింది, పొడిగింపు పరిశీలనలో ఉంది. కొత్త నిబంధనలు ప్రకటించగానే పూర్తి గైడ్‌లు ఇస్తాం.</div>'},
+        end='<p style="margin:8px 0 40px">ఇవి కూడా చూడండి: <a href="/te/schemes/for-youth/">యువతకు అవకాశాలు</a> · <a href="/te/schemes/for-men/">అబ్బాయిలు & పురుషులకు పథకాలు</a></p>'),
+    "for-youth": dict(
+        title="యువతకు ప్రభుత్వ పథకాలు: ఉద్యోగాలు, ఇంటర్న్‌షిప్‌లు, నైపుణ్యాలు",
+        desc="యువతీ యువకులకు ప్రభుత్వ అవకాశాలు: జీతంతో ఇంటర్న్‌షిప్‌లు, అగ్నివీర్ ఉద్యోగాలు, ఉచిత నైపుణ్య శిక్షణ, వృత్తి, వ్యాపార రుణాలు, పొదుపు, బీమా. కేంద్రం, ఏపీ, తెలంగాణ.",
+        crumb="యువతకు", icon="🧑‍💼", h1="యువతకు అవకాశాలు",
+        lede="జీతంతో ఇంటర్న్‌షిప్‌లు, రక్షణ దళాల ఉద్యోగాలు, ఉచిత నైపుణ్య శిక్షణ, సొంత పని మొదలుపెట్టడానికి సాయం: యువతకు ప్రభుత్వ అవకాశాలన్నీ ఒకే చోట.",
+        share="యువతకు ప్రభుత్వ అవకాశాలు: జీతంతో ఇంటర్న్‌షిప్‌లు, అగ్నివీర్, ఉచిత నైపుణ్య శిక్షణ, వ్యాపార రుణాలు.",
+        og=("యువతకు అవకాశాలు", [("ఇందులో", "ఇంటర్న్‌షిప్‌లు, అగ్నివీర్"), ("ఇంకా", "ఉచిత నైపుణ్య శిక్షణ"), ("ఎక్కడివి", "కేంద్రం, ఏపీ, తెలంగాణ")]),
+        groups=[("🧑‍💼 ఉద్యోగాలు & ఇంటర్న్‌షిప్‌లు", "చదువుతూ సంపాదించండి, లేదా దేశానికి సేవ చేయండి."),
+                ("🛠️ నైపుణ్యాలు & చదువు", "మీ కెరీర్ కోసం ఉచిత శిక్షణ, స్కాలర్‌షిప్‌లు."),
+                ("💼 సొంత పని మొదలుపెట్టండి", "మీ సొంత వ్యాపారం లేదా వృత్తికి రుణాలు, సహాయం."),
+                ("🛡️ మీ భవిష్యత్తుకు భద్రత", "ముందే మొదలుపెట్టడానికి తక్కువ ఖర్చుతో పొదుపు, పింఛన్, బీమా.")],
+        notes={2: '<div class="note"><strong>మళ్ళీ ప్రారంభిస్తున్నారు:</strong> <strong>స్టాండ్-అప్ ఇండియా</strong>, <strong>PMEGP</strong> (కొత్త వ్యాపారాలకు సబ్సిడీ రుణాలు)ను ప్రభుత్వం పునరుద్ధరిస్తోంది. కొత్త నిబంధనలు ప్రకటించగానే గైడ్‌లు ఇస్తాం. <a href="/te/schemes/for-women/">బాలికలు & మహిళలకు పథకాలు చూడండి →</a></div>'},
+        end='<p style="margin:8px 0 40px">ఇవి కూడా చూడండి: <a href="/te/schemes/for-women/">బాలికలు & మహిళలకు పథకాలు</a> · <a href="/te/schemes/for-men/">అబ్బాయిలు & పురుషులకు పథకాలు</a></p>'),
+    "for-men": dict(
+        title="అబ్బాయిలు, పురుషులకు పథకాలు: చదువు, ఉద్యోగం, రుణాలు",
+        desc="అబ్బాయిలు, పురుషులకు ఉపయోగపడే ప్రభుత్వ పథకాలు: కాలేజీ స్కాలర్‌షిప్‌లు, మొదటి ఉద్యోగ ప్రోత్సాహకం, ఇంటర్న్‌షిప్‌లు, అగ్నివీర్, ఈ-శ్రమ్, కార్మికుల పింఛన్, వీధి వ్యాపారుల రుణాలు, నేతన్నలు, మత్స్యకారులు, డ్రైవర్లకు సాయం.",
+        crumb="అబ్బాయిలు & పురుషులకు", icon="👨", h1="అబ్బాయిలు & పురుషులకు పథకాలు",
+        lede="చాలా ప్రభుత్వ పథకాలు అందరికీ వర్తిస్తాయి. చదువు, మొదటి ఉద్యోగం, పని, వ్యాపారం, కుటుంబం: జీవితంలోని ప్రతి దశలో అబ్బాయిలు, పురుషులకు ఎక్కువగా ఉపయోగపడే పథకాలను ఈ పేజీ ఒకే చోట చూపిస్తుంది.",
+        share="అబ్బాయిలు, పురుషులకు ప్రభుత్వ పథకాలు: కాలేజీ స్కాలర్‌షిప్‌లు, మొదటి ఉద్యోగ ప్రోత్సాహకం, కార్మికుల పింఛన్, వ్యాపారుల రుణాలు, ఇంకా.",
+        og=("అబ్బాయిలు, పురుషులకు పథకాలు", [("చదువు", "స్కాలర్‌షిప్‌లు, నైపుణ్యాలు"), ("పని", "మొదటి ఉద్యోగం, ఈ-శ్రమ్, పింఛన్"), ("వ్యాపారం", "వ్యాపారులు, కళాకారులకు రుణాలు")]),
+        groups=[("🎓 చదువు & నైపుణ్యాలు", "విద్యార్థులు, యువతకు స్కాలర్‌షిప్‌లు, ఉచిత శిక్షణ."),
+                ("💼 మొదటి ఉద్యోగం & కెరీర్", "జీతంతో ఇంటర్న్‌షిప్‌లు, మొదటి ఉద్యోగ ప్రోత్సాహకం, రక్షణ దళాల కెరీర్."),
+                ("👷 కార్మికులు & కూలీలు", "రోజువారీ కూలీలు, అసంఘటిత కార్మికులకు నమోదు, పింఛన్, బీమా."),
+                ("🛒 సొంత వ్యాపారం, వృత్తులు & డ్రైవర్లు", "వీధి వ్యాపారులు, కళాకారులు, నేతన్నలు, మత్స్యకారులు, డ్రైవర్లు, చిన్న వ్యాపారులకు రుణాలు, సహాయం."),
+                ("🌾 రైతులు", "రైతు కుటుంబాలకు ఆదాయ సాయం, పంటల బీమా."),
+                ("🏥 ఆరోగ్యం & కుటుంబం", "మీ కుటుంబానికి ఉచిత వైద్యం, పొదుపు.")],
+        notes={},
+        end='<p style="margin:8px 0 40px">ఇవి కూడా చూడండి: <a href="/te/schemes/for-youth/">యువతకు అవకాశాలు</a> · <a href="/te/schemes/for-women/">బాలికలు & మహిళలకు పథకాలు</a></p>'),
+}
+
+def coll_group_te(title, intro, slugs):
+    cards = "".join(te_card(BY_SLUG[x], TE[x]) if x in TE else scheme_card(BY_SLUG[x]) for x in slugs if x in BY_SLUG)
+    return f"""
+    <section style="padding:40px 0">
+      <div class="section-head">
+        <h2>{title}</h2>
+        <p>{intro}</p>
+      </div>
+      <div class="grid">
+{cards}      </div>
+    </section>
+"""
+
+for page, c in TE_COLL.items():
+    assert len(c["groups"]) == len(COLL[page]), page
+    path = f"/te/schemes/{page}/"
+    img = og_card(page, c["og"][0], c["icon"], "సంకలనం", c["og"][1], lang="te", foot="సులభమైన గైడ్‌లు · కేంద్రం, ఏపీ, తెలంగాణ")
+    groups_html = ""
+    for i, (title, intro) in enumerate(c["groups"]):
+        groups_html += coll_group_te(title, intro, COLL[page][i]) + c["notes"].get(i, "")
+    write(f"te/schemes/{page}/index.html",
+        head(page_title(c["title"]), c["desc"], path, lang="te",
+             alternates={"en": f"/schemes/{page}/", "te": path}, image=img)
+        + nav("schemes", lang="te") + f'''
+    <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › {c["crumb"]}</p>
+    <header class="page-head">
+      <div class="eyebrow">సంకలనం</div>
+      <h1>{c["h1"]}</h1>
+      <p>{c["lede"]}</p>
+      <p class="lang-switch"><a href="/schemes/{page}/" lang="en">Read in English →</a></p>{share_bar(path, c["share"], "te")}
+    </header>
+    <a class="cta" href="/te/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>మీకు ఏవి వర్తిస్తాయో చూడండి</strong><br><span class="muted" style="font-size:0.9rem">మా అర్హత చెకర్‌లో కొన్ని ప్రశ్నలకు సమాధానం ఇవ్వండి.</span></div></a>
+{groups_html}    {c["end"]}
+''' + footer("te"))
+
 te_items = [x for x in DISPLAY if x["slug"] in TE]
 write("te/schemes/index.html",
     head(page_title("తెలుగులో ప్రభుత్వ పథకాలు: కేంద్రం, ఏపీ, తెలంగాణ"),
@@ -3844,10 +3949,13 @@ write("te/schemes/index.html",
       <p>కేంద్ర ప్రభుత్వ, ఆంధ్రప్రదేశ్, తెలంగాణ పథకాల గురించి స్పష్టమైన గైడ్‌లు: ఎవరు అర్హులు, ఏం లభిస్తుంది, ఏ పత్రాలు కావాలి, అధికారిక పోర్టల్‌లో ఎలా దరఖాస్తు చేయాలి.</p>
       <p class="lang-switch"><a href="/schemes/" lang="en">All schemes in English →</a></p>
     </header>
+    <a class="cta" href="/te/schemes/for-women/" style="margin-bottom:12px"><span>👩</span><div><strong>బాలికలు & మహిళలకు పథకాలు</strong><br><span class="muted" style="font-size:0.9rem">స్కాలర్‌షిప్‌లు, వ్యాపార రుణాలు, SHG సాయం, ఉచిత బస్సు, ఇంకా.</span></div></a>
+    <a class="cta" href="/te/schemes/for-youth/" style="margin-bottom:12px"><span>🧑‍💼</span><div><strong>యువతకు అవకాశాలు</strong><br><span class="muted" style="font-size:0.9rem">జీతంతో ఇంటర్న్‌షిప్‌లు, అగ్నివీర్, ఉచిత నైపుణ్య శిక్షణ, రుణాలు.</span></div></a>
+    <a class="cta" href="/te/schemes/for-men/" style="margin-bottom:12px"><span>👨</span><div><strong>అబ్బాయిలు & పురుషులకు పథకాలు</strong><br><span class="muted" style="font-size:0.9rem">స్కాలర్‌షిప్‌లు, మొదటి ఉద్యోగం, కార్మికుల పింఛన్, వ్యాపారుల రుణాలు.</span></div></a>
     <a class="cta" href="/te/tools/scheme-eligibility-checker/" style="margin-bottom:28px"><span>✅</span><div><strong>మీకు ఏ పథకాలు వర్తిస్తాయో తెలియదా?</strong><br><span class="muted" style="font-size:0.9rem">కొన్ని ప్రశ్నలకు సమాధానం ఇచ్చి మీకు సరిపోయే పథకాలు చూడండి.</span></div></a>
     <div class="grid">
 {"".join(te_card(x, TE[x["slug"]]) for x in te_items)}    </div>
-    <p class="soon-list"><strong>త్వరలో:</strong> మరిన్ని ఆంధ్రప్రదేశ్, తెలంగాణ పథకాలు, కేంద్ర పథకాలు తెలుగులో.</p>
+    <p class="soon-list"><strong>త్వరలో:</strong> మరిన్ని ఆంధ్రప్రదేశ్, తెలంగాణ, కేంద్ర పథకాలు. మా గైడ్‌లన్నీ ఇప్పుడు తెలుగులోనూ ఉన్నాయి.</p>
     <div class="note" style="margin-top:32px">క్రమవృద్ధి ఒక స్వతంత్ర సమాచార వెబ్‌సైట్, ప్రభుత్వ వెబ్‌సైట్ కాదు. మేము మీ ఆధార్, బ్యాంకు వివరాలు లేదా ఎలాంటి ఫీజు అడగము. ఎల్లప్పుడూ గైడ్‌లో ఇచ్చిన అధికారిక పోర్టల్‌లోనే దరఖాస్తు చేయండి.</div>
     <div style="height:40px"></div>
 ''' + footer("te"))
@@ -4174,11 +4282,12 @@ def lastmod(u):
     slug = u.rstrip("/").split("/")[-1]
     if u.startswith(("/schemes/", "/te/schemes/")) and slug in BY_SLUG:
         return guide_iso(slug)
-    if u in ("/", "/updates/", "/schemes/", "/te/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/"):
+    if u in ("/", "/updates/", "/schemes/", "/te/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/",
+             "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/"):
         return SITE_ISO
     return UPDATED_ISO
 
-urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{lastmod(u)}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")

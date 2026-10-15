@@ -129,4 +129,10 @@ SEO_TE = {
     "sukanya-samriddhi-yojana": "సుకన్య సమృద్ధి యోజన: వడ్డీ రేటు, నిబంధనలు",
     "ayushman-bharat-pm-jay": "ఆయుష్మాన్ కార్డు: ₹5 లక్షల వైద్యం, 70+ వారికి",
     "atal-pension-yojana": "అటల్ పెన్షన్ యోజన: వయసు వారీ చార్ట్, అర్హత",
+    "pm-awas-yojana-urban": "పీఎం ఆవాస్ యోజన అర్బన్ 2.0: అర్హత, సబ్సిడీ",
+    "pm-awas-yojana-gramin": "పీఎం ఆవాస్ యోజన గ్రామీణ్: అర్హత, స్టేటస్",
+    "pm-mudra-yojana": "ముద్ర రుణం 2026: ₹20 లక్షల వరకు, అర్హత",
+    "pm-jan-dhan-yojana": "జన్ ధన్ ఖాతా: లాభాలు, పత్రాలు, ఎలా తెరవాలి",
+    "pm-jeevan-jyoti-bima-yojana": "PMJJBY: ₹436కు ₹2 లక్షల జీవిత బీమా",
+    "pm-suraksha-bima-yojana": "PMSBY: ₹20కు ₹2 లక్షల ప్రమాద బీమా",
 }

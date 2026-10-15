@@ -255,3 +255,7 @@ TE.update(TE4)
 # Batch 5: boys & men guides and the big central schemes
 from te_content5 import TE5
 TE.update(TE5)
+
+# Batch 6: housing, Mudra, Jan Dhan and insurance
+from te_content6 import TE6
+TE.update(TE6)
