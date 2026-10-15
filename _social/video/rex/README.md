@@ -35,3 +35,11 @@ Two kinds of videos, both built from the game itself:
    Then from `stories/`: `node make_stories.js roar --stills`, look at the frames, and `node make_stories.js` for all.
 
 Node packages come from `_social/video/node_modules` (`puppeteer-core`). ffmpeg must be on PATH.
+
+## Rex Adventures episodes (`sketch/`, `director/`)
+Pencil-sketch storybook episodes (Episode 0 "Rex is Born", Episode 1 "The Twinkling Rain"), all drawn by code on a canvas.
+- `sketch/sketch.html` loads `art.js` (pencil drawing kit), `rex_puppet.js` (baby Rex), `props.js` + `props2.js`, `film.js` (camera, grade, B&W), `ep0.js`, `ep1.js`.
+- Stills for review: `node shot.js <prefix> <t1,t2,...> <bw|color|both> <ep>`.
+- Video: `node render.js <ep> <bw|color> [--from=s --to=s]`; join chunks with `node join.js <ep> <mode> 0,77,154,230`. Music and sounds come from `score.js`.
+- Run with `NODE_PATH=../../node_modules`. Output goes to `_social/videos/rex/adventures/` (with UPLOAD.md).
+- `director/` holds the director agent's brief, shot list and review rounds; a version is rendered only after it says READY TO RENDER.
