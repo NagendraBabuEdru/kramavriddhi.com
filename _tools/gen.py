@@ -19,7 +19,8 @@ GUIDE_UPDATED = {
     # batch A (added 15 Oct 2026) and the Rajiv Yuva Vikasam update
     **dict.fromkeys(["ts-rajiv-yuva-vikasam", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ts-kalyana-lakshmi-shaadi-mubarak", "pm-fasal-bima-yojana"], "2026-10-15"),
     # 14 Oct 2026 fact check
-    **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava", "ap-thalliki-vandanam", "ts-rythu-bharosa"], "2026-10-14"),
+    **dict.fromkeys(["ap-thalliki-vandanam", "ts-rythu-bharosa"], "2026-10-14"),
+    **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava"], "2026-10-15"),  # re-checked 15 Oct 2026
 }
 MONTHS = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
           "te": ["జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్", "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్"]}
@@ -354,7 +355,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 
         <h2>Latest update</h2>
         <p>The <strong>23rd instalment</strong> was released on <strong>20 June 2026</strong>. Instalments usually come about every four months, so the <strong>24th instalment</strong> (for August–November 2026) is expected in October–November 2026.</p>
-        <div class="note"><strong>No official date yet (14 October 2026).</strong> Some news reports say the 24th instalment may come around 17–18 October, and a "20 October" date is being shared on social media. None of these dates has been announced by the government. The real date is announced by the Ministry of Agriculture (PIB) and on pmkisan.gov.in a few days before the release. Until then, make sure your eKYC, land seeding and Aadhaar–bank link are done.</div>
+        <div class="note"><strong>No official date yet (15 October 2026).</strong> Some news reports say the 24th instalment may come around 17–18 October, and a "20 October" date is being shared on social media. None of these dates has been announced by the government. The real date is announced by the Ministry of Agriculture (PIB) and on pmkisan.gov.in a few days before the release. Until then, make sure your eKYC, land seeding and Aadhaar–bank link are done.</div>
         <p>On <strong>31 July 2026</strong>, the Union Cabinet approved <strong>continuing PM-KISAN from 2026-27 to 2030-31</strong> with an outlay of ₹3.15 lakh crore, so the ₹6,000 a year support will continue.</p>
 
         <h2>Benefits</h2>
@@ -425,7 +426,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Is eKYC compulsory for PM-KISAN?", "Yes. eKYC is mandatory for all registered farmers. It can be done by OTP on pmkisan.gov.in, by biometrics at a CSC, or by face authentication in the PM-KISAN app."),
         ("Can a tenant farmer get PM-KISAN?", "The scheme is for land-holding farmer families whose names are in the state land records. Tenant farmers who do not own land are generally not covered."),
         ("Can both husband and wife get PM-KISAN separately?", "No. The benefit is per farmer family (husband, wife and minor children), so only one member of the family receives it."),
-        ("When will the PM-KISAN 24th instalment come?", "It is expected in October–November 2026. As of 14 October 2026 the government has not announced a date. Dates seen on social media, such as 20 October, are not confirmed."),
+        ("When will the PM-KISAN 24th instalment come?", "It is expected in October–November 2026. As of 15 October 2026 the government has not announced a date. Dates seen on social media, such as 20 October, are not confirmed."),
         ("Why did my PM-KISAN instalment stop?", "Common reasons are pending eKYC, bank account not seeded with Aadhaar, land seeding not done, or the family falling into an exclusion category. Check 'Know Your Status' on pmkisan.gov.in."),
     ],
     sources=[
@@ -1227,7 +1228,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much do farmers get under Annadata Sukhibhava?", "₹20,000 per farmer family per year: ₹14,000 from the Andhra Pradesh government and ₹6,000 from PM-KISAN."),
         ("When was the latest Annadata Sukhibhava instalment released?", "The first instalment for 2026-27 (₹7,000 per family) was released in June 2026 to about 46.86 lakh farmer families."),
-        ("When will the 2nd Annadata Sukhibhava instalment come?", "News reports say around Dasara in October 2026, together with PM-KISAN's 24th instalment (17 October has been mentioned). As of 14 October 2026 the government has not officially announced the date or amount."),
+        ("When will the 2nd Annadata Sukhibhava instalment come?", "News reports say around Dasara in October 2026, together with PM-KISAN's 24th instalment (17 October has been mentioned). As of 15 October 2026 the government has not officially announced the date or amount."),
         ("Do I need PM-KISAN to get Annadata Sukhibhava?", "The two are paid together. Keeping your PM-KISAN registration and eKYC complete helps make sure you receive the full ₹20,000."),
         ("How do I check Annadata Sukhibhava status?", "On annadathasukhibhava.ap.gov.in, choose Know Your Status and enter your Aadhaar number, or ask at your Rythu Seva Kendram."),
         ("Are tenant farmers eligible?", "The government announced support for landless cultivators from the state budget, but payment status for tenant farmers has varied. Check with your Rythu Seva Kendram."),
