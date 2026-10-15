@@ -13,11 +13,11 @@ UPDATED_ISO = "2026-10-06"
 GUIDE_UPDATED = {
     **dict.fromkeys(["aicte-pragati-scholarship", "cbse-single-girl-child-scholarship", "lakhpati-didi",
                      "ts-indira-mahila-shakti", "pm-internship-scheme", "pm-kaushal-vikas-yojana",
-                     "agnipath-agniveer", "pm-vishwakarma", "ts-rajiv-yuva-vikasam"], "2026-10-08"),
+                     "agnipath-agniveer", "pm-vishwakarma"], "2026-10-08"),
     **dict.fromkeys(["central-sector-scholarship", "pm-viksit-bharat-rozgar-yojana", "e-shram-card",
                      "pm-shram-yogi-maandhan", "pm-svanidhi", "ap-auto-drivers-sevalo"], "2026-10-13"),
-    # batch A (added 15 Oct 2026)
-    **dict.fromkeys(["ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ts-kalyana-lakshmi-shaadi-mubarak", "pm-fasal-bima-yojana"], "2026-10-15"),
+    # batch A (added 15 Oct 2026) and the Rajiv Yuva Vikasam update
+    **dict.fromkeys(["ts-rajiv-yuva-vikasam", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ts-kalyana-lakshmi-shaadi-mubarak", "pm-fasal-bima-yojana"], "2026-10-15"),
     # 14 Oct 2026 fact check
     **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava", "ap-thalliki-vandanam", "ts-rythu-bharosa"], "2026-10-14"),
 }
@@ -137,7 +137,7 @@ SCHEMES = [
          summary="For carpenters, tailors, barbers and other artisans: paid training, ₹15,000 toolkit and loans up to ₹3 lakh at 5%."),
     dict(slug="ts-rajiv-yuva-vikasam", name="Rajiv Yuva Vikasam (Telangana)", short="Rajiv Yuva Vikasam",
          state="ts", cat="business", cat_label="Business & Self-employment", icon="🚀",
-         summary="Announced ₹50,000–₹4 lakh self-employment support for SC/ST/BC/minority youth. Not yet implemented (2026)."),
+         summary="Announced ₹50,000–₹4 lakh self-employment support for SC/ST/BC/minority youth. First phase planned from 19 Nov 2026."),
     dict(slug="central-sector-scholarship", name="Central Sector Scholarship for College Students (CSSS)", short="Central Sector Scholarship",
          cat="education", cat_label="Education & Skills", icon="🎓",
          summary="₹12,000–₹20,000 a year for college students in the top 20% of their Class 12 board. 2026-27 last date: 31 October."),
@@ -2385,14 +2385,14 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 # ---- TS: Rajiv Yuva Vikasam
 s = BY_SLUG["ts-rajiv-yuva-vikasam"]
 write(f"schemes/{s['slug']}/index.html", article(s,
-    lede="Rajiv Yuva Vikasam is a Telangana scheme announced in 2025 to give SC, ST, BC and minority youth ₹50,000 to ₹4 lakh with a large subsidy to start their own business. About 16 lakh people applied, but as of 2026 the scheme has not been implemented.",
-    description="Rajiv Yuva Vikasam (Telangana) explained: self-employment support ₹50,000–₹4 lakh, subsidy slabs, eligibility, and current status in 2026.",
-    facts=[("Support", "₹50,000 – ₹4 lakh"), ("Subsidy", "70% – 100%"), ("Applications", "About 16 lakh"), ("Status (2026)", "Not yet implemented")],
+    lede="Rajiv Yuva Vikasam is a Telangana scheme announced in 2025 to give SC, ST, BC and minority youth ₹50,000 to ₹4 lakh with a large subsidy to start their own business. About 16 lakh people applied. Nothing has been paid yet; the first phase is planned to start on 19 November 2026.",
+    description="Rajiv Yuva Vikasam (Telangana) explained: self-employment support ₹50,000–₹4 lakh, subsidy slabs, eligibility, and the first phase planned from 19 November 2026.",
+    facts=[("Support", "₹50,000 – ₹4 lakh"), ("Subsidy", "70% – 100%"), ("Applications", "About 16 lakh"), ("1st phase", "Planned from 19 Nov 2026")],
     body='''
         <h2>What is Rajiv Yuva Vikasam?</h2>
         <p>Rajiv Yuva Vikasam was announced by the Telangana government in 2025 to help unemployed youth from SC, ST, BC and minority communities set up self-employment units, with the government paying most of the cost.</p>
 
-        <div class="note"><strong>Current status:</strong> About <strong>16 lakh</strong> applications were received and nearly 5 lakh beneficiaries were shortlisted. Sanction letters were announced for June 2025, but according to news reports in <strong>April 2026</strong>, the scheme has <strong>not been implemented</strong> and officials said they were awaiting the government's decision. We will update this page as soon as there is official news.</div>
+        <div class="note"><strong>Current status (15 October 2026):</strong> About <strong>16 lakh</strong> applications were received. Sanction letters were announced for June 2025 but the rollout was stopped after complaints about ineligible names in the list, and in April 2026 the scheme had still <strong>not been implemented</strong>. In September 2026 the Deputy Chief Minister said the <strong>first phase</strong>, for units costing <strong>up to ₹1 lakh</strong>, will start on <strong>19 November 2026</strong>, with beneficiaries selected under the District Collector. <strong>No money has been paid yet</strong>, and the final list has not been published. Larger units (₹1–4 lakh) have no date.</div>
 
         <h2>Support that was announced</h2>
         <div class="table-wrap">
@@ -2426,13 +2426,16 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </div>
 ''',
     faqs=[
-        ("Has Rajiv Yuva Vikasam started?", "As of April 2026, news reports say the scheme had not been implemented, although about 16 lakh people applied. We will update this page when there is official news."),
+        ("Has Rajiv Yuva Vikasam started?", "Not yet. About 16 lakh people applied. In September 2026 the Deputy Chief Minister said the first phase, for units up to ₹1 lakh, will start on 19 November 2026. No money had been paid as of 15 October 2026."),
+        ("Will everyone who applied get Rajiv Yuva Vikasam?", "No. Applying does not mean you are selected. Beneficiaries are chosen after verification under the District Collector, and the first phase covers only units up to ₹1 lakh."),
         ("How much support was announced under Rajiv Yuva Vikasam?", "₹50,000 to ₹4 lakh per unit, with a subsidy of 100% for units up to ₹50,000, falling to 70% for units up to ₹4 lakh."),
         ("Who could apply for Rajiv Yuva Vikasam?", "Unemployed SC, ST, BC and minority youth in Telangana with family income below ₹1.5 lakh (rural) or ₹2 lakh (urban), aged 21 to 55."),
         ("What can I do while waiting?", "Keep your application number safe, and consider schemes open now such as PM Mudra loans, PM Vishwakarma and free PMKVY skill training."),
     ],
     sources=[
         ("Telangana Today: One year on, Rajiv Yuva Vikasam yet to take off (Apr 2026)", "https://telanganatoday.com/one-year-on-rajiv-yuva-vikasam-scheme-yet-to-take-off-in-telangana"),
+        ("The Hans India: First phase of Rajiv Yuva Vikasam to start on 19 November (15 Sep 2026)", "https://www.thehansindia.com/telangana/telangana-dy-cm-bhatti-vikramarka-emphasises-focus-on-sc-and-st-welfare-1122177"),
+        ("Andhra Jyothy: ₹1 lakh aid from 19 November, Adilabad applications (22 Sep 2026)", "https://www.andhrajyothy.com/2026/telangana/adilabad/rajiv-yuva-vikasam-30022-applications-received-in-district-1560281.html"),
         ("Kamareddy district (telangana.gov.in): Rajiv Yuva Vikasam Scheme", "https://kamareddy.telangana.gov.in/scheme/rajiv-yuva-vikasam-scheme/"),
     ]))
 
@@ -3830,14 +3833,14 @@ def te_card(s, t):
 
 te_items = [x for x in DISPLAY if x["slug"] in TE]
 write("te/schemes/index.html",
-    head(page_title("తెలుగులో ప్రభుత్వ పథకాలు: ఆంధ్రప్రదేశ్, తెలంగాణ"),
-         "ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాల సులభమైన తెలుగు గైడ్‌లు: అర్హత, లబ్ధి, పత్రాలు, దరఖాస్తు విధానం.",
+    head(page_title("తెలుగులో ప్రభుత్వ పథకాలు: కేంద్రం, ఏపీ, తెలంగాణ"),
+         "కేంద్ర, ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాల సులభమైన తెలుగు గైడ్‌లు: అర్హత, లబ్ధి, పత్రాలు, దరఖాస్తు విధానం.",
          "/te/schemes/", lang="te", alternates={"en": "/schemes/", "te": "/te/schemes/"})
     + nav("schemes", lang="te") + f'''
     <header class="page-head">
       <div class="eyebrow">తెలుగులో పథకాలు</div>
       <h1>ప్రభుత్వ పథకాలు, సులభమైన తెలుగులో</h1>
-      <p>ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాల గురించి స్పష్టమైన గైడ్‌లు: ఎవరు అర్హులు, ఏం లభిస్తుంది, ఏ పత్రాలు కావాలి, అధికారిక పోర్టల్‌లో ఎలా దరఖాస్తు చేయాలి.</p>
+      <p>కేంద్ర ప్రభుత్వ, ఆంధ్రప్రదేశ్, తెలంగాణ పథకాల గురించి స్పష్టమైన గైడ్‌లు: ఎవరు అర్హులు, ఏం లభిస్తుంది, ఏ పత్రాలు కావాలి, అధికారిక పోర్టల్‌లో ఎలా దరఖాస్తు చేయాలి.</p>
       <p class="lang-switch"><a href="/schemes/" lang="en">All schemes in English →</a></p>
     </header>
     <a class="cta" href="/te/tools/scheme-eligibility-checker/" style="margin-bottom:28px"><span>✅</span><div><strong>మీకు ఏ పథకాలు వర్తిస్తాయో తెలియదా?</strong><br><span class="muted" style="font-size:0.9rem">కొన్ని ప్రశ్నలకు సమాధానం ఇచ్చి మీకు సరిపోయే పథకాలు చూడండి.</span></div></a>
@@ -3929,6 +3932,10 @@ UPDATES = [
          title="Sukanya Samriddhi interest stays at 8.2% for Oct–Dec 2026",
          text="The rate is reviewed every quarter. The next announcement is expected at the end of December.",
          link="/schemes/sukanya-samriddhi-yojana/"),
+    dict(kind="expected", date="15 Sep 2026",
+         title="Rajiv Yuva Vikasam: first phase planned from 19 November",
+         text="The Deputy CM said units up to ₹1 lakh will be supported first, from 19 November 2026. The final beneficiary list is not out yet, and applying does not guarantee selection.",
+         link="/schemes/ts-rajiv-yuva-vikasam/"),
     dict(kind="news", date="1 Sep 2026",
          title="Kalyana Lakshmi and Shaadi Mubarak continue after High Court order",
          text="A Division Bench stayed a single judge's order that had put the marriage-aid schemes on hold. The 1 tola gold promise is still not implemented.",

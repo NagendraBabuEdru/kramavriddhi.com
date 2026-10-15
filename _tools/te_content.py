@@ -247,3 +247,7 @@ TE.update(TE2)
 # Batch 3: weavers, fishermen, marriage aid, crop insurance
 from te_content3 import TE3
 TE.update(TE3)
+
+# Batch 4: girls & women and youth guides
+from te_content4 import TE4
+TE.update(TE4)
