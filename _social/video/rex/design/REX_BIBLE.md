@@ -1,7 +1,7 @@
 # REX BIBLE v1: the master spec for Rex, the baby T-Rex
 
 Owner of this document: the design expert. The animator implements it; the expert reviews against it.
-Status: **v1.4 (2026-10-18)**, written after the round 0 audit (`design/reviews/round0_audit.md`) and amended after the round 1–1d reviews. See the changelog at the end.
+Status: **v1.5 (2026-10-18)**, written after the round 0 audit (`design/reviews/round0_audit.md`) and amended after the round 1–1d and round 2 reviews. See the changelog at the end.
 If code and Bible disagree, the Bible wins, unless the expert changes the Bible.
 
 ---
@@ -191,6 +191,35 @@ All views share the guide lines in §2.1, the same volumes and the same landmark
 | Legs | thighs (±30,-30) 26 × 28; feet face the camera: ovals (±32,-7) 20 × 7, 3 nubs at the front | §2.6 | near thigh (4,-30) r 28; far foot toes peek 12 behind | heels, round, toes hidden | heels (±30,-6) |
 | Arms | shoulders (±40,-106), hands (±46,-86), ≥ 6 units of air | §2.6 | near arm only; far hand peeks 6 behind | near elbow peeks at (+46,-98) | hands peek at the sides (±52,-92) |
 | Tail | tip peeks behind the left thigh: rounded nub at (-66…-80, -36…-52) | §2.7 | full: (-40,-40)→(-76,-36)→(-110,-38)→(-134,-46)→(-148,-56) | toward the viewer, lower-left: (-18,-40)→(-50,-30)→(-76,-26)→(-92,-32)→(-100,-42) | curls to screen-left: base (0,-40), tip (-62,-34) |
+
+### 4.1 View overrides (v1.5, after the round 2 review). Where these differ from the table above, they win.
+- **Side head outline** (HC-relative, 25 points, clockwise from the back):
+  ```
+  (-60,0) (-57,-20) (-48,-38) (-33,-51) (-14,-57) (6,-57) (26,-52) (44,-44) (56,-33) (63,-20)
+  (68,-10) (78,-6) (87,0) (90,10) (88,22) (80,32) (66,40) (48,46) (28,51) (8,54)
+  (-12,54) (-32,49) (-46,40) (-56,24) (-60,12)
+  ```
+  The forehead is round down to (63,-20). The snout is a short round **muzzle** from x 68 to the tip at 90; it is never a cone or wedge.
+  - Skull depth at y −20: 120.
+  - The snout adds 22 units, about 15 % of the 150 head length.
+  - Side eye at HC(26,2), 15 × 25, so it sits on the cranium. Brow HC(26,−32).
+  - Nostril HC(85,−2).
+  - Mouth: A (30,24) with a tick up to (27,20), then B (56,33), then F (84,25).
+  - Face light zone: HC(40,8), rx 46, ry 34.
+- **The head-turn keys** use this new side outline. All in-between yaws must stay convex on top, with no straight forehead-to-snout line longer than 25 units.
+- **Front face** (HC-relative):
+  - eyes at (±33,0), 20 × 26, so the outer edges are 9 units inside the outline and the inner edges at ±13;
+  - nostrils at (±6,20), 2.2 × 1.6, so they never sit between the eyes at eye level;
+  - mouth corners (±22,32) with ticks up 4, middle (0,40);
+  - the muzzle arc is the ellipse (0,24), 30 × 20, upper half only, at line 1.4 dark 0.35.
+- **Far eye in head turns, 65–80°**: the far eye slides behind the **snout-bridge curve**. Clip it with the near-side bridge silhouette, i.e. the head outline offset 3 units inward between the brow and the nostril; do not shrink its width. Its outline and pupil are only drawn while its visible width is ≥ 6 units, fading out over 6 → 3 units. A thin vertical sliver of eye must never show.
+- **Tail in the back views**:
+  - Back 180°: the base ellipse at (0,−44), rx 22 ry 18 (the root seen from behind), then the centreline (0,−44) → (−12,−30) → (−34,−22) → (−56,−24) → (−70,−36), thickness 40 / 30 / 20 / 12, ending in an r 6 cap.
+  - The tail overlaps the **left foot only**. The right foot and leg stay fully clear. The tip stays ≥ 10 units above the ground.
+  - ¾ back 135°: centreline (−14,−44) → (−40,−30) → (−66,−26) → (−86,−32) → (−96,−44), thickness 36 / 28 / 20 / 14 (approved), r 6 cap. It overlaps the near (left) thigh by ≤ 40 % of the thigh's width, and the far foot stays visible.
+- **Arms in the back view**: each arm shows the hand **plus 8 units of forearm** coming out from behind the body outline at (±48,−96) → hand (±56,−88). The arm overlaps the body outline by ≥ 4 units, so it never reads as a floating dot. It is drawn before the body, so the body outline crosses it.
+- **¾ back cheek bump**: draw its outline only on the part that sits outside the skull ellipse; no stroke inside the head.
+- **Body view switching (for animation)**: the body uses discrete views; the head interpolates continuously. Body switches happen at yaw 22.5 / 67.5 / 112.5 / 157.5, only on a frame where the head is mid-turn and the eyes are closed (a blink) or the move is fast (≥ 15° per frame). Never let the body switch during a hold.
 
 Volume checks the reviewer will measure:
 - The front skull width (124) must equal the side skull depth without the snout (back -60 to forehead front about +60 = 120) ± 6.
@@ -632,3 +661,11 @@ After round 7 is APPROVED: migrate the episodes from `A.rex` to `A.rex2` (the ex
 - **v1.4 (round 1d review)**:
   - the open-mouth silhouette now has overbite ≤ 9 at open = 1, the jaw front comes forward, the jaw front is convex, and the upper lip has no cusp;
   - §12 round 2 notes added (§12.2a).
+- **v1.5 (round 2 review)**: added §4.1 view overrides:
+  - a new side head outline (round muzzle, depth 120);
+  - the front face layout;
+  - far-eye occlusion in head turns;
+  - back and ¾-back tail paths;
+  - back-view arms;
+  - ¾-back cheek stroke;
+  - body view-switch rule.

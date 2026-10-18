@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer-core'), path = require('path');
 const [out, sheet, name, modes = 'color,bw,guides,silhouette'] = process.argv.slice(2);
 (async () => {
-  const b = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true, args: ['--allow-file-access-from-files'] });
+  const b = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true, args: ['--allow-file-access-from-files', '--disable-gpu'] });
   const p = await b.newPage(); await p.setViewport({ width: 1920, height: 1080 });
   p.on('pageerror', e => console.log('pageerror', e.message));
   for (const m of modes.split(',')) {

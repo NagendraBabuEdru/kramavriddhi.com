@@ -59,4 +59,25 @@
     label('facing right', 640, 990, 32); label('facing left (light stays upper-left)', 1300, 990, 32);
     label('key light ↖', 120, 80, 32, '#a07a2a', 'left');
   } });
+  // round 2: turnaround (5 views) and head-turn strip
+  const VIEWS = [[0, 'front 0°', 0], [45, '¾ front 45°', 0], [90, 'side 90°', 20], [135, '¾ back 135°', 0], [180, 'back 180°', 0]];
+  const BODYX = { 0: 0, 45: 0, 90: -4, 135: 0, 180: 0 };
+  F.episode('r2turn', { ...base, draw() {
+    const s = 1.4, G = 900; ground(G);
+    if (MODE() === 'guides') { const ctx = A.ctx(); ctx.save(); ctx.strokeStyle = 'rgba(220,40,40,0.6)'; ctx.lineWidth = 1.2; ctx.setLineDash([8, 6]);
+      for (const [n, gy] of GUIDES) { ctx.beginPath(); ctx.moveTo(20, G + gy * s); ctx.lineTo(1900, G + gy * s); ctx.stroke(); label(n.split(' ')[0], 30, G + gy * s - 4, 20, '#c62828', 'left'); } ctx.restore(); }
+    VIEWS.forEach(([yaw, name, dx], i) => {
+      const cx = 192 + i * 384 + dx;
+      rex(cx - BODYX[yaw] * s, G, s, { yaw, face: { browCurve: 0.3, lidUp: 1, lidLo: 0, mouth: 'M1', corners: 0.3 } });
+      label(name, cx, 980, 30);
+      if (MODE() === 'guides') { const st = A.rex2.stats || {};
+        [`skull ${st.skull}`, `eye ry ${st.eyeRy}`, `hat width ${st.hatW}`, `bumps ${st.bumps}  spots ${st.spots}`].forEach((t, k) => label(t, cx, 1012 + k * 20, 18, '#c62828')); }
+    });
+  } });
+  const strip = y0 => ({ ...base, draw() {
+    const s = 1.6;
+    for (let i = 0; i < 9; i++) { const yaw = y0 + i * 11.25, row = i < 5 ? 0 : 1, col = row ? i - 5 : i, cx = row ? 384 + col * 384 : 192 + col * 384, cy = row ? 800 : 300;
+      A.rex2.head(cx - 10, cy, s, { yaw, face: { browCurve: 0.3, lidUp: 1, lidLo: 0, mouth: 'M1', corners: 0.3 } }); label(`yaw ${yaw}°`, cx, cy + 150, 28); }
+  } });
+  F.episode('r2strip', strip(0)); F.episode('r2bstrip', strip(90));
 })();
