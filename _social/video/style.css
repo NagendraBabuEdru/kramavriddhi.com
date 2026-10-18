@@ -148,3 +148,8 @@ body { font-family: 'Nirmala UI', 'Segoe UI', sans-serif; color: var(--ink); }
 .compact .chip { padding: 20px 30px; }
 .compact .warn { margin-top: 36px; }
 .compact .point { margin-top: 30px; }
+
+/* English-primary Shorts: Latin text in Segoe UI; Telugu falls back to Nirmala UI */
+.en-primary #scenes { font-family: 'Segoe UI', 'Nirmala UI', sans-serif; }
+.en-primary .sub.te, .en-primary .e.te { font-family: 'Nirmala UI', 'Segoe UI', sans-serif; }
+.en-primary .end .link .te { display: block; font-size: 40px; font-weight: 600; margin-top: 4px; opacity: .9; }

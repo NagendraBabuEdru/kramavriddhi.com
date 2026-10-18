@@ -34,6 +34,7 @@
     '<div id="bgDark" style="position:absolute;inset:0;background:linear-gradient(160deg,#0b4f4a,#0f766e 70%)"></div>';
   const bgDark = $('#bgDark'), steps = $('#steps path'), logo = $('#brand .logo'), brand = $('#brand'), tag = $('#tag');
   tag.textContent = short.tag; tag.style.background = short.tagColor;
+  if (short.lang === 'en') document.body.classList.add('en-primary'); // English big, Telugu small
   if (!short.tag) tag.style.display = 'none';
   const dots = [];
   for (let i = 0; i < 16; i++) {

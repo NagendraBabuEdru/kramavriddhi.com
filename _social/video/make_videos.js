@@ -13,7 +13,7 @@ const OUT = path.join(__dirname, '..', 'videos');
 const BROWSERS = ['C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'];
 const args = process.argv.slice(2), stills = args.includes('--stills');
-const ids = args.filter(a => /^\d$/.test(a));
+const ids = args.filter(a => /^\d+$/.test(a));
 const at = (args.find(a => a.startsWith('--t=')) || '').slice(4).split(',').filter(Boolean).map(Number); // e.g. --stills --t=11.5,15
 
 // Load the scene list (shorts.js is a browser script) to read file names and durations

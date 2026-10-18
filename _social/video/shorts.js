@@ -12,6 +12,15 @@ function endCard(extraTe, extraEn) {
   <div class="share" data-in="1.7">${extraTe}<div class="sub en">${extraEn}</div></div>
   <div class="safe" data-in="2.5" data-fx="fade">⚠️ ${SAFE_TE}<div class="e en">${SAFE_EN}</div></div>`;
 }
+// English-primary end card: English big, Telugu small
+function endCardEn(extraEn, extraTe) {
+  return `
+  <div class="biglogo" data-in="0" data-fx="pop">{LOGO}</div>
+  <div class="site" data-in="0.35">kramavriddhi.com</div>
+  <div class="link" data-in="0.8" data-fx="pop" data-pulse>Full details 👉 link in description<span class="te">పూర్తి వివరాలు 👉 లింక్ డిస్క్రిప్షన్‌లో</span></div>
+  <div class="share" data-in="1.7">${extraEn}<div class="sub te">${extraTe}</div></div>
+  <div class="safe" data-in="2.5" data-fx="fade">⚠️ Kramavriddhi is an independent channel, not the government. Apply only on the official portal. We never ask for Aadhaar, OTP or money.<div class="e te">${SAFE_TE}</div></div>`;
+}
 const point = (n, te, en, tin) =>
   `<div class="point" data-in="${tin}" data-fx="left"><div class="n">${n}</div><div><div class="t">${te}</div><div class="e en">${en}</div></div></div>`;
 const chip = (ic, te, en, tin) =>
@@ -288,6 +297,138 @@ const SHORTS = {
         ${point(2, 'మీ ఆధార్ నంబర్ ఇవ్వండి', 'Enter your Aadhaar number, only on the official site', 2.2)}
         <div class="warn" data-in="3.6" data-fx="pop">📅 త్వరలో రావచ్చు, అధికారిక తేదీ ఇంకా ప్రకటించలేదు<div class="e en">Expected soon. No official date yet</div></div>` },
       { start: 27, cls: 'end', html: endCard('రైతు మిత్రులకు షేర్ చేయండి! 🌾', 'Share with farmer friends') },
+    ],
+  },
+
+  // ================= English-primary Shorts (lang: 'en'): English big, Telugu small, for an all-India audience
+  // ---------------------------------------------------------------- Short 7: Pragati Scholarship (English)
+  7: {
+    file: 'short-7-pragati-en', lang: 'en', duration: 34, tag: '⏰ Last date 31 Oct', tagColor: '#d97706', music: { root: 60, seed: 1 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Girls can get</div>
+        <div class="mega gold" data-in="0.25" data-fx="count" data-count="50000" data-prefix="₹" data-pulse>₹50,000</div>
+        <div class="h1" data-in="0.9">every year!</div>
+        <div class="sub te" data-in="1.2">అమ్మాయిలకు ఏడాదికి ₹50,000 స్కాలర్‌షిప్</div>
+        <div class="pill" data-in="1.8" data-fx="pop">⏰ Last date: 31 October</div>` },
+      { start: 4.5, html: `
+        <div class="label" data-in="0.1">What is it?</div>
+        <div class="h2" data-in="0.2">AICTE Pragati Scholarship 2026-27</div>
+        <div class="sub te" data-in="0.5">AICTE ప్రగతి స్కాలర్‌షిప్</div>
+        <div class="para" data-in="1.1">For girls studying an AICTE-approved degree or diploma course</div>
+        <div class="chips">
+          ${chip('🛠️', 'Engineering', 'ఇంజినీరింగ్', 2.2)}
+          ${chip('💊', 'Pharmacy', 'ఫార్మసీ', 2.9)}
+          ${chip('🏫', 'Polytechnic (diploma)', 'పాలిటెక్నిక్', 3.6)}
+        </div>` },
+      { start: 11, html: `
+        <div class="label" data-in="0.1">Who can apply?</div>
+        <div class="h2" data-in="0.2">Check if you qualify</div>
+        ${point(1, 'Family income below ₹8 lakh a year', 'కుటుంబ ఆదాయం ₹8 లక్షల లోపు', 1.0)}
+        ${point(2, 'Up to two girls per family', 'ఒక కుటుంబంలో ఇద్దరు అమ్మాయిల వరకు', 3.4)}
+        ${point(3, 'AICTE-approved college and course', 'AICTE గుర్తింపు ఉన్న కాలేజీ / కోర్సు', 5.8)}` },
+      { start: 20.5, dark: true, html: `
+        <div class="label" data-in="0.1">How to apply</div>
+        <div class="h2" data-in="0.2">Apply online, free</div>
+        <div class="card white" data-in="0.9" data-fx="pop">
+          <div class="portal"><div class="ic">🎓</div><div><div class="t">National Scholarship Portal</div><div class="u">scholarships.gov.in</div></div></div>
+        </div>
+        <div class="row">
+          <div class="datecard" data-in="2.0" data-fx="pop" data-pulse>
+            <div class="top">LAST DATE</div><div class="day">31</div><div class="mon">October 2026</div>
+          </div>
+        </div>
+        <div class="sub" data-in="3.0">✔ Apply only on the official portal<br><span class="te">అధికారిక పోర్టల్‌లో మాత్రమే దరఖాస్తు చేయండి</span></div>` },
+      { start: 27, cls: 'end', html: endCardEn('Share with girls who can apply! 💛', 'మీకు తెలిసిన అమ్మాయిలకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 8: Central Sector Scholarship (English)
+  8: {
+    file: 'short-8-csss-en', lang: 'en', duration: 35, tag: '⏰ Last date 31 Oct', tagColor: '#d97706', music: { root: 58, seed: 2 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">College students can get</div>
+        <div class="mega gold" data-in="0.25" data-fx="pop" data-pulse style="font-size:150px;line-height:1.15">₹12,000–<br>₹20,000</div>
+        <div class="h1" data-in="0.9">a year!</div>
+        <div class="sub te" data-in="1.2">కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000 స్కాలర్‌షిప్</div>
+        <div class="pill" data-in="1.8" data-fx="pop">⏰ Last date: 31 October</div>` },
+      { start: 4.5, html: `
+        <div class="label" data-in="0.1">What is it?</div>
+        <div class="h2" data-in="0.2">Central Sector Scholarship (CSSS)</div>
+        <div class="sub" data-in="0.5">PM-USP · Ministry of Education<br><span class="te">సెంట్రల్ సెక్టార్ స్కాలర్‌షిప్</span></div>
+        <div class="chips">
+          ${chip('🎓', 'Degree years 1–3: ₹12,000 a year', 'డిగ్రీ 1–3 సంవత్సరాలు', 1.4)}
+          ${chip('📚', 'PG, and 4th/5th year of technical courses: ₹20,000 a year', 'పీజీ, B.Tech 4వ సంవత్సరం', 2.3)}
+          ${chip('🏦', 'Paid by DBT to your bank account', 'నేరుగా బ్యాంకు ఖాతాలోకి', 3.2)}
+        </div>` },
+      { start: 10, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Who can apply?</div>
+        <div class="h2" data-in="0.2">Check if you qualify</div>
+        ${point(1, 'Top 20% in your Class 12 board', 'Above the 80th percentile in your stream · 12వ తరగతిలో టాప్ 20%', 0.9)}
+        ${point(2, 'Family income up to ₹4.5 lakh', 'కుటుంబ ఆదాయం ₹4.5 లక్షల లోపు', 2.6)}
+        ${point(3, 'Regular degree course', 'Not diploma or distance · రెగ్యులర్ డిగ్రీ కోర్సు', 4.3)}
+        ${point(4, 'No other scholarship', 'Or fee reimbursement · వేరే స్కాలర్‌షిప్ రాకూడదు', 5.8)}` },
+      { start: 17.5, dark: true, html: `
+        <div class="label" data-in="0.1">For boys and girls</div>
+        <div class="split">
+          <div class="half" data-in="0.3" data-fx="pop"><div class="ic">👦</div><div class="pc">50%</div><div class="t">Boys</div><div class="e te">అబ్బాయిలకు</div></div>
+          <div class="half" data-in="0.7" data-fx="pop"><div class="ic">👧</div><div class="pc">50%</div><div class="t">Girls</div><div class="e te">అమ్మాయిలకు</div></div>
+        </div>
+        <div class="para" data-in="1.8">To renew each year: 50% marks + 75% attendance</div>
+        <div class="sub te" data-in="2.1">ప్రతి సంవత్సరం కొనసాగాలంటే: 50% మార్కులు + 75% హాజరు</div>` },
+      { start: 22.5, html: `
+        <div class="label" data-in="0.1">How to apply</div>
+        <div class="h2" data-in="0.2">Apply online, free</div>
+        <div class="card white" data-in="0.8" data-fx="pop">
+          <div class="portal"><div class="ic">🎓</div><div><div class="t">National Scholarship Portal</div><div class="u">scholarships.gov.in</div></div></div>
+        </div>
+        <div class="row">
+          <div class="datecard" data-in="1.7" data-fx="pop" data-pulse>
+            <div class="top">LAST DATE</div><div class="day">31</div><div class="mon">October 2026</div>
+          </div>
+        </div>
+        <div class="sub" data-in="2.6">✔ Then your college verifies it. Apply only on the official portal.<br><span class="te">తర్వాత మీ కాలేజీ వెరిఫై చేస్తుంది</span></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with your college friends! 🎓', 'కాలేజీ ఫ్రెండ్స్‌కి షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 9: Sukanya Samriddhi Yojana (English)
+  9: {
+    file: 'short-9-sukanya-en', lang: 'en', duration: 35, tag: '📈 8.2% · Oct–Dec 2026', tagColor: '#7c3aed', music: { root: 62, seed: 3 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Saving for your daughter?</div>
+        <div class="mega gold" data-in="0.3" data-fx="pop" data-pulse>8.2%</div>
+        <div class="h1" data-in="0.9">interest, tax-free</div>
+        <div class="sub te" data-in="1.2">సుకన్య సమృద్ధి: కూతురి కోసం 8.2% వడ్డీ, పన్ను లేదు</div>
+        <div class="pill" data-in="1.8" data-fx="pop" style="background:#7c3aed">📈 Rate for Oct–Dec 2026</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">The rules</div>
+        <div class="h2" data-in="0.2">Sukanya Samriddhi Yojana</div>
+        <div class="chips">
+          ${chip('👧', 'Girl below 10 years', '10 ఏళ్ల లోపు అమ్మాయి', 1.0)}
+          ${chip('💰', 'Deposit ₹250 – ₹1.5 lakh a year', 'ఏడాదికి ₹250 – ₹1.5 లక్షలు', 1.9)}
+          ${chip('📅', 'Deposit for 15 years, matures in 21', '15 ఏళ్లు జమ · 21 ఏళ్లకు మెచ్యూరిటీ', 2.8)}
+          ${chip('🏤', 'Open at a post office or bank', 'పోస్టాఫీసు లేదా బ్యాంకులో', 3.7)}
+        </div>` },
+      { start: 11.5, dark: true, html: `
+        <div class="label" data-in="0.1">Example</div>
+        <div class="h2" data-in="0.2">Save ₹1,000 a month</div>
+        <div class="sub te" data-in="0.5">నెలకు ₹1,000 జమ చేస్తే</div>
+        <div class="card teal-bg" data-in="1.0" data-fx="pop" style="background:rgba(255,255,255,.12)">
+          <div class="kicker" style="font-size:46px">You deposit ₹1.8 lakh. At 21 years, about</div>
+          <div class="mega gold" data-in="1.4" data-fx="pop" style="font-size:140px;white-space:nowrap">₹5.7 lakh</div>
+          <div class="cap te">సుమారు ₹5.7 లక్షలు</div>
+        </div>
+        <div class="sub" data-in="2.6">Illustration only, if the rate stays at 8.2%. Rates change every quarter.</div>` },
+      { start: 18.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Good to know</div>
+        <div class="h2" data-in="0.2">Before you open one</div>
+        ${point('✓', 'Withdraw up to 50% for education', 'After she turns 18 or passes Class 10 · చదువుకు 50% వరకు', 1.0)}
+        ${point('✓', 'Interest and maturity are tax-free', 'Deposit deduction only in the old tax regime · వడ్డీపై పన్ను లేదు', 2.8)}
+        ${point('✓', 'Missed a year? Revive it', 'Pay ₹250 + ₹50 penalty per missed year · ₹50 జరిమానాతో మళ్ళీ', 4.6)}` },
+      { start: 28, cls: 'end', html: endCardEn('Try our free Sukanya calculator! 🧮', 'కూతుళ్ళ తల్లిదండ్రులకు షేర్ చేయండి') },
     ],
   },
 };
