@@ -66,7 +66,7 @@
   const sidev = (v, i) => Array.isArray(v) ? v[i] : v;
 
   /* ---------- tail: 5 segments, each rotating relative to the previous (lag / follow-through) ---------- */
-  function tail(p, base = [[-30, -40], [-62, -36], [-94, -36], [-118, -42], [-132, -52]], th = [44, 32, 22, 15], capR = 5.5) {
+  function tail(p, base = [[-30, -40], [-62, -36], [-94, -36], [-118, -42], [-132, -52]], th = [44, 32, 22, 15], capR = 5.5, openRoot = false) {
     th = [...th, 11];
     const tl = p.tail || {}, wag = tl.wag || 0, ph = tl.phase || 0, lift = tl.lift || 0;
     const pts = [base[0]]; let acc = 0;
@@ -85,7 +85,7 @@
     const tip = pts[pts.length - 1], a0 = Math.atan2(tip[1] - pts[3][1], tip[0] - pts[3][0]), cap = [];
     for (let k = 1; k < 8; k++) { const a = a0 + Math.PI / 2 - k / 8 * Math.PI; cap.push([tip[0] + Math.cos(a) * capR, tip[1] + Math.sin(a) * capR]); }
     const poly = [[up[0][0] + 14, up[0][1] - 4], ...up.slice(1), ...cap, ...dn.slice(1).reverse(), [dn[0][0] + 14, dn[0][1] + 4]];
-    part(poly, C.rex, 41);
+    if (openRoot) { part(poly, C.rex, 41, { line: false }); stroke(poly.slice(2, -2), { w: 3, seed: 41 }); } else part(poly, C.rex, 41);
     // spots along the top at 30 / 55 / 75 % of the length
     [[0.3, 6, 4.5], [0.55, 5, 4], [0.75, 4, 3]].forEach(([f, rx, ry], i) => {
       const q = f * (pts.length - 1), k = Math.min(pts.length - 2, Math.floor(q)), t = q - k;
@@ -145,31 +145,42 @@
     if (lidLo > 0.15) { const ly = cyy + ry2 - lidLo * ry2 * 1.0; fill([[cx - rx - 4, cyy + ry2 + 10], [cx + rx + 4, cyy + ry2 + 10], [cx + rx + 4, ly + 4], [cx + rx * 0.5, ly], [cx, ly - 1.5], [cx - rx * 0.5, ly], [cx - rx - 4, ly + 4]], C.skin); }
     ctx.restore();
     const lowEdge = lidLo > 0.15 ? (() => { const ly = cyy + ry2 - lidLo * ry2 * 1.0; return [[cx - rx - 4, ly + 4], [cx - rx * 0.5, ly], [cx, ly - 1.5], [cx + rx * 0.5, ly], [cx + rx + 4, ly + 4]]; })() : null;
-    if (lowEdge) {   // outline only above the lid edge, then the edge itself (clipped to the eye) at the eye-outline weight
-      ctx.save(); ctx.beginPath(); ctx.moveTo(lowEdge[0][0], lowEdge[0][1]); for (const q of lowEdge.slice(1)) ctx.lineTo(q[0], q[1]);
-      ctx.lineTo(cx + rx + 12, cyy - ry2 - 20); ctx.lineTo(cx - rx - 12, cyy - ry2 - 20); ctx.closePath(); ctx.clip();
-      stroke(E, { closed: true, w: 2.6, j: 0.5, seed: 310 + i, face: true }); ctx.restore();
-      ctx.save(); path(ell(cx, cyy, rx + 1.3, ry2 + 1.3, 30, r0), true); ctx.clip(); stroke(lowEdge, { w: 2.6, j: 0.3, seed: 330 + i, face: true }); ctx.restore();
-    } else stroke(E, { closed: true, w: 2.6, j: 0.5, seed: 310 + i, face: true });
+    const clipPoly = (P, inverse) => { ctx.beginPath(); if (inverse) ctx.rect(-1000, -1000, 2000, 2000); ctx.moveTo(P[0][0], P[0][1]); for (const q of P.slice(1)) ctx.lineTo(q[0], q[1]); ctx.closePath(); ctx.clip(inverse ? 'evenodd' : 'nonzero'); };
+    const belowUpper = lidOn && lidUp < 1 ? [...edge, [edge[4][0] + 14, cyy + ry2 + 24], [edge[0][0] - 14, cyy + ry2 + 24]] : null;
+    const aboveLower = lowEdge ? [...lowEdge, [cx + rx + 12, cyy - ry2 - 20], [cx - rx - 12, cyy - ry2 - 20]] : null;
+    // the eye outline proper: between the lid edges, at full weight
+    ctx.save(); if (belowUpper) clipPoly(belowUpper); if (aboveLower) clipPoly(aboveLower); stroke(E, { closed: true, w: 2.6, j: 0.5, seed: 310 + i, face: true }); ctx.restore();
+    // above a lowered upper lid: only a light eyelid line, and none at all once the eye is nearly closed (never an empty ring)
+    if (belowUpper && lidUp >= 0.5) { ctx.save(); clipPoly(belowUpper, true); stroke(E, { closed: true, w: 1.6, dark: 0.45, j: 0.5, seed: 310 + i, face: true }); ctx.restore(); }
+    if (lowEdge) { ctx.save(); path(ell(cx, cyy, rx + 1.3, ry2 + 1.3, 30, r0), true); ctx.clip(); stroke(lowEdge, { w: 2.6, j: 0.3, seed: 330 + i, face: true }); ctx.restore(); }
     if (lidOn) { ctx.save(); path(E, true); ctx.clip(); stroke(edge, { w: 2.6, j: 0.4, seed: 320 + i, face: true }); ctx.restore(); }
   }
 
   /* ---------- mouth (§6) with the jaw rig ---------- */
-  const MOUTH = {   // v1.1 anchors: every mouth point >= 6 units from both eyes
+  // §6 mouths (v1.4). kind: 'line' (closed lips), 'open' (lips + dropped jaw), 'o' (an oval opening)
+  const MOUTH = {   // every mouth point >= 6 units from both eyes
     M0: { A: [22, 28], B: [44, 32], F: [70, 26], open: 0 },
     M1: { A: [22, 22], B: [44, 36], F: [70, 24], open: 0, tick: [20, 20] },
-    M2: { A: [22, 22], B: [44, 36], F: [70, 24], open: 0.3, tick: [20, 20] },
+    M2: { A: [22, 22], B: [44, 36], F: [70, 24], open: 0.3, tick: [20, 20], tongue: 0.4 },
     M3: { A: [22, 22], B: [44, 34], F: [68, 22], open: 0.2, teeth: 1, tick: [21, 19] },
     M4: { A: [22, 22], B: [44, 26], F: [66, 20], open: 0.9, teeth: 1, tongue: 0.5 },
     M5: { o: [44, 32, 6, 7], open: 0.15 },
     M6: { o: [42, 36, 11, 14], open: 0.5, tongue: 0.4 },
     M7: { A: [22, 32], B: [44, 28], F: [66, 28], open: 0, tick: [18, 36] },
+    M8: { A: [22, 32], B: [44, 28], F: [66, 28], open: 0, tick: [18, 36], wobble: 0.8 },
+    M9: { A: [22, 34], B: [44, 26], F: [66, 32], open: 0.9, tongue: 0.5, wail: 1 },
+    M10: { o: [42, 38, 14, 20], open: 1.0, tongue: 0.5 },
+    M11: { A: [22, 30], B: [44, 32], F: [66, 30], open: 0.3, tongueOut: [62, 38, 8, 6] },
+    M12: { pucker: [48, 30, 4], open: 0 },
+    M13: { A: [22, 32], B: [46, 32], F: [70, 20], open: 0, tickF: [73, 15] },
+    M14: { A: [22, 30], B: [46, 30], F: [72, 28], open: 0.1, teeth: 1, small: 1 },
+    M15: { A: [22, 22], B: [44, 28], F: [66, 22], open: 0.8, teeth: 1, tongue: 0.4, corners: 0.4, roar: 1 },
   };
   function mouthLine(m, f) {
-    const c = ((f.corners || 0) + 0.3 * (f.cheek || 0)) * 7, wd = f.width ?? 1, sd = (f.side || 0) * 10, mid = m.B[0];
+    const c = ((f.corners ?? m.corners ?? 0) + 0.3 * (f.cheek || 0)) * 7, wd = f.width ?? 1, sd = (f.side || 0) * 10, mid = m.B[0];
     const sc = p => [mid + (p[0] - mid) * wd + sd, p[1]];
     const k = c / 7;   // corners: up raises the far end and deepens the middle; the near corner never rises above y 22
-    return { A: sc([m.A[0], Math.max(22, m.A[1] + Math.max(0, -k) * 7)]), B: sc([m.B[0], m.B[1] + k * 4]), F: sc([m.F[0], m.F[1] - k * 7]), tick: m.tick && sc(m.tick) };
+    return { A: sc([m.A[0], Math.max(22, m.A[1] + Math.max(0, -k) * 7)]), B: sc([m.B[0], m.B[1] + k * 4]), F: sc([m.F[0], m.F[1] - k * 7]), tick: m.tick && sc(m.tick), tickF: m.tickF && sc(m.tickF) };
   }
   // the top of the head outline at x (for keeping brows inside)
   function topAt(poly, x) {
@@ -178,27 +189,48 @@
       if ((a[0] - x) * (b[0] - x) <= 0 && a[0] !== b[0]) { const y = a[1] + (b[1] - a[1]) * (x - a[0]) / (b[0] - a[0]); if (y < best) best = y; } }
     return best;
   }
-  // head + jaw in head-local coordinates (HC at 0,0)
+  const quad = (P, Q, R, n = 7) => { const c = [2 * Q[0] - (P[0] + R[0]) / 2, 2 * Q[1] - (P[1] + R[1]) / 2]; return Array.from({ length: n }, (_, i) => i / (n - 1)).map(u => [(1 - u) * (1 - u) * P[0] + 2 * u * (1 - u) * c[0] + u * u * R[0], (1 - u) * (1 - u) * P[1] + 2 * u * (1 - u) * c[1] + u * u * R[1]]); };
+  // a wobbly lip: a 3-wave sine along the line (amplitude 2 × wobble), animating at 6 Hz
+  const wobbly = (pts, wob, t) => wob > 0 ? pts.map((q, i) => { const u = i / (pts.length - 1); return [q[0], q[1] + Math.sin(u * Math.PI * 6 + t * 6 * Math.PI * 2) * 2 * wob * Math.sin(u * Math.PI)]; }) : pts;
+  // C1 (§6 v1.4): jaw-front points, closed-outline position → open position, blended by `open`
+  const JAW_CLOSED = [[78, 26], [78, 29], [74, 33], [62, 38], [38, 46], [18, 52], [2, 54], [-10, 54]];
+  const JAW_OPEN = [[78, 30], [82, 37], [78, 45], [64, 50], [40, 51], [18, 52], [2, 54], [-10, 54]];
+  // tears along the cheek surface (lid corner → HC(-10,30) → off the chin), never across the mouth
+  function tears(f, t) {
+    if (f.tears) { const path3 = [[-22, 18], [-12, 30], [-6, 56]]; const tt = t * 1.4 % 1;
+      for (const q of [tt, (tt + 0.5) % 1]) { const P = q < 0.5 ? [lerp(path3[0][0], path3[1][0], q * 2), lerp(path3[0][1], path3[1][1], q * 2)] : [lerp(path3[1][0], path3[2][0], q * 2 - 1), lerp(path3[1][1], path3[2][1], q * 2 - 1)];
+        fill(ell(P[0], P[1], 3.5, 4.5, 10), C.tear, f.tears); fill(ell(P[0] - 1, P[1] - 1.5, 1, 1.2, 6), C.eyeW, f.tears); } }
+  }
+  function streams(f, t, SIL) {   // wail tears: two arcs from the outer eye corners, sideways and down (apex <= 12 above the eye), never over the head
+    if (!f.stream) return;
+    const ph = t * 3 % 1;
+    ctx.save(); ctx.beginPath(); ctx.rect(-1000, -1000, 2000, 2000); ctx.moveTo(SIL[0][0], SIL[0][1]); for (const q of SIL.slice(1)) ctx.lineTo(q[0], q[1]); ctx.closePath(); ctx.clip('evenodd');
+    for (let k = 0; k < 5; k++) { const u = (k + ph) / 5;
+      fill(ell(-28 - u * 72, 2 - u * 34 + u * u * 70, 4 - u * 1.2, 5 - u * 1.2, 10), C.tear, f.stream * (1 - u * 0.4));
+      fill(ell(54 + u * 60, -2 - u * 30 + u * u * 66, 3.5 - u, 4.5 - u, 10), C.tear, f.stream * (1 - u * 0.4)); }
+    ctx.restore();
+  }
+  // head + jaw in head-local coordinates (HC at 0,0), the ¾ master
   function head(p, f) {
-    const m = MOUTH[f.mouth || 'M1'] || MOUTH.M1, open = f.open ?? m.open, ang = open * 0.38;
-    const ml = m.o ? null : mouthLine(m, f);
-    if (ml && open > 0.001) ml.F = [Math.min(ml.F[0], 66), Math.max(ml.F[1], 24)];   // open: the far corner stays under the snout (no beak)
-    if (ml && open > 0.5) ml.B = [ml.B[0], Math.min(ml.B[1], Math.max(ml.A[1], ml.F[1]) + 4)];   // flat upper lip for big opens
-    const quad = (P, Q, R) => { const c = [2 * Q[0] - (P[0] + R[0]) / 2, 2 * Q[1] - (P[1] + R[1]) / 2]; return [0, 0.17, 0.33, 0.5, 0.67, 0.83, 1].map(u => [(1 - u) * (1 - u) * P[0] + 2 * u * (1 - u) * c[0] + u * u * R[0], (1 - u) * (1 - u) * P[1] + 2 * u * (1 - u) * c[1] + u * u * R[1]]); };
-    const upper = ml ? quad(ml.A, ml.B, ml.F) : null;
-    // the jaw rotates about the hinge and drops (soft D), the chin moving <= 14 units in all
-    const isOpen = ang > 0.001 && !!upper;
+    const m = MOUTH[f.mouth || 'M1'] || MOUTH.M1, open = Math.max(0, Math.min(1, f.open ?? m.open)), ang = open * 0.38, t = p.t || 0;
+    const lipped = !m.o && !m.pucker;
+    const ml = lipped ? mouthLine(m, f) : null;
+    if (ml && open > 0.001) ml.F = [Math.min(ml.F[0], 76), Math.max(ml.F[1], 26)];   // open: the far corner sits under the snout
+    if (ml && open > 0.5 && !m.wail) ml.B = [ml.B[0], Math.min(ml.B[1], Math.max(ml.A[1], ml.F[1]) + 4)];   // flat upper lip for big opens
+    const upper = ml ? wobbly(quad(ml.A, ml.B, ml.F), f.wobble ?? m.wobble ?? 0, t) : null;
+    const isOpen = ang > 0.001;
+    // the jaw rotates about the hinge and drops (soft D); the chin moves <= 14 units; the transform fades into the neck
     const jawT = q => { const r = rot(q, HINGE, ang * 0.7); return [r[0], r[1] + open * 8]; };
+    const jawW = q => { const w = Math.max(0, Math.min(1, (q[0] + 10) / 28)), r = jawT(q); return [lerp(q[0], r[0], w), lerp(q[1], r[1], w)]; };
+    const jawFront = JAW_CLOSED.map((q, i) => jawW([lerp(q[0], JAW_OPEN[i][0], open), lerp(q[1], JAW_OPEN[i][1], open)]));
     let SIL = HEAD, lowLip = null;
     if (isOpen) {
-      const sag = 3 + open * 8;
-      lowLip = upper.map((q, k) => { const r = jawT(q), u = k / (upper.length - 1); return [r[0], r[1] + sag * Math.sin(u * Math.PI)]; });
-      const F = ml.F, F2 = lowLip[lowLip.length - 1];
-      // the jaw transform fades from full at x >= 18 to none at x <= -10, so the chin blends into the neck
-      const jawW = q => { const w = Math.max(0, Math.min(1, (q[0] + 10) / 28)), r = jawT(q); return [lerp(q[0], r[0], w), lerp(q[1], r[1], w)]; };
-      const chin = [[68, 34], [64, 41], [54, 46], [38, 49], [18, 52], [2, 54], [-10, 54]].map(jawW);
-      // one path, always going down at the snout: skull -> (79,0) -> (81,12) -> (79,20) -> (74,25) -> far corner -> (mouth) -> round jaw -> neck
-      SIL = [...HEAD.slice(0, 12), [81, 12], [79, 20], [74, 25], F, F2, ...chin, ...HEAD.slice(19)];
+      if (lipped) {
+        const sag = (m.wail ? 6 : 3) + open * (m.wail ? 12 : 8);
+        lowLip = upper.map((q, k) => { const r = jawT(q), u = k / (upper.length - 1); return [r[0] + (m.wail ? (u - 0.5) * 6 * open : 0), r[1] + sag * Math.sin(u * Math.PI)]; });
+        // one path: snout tip (81,12) → (80,20) → (77,25) → far corner F → (mouth) → F2 → round, convex jaw front → chin → neck
+        SIL = [...HEAD.slice(0, 12), [81, 12], [80, 22], [Math.max(ml.F[0] + 4, 76), ml.F[1] - 1], ml.F, lowLip[lowLip.length - 1], ...jawFront.slice(1), ...HEAD.slice(19)];
+      } else SIL = [...HEAD.slice(0, 12), [81, 12], [80, 22], ...jawFront, ...HEAD.slice(19)];   // oval mouths: the jaw drops, no lip notch
     }
     // 1) skin, shadow hatch (never in the face zone), face glow, spots
     fill(SIL, C.rex);
@@ -207,31 +239,43 @@
     A.hatch(SIL, { gap: 6, dark: 0.2, w: 1.1, seed: 51 }); ctx.restore();
     ctx.save(); path(SIL, true); ctx.clip();
     soft(22, 8, 56, 36, C.face, 0.6, 0.55);
-    if (isOpen) soft(32, 40, 36, 18, C.face, 0.45);
+    if (isOpen) soft(34, 42, 36, 18, C.face, 0.45);
     [[-46, -28, 7, 5], [-53, -8, 6, 4.5], [-48, 14, 5, 4]].forEach(([x, y, rx, ry]) => fill(ell(x, y, rx, ry, 12), C.spot));
     ctx.restore();
     // 2) the mouth
-    if (isOpen) {
+    const tg = f.tongue ?? m.tongue ?? 0, teeth = f.teeth ?? m.teeth ?? 0;
+    if (lipped && isOpen) {
       const inner = [...upper, ...lowLip.slice().reverse()];
       fill(inner, C.mouth);
       ctx.save(); path(inner, true); ctx.clip();
-      const tg = f.tongue ?? m.tongue ?? 0;
-      if (tg > 0) { const lb = lowLip[3]; fill(ell(lb[0] - 2, lb[1] - 3, 16, 4 + 7 * tg, 18), C.tongue); }
+      if (tg > 0) { const lb = lowLip[3]; fill(ell(lb[0] - 2, lb[1] - 2, m.small ? 10 : 16, 3 + 7 * tg, 18), C.tongue); }
       ctx.restore();
-      if (f.teeth ?? m.teeth) for (const tx of [36, 50]) { const q = tx < ml.B[0] ? lerp(ml.A[1], ml.B[1], (tx - ml.A[0]) / (ml.B[0] - ml.A[0])) : lerp(ml.B[1], ml.F[1], (tx - ml.B[0]) / (ml.F[0] - ml.B[0]));
-        const tooth = [[tx - 3, q - 1], [tx + 3, q - 1], [tx + 3, q + 3], [tx + 1.5, q + 5.2], [tx - 1.5, q + 5.2], [tx - 3, q + 3]]; fill(tooth, C.claw); stroke(tooth.slice(1, 5), { w: 1.0, dark: 0.35, j: 0, seed: 360 + tx, face: true }); }
+      if (teeth) for (const tx of [36, 50]) { const q = upper.reduce((b, pnt) => Math.abs(pnt[0] - tx) < Math.abs(b[0] - tx) ? pnt : b)[1];
+        const th = m.roar ? 6 : (m.small ? 4 : 5.2), tw = m.small ? 2.5 : 3;
+        const tooth = [[tx - tw, q - 1], [tx + tw, q - 1], [tx + tw, q + th * 0.55], [tx + tw * 0.5, q + th], [tx - tw * 0.5, q + th], [tx - tw, q + th * 0.55]]; fill(tooth, C.claw); stroke(tooth.slice(1, 5), { w: 1.0, dark: 0.35, j: 0, seed: 360 + tx, face: true }); }
       stroke(inner, { closed: true, w: 2.6, j: 0.4, seed: 371, face: true });
+      if (m.tongueOut) { const [tx, ty, rx, ry] = m.tongueOut, q = jawT([tx, ty]); const T = ell(q[0], q[1], rx, ry, 16, 0.4); fill(T, C.tongue); stroke(T.slice(2, 14), { w: 2.0, j: 0.3, seed: 376, face: true }); stroke([[q[0] - 2, q[1] - 2], [q[0] + 2, q[1] + 3]], { w: 1.2, dark: 0.5, j: 0, seed: 377, face: true }); }
     } else if (m.o) {
-      const [ox, oy, rx, ry] = m.o; fill(ell(ox, oy, rx, ry, 16), C.mouth); stroke(ell(ox, oy, rx, ry, 16), { closed: true, w: 2.6, j: 0.4, seed: 372, face: true });
+      const [ox, oy, rx, ry] = m.o, c = jawT([ox, oy + ry * 0.4]), cy = lerp(oy, c[1] - ry * 0.4, 0.5), O = ell(ox, cy, rx, ry, 20);
+      fill(O, C.mouth);
+      if (tg > 0) { ctx.save(); path(O, true); ctx.clip(); fill(ell(ox, cy + ry * 0.75, rx * 0.8, ry * 0.45 * (0.6 + tg), 16), C.tongue); ctx.restore(); }
+      stroke(O, { closed: true, w: 2.6, j: 0.4, seed: 372, face: true });
+    } else if (m.pucker) {
+      const [px, py, r] = m.pucker; fill(ell(px, py, r, r, 12), C.mouth); stroke(ell(px, py, r, r, 12), { closed: true, w: 2.6, j: 0.3, seed: 378, face: true });
+      for (const a of [-2.4, -0.8, 0.8, 2.4]) stroke([[px + Math.cos(a) * (r + 2), py + Math.sin(a) * (r + 2)], [px + Math.cos(a) * (r + 5), py + Math.sin(a) * (r + 5)]], { w: 1.4, j: 0, dark: 0.6, seed: 379, face: true });
     } else {
       stroke(upper, { w: 2.6, j: 0.4, seed: 373, face: true });
       if (ml.tick) stroke([ml.A, ml.tick], { w: 2.2, j: 0.2, seed: 374, face: true });
+      if (ml.tickF) stroke([ml.F, ml.tickF], { w: 2.2, j: 0.2, seed: 375, face: true });
     }
     // the silhouette outline: one closed path, heavier on the shadow side
     stroke(SIL, { closed: true, w: 3, seed: 51, ghost: true });
     ctx.save(); shadowClip(SIL, 0.45); stroke(SIL, { closed: true, w: 3.6, seed: 51 }); ctx.restore();
-    // 3) cheeks, blush, nostrils
+    // 3) cheeks, blush (cold: also the snout tip), nostrils
+    ctx.save(); path(SIL, true); ctx.clip();
     if (f.blush) { const ba = Math.min(1, 0.5 + 0.5 * f.blush); soft(-22, 30, 12, 7, C.blush, ba, 0.5); soft(60, 6, 7, 5, C.blush, ba, 0.5); }
+    if (f.cold) soft(74, 4, 10, 6, C.blush, Math.min(1, 0.5 + 0.5 * f.cold), 0.5);
+    ctx.restore();
     const fl = 1 + 0.6 * (f.flare || 0);
     fill(ell(64, -4, 2.6 * fl, 1.8 * fl, 10, -0.3), C.pupil, 0.85); fill(ell(74, -2, 2.0 * fl, 1.4 * fl, 10, -0.3), C.pupil, 0.85);
     // 4) eyes, then brows
@@ -245,9 +289,12 @@
       if (push > 0) pts = pts.map(q => [q[0], q[1] + push]);
       stroke(pts, { w: 3, j: 0.4, seed: 380 + i, face: true });
     });
-    if (f.wrinkle) for (const [x, y] of [[56, -14], [60, -8]]) stroke([[x - 3, y + 1], [x, y - 1.5], [x + 3, y + 1]], { w: 1.6, j: 0.2, seed: 390 + x, face: true });
-    if (f.tears) { const tt = (p.t || 0) * 1.4 % 1; for (const q of [tt, (tt + 0.5) % 1]) { const tx = lerp(-16, -8, q), ty = lerp(26, 52, q); fill(ell(tx, ty, 3.5, 4.5, 10), C.tear, f.tears); } }
-    if (f.sweat) fill(ell(-52, -30, 3.5, 5, 10), C.tear, f.sweat);
+    const wr = f.wrinkle ?? (m.pucker ? 1 : 0);
+    if (wr) { ctx.save(); ctx.globalAlpha *= Math.min(1, wr); for (const [x, y] of [[63, -13], [67, -7], [60, -19]].slice(0, wr > 0.5 ? 3 : 2)) stroke([[x - 3, y + 1], [x, y - 1.5], [x + 3, y + 1]], { w: 1.6, j: 0.2, seed: 390 + x, face: true }); ctx.restore(); }
+    tears(f, t);
+    if (f.sweat) { const k = 0.6 + 0.4 * f.sweat, D = [[-56, -8 - 7 * k], [-56 + 5 * k, -8 + 2 * k], [-56, -8 + 7 * k], [-56 - 5 * k, -8 + 2 * k]]; fill(D, C.tear, Math.min(1, f.sweat + 0.3)); stroke(D, { closed: true, w: 1.4, dark: 0.6, j: 0, seed: 397, face: true }); fill(ell(-57.5, -7, 1.2, 1.6, 6), C.eyeW, f.sweat); }
+    streams(f, t, SIL);
+    if (f.breath) { const B = ell(98, 26, 16, 10, 16); fill(B, '#ffffff', 0.7 * f.breath); stroke(B.slice(8, 16), { w: 1.2, dark: 0.3, j: 0.3, seed: 398, face: true }); }
   }
 
   /* ===================== Turnaround (Bible §4, §12.2a): pose.yaw 0 | 45 (master) | 90 | 135 | 180 ===================== */
@@ -306,7 +353,8 @@
   function skullLine(SIL) { const j = SIL.length > 40 ? 0.5 : 1.2; stroke(SIL, { closed: true, w: 3, j, seed: 51, ghost: true }); ctx.save(); shadowClip(SIL, 0.45); stroke(SIL, { closed: true, w: 3.6, j, seed: 51 }); ctx.restore(); }
   // one head for any yaw 0…180, blended between the five §4 / §4.1 keys
   function headYaw(yaw, p, f) {
-    const SIL = outlineAt(yaw), face = fade(yaw, 116, 122), INNER = outlineAt(yaw, 3);   // face pieces slide round the head and are gone by ~120°
+    const mo = MOUTH[f.mouth || 'M1'] || MOUTH.M1, op = yaw < 22.5 ? Math.max(0, Math.min(1, f.open ?? mo.open)) : 0;
+    const SIL = outlineAt(yaw).map(q => q[1] > 26 ? [q[0], q[1] + op * 8 * Math.max(0, 1 - (q[0] / 52) ** 2)] : q), face = fade(yaw, 116, 122), INNER = outlineAt(yaw, 3);   // face pieces slide round the head and are gone by ~120°
     const fz = K(yaw, [[0, 14, 50, 36], [22, 8, 56, 36], [40, 8, 46, 34], [56, 8, 30, 30], [60, 8, 20, 20]]);
     skull(SIL, face > 0 ? fz : null);
     ctx.save(); path(SIL, true); ctx.clip();
@@ -316,10 +364,10 @@
     // head spots: the near three, then the far three appearing behind
     let spots = 0;
     const near = [[[-60, -30], [-46, -28], [-34, -36], [-20, -36], [-22, -34], 7, 5], [[-62, -8], [-53, -8], [-50, -16], [-34, -14], [-40, -14], 6, 4.5], [[-58, 14], [-48, 14], [-54, 6], [-30, 8], [-44, 8], 5, 4]];
-    const far = [[[60, -30], [60, -30], [40, -42], [22, -40], [22, -34], 7, 5, 112, 135], [[62, -8], [62, -8], [56, -14], [52, -14], [40, -14], 6, 4.5, 140, 165], [[58, 14], [58, 14], [56, 8], [54, 8], [44, 8], 5, 4, 140, 165]];
+    const far = [[[70, -44], [70, -44], [70, -44], [22, -40], [22, -34], 7, 5], [[72, -14], [72, -14], [72, -14], [66, -14], [40, -14], 6, 4.5], [[70, 8], [70, 8], [70, 8], [64, 8], [44, 8], 5, 4]];
     const sa = clamp01((yaw - 10) / 20);
     near.forEach(([a, b, c, d, e, rx, ry]) => { if (sa <= 0) return; const q = K(yaw, [a, b, c, d, e]); fill(ell(q[0], q[1], rx, ry, 12), C.spot, sa); spots++; });
-    far.forEach(([a, b, c, d, e, rx, ry, y0, y1]) => { const al = clamp01((yaw - y0) / (y1 - y0)); if (al <= 0) return; const q = K(yaw, [a, b, c, d, e]); fill(ell(q[0], q[1], rx, ry, 12), C.spot, al); spots++; });
+    far.forEach(([a, b, c, d, e, rx, ry]) => { if (yaw <= 90) return; const q = K(yaw, [a, b, c, d, e]); if (rightAt(SIL, q[1]) - q[0] < -rx) return; fill(ell(q[0], q[1], rx, ry, 12), C.spot); spots++; });
     STATS.spots = (STATS.spots || 0) + spots;
     if (face > 0) {
       ctx.save(); ctx.globalAlpha *= face; if (yaw > 90) { path(INNER, true); ctx.clip(); }
@@ -329,13 +377,29 @@
       const n1 = K(yaw, [[-6, 20], [64, -4], [85, -2], [130, -2], [130, -2]]), n2 = lp(yaw, [6, 20], [74, -2], [88, -2]);
       fill(ell(n1[0], n1[1], li(yaw, 2.2, 2.6, 2.4), li(yaw, 1.6, 1.8, 1.8), 10, li(yaw, 0.3, -0.3, -0.3)), C.pupil, 0.85);
       fill(ell(n2[0], n2[1], li(yaw, 2.2, 2.0, 1.2), li(yaw, 1.6, 1.4, 1.0), 10, -0.3), C.pupil, 0.85 * fade(yaw, 70, 80));
-      // the mouth (line mouths in turned views): A – B – F, with the corner tick(s)
-      const mA = K(yaw, [[-22, 32], [22, 22], [30, 24], [88, 24], [88, 24]]), mB = K(yaw, [[0, 40], [44, 36], [56, 33], [110, 33], [110, 33]]), mF = K(yaw, [[22, 32], [70, 24], [84, 25], [130, 25], [130, 25]]);
-      const c = [2 * mB[0] - (mA[0] + mF[0]) / 2, 2 * mB[1] - (mA[1] + mF[1]) / 2];
-      stroke([0, 0.17, 0.33, 0.5, 0.67, 0.83, 1].map(u => [(1 - u) * (1 - u) * mA[0] + 2 * u * (1 - u) * c[0] + u * u * mF[0], (1 - u) * (1 - u) * mA[1] + 2 * u * (1 - u) * c[1] + u * u * mF[1]]), { w: 2.6, j: 0.4, seed: 373, face: true });
-      const tk = K(yaw, [[-2, -4], [-2, -2], [-3, -4], [-3, -4], [-3, -4]]);
-      stroke([mA, [mA[0] + tk[0], mA[1] + tk[1]]], { w: 2.2, j: 0.2, seed: 374, face: true });
-      const ft = fade(yaw, 10, 25); if (ft > 0) { ctx.save(); ctx.globalAlpha *= ft; stroke([mF, [mF[0] + 2, mF[1] - 4]], { w: 2.2, j: 0.2, seed: 375, face: true }); ctx.restore(); }
+      // the mouth follows the ¾ mouth: its offsets from M1 move the front / side keys (the front is symmetric)
+      const m = MOUTH[f.mouth || 'M1'] || MOUTH.M1, lipped = !m.o && !m.pucker, open = Math.max(0, Math.min(1, f.open ?? m.open));
+      const ml = lipped ? mouthLine(m, f) : { A: [22, 22], B: [44, 36], F: [70, 24] };
+      const dA = ml.A[1] - 22, dB = ml.B[1] - 36, dF = ml.F[1] - 24, dC = (dA + dF) / 2 * 0.6, dBf = dB * 0.6;   // the front muzzle is short: offsets scaled
+      const mA = K(yaw, [[-22 * (ml.F[0] - ml.A[0]) / 48, 32 + dC], [ml.A[0], ml.A[1]], [30, 24 + dA], [88, 24], [88, 24]]), mB = K(yaw, [[0, 40 + dBf], [ml.B[0], ml.B[1]], [56, 33 + dB], [110, 33], [110, 33]]), mF = K(yaw, [[22 * (ml.F[0] - ml.A[0]) / 48, 32 + dC], [ml.F[0], ml.F[1]], [84, 25 + dF], [130, 25], [130, 25]]);
+      const frown = mA[1] > mB[1] + 1, upper = wobbly(quad(mA, mB, mF), f.wobble ?? m.wobble ?? 0, p.t || 0);
+      if (yaw < 22.5 && (open > 0.001 || !lipped)) {   // front view: open mouths as a soft D (or an oval), the chin dropping a little
+        if (lipped) {
+          const sag = 3 + open * 12, low = upper.map((q, k) => [q[0], q[1] + open * 8 + sag * Math.sin(k / (upper.length - 1) * Math.PI)]), inner = [...upper, ...low.reverse()];
+          fill(inner, C.mouth);
+          const tg = f.tongue ?? m.tongue ?? 0; if (tg > 0) { ctx.save(); path(inner, true); ctx.clip(); fill(ell(0, 40 + dBf + open * 8 + sag * 0.7, 13, 3 + 6 * tg, 16), C.tongue); ctx.restore(); }
+          if (f.teeth ?? m.teeth) for (const tx of [-7, 7]) { const q = quad(mA, mB, mF, 21).reduce((b, pnt) => Math.abs(pnt[0] - tx) < Math.abs(b[0] - tx) ? pnt : b)[1]; const tooth = [[tx - 3, q - 1], [tx + 3, q - 1], [tx + 3, q + 3], [tx + 1.5, q + 5.2], [tx - 1.5, q + 5.2], [tx - 3, q + 3]]; fill(tooth, C.claw); stroke(tooth.slice(1, 5), { w: 1.0, dark: 0.35, j: 0, seed: 360 + tx, face: true }); }
+          stroke(inner, { closed: true, w: 2.6, j: 0.4, seed: 371, face: true });
+        } else if (m.o) { const [, , rx, ry] = m.o, O = ell(0, 38 + open * 6, rx, ry, 20); fill(O, C.mouth); stroke(O, { closed: true, w: 2.6, j: 0.4, seed: 372, face: true }); }
+        else { const P = ell(0, 36, 4, 4, 12); fill(P, C.mouth); stroke(P, { closed: true, w: 2.6, j: 0.3, seed: 378, face: true }); }
+      } else {
+        stroke(upper, { w: 2.6, j: 0.4, seed: 373, face: true });
+        const tk = K(yaw, [[-2, frown ? 4 : -4], [-2, frown ? 4 : -2], [-3, frown ? 4 : -4], [-3, -4], [-3, -4]]);
+        stroke([mA, [mA[0] + tk[0], mA[1] + tk[1]]], { w: 2.2, j: 0.2, seed: 374, face: true });
+        const ft = fade(yaw, 10, 25); if (ft > 0) { ctx.save(); ctx.globalAlpha *= ft; stroke([mF, [mF[0] + 2, mF[1] + (frown ? 4 : -4)]], { w: 2.2, j: 0.2, seed: 375, face: true }); ctx.restore(); }
+      }
+      if (f.sweat) { const sw = lp(yaw, [-50, -30], [-52, -30], [-40, -34]); fill(ell(sw[0], sw[1], 3.5, 5, 10), C.tear, Math.min(1, f.sweat + 0.3)); }
+      if (f.cold) { const cs = lp(yaw, [0, 22], [74, 4], [86, 6]); soft(cs[0], cs[1], 10, 6, C.blush, Math.min(1, 0.5 + 0.5 * f.cold), 0.5); }
       ctx.restore();
     }
     ctx.restore();
@@ -348,7 +412,8 @@
     if (face > 0) {
       ctx.save(); ctx.globalAlpha *= face; path(yaw > 90 ? INNER : SIL, true); ctx.clip();
       const look = f.look || [li(yaw, 0, 0.15, 0.4), 0], ff = { ...f, look };
-      const nE = K(yaw, [[-33, 0, 20, 26], [-6, 2, 22, 26], [26, 2, 15, 25], [84, 2, 15, 25], [84, 2, 15, 25]]);
+      const wideK = yaw < 22.5 && sidev(f.lidUp ?? 1, 0) > 1 ? 0.88 : 1, nE0 = K(yaw, [[-33, 0, 20, 26], [-6, 2, 22, 26], [26, 2, 15, 25], [84, 2, 15, 25], [84, 2, 15, 25]]);
+      const nE = [nE0[0] * (wideK < 1 ? 0.95 : 1), nE0[1], nE0[2] * wideK, nE0[3]];
       eye(nE[0], nE[1], nE[2], nE[3], 0, ff, 0, p.flip, li(yaw, 1, 1, 0.7));
       ctx.restore();
       STATS.eyeRy = nE[3];
@@ -356,12 +421,13 @@
       const inner = outlineAt(yaw, 3), vis = Math.min(2 * fE[2], rightAt(inner, fE[1]) - (fE[0] - fE[2])), fa = yaw < 60 ? 1 : clamp01((vis - 3) / 3);
       if (fa > 0 && yaw < 90) { ctx.save(); ctx.globalAlpha *= fa * face; path(inner, true); ctx.clip(); eye(fE[0], fE[1], fE[2], fE[3], li(yaw, 0, 0.08, 0.1), ff, 1, p.flip, li(yaw, 1, 0.7, 0.5)); ctx.restore(); }
       const brows = [[K(yaw, [-33, -6, 26, 84, 84]), -32, li(yaw, 34, 34, 22), 1, face], [li(yaw, 33, 38, 66), li(yaw, -32, -30, -46), li(yaw, 34, 24, 14), -1, (yaw < 60 ? 1 : fa) * fade(yaw, 70, 80)]];
-      brows.forEach(([bx, by, len, innerDir, al], i) => {
+      brows.forEach(([bx, by, len, innerDir, al0], i) => { let al = al0;
         if (al <= 0) return;
         const lift = sidev(f.browLift ?? 0, i), tilt = Math.max(-0.6, sidev(f.browTilt ?? 0, i)), curve = sidev(f.browCurve ?? 0.3, i);
         const dy = lift < 0 ? -lift * 6 : -lift * 10, arch = 3 + curve * 6, ix = bx + innerDir * len / 2, ox = bx - innerDir * len / 2;
         let pts = [0, 0.25, 0.5, 0.75, 1].map(u => [lerp(ox, ix, u), by + dy + 2 - Math.sin(u * Math.PI) * arch - u * tilt * 12]);
         const push = Math.max(0, ...pts.map(q => topAt(SIL, q[0]) + 6 - q[1])); if (push > 0) pts = pts.map(q => [q[0], q[1] + push]);
+        if (i === 1 && yaw > 45) { const gap = (fE[1] - fE[3]) - Math.max(...pts.map(q => q[1])); al *= clamp01(gap / 4); if (al <= 0.02) return; }
         ctx.save(); path(yaw > 90 ? INNER : SIL, true); ctx.clip(); ctx.globalAlpha *= al; stroke(pts, { w: 3, j: 0.4, seed: 380 + i, face: true }); ctx.restore();
       });
     } else STATS.eyeRy = '—';
@@ -423,8 +489,8 @@
       else bumpsOn([0, 1, 2, 3, 4].map(i => [lerp(-14, -22, i / 4), lerp(-120, -56, i / 4), [7.5, 7, 6.5, 5.5, 5][i]]), false);
       if (back) for (const sx of [-1, 1]) { part(ell(30 * sx, -30, 26, 28, 24), C.rex, 90 + sx, { band: 0.4 }); part(ell(30 * sx, -6, 16, 6, 18), C.rex, 93 + sx, { hatch: false }); }
       else { part(ell(-26, -32, 24, 27, 22), C.shade, 61, { band: 0.4 }); part(ell(-26, -6, 14, 6, 18), C.shade, 62, { hatch: false }); part(ell(20, -30, 28, 30, 24), C.rex, 90, { band: 0.4 }); part(ell(22, -6, 16, 6, 18), C.rex, 93, { hatch: false }); }
-      if (back) { tail(p, [[0, -44], [-12, -30], [-34, -22], [-56, -24], [-70, -36]], [40, 30, 20, 12], 6); const rt = ell(0, -44, 22, 18, 24); fill(rt, C.rex); stroke(rt.slice(12, 24).concat([rt[0]]), { w: 3, seed: 43 }); }
-      else tail(p, [[-14, -44], [-40, -30], [-66, -26], [-86, -32], [-96, -44]], [36, 28, 20, 14], 6);
+      if (back) { tail(p, [[0, -44], [-12, -30], [-34, -22], [-56, -24], [-70, -36]], [40, 30, 20, 12], 6); const rt = ell(0, -44, 22, 18, 24); fill(rt, C.rex); stroke(rt.slice(0, 13), { w: 3, seed: 43 }); }
+      else tail(p, [[-10, -50], [-40, -30], [-66, -26], [-86, -32], [-96, -44]], [36, 28, 20, 14], 6, true);
       onHead(back ? 0 : 6, p, () => headYaw(back ? 180 : 135, p, f));
     }
     return true;
@@ -472,6 +538,7 @@
       if (dh - r < 4) return;   // too close to the head outline
       const E = ell(bx, by, r, r * 0.75, 14); fill(E, C.shade); stroke(E.slice(4, 12), { w: 1.6, seed: 80 + i });
     });
+    if (p.shiverTicks) for (const [x, y, dx] of [[-50, -96, -1], [-54, -78, -1], [-52, -60, -1], [52, -96, 1], [55, -78, 1], [53, -60, 1]]) { const ph = Math.sin((p.t || 0) * 60 + y) * 1.5; stroke([[x + dx * 3, y + ph], [x + dx * 9, y - 2 + ph]], { w: 1.8, dark: 0.7, j: 0, seed: 140 + y }); }
     // near leg: thigh + foot (sole exactly on y = 0) + 3 claw nubs
     part(ell(24, -30, 28, 30, 24), C.rex, 90, { band: 0.4 });
     const foot = [[2, 0], [54, 0], [58, -4], [56, -9], [48, -13], [40, -14], [20, -14], [4, -12], [0, -6]];

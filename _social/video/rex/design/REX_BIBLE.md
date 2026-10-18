@@ -1,7 +1,7 @@
 # REX BIBLE v1: the master spec for Rex, the baby T-Rex
 
 Owner of this document: the design expert. The animator implements it; the expert reviews against it.
-Status: **v1.5 (2026-10-18)**, written after the round 0 audit (`design/reviews/round0_audit.md`) and amended after the round 1–1d and round 2 reviews. See the changelog at the end.
+Status: **v1.6 (2026-10-18)**, written after the round 0 audit (`design/reviews/round0_audit.md`) and amended after the round 1–3 reviews. See the changelog at the end.
 If code and Bible disagree, the Bible wins, unless the expert changes the Bible.
 
 ---
@@ -239,7 +239,7 @@ Pose field `face: { ... }`. Each control is per side where it says L/R ("near/fa
 | `browLift` (L, R) | -1…1 | moves the brow ∓: -1 = 6 units down, +1 = 10 units up |
 | `browTilt` (L, R) | -1…1 | the **inner end** (toward the snout bridge) moves up (+) or down (−) by **12** units. + = sad or worried, − = determined. **Clamp at −0.6** so he never looks angry. |
 | `browCurve` (L, R) | -1…1 | arch height, ±6 units |
-| `lidUp` (L, R) | 0…1.15 | upper lid: 1 = default (the lid edge just touches the eye top), 0 = closed, 1.15 = wide (the eye white grows 10 % taller, the lid goes up). Implement the lid as a skin-coloured shape clipped to the eye, with its edge drawn at 2.6. The lid edge is an **arc** (sag 0.25 × rx, following the eye's curve), never a straight line, and it **tilts with the brow**: angle = browTilt × **0.40** rad, with the inner end up for +. The lid edge never extends outside the eye outline. |
+| `lidUp` (L, R) | 0…1.15 | upper lid: 1 = default (the lid edge just touches the eye top), 0 = closed, 1.15 = wide (the eye white grows 10 % taller, the lid goes up). Implement the lid as a skin-coloured shape clipped to the eye, with its edge drawn at 2.6. The lid edge is an **arc** (sag 0.25 × rx, following the eye's curve), never a straight line, and it **tilts with the brow**: angle = browTilt × **0.40** rad, with the inner end up for +. The lid edge never extends outside the eye outline. **Upper-lid outline rule (v1.6)**: above the upper-lid edge the eye outline is drawn only as an eyelid line at weight 1.6, dark 0.45, and only while lidUp ≥ 0.5. Below 0.5 nothing is drawn above the lid edge; the lid edge (2.6) is the only line. A nearly closed eye must never read as an empty ring. When lidUp ≥ 1.1 (wide), the eye must still keep ≥ 6 units inside the head outline (front view included); shrink rx if needed. |
 | `lidLo` (L, R) | 0…0.6 | lower lid pushing up by `lidLo × ry` (coverage factor 1.0, not more), with an upward-curved edge (smile squint, Duchenne). The effective value (including cheek) is **capped at 0.45**. The lid fill matches the skin under it exactly (no lighter crescent). The edge line is 2.0. When the effective lidLo > 0.2, the pupils shift up by 0.15 × ry so they are never half-buried. Not drawn below 0.15. **Outline rule**: below the lower-lid edge the eye outline is **not drawn**; the lid edge becomes the eye's lower boundary, at the eye-outline weight 2.6, and it meets the outline ends exactly (no overshoot). The visible eye becomes a clean crescent or half-moon. (Upper lids keep the eye outline above the lid edge; that reads as eyelid volume.) |
 | `closed` | `'down'`/`'happy'`/`'squeeze'` | shape of a fully closed eye: ∪ relaxed (sleep), ∩ happy, > < squeeze |
 | `pupil` | 0.30…0.72 | pupil radius × ry. 0.3 = shock, 0.58 = default, 0.7 = love or wonder |
@@ -324,6 +324,13 @@ Base points: near corner A (22,24), middle B (44,34), far end F (70,26). **Every
 | M13 | smirk | A(22,32) flat – B(46,32) – F(70,20) with a tick at F |
 | M14 | eee/chatter | flat wide A(20,30) – F(72,28); open 0.05–0.15; 2 small teeth |
 | M15 | cute roar | jaw 0.8, corners +0.4, 2 teeth, tongue 40 % |
+
+**Open-mouth silhouette amendment (v1.6)**: this overrides the v1.4 numbers below where they differ.
+- At any open value the upper-lip path from the snout tip to F is **convex or straight**: no concave notch and no inward hook under the tip.
+- Upper lip: (81,12) → (80,22) → F, with F clamped to x ≤ 76 and y ≥ 26. It turns into the mouth with a radius ≥ 5, not a cusp.
+- The jaw front's foremost point is at x ≥ 76 after the transform, so the overbite is ≤ 5 at every open value.
+- New pre-transform jaw front: F2 (78,30) → (82,37) → (78,45) → (64,50) → (40,51) → (18,52).
+- Test it on M3, M4 and M15 at s = 1.75: the snout front and the jaw front must read as **one rounded muzzle split by the mouth**, not as a beak over a chin.
 
 **Open-mouth silhouette shape (v1.4)**: this replaces v1.3, whose numbers still left a small overbite.
 - Judge the shape **at open = 1, after the jaw transform**.
@@ -669,3 +676,7 @@ After round 7 is APPROVED: migrate the episodes from `A.rex` to `A.rex2` (the ex
   - back-view arms;
   - ¾-back cheek stroke;
   - body view-switch rule.
+- **v1.6 (round 3 review)**:
+  - open-mouth amendment (no lip notch, overbite ≤ 5, a new jaw front);
+  - upper-lid outline rule (no empty rings; wide eyes stay ≥ 6 inside the outline);
+  - E13 and E22 body cue for the arms (§7 note).
