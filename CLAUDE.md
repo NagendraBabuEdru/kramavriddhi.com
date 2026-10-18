@@ -12,6 +12,7 @@ Almost every HTML page is **generated**. Edit the generator, not the HTML:
 - Rebuild: `python _tools/gen.py && python _tools/home.py`
 - `assets/style.css` and `assets/site.js` (calculator suggestion pop-up card, per-path config) are hand-edited.
 - `games/rex-adventure/` is a copied Flutter web build (source: private repo Rex_adventure). Rebuild with `flutter build web --release --base-href /games/rex-adventure/` from PowerShell, copy `build/web`, then re-add the Google Analytics snippet to its `index.html`.
+- `apps/gpat/` is a copied Vite build of GPAT Prep (source: private repo GPAT, `base: '/apps/gpat/'` in its `vite.config.ts`, Analytics snippet already in its `index.html`). Rebuild with `npm run check && npm run build` there, then replace `apps/gpat/` with its `dist/`.
 - Folders starting with `_` (`_tools`, `_social`) are not published.
 
 ## Rules for content

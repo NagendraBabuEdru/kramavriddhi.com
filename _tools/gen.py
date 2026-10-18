@@ -4862,7 +4862,7 @@ APPS_LIVE = [
     dict(name="DevOps Academy", emoji="☁️", url="https://nagendrababuedru.github.io/DevOps/",
          tags=["Learning", "Free", "Works offline"],
          summary="Learn Cloud (Azure, AWS, GCP), AI & LLMs, DevOps and Data Engineering with hands-on terminal labs, real-world scenarios, 320+ interview questions with audio, and timed challenges."),
-    dict(name="GPAT Prep", emoji="💊", url="https://nagendrababuedru.github.io/GPAT/",
+    dict(name="GPAT Prep", emoji="💊", url="/apps/gpat/",
          tags=["Exam prep", "Free", "No sign-up"],
          summary="Revision and self-testing for the Graduate Pharmacy Aptitude Test: notes, topic-wise practice, mock tests, spaced revision and progress analytics. Progress stays on your device.",
          note="Study material in this app is AI-generated and not reviewed by subject experts. Use it alongside your textbooks, never as clinical guidance."),
@@ -5037,7 +5037,7 @@ def lastmod(u):
         return SITE_ISO
     return UPDATED_ISO
 
-urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/", "/te/tools/scheme-eligibility-checker/", "/te/tools/atal-pension-calculator/", "/te/tools/sukanya-samriddhi-calculator/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/", "/te/tools/scheme-eligibility-checker/", "/te/tools/atal-pension-calculator/", "/te/tools/sukanya-samriddhi-calculator/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/apps/gpat/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{lastmod(u)}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
