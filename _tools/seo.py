@@ -101,6 +101,12 @@ SEO = {
         "Aadabidda Nidhi AP: ₹1,500 a month promised for women 18+. Status: not started as of October 2026, no application. Avoid fake registration sites."),
     "ap-nirudyoga-bhruthi": ("Nirudyoga Bhruthi ₹3,000: Status October 2026",
         "Nirudyoga Bhruthi AP unemployment allowance: ₹3,000 a month promised. Status: not started as of October 2026. Job and skill schemes you can use now."),
+    "pm-ujjwala-yojana": ("PM Ujjwala Yojana 2026: Free Gas Connection, ₹300 Subsidy",
+        "PM Ujjwala Yojana: free LPG connection for poor women, ₹300 subsidy now on 4 refills a year (June 2026), eligibility, documents, apply on pmuy.gov.in."),
+    "pm-surya-ghar": ("PM Surya Ghar Yojana: ₹78,000 Rooftop Solar Subsidy",
+        "PM Surya Ghar Muft Bijli Yojana: rooftop solar subsidy ₹30,000 per kW up to ₹78,000, up to 300 units a month, eligibility, loans, how to apply."),
+    "kisan-credit-card": ("Kisan Credit Card 2026: 4% Interest, Limit & Apply",
+        "Kisan Credit Card: crop loans at 7%, 4% on prompt repayment, ₹2 lakh without collateral, ₹5 lakh limit announced, dairy and fisheries KCC, how to apply."),
 }
 
 # Telugu page titles (the Telugu description in te_content*.py is kept as it is).
@@ -150,4 +156,7 @@ SEO_TE = {
     "ap-ntr-vaidya-seva": "ఎన్టీఆర్ వైద్య సేవ: ₹25 లక్షల ఉచిత వైద్యం, అర్హత",
     "ap-aadabidda-nidhi": "ఆడబిడ్డ నిధి ₹1,500: అక్టోబర్ 2026 స్థితి",
     "ap-nirudyoga-bhruthi": "నిరుద్యోగ భృతి ₹3,000: అక్టోబర్ 2026 స్థితి",
+    "pm-ujjwala-yojana": "పీఎం ఉజ్వల యోజన: ఉచిత గ్యాస్ కనెక్షన్, ₹300 సబ్సిడీ",
+    "pm-surya-ghar": "పీఎం సూర్య ఘర్: రూఫ్‌టాప్ సోలార్‌కు ₹78,000 సబ్సిడీ",
+    "kisan-credit-card": "కిసాన్ క్రెడిట్ కార్డు: 4% వడ్డీ, పరిమితి, దరఖాస్తు",
 }

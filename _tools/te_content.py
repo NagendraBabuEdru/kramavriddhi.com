@@ -263,3 +263,7 @@ TE.update(TE6)
 # Batch 7: fee reimbursement, NTR Vaidya Seva, promised AP schemes
 from te_content7 import TE7
 TE.update(TE7)
+
+# Batch 8: Ujjwala, Surya Ghar, Kisan Credit Card
+from te_content8 import TE8
+TE.update(TE8)

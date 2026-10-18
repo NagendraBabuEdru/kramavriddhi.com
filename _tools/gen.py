@@ -16,8 +16,8 @@ GUIDE_UPDATED = {
                      "agnipath-agniveer", "pm-vishwakarma"], "2026-10-08"),
     **dict.fromkeys(["central-sector-scholarship", "pm-viksit-bharat-rozgar-yojana", "e-shram-card",
                      "pm-shram-yogi-maandhan", "pm-svanidhi", "ap-auto-drivers-sevalo"], "2026-10-13"),
-    # batch D (added 18 Oct 2026)
-    **dict.fromkeys(["ap-fee-reimbursement", "ts-fee-reimbursement", "ap-ntr-vaidya-seva", "ap-aadabidda-nidhi", "ap-nirudyoga-bhruthi"], "2026-10-18"),
+    # batch D and E (added 18 Oct 2026)
+    **dict.fromkeys(["pm-ujjwala-yojana", "pm-surya-ghar", "kisan-credit-card", "ap-fee-reimbursement", "ts-fee-reimbursement", "ap-ntr-vaidya-seva", "ap-aadabidda-nidhi", "ap-nirudyoga-bhruthi"], "2026-10-18"),
     # batch A (added 15 Oct 2026) and the Rajiv Yuva Vikasam update
     **dict.fromkeys(["ts-rajiv-yuva-vikasam", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ts-kalyana-lakshmi-shaadi-mubarak", "pm-fasal-bima-yojana"], "2026-10-15"),
     # 14 Oct 2026 fact check
@@ -186,6 +186,15 @@ SCHEMES = [
     dict(slug="ap-nirudyoga-bhruthi", name="Nirudyoga Bhruthi Unemployment Allowance (Andhra Pradesh)", short="Nirudyoga Bhruthi",
          state="ap", cat="jobs", cat_label="Jobs & Internships", icon="🧑‍🎓",
          summary="₹3,000 a month promised for unemployed youth in the 2024 Super Six. Not started as of October 2026: no order, no application."),
+    dict(slug="pm-ujjwala-yojana", name="PM Ujjwala Yojana (Free LPG Connection)", short="PM Ujjwala Yojana",
+         cat="women", cat_label="Women & Girls", icon="🔥",
+         summary="Free LPG connection, first refill and stove for women from poor families. ₹300 subsidy now on 4 refills a year (from June 2026)."),
+    dict(slug="pm-surya-ghar", name="PM Surya Ghar Muft Bijli Yojana (Rooftop Solar)", short="PM Surya Ghar",
+         cat="housing", cat_label="Housing", icon="☀️",
+         summary="Up to ₹78,000 subsidy to put solar panels on your roof and get up to 300 units of power a month. Open till March 2027."),
+    dict(slug="kisan-credit-card", name="Kisan Credit Card (KCC)", short="Kisan Credit Card",
+         cat="farmers", cat_label="Farmers & Agriculture", icon="💳",
+         summary="Crop loans for farmers, fish farmers and livestock farmers at 7% interest, 4% if repaid on time. Up to ₹2 lakh without collateral."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -256,7 +265,7 @@ write("schemes/index.html",
 {"".join(scheme_card(s) for s in DISPLAY)}    </div>
     <p class="empty" id="empty">No schemes match yet. New guides are added every week.</p>
 
-    <p class="soon-list"><strong>Coming soon:</strong> National Scholarship Portal, PM Ujjwala Yojana, PM Surya Ghar (rooftop solar), Kisan Credit Card, and more Andhra Pradesh and Telangana schemes.</p>
+    <p class="soon-list"><strong>Coming soon:</strong> National Scholarship Portal, PM-KUSUM (solar pumps), Stand-Up India (when relaunched), and more Andhra Pradesh and Telangana schemes.</p>
 
     <div class="note" style="margin-top:32px">Kramavriddhi is an independent information website, not a government website. We never ask for your Aadhaar, bank details or any fee. Always apply only on the official portal linked in each guide.</div>
 
@@ -2129,7 +2138,7 @@ COLL = {
     "for-women": [
         ["sukanya-samriddhi-yojana", "cbse-single-girl-child-scholarship", "aicte-pragati-scholarship", "ap-thalliki-vandanam", "ap-fee-reimbursement", "ts-fee-reimbursement"],
         ["lakhpati-didi", "ts-indira-mahila-shakti", "pm-mudra-yojana"],
-        ["ts-kalyana-lakshmi-shaadi-mubarak", "ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana", "ap-aadabidda-nidhi"],
+        ["ts-kalyana-lakshmi-shaadi-mubarak", "ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana", "pm-ujjwala-yojana", "ap-aadabidda-nidhi"],
     ],
     "for-youth": [
         ["pm-internship-scheme", "agnipath-agniveer", "ap-nirudyoga-bhruthi"],
@@ -2142,8 +2151,8 @@ COLL = {
         ["pm-viksit-bharat-rozgar-yojana", "agnipath-agniveer"],
         ["e-shram-card", "pm-shram-yogi-maandhan", "atal-pension-yojana", "pm-suraksha-bima-yojana", "pm-jeevan-jyoti-bima-yojana"],
         ["pm-svanidhi", "pm-mudra-yojana", "pm-vishwakarma", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam"],
-        ["pm-kisan", "pm-fasal-bima-yojana", "ap-annadata-sukhibhava", "ts-rythu-bharosa"],
-        ["ayushman-bharat-pm-jay", "ap-ntr-vaidya-seva", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana"],
+        ["pm-kisan", "pm-fasal-bima-yojana", "kisan-credit-card", "ap-annadata-sukhibhava", "ts-rythu-bharosa"],
+        ["ayushman-bharat-pm-jay", "ap-ntr-vaidya-seva", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana", "pm-surya-ghar"],
     ],
 }
 
@@ -3454,6 +3463,187 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Deccan Herald: NDA manifesto promises, Super Six (2024)", "https://www.deccanherald.com/amp/story/elections%2Fandhra-pradesh%2Fandhra-assembly-elections-2024-nda-manifestopromises-super-six-3001476"),
     ]))
 
+# ---------------------------------------------------------------- batch E: Ujjwala, Surya Ghar, Kisan Credit Card (added 18 Oct 2026)
+
+# ---- PM Ujjwala Yojana
+s = BY_SLUG["pm-ujjwala-yojana"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Ujjwala Yojana gives women from poor families a free LPG gas connection, with the first refill and a stove free under Ujjwala 2.0. Ujjwala customers also get a ₹300 subsidy per cylinder, but since June 2026 only on 4 refills a year.",
+    description="PM Ujjwala Yojana explained: free LPG connection for poor women, ₹300 subsidy now on 4 refills a year (June 2026), who is eligible, documents and how to apply on pmuy.gov.in.",
+    facts=[("Connection", "Free (deposit-free)"), ("Subsidy", "₹300 / cylinder"), ("Subsidised refills", "4 a year (from June 2026)"), ("For", "Adult women, poor families")],
+    body='''
+        <h2>What is PM Ujjwala Yojana?</h2>
+        <p>Pradhan Mantri Ujjwala Yojana (PMUY), run by the Ministry of Petroleum and Natural Gas since 2016, gives deposit-free LPG connections in the name of women from poor households, so families can cook with clean gas instead of wood or coal. Under <strong>Ujjwala 2.0</strong>, the first refill and a gas stove are also given free.</p>
+
+        <h2>Latest update: subsidy now on 4 refills a year</h2>
+        <ul>
+          <li>Ujjwala customers get a subsidy of <strong>₹300 per 14.2 kg cylinder</strong>, credited to the bank account.</li>
+          <li>In <strong>June 2026</strong> the government cut the number of subsidised refills from <strong>9 to 4 a year</strong>, citing high global LPG prices. That means up to <strong>₹1,200 a year</strong> per household. Refills after the fourth are at the normal price.</li>
+          <li>In AP and Telangana you may also get state help: <a href="/schemes/ap-deepam-2/">Deepam-2</a> (three free cylinders a year in AP) and the ₹500 cylinder under <a href="/schemes/ts-mahalakshmi/">Mahalakshmi</a> (Telangana).</li>
+        </ul>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>A woman aged <strong>18 or above</strong> from a poor household.</li>
+          <li><strong>No LPG connection</strong> in the same household already.</li>
+          <li>The household should fall in a listed category, such as SC/ST households, PMAY-Gramin beneficiaries, Antyodaya (AAY) card holders, forest dwellers, most backward classes, tea and ex-tea garden tribes, island and river-island residents, or a poor family that gives a self-declaration (deprivation declaration) as per the scheme.</li>
+          <li>Migrant families can apply with a self-declaration of address.</li>
+        </ul>
+
+        <h2>Documents needed</h2>
+        <ul>
+          <li>Aadhaar of the applicant woman (and of adult family members as asked)</li>
+          <li>Ration card or other document showing family members</li>
+          <li>Bank account details (Aadhaar-seeded) for the subsidy</li>
+          <li>Address proof (or self-declaration for migrants)</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Apply online at <a href="https://www.pmuy.gov.in" target="_blank" rel="noopener">pmuy.gov.in</a> by choosing your oil company (Indane, Bharat Gas or HP Gas) and distributor, or visit your nearest LPG distributor.</li>
+          <li>Submit the KYC form with your documents. The distributor checks your details.</li>
+          <li>After approval you get the connection, cylinder and stove. Do your <strong>Aadhaar eKYC</strong> with the distributor when asked, so the ₹300 subsidy keeps coming.</li>
+        </ol>
+        <div class="note">The Ujjwala connection is free. Don't pay agents for a "free gas connection." Pay only the official price for refills at your distributor.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://www.pmuy.gov.in" target="_blank" rel="noopener">pmuy.gov.in</a> · <strong>LPG helpline:</strong> 1906 (emergency) / your distributor
+        </div>
+''',
+    faqs=[
+        ("How many Ujjwala cylinders get the ₹300 subsidy now?", "Since June 2026, only the first 4 refills in a year get the ₹300 subsidy, up to ₹1,200 a year. Earlier it was 9."),
+        ("Is the Ujjwala gas connection free?", "Yes. The connection is deposit-free, and under Ujjwala 2.0 the first refill and a stove are also free."),
+        ("Who can get an Ujjwala connection?", "A woman aged 18+ from a poor household that has no LPG connection, in one of the listed categories or with a deprivation self-declaration."),
+        ("How do I apply for PM Ujjwala Yojana?", "Online on pmuy.gov.in or at your nearest Indane, Bharat Gas or HP Gas distributor with Aadhaar, ration card and bank details."),
+        ("Can I get Ujjwala and Deepam-2 together in AP?", "Deepam-2 is a separate AP scheme for rice card families. Ask your distributor how the two apply to your connection."),
+    ],
+    sources=[
+        ("PM Ujjwala Yojana official portal", "https://www.pmuy.gov.in"),
+        ("ThePrint: Govt cuts subsidised LPG cylinders to Ujjwala beneficiaries to 4 (Jun 2026)", "https://theprint.in/economy/govt-cuts-subsidised-lpg-cylinders-to-ujjwala-beneficiaries-to-4/2954319/"),
+        ("The Wire: Subsidised Ujjwala refills cut from nine to four (Jun 2026)", "https://m.thewire.in/article/energy/union-govt-cuts-subsidised-lpg-refills-under-ujjwala-scheme-from-nine-to-four"),
+        ("PMIndia: Cabinet approves ₹300 targeted subsidy for Ujjwala, 2025-26", "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-continuation-of-targeted-subsidy-for-pradhan-mantri-ujjwala-yojana-consumers-for-2025-26-at-rs-12000-crore/"),
+    ]))
+
+# ---- PM Surya Ghar Muft Bijli Yojana
+s = BY_SLUG["pm-surya-ghar"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Surya Ghar Muft Bijli Yojana helps families put solar panels on their own roof. The Central Government gives a subsidy of up to ₹78,000, so a home can get up to 300 units of electricity a month from the sun and cut its power bill.",
+    description="PM Surya Ghar Muft Bijli Yojana explained: rooftop solar subsidy ₹30,000 per kW up to ₹78,000, up to 300 free units, who is eligible, loans, how to apply on pmsuryaghar.gov.in.",
+    facts=[("Subsidy", "Up to ₹78,000"), ("Per kW", "₹30,000 (1st & 2nd kW)"), ("Free power", "Up to 300 units / month"), ("Runs till", "March 2027")],
+    body='''
+        <h2>What is PM Surya Ghar?</h2>
+        <p>The Union Cabinet approved PM Surya Ghar: Muft Bijli Yojana on <strong>29 February 2024</strong> with ₹75,021 crore, to put rooftop solar on <strong>1 crore homes</strong> by <strong>March 2027</strong>. It is run by the Ministry of New and Renewable Energy (MNRE) with your electricity distribution company (DISCOM). By July 2026 more than <strong>50 lakh</strong> homes had installed rooftop solar under it.</p>
+
+        <h2>How much subsidy?</h2>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>System size</th><th>Central subsidy</th></tr>
+          <tr><td>1 kW</td><td>₹30,000</td></tr>
+          <tr><td>2 kW</td><td>₹60,000</td></tr>
+          <tr><td>3 kW or more</td><td>₹78,000 (maximum)</td></tr>
+        </table>
+        </div>
+        <p>That is ₹30,000 per kW for the first 2 kW and ₹18,000 for the third kW. Housing societies / RWAs get ₹18,000 per kW for common facilities. Some states add their own top-up. A 1–2 kW system usually suits homes using up to 150 units a month; 2–3 kW suits 150–300 units.</p>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>An Indian household that <strong>owns a house</strong> with a roof suitable for solar panels.</li>
+          <li>A valid <strong>electricity connection</strong> in the household's name.</li>
+          <li>The household should not have taken any other subsidy for solar panels.</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Register on <a href="https://pmsuryaghar.gov.in" target="_blank" rel="noopener">pmsuryaghar.gov.in</a> (or the PM Surya Ghar app) with your state, DISCOM, electricity consumer number and mobile number.</li>
+          <li>Apply for rooftop solar and get feasibility approval from your DISCOM.</li>
+          <li>Get the system installed by a <strong>registered vendor</strong> listed on the portal.</li>
+          <li>Apply for net metering. After the DISCOM inspects and commissions it, submit your bank details and the commissioning report on the portal.</li>
+          <li>The subsidy is credited to your bank account.</li>
+        </ol>
+        <p><strong>Loans:</strong> collateral-free loans at low interest (around 7%) are available from public sector banks for systems up to 3 kW. Apply through the portal or your bank.</p>
+        <div class="note">Applying is free. Use only vendors registered on the portal, and don't pay anyone who promises "free solar" in exchange for your electricity bill or Aadhaar details.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://pmsuryaghar.gov.in" target="_blank" rel="noopener">pmsuryaghar.gov.in</a> · <strong>Helpline:</strong> 15555<br>
+          <strong>Help:</strong> your DISCOM (APSPDCL, APEPDCL, APCPDCL in AP; TGSPDCL, TGNPDCL in Telangana)
+        </div>
+''',
+    faqs=[
+        ("How much subsidy does PM Surya Ghar give?", "₹30,000 for 1 kW, ₹60,000 for 2 kW and ₹78,000 (maximum) for 3 kW or more."),
+        ("Is electricity really free under PM Surya Ghar?", "The rooftop system can produce up to 300 units a month for a typical home, which can cut your bill to near zero depending on your use."),
+        ("Who can apply for PM Surya Ghar?", "Households that own a house with a suitable roof and a valid electricity connection, and haven't taken another solar subsidy."),
+        ("Can I get a loan for rooftop solar?", "Yes. Public sector banks give collateral-free loans at low interest for systems up to 3 kW."),
+        ("Till when is PM Surya Ghar open?", "The scheme runs till FY 2026-27, that is March 2027."),
+    ],
+    sources=[
+        ("PM Surya Ghar official portal (MNRE)", "https://pmsuryaghar.gov.in"),
+        ("PIB: PM Surya Ghar, India's solar revolution", "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2111106&reg=48&lang=2"),
+        ("SolarQuarter: PM Surya Ghar crosses 50 lakh installations (Aug 2026)", "https://solarquarter.com/2026/08/07/pm-surya-ghar-scheme-crosses-50-lakh-rooftop-solar-installations-adds-record-5-06-lakh-homes-in-july-2026/"),
+    ]))
+
+# ---- Kisan Credit Card
+s = BY_SLUG["kisan-credit-card"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="The Kisan Credit Card (KCC) gives farmers, fish farmers and livestock farmers a crop loan from the bank at low interest: 7% a year, which comes down to 4% if you repay on time. Loans up to ₹2 lakh need no collateral.",
+    description="Kisan Credit Card explained: crop loans at 7% interest, 4% on prompt repayment, ₹2 lakh without collateral, ₹5 lakh limit announced, KCC for fisheries and animal husbandry, how to apply.",
+    facts=[("Interest", "7% (4% if repaid on time)"), ("No collateral", "Up to ₹2 lakh"), ("Subsidised limit", "₹3 lakh (₹5 lakh announced)"), ("Card valid", "5 years")],
+    body='''
+        <h2>What is the Kisan Credit Card?</h2>
+        <p>The KCC is a credit card and loan account from banks for farmers' short-term needs: seeds, fertiliser, pesticides, labour and post-harvest costs, plus some household needs. Since 2018-19 it also covers <strong>animal husbandry</strong> (dairy, poultry, goats) and <strong>fisheries</strong>. You get a RuPay card and can withdraw as needed up to your limit.</p>
+
+        <h2>Interest and limits</h2>
+        <ul>
+          <li>Under the government's <strong>Modified Interest Subvention Scheme (MISS)</strong>, short-term loans up to <strong>₹3 lakh</strong> are given at <strong>7% interest</strong>.</li>
+          <li>If you repay on time, you get a <strong>3% prompt repayment incentive</strong>, so the effective interest is <strong>4%</strong>.</li>
+          <li>For animal husbandry and fisheries, the subsidised interest applies up to ₹2 lakh.</li>
+          <li>The <strong>Union Budget 2025-26</strong> announced raising the MISS limit from ₹3 lakh to <strong>₹5 lakh</strong>. Ask your bank how much of your loan currently gets the subsidised rate.</li>
+          <li>From 1 January 2025, banks can give farm loans up to <strong>₹2 lakh without collateral</strong> (no land mortgage or guarantor).</li>
+        </ul>
+
+        <h2>Who can get a KCC?</h2>
+        <ul>
+          <li>Farmers who own land, and also <strong>tenant farmers, oral lessees and sharecroppers</strong>.</li>
+          <li>Self-help groups and joint liability groups of farmers.</li>
+          <li>Fish farmers, fishermen and livestock / poultry farmers.</li>
+          <li><a href="/schemes/pm-kisan/">PM-KISAN</a> beneficiaries can get a KCC more easily, as banks hold special KCC drives for them.</li>
+        </ul>
+
+        <h2>Documents usually needed</h2>
+        <ul>
+          <li>KCC application form (from the bank or PM-KISAN portal)</li>
+          <li>Aadhaar and a photo</li>
+          <li>Land records (pattadar passbook / 1-B / Adangal) or tenancy agreement / CCRC (AP) for tenants</li>
+          <li>Crop details, or details of animals / fish ponds for allied activities</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Visit your bank branch (public, private, regional rural or cooperative bank), or download the KCC form from the <a href="https://pmkisan.gov.in" target="_blank" rel="noopener">PM-KISAN portal</a>.</li>
+          <li>Submit the form with your documents. Banks are expected to decide within about 14 days.</li>
+          <li>The bank fixes your limit based on your crops and land, and gives you a RuPay KCC. The card is valid for 5 years and is reviewed every year.</li>
+          <li>Repay on or before the due date to get the 4% rate and keep your limit active.</li>
+        </ol>
+        <p>Crops financed through a KCC loan are covered under <a href="/schemes/pm-fasal-bima-yojana/">PM Fasal Bima Yojana</a> where the state runs it, unless you opt out.</p>
+        <div class="note">There are no processing fees for KCC loans up to ₹3 lakh at most banks. Don't pay agents to "get your KCC sanctioned."</div>
+
+        <div class="official">
+          <strong>Apply at:</strong> your bank branch · KCC form on <a href="https://pmkisan.gov.in" target="_blank" rel="noopener">pmkisan.gov.in</a><br>
+          <strong>Help:</strong> Rythu Seva Kendram (AP) or Agriculture Extension Officer (Telangana)
+        </div>
+''',
+    faqs=[
+        ("What is the Kisan Credit Card interest rate?", "7% a year on loans up to ₹3 lakh, reduced to an effective 4% if you repay on time."),
+        ("How much KCC loan can I get without collateral?", "Up to ₹2 lakh from 1 January 2025."),
+        ("Has the KCC limit been raised to ₹5 lakh?", "The Union Budget 2025-26 announced raising the subsidised-interest limit from ₹3 lakh to ₹5 lakh. Ask your bank how much of your loan gets the 7% / 4% rate now."),
+        ("Can tenant farmers get a Kisan Credit Card?", "Yes. Tenant farmers, oral lessees and sharecroppers are eligible."),
+        ("Is KCC available for dairy and fisheries?", "Yes. Since 2018-19, KCC also covers animal husbandry and fisheries, with subsidised interest up to ₹2 lakh."),
+    ],
+    sources=[
+        ("PIB: Cabinet approves continuation of MISS for 2025-26 (28 May 2025)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2131988"),
+        ("The Tribune: KCC interest subvention limit to be raised to ₹5 lakh (Budget 2025-26)", "https://www.tribuneindia.com/news/business/kisan-credit-card-interest-subvention-scheme-limit-to-be-raised-to-rs-5-lakh-sitharaman"),
+        ("PM-KISAN portal: KCC form", "https://pmkisan.gov.in"),
+    ]))
+
 # ---- Collection: For boys & men
 write("schemes/for-men/index.html",
     head(page_title("Government Schemes for Men: Scholarships, Jobs, Loans"),
@@ -3656,6 +3846,9 @@ CHECKER_TEXT = {
             apFee="College students from families earning up to ₹2.5 lakh can get full tuition fee and a yearly maintenance grant.",
             tsFee="SC, ST, BC, EBC, minority and disabled college students within the income limits can get tuition fee and maintenance through ePASS.",
             apVaidya="Rice card families get cashless treatment up to ₹25 lakh a year at network hospitals.",
+            ujjwala="Women from poor families with no LPG connection can get a free connection and ₹300 subsidy on 4 refills a year.",
+            suryaghar="You own a house: get up to ₹78,000 subsidy for rooftop solar and up to 300 units a month.",
+            kcc="Farmers, fish farmers and livestock farmers can get crop loans at 7%, or 4% if repaid on time.",
         ),
     ),
     "te": dict(
@@ -3754,6 +3947,9 @@ CHECKER_TEXT = {
             apFee="₹2.5 లక్షల లోపు ఆదాయం ఉన్న కుటుంబాల కాలేజీ విద్యార్థులకు పూర్తి ట్యూషన్ ఫీజు, ఏటా నిర్వహణ సాయం.",
             tsFee="ఆదాయ పరిమితిలోపు ఉన్న ఎస్సీ, ఎస్టీ, బీసీ, ఈబీసీ, మైనారిటీ, దివ్యాంగ కాలేజీ విద్యార్థులకు ePASS ద్వారా ట్యూషన్ ఫీజు, నిర్వహణ సాయం.",
             apVaidya="బియ్యం కార్డు కుటుంబాలకు నెట్‌వర్క్ ఆసుపత్రుల్లో ఏటా ₹25 లక్షల వరకు నగదు రహిత వైద్యం.",
+            ujjwala="ఎల్పీజీ కనెక్షన్ లేని పేద కుటుంబాల మహిళలకు ఉచిత కనెక్షన్, ఏడాదికి 4 రీఫిల్స్‌కు ₹300 సబ్సిడీ.",
+            suryaghar="మీకు సొంత ఇల్లు ఉంది: రూఫ్‌టాప్ సోలార్‌కు ₹78,000 వరకు సబ్సిడీ, నెలకు 300 యూనిట్ల వరకు కరెంటు.",
+            kcc="రైతులు, చేపల పెంపకందారులు, పశువుల రైతులకు 7% వడ్డీకి పంట రుణాలు, సకాలంలో కడితే 4%.",
         ),
     ),
 }
@@ -3844,6 +4040,9 @@ def checker_page(lang):
 
           // Central schemes
           if (f.farmland && notRich && !f.govtjob) add('pm-kisan', 'kisan');
+          if (f.farmland || f.fisher) add('kisan-credit-card', 'kcc');
+          if (woman && age >= 18 && !f.lpg && (poor || inc <= 1)) add('pm-ujjwala-yojana', 'ujjwala');
+          if (f.pucca) add('pm-surya-ghar', 'suryaghar');
           if (f.farmland) add('pm-fasal-bima-yojana', state === 'ap' ? 'pmfbyAp' : (state === 'ts' ? 'pmfbyTs' : 'pmfby'));
           if (age >= 70) add('ayushman-bharat-pm-jay', 'jay70');
           else if (poor) add('ayushman-bharat-pm-jay', 'jayPoor');
@@ -4350,6 +4549,10 @@ UPDATES = [
          title="PM-KISAN continued until 2030-31",
          text="The Union Cabinet approved continuing PM-KISAN from 2026-27 to 2030-31 with ₹3.15 lakh crore.",
          link="/schemes/pm-kisan/"),
+    dict(kind="news", date="8 Jun 2026",
+         title="Ujjwala: ₹300 gas subsidy now on only 4 refills a year",
+         text="The Centre cut subsidised Ujjwala refills from 9 to 4 a year, so the subsidy is now up to ₹1,200 a year per household.",
+         link="/schemes/pm-ujjwala-yojana/"),
     dict(kind="news", date="8 May 2026",
          title="Telangana: interest-free SHG loans raised to ₹10 lakh",
          text="Under Indira Mahila Shakti, the government now pays interest on SHG bank loans up to ₹10 lakh (earlier ₹5 lakh).",
