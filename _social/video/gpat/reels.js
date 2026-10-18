@@ -2,6 +2,7 @@
 // Phone screens are real captures of the live app (capture.js -> cap/*.jpg). Facts on screen come from the
 // app itself: 125 questions / 180 min / +4 −1 0 marking, 1,746 questions, review intervals 1-3-7-16-35 days.
 // Subject weightage is the app's estimate from past papers, never called official.
+// English only (owner's choice, Oct 2026); engine.js still supports lang: 'te' if Telugu comes back.
 // Rules: say "AI-generated study aid, verify with your textbooks" on every end card; no rank or score promises;
 // no affiliation with NTA, AICTE or PCI; no medical or dosing claims.
 const PARROT = `<svg viewBox="0 0 64 64" style="width:100%;height:100%"><path d="M22 50 L14 62 L22 58 L24 63 L28 52 Z" fill="#1f8a4c"/><path d="M26 51 L22 63 L30 56 Z" fill="#2563eb"/><ellipse cx="31" cy="40" rx="14" ry="15" fill="#22c55e"/><ellipse cx="34" cy="44" rx="8" ry="10" fill="#bbf7d0"/><path d="M19 34 C14 44 18 54 28 55 C24 48 24 40 27 34 Z" fill="#15803d"/><path d="M20 46 C21 50 24 53 28 55 C25 51 24 48 24 45 Z" fill="#dc2626"/><circle cx="35" cy="20" r="13" fill="#22c55e"/><path d="M30 8 C31 3 36 2 37 7 C39 3 43 5 41 10 Z" fill="#16a34a"/><circle cx="37" cy="26" r="3" fill="#fb7185" opacity="0.7"/><circle cx="39" cy="17" r="4.2" fill="#fff"/><circle cx="40" cy="17" r="2.3" fill="#111827"/><circle cx="40.8" cy="16" r="0.8" fill="#fff"/><path d="M45 18 C53 17 55 24 50 29 C50 25 48 23 45 23 Z" fill="#f97316"/><path d="M45 23 C48 23 50 25 50 29 C47 28 45 26 45 23 Z" fill="#c2410c"/><path d="M28 55 v4 M34 55 v4" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/></svg>`;
@@ -15,18 +16,10 @@ const END = {
     <div class="link" data-in="1.5">🔗 Link in bio</div>
     <div class="safe" data-in="2.2" data-fx="fade">⚠️ AI-generated study aid. Verify with your textbooks.
       <div class="s2">Not affiliated with NTA, AICTE or PCI. Not medical advice.</div></div>`,
-  te: `
-    <div class="parrot" data-in="0" data-fx="pop">{PARROT}</div>
-    <div class="title en" data-in="0.3">GPAT Prep</div>
-    <div class="what" data-in="0.6">ఉచిత GPAT స్టడీ యాప్. మీ ఫోన్ బ్రౌజర్‌లోనే తెరుచుకుంటుంది.</div>
-    <div class="url" data-in="1.0" data-fx="pop" data-pulse>kramavriddhi.com/apps/gpat</div>
-    <div class="link" data-in="1.5">🔗 లింక్ బయోలో ఉంది</div>
-    <div class="safe" data-in="2.2" data-fx="fade">⚠️ ఇది AI తయారుచేసిన స్టడీ మెటీరియల్. మీ టెక్స్ట్‌బుక్స్‌తో సరిచూసుకోండి.
-      <div class="s2">NTA, AICTE, PCI లతో సంబంధం లేదు. వైద్య సలహా కాదు.</div></div>`,
 };
 const head = (h, sub, tin = 0) => `<div class="head" data-in="${tin}">${h}</div>` + (sub ? `<div class="sub" data-in="${tin + 0.5}">${sub}</div>` : '');
 
-// ------------------------------------------------------------ Reel 2: mock test (EN + TE share timing)
+// ------------------------------------------------------------ Reel 2: mock test
 function mockReel(lang) {
   const T = {
     en: {
@@ -37,15 +30,6 @@ function mockReel(lang) {
       s3: head('Flag, skip, and jump to any question'),
       s4: head('See your score and the marks lost to guessing', 'Then review every answer with its explanation'),
       timer: '⏱ Timer', flag: '⚐ Flagged',
-    },
-    te: {
-      hook: `<div class="kicker" data-in="0">GPAT ప్రాక్టీస్,</div>
-        <div class="h1 gold" data-in="0.3">అసలు పరీక్షలాగే</div>`,
-      s1: head('ఫుల్ మాక్ టెస్ట్: 125 ప్రశ్నలు, 3 గంటలు', '60 ప్రశ్నల హాఫ్ పేపర్, 25 ప్రశ్నల క్విక్ మాక్ కూడా ఉన్నాయి'),
-      s2: head('అసలు మార్కింగ్: సరైనదానికి <span class="green">+4</span>, తప్పుకు <span class="red">−1</span>', 'వదిలేస్తే 0. పరీక్షలాగే టైమర్ నడుస్తుంది.'),
-      s3: head('ఫ్లాగ్ చేయండి, స్కిప్ చేయండి, ఏ ప్రశ్నకైనా వెళ్ళండి'),
-      s4: head('స్కోర్, నెగటివ్ మార్కులతో పోయినవి చూడండి', 'ప్రతి సమాధానానికి వివరణ కూడా ఉంటుంది'),
-      timer: '⏱ టైమర్', flag: '⚐ ఫ్లాగ్',
     },
   }[lang];
   return {
@@ -75,7 +59,7 @@ function mockReel(lang) {
   };
 }
 
-// ------------------------------------------------------------ Reel 4: Chilaka (EN + TE)
+// ------------------------------------------------------------ Reel 4: Chilaka
 function chilakaReel(lang) {
   const T = {
     en: {
@@ -86,15 +70,6 @@ function chilakaReel(lang) {
       s2: head('and explains what each page is for'),
       s3: head('Exam tips, right when you need them', 'Like: guessing costs marks, so skip if unsure'),
       s4: head('Plus an honest reminder', 'The notes are AI-written. If your textbook differs, trust the textbook.'),
-    },
-    te: {
-      hook: `<div class="bigparrot" data-in="0" data-fx="pop">{PARROT}</div>
-        <div class="h1" data-in="0.5"><span class="gold">చిలక</span>ను కలవండి</div>
-        <div class="sub" data-in="0.9" style="font-size:52px">మీ GPAT స్టడీ బడ్డీ</div>`,
-      s1: head('ప్రతి పేజీ మొదటిసారి తెరిచినప్పుడు చిలక వస్తుంది'),
-      s2: head('ఆ పేజీ దేనికో, ఎలా వాడాలో చెబుతుంది'),
-      s3: head('పరీక్ష టిప్స్ కూడా చెబుతుంది', 'ఉదా: గెస్ చేస్తే మార్కులు పోతాయి, తెలియకపోతే వదిలేయండి'),
-      s4: head('నిజాయితీగా గుర్తుచేస్తుంది కూడా', 'ఈ నోట్స్ AI రాసినవి. టెక్స్ట్‌బుక్‌లో వేరుగా ఉంటే టెక్స్ట్‌బుక్‌నే నమ్మండి.'),
     },
   }[lang];
   return {
@@ -142,7 +117,6 @@ const REELS = {
   },
 
   'mock-en': mockReel('en'),
-  'mock-te': mockReel('te'),
 
   // ---------------------------------------------------------- Reel 3: flashcards
   'cards-en': {
@@ -174,7 +148,6 @@ const REELS = {
   },
 
   'chilaka-en': chilakaReel('en'),
-  'chilaka-te': chilakaReel('te'),
 
   // ---------------------------------------------------------- Reel 5: free, no sign-up
   'free-en': {

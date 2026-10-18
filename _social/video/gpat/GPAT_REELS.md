@@ -2,14 +2,14 @@
 
 Goal: bring GPAT aspirants (B.Pharm final-year students) to **https://kramavriddhi.com/apps/gpat/**.
 
-Finished videos are in `_social/videos/gpat/` (1080×1920, 30 fps, 27–30 s, music only, all text burned in, so they work with the sound off).
+English only. Finished videos are in `_social/videos/gpat/` (1080×1920, 30 fps, 27–30 s, music only, all text burned in, so they work with the sound off).
 
 | # | File | Angle | Length |
 |---|---|---|---|
 | 1 | `gpat-reel-1-study-first-en.mp4` | Know what to study first | 28 s |
-| 2 | `gpat-reel-2-mock-en.mp4` · `gpat-reel-2-mock-te.mp4` | Real GPAT mock: +4/−1, 180 min | 30 s |
+| 2 | `gpat-reel-2-mock-en.mp4` | Real GPAT mock: +4/−1, 180 min | 30 s |
 | 3 | `gpat-reel-3-flashcards-en.mp4` | Flashcards that come back before you forget | 27 s |
-| 4 | `gpat-reel-4-chilaka-en.mp4` · `gpat-reel-4-chilaka-te.mp4` | Meet Chilaka 🦜, the study buddy | 30 s |
+| 4 | `gpat-reel-4-chilaka-en.mp4` | Meet Chilaka 🦜, the study buddy | 30 s |
 | 5 | `gpat-reel-5-free-en.mp4` | Free, no sign-up, works on your phone | 29 s |
 
 Every phone screen in the videos is a real capture of the live app (a demo profile "Priya" answering
@@ -25,7 +25,7 @@ questions at a normal pace), not invented UI.
 ## How to post
 - **Instagram:** upload as a Reel, paste the caption, set the cover to the frame with the big headline (about 2 s in). Put `kramavriddhi.com/apps/gpat` as a link in bio (or a bio link item called "GPAT Prep").
 - **YouTube:** upload from the app or Studio. Title is the first caption line. Paste the description. "Not made for kids". Add to a playlist called **"GPAT Prep"**.
-- Post one reel every 2–3 days. Best order: 2 (mock) → 1 (study first) → 4 (Chilaka) → 3 (flashcards) → 5 (free). Post the Telugu versions on the same day as the English one, or a day later.
+- Post one reel every 2–3 days. Best order: 2 (mock) → 1 (study first) → 4 (Chilaka) → 3 (flashcards) → 5 (free).
 - **Pinned comment (all reels):** `Free GPAT practice: kramavriddhi.com/apps/gpat ✅ No login. AI-generated study aid, so verify with your textbooks.`
 
 ---
@@ -60,25 +60,23 @@ GPAT Prep shows every subject with the number of questions it usually gets (an e
 
 ---
 
-## Reel 2: Real GPAT mock (`gpat-reel-2-mock-en.mp4`, `gpat-reel-2-mock-te.mp4`, 30 s)
+## Reel 2: Real GPAT mock (`gpat-reel-2-mock-en.mp4`, 30 s)
 
-| Time | English on screen | Telugu on screen | Phone shows |
-|---|---|---|---|
-| 0–3.5 s | Practise GPAT **like the real exam** · 125 Q · 180 min · +4 / −1 | GPAT ప్రాక్టీస్, **అసలు పరీక్షలాగే** | — |
-| 3.5–8.5 s | Full mock: 125 questions, 3 hours · Or a 60-question half paper, or a 25-question quick mock | ఫుల్ మాక్ టెస్ట్: 125 ప్రశ్నలు, 3 గంటలు · 60 ప్రశ్నల హాఫ్ పేపర్, 25 ప్రశ్నల క్విక్ మాక్ కూడా ఉన్నాయి | Mock test page |
-| 8.5–14.5 s | Real marking: +4 right, −1 wrong · Skip = 0. And a timer runs, just like exam day. (label "⏱ Timer") | అసలు మార్కింగ్: సరైనదానికి +4, తప్పుకు −1 · వదిలేస్తే 0. పరీక్షలాగే టైమర్ నడుస్తుంది. | A question, tap on an answer |
-| 14.5–18.5 s | Flag, skip, and jump to any question | ఫ్లాగ్ చేయండి, స్కిప్ చేయండి, ఏ ప్రశ్నకైనా వెళ్ళండి | Question palette |
-| 18.5–23.5 s | See your score and the marks lost to guessing · Then review every answer with its explanation | స్కోర్, నెగటివ్ మార్కులతో పోయినవి చూడండి · ప్రతి సమాధానానికి వివరణ కూడా ఉంటుంది | Quick-mock result (demo attempt) |
-| 23.5–30 s | End card | End card (Telugu) | — |
+| Time | On screen | Phone shows |
+|---|---|---|
+| 0–3.5 s | Practise GPAT **like the real exam** · 125 Q · 180 min · +4 / −1 | — |
+| 3.5–8.5 s | Full mock: 125 questions, 3 hours · Or a 60-question half paper, or a 25-question quick mock | Mock test page |
+| 8.5–14.5 s | Real marking: +4 right, −1 wrong · Skip = 0. And a timer runs, just like exam day. (label "⏱ Timer") | A question, tap on an answer |
+| 14.5–18.5 s | Flag, skip, and jump to any question | Question palette |
+| 18.5–23.5 s | See your score and the marks lost to guessing · Then review every answer with its explanation | Quick-mock result (demo attempt) |
+| 23.5–30 s | End card | — |
 
-**Script (EN):** "Want GPAT practice that feels like the real exam? Take a full mock: 125 questions in 3 hours, or a half paper or 25-question quick mock. Real marking, plus four for right, minus one for wrong, zero for a skip, with a timer running. Flag and jump between questions. Then see your score, the marks you lost to guessing, and an explanation for every answer."
+**Script:** "Want GPAT practice that feels like the real exam? Take a full mock: 125 questions in 3 hours, or a half paper or 25-question quick mock. Real marking, plus four for right, minus one for wrong, zero for a skip, with a timer running. Flag and jump between questions. Then see your score, the marks you lost to guessing, and an explanation for every answer."
 
-**Script (TE):** "అసలు GPAT పరీక్షలాగే ప్రాక్టీస్ చేయాలా? 125 ప్రశ్నలు, 3 గంటల ఫుల్ మాక్ టెస్ట్. సరైనదానికి ప్లస్ 4, తప్పుకు మైనస్ 1. ఫ్లాగ్ చేసి ఏ ప్రశ్నకైనా వెళ్ళవచ్చు. చివర్లో స్కోర్, ప్రతి సమాధానానికి వివరణ."
 
-**Title (YouTube EN):** `Free GPAT mock test: 125 Q, 180 min, +4/−1 marking 📝`
-**Title (YouTube TE):** `ఉచిత GPAT మాక్ టెస్ట్: 125 ప్రశ్నలు, 3 గంటలు, +4/−1 📝`
+**Title (YouTube):** `Free GPAT mock test: 125 Q, 180 min, +4/−1 marking 📝`
 
-**Caption (EN):**
+**Caption:**
 ```
 Practise GPAT like the real paper 📝
 
@@ -92,21 +90,6 @@ Free, no login, opens in your phone browser 👉 kramavriddhi.com/apps/gpat (lin
 ⚠️ AI-generated study aid. Verify with your textbooks. Not affiliated with NTA, AICTE or PCI.
 
 #GPAT #GPATMockTest #GPAT2027 #GPATPreparation #BPharm #PharmacyStudents #MockTest #PharmacyExam #Kramavriddhi
-```
-
-**Caption (TE):**
-```
-అసలు GPAT పరీక్షలాగే ప్రాక్టీస్ చేయండి 📝
-
-⏱ ఫుల్ మాక్: 125 ప్రశ్నలు, 180 నిమిషాలు (60 ప్రశ్నల హాఫ్ పేపర్, 25 ప్రశ్నల క్విక్ మాక్ కూడా)
-✅ సరైనదానికి +4 · ❌ తప్పుకు −1 · వదిలేస్తే 0
-📊 స్కోర్, నెగటివ్ మార్కులు, ప్రతి సమాధానానికి వివరణ
-
-ఉచితం, లాగిన్ అవసరం లేదు 👉 kramavriddhi.com/apps/gpat (లింక్ బయోలో)
-
-⚠️ ఇది AI తయారుచేసిన స్టడీ మెటీరియల్. మీ టెక్స్ట్‌బుక్స్‌తో సరిచూసుకోండి. NTA, AICTE, PCI లతో సంబంధం లేదు.
-
-#GPAT #GPATMockTest #GPATTelugu #BPharm #PharmacyStudents #TeluguStudents #APStudents #TelanganaStudents #Kramavriddhi
 ```
 
 ---
@@ -143,25 +126,23 @@ Free, no login 👉 kramavriddhi.com/apps/gpat (link in bio)
 
 ---
 
-## Reel 4: Meet Chilaka 🦜 (`gpat-reel-4-chilaka-en.mp4`, `gpat-reel-4-chilaka-te.mp4`, 30 s)
+## Reel 4: Meet Chilaka 🦜 (`gpat-reel-4-chilaka-en.mp4`, 30 s)
 
-| Time | English on screen | Telugu on screen | Phone shows |
-|---|---|---|---|
-| 0–4 s | Meet **Chilaka** · your GPAT study buddy | **చిలక**ను కలవండి · మీ GPAT స్టడీ బడ్డీ | Big parrot |
-| 4–9.5 s | Chilaka pops up the first time you open a page | ప్రతి పేజీ మొదటిసారి తెరిచినప్పుడు చిలక వస్తుంది | Dashboard tip, tap "Next" |
-| 9.5–15 s | and explains what each page is for | ఆ పేజీ దేనికో, ఎలా వాడాలో చెబుతుంది | Syllabus and Revision tips |
-| 15–19.5 s | Exam tips, right when you need them · Like: guessing costs marks, so skip if unsure | పరీక్ష టిప్స్ కూడా చెబుతుంది · ఉదా: గెస్ చేస్తే మార్కులు పోతాయి, తెలియకపోతే వదిలేయండి | Mock tip |
-| 19.5–24 s | Plus an honest reminder · The notes are AI-written. If your textbook differs, trust the textbook. | నిజాయితీగా గుర్తుచేస్తుంది కూడా · ఈ నోట్స్ AI రాసినవి. టెక్స్ట్‌బుక్‌లో వేరుగా ఉంటే టెక్స్ట్‌బుక్‌నే నమ్మండి. | Topic-notes tip |
-| 24–30 s | End card | End card (Telugu) | — |
+| Time | On screen | Phone shows |
+|---|---|---|
+| 0–4 s | Meet **Chilaka** · your GPAT study buddy | Big parrot |
+| 4–9.5 s | Chilaka pops up the first time you open a page | Dashboard tip, tap "Next" |
+| 9.5–15 s | and explains what each page is for | Syllabus and Revision tips |
+| 15–19.5 s | Exam tips, right when you need them · Like: guessing costs marks, so skip if unsure | Mock tip |
+| 19.5–24 s | Plus an honest reminder · The notes are AI-written. If your textbook differs, trust the textbook. | Topic-notes tip |
+| 24–30 s | End card | — |
 
-**Script (EN):** "Meet Chilaka, your GPAT study buddy. The first time you open a page, Chilaka pops up and explains what it's for, shares exam tips like 'guessing costs marks', and reminds you honestly: these notes are AI-written, so trust your textbook."
+**Script:** "Meet Chilaka, your GPAT study buddy. The first time you open a page, Chilaka pops up and explains what it's for, shares exam tips like 'guessing costs marks', and reminds you honestly: these notes are AI-written, so trust your textbook."
 
-**Script (TE):** "చిలకను కలవండి, మీ GPAT స్టడీ బడ్డీ. ఏ పేజీ మొదటిసారి తెరిచినా చిలక వచ్చి అది దేనికో చెబుతుంది, పరీక్ష టిప్స్ ఇస్తుంది, ఈ నోట్స్ AI రాసినవి కాబట్టి టెక్స్ట్‌బుక్‌నే నమ్మమని గుర్తుచేస్తుంది."
 
-**Title (YouTube EN):** `Meet Chilaka 🦜 your free GPAT study buddy`
-**Title (YouTube TE):** `చిలకను కలవండి 🦜 మీ ఉచిత GPAT స్టడీ బడ్డీ`
+**Title (YouTube):** `Meet Chilaka 🦜 your free GPAT study buddy`
 
-**Caption (EN):**
+**Caption:**
 ```
 Meet Chilaka 🦜, the study buddy inside GPAT Prep.
 
@@ -172,19 +153,6 @@ Free, no login 👉 kramavriddhi.com/apps/gpat (link in bio)
 ⚠️ AI-generated study aid. Verify with your textbooks. Not affiliated with NTA, AICTE or PCI.
 
 #GPAT #GPATPreparation #Chilaka #StudyBuddy #BPharm #PharmacyStudents #PharmacyExam #StudyWithMe #Kramavriddhi
-```
-
-**Caption (TE):**
-```
-చిలకను కలవండి 🦜 GPAT Prep లో మీ స్టడీ బడ్డీ.
-
-ఏ పేజీ మొదటిసారి తెరిచినా చిలక వచ్చి అది దేనికో చెబుతుంది, పరీక్ష టిప్స్ ఇస్తుంది (ఉదా: తెలియకపోతే గెస్ చేయకుండా వదిలేయడం మంచిది). అవసరమైనప్పుడు చిలకను ట్యాప్ చేయండి.
-
-ఉచితం, లాగిన్ అవసరం లేదు 👉 kramavriddhi.com/apps/gpat (లింక్ బయోలో)
-
-⚠️ ఇది AI తయారుచేసిన స్టడీ మెటీరియల్. మీ టెక్స్ట్‌బుక్స్‌తో సరిచూసుకోండి. NTA, AICTE, PCI లతో సంబంధం లేదు.
-
-#GPAT #GPATTelugu #Chilaka #BPharm #PharmacyStudents #TeluguStudents #APStudents #TelanganaStudents #Kramavriddhi
 ```
 
 ---
@@ -228,7 +196,7 @@ It says it upfront: the material is AI-generated. Use it to revise and test your
 cd _social/video/gpat
 node capture.js        # records the live app into cap/ (about 6 minutes)
 node make_reels.js     # renders all reels into _social/videos/gpat/
-node make_reels.js mock-te          # one reel
+node make_reels.js mock-en          # one reel
 node make_reels.js --stills mock-en # quick check frames in _social/videos/gpat/frames/
 ```
 Needs Chrome and ffmpeg, and `npm install` once in `_social/video/` (shared puppeteer-core). In Git Bash, prefix
