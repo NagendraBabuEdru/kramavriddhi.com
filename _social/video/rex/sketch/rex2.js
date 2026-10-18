@@ -67,12 +67,16 @@
 
   /* ---------- tail: 5 segments, each rotating relative to the previous (lag / follow-through) ---------- */
   function tail(p, base = [[-30, -40], [-62, -36], [-94, -36], [-118, -42], [-132, -52]], th = [44, 32, 22, 15], capR = 5.5, openRoot = false) {
+    const tl = p.tail || {}, wrap = Math.max(0, Math.min(1, tl.wrap || 0)), wag = tl.wag || 0, ph = tl.phase || 0, lift = ((tl.lift || 0) + (tl.up || 0) / 0.7) * (1 - wrap);
+    const WRAP = [[-30, -40], [-50, -26], [-36, -14], [-4, -12], [30, -14]];   // curled forward under the body, the tip in front of the near foot
+    if (tl.straight) base = [[-30, -40], [-62, -38], [-94, -36], [-120, -34], [-138, -32]];
+    if (tl.points) base = tl.points;
+    if (wrap) { base = base.map((b, i) => [lerp(b[0], WRAP[i][0], wrap), lerp(b[1], WRAP[i][1], wrap)]); th = th.map(v => v * (1 - 0.35 * wrap)); capR *= 1 - 0.2 * wrap; }
     th = [...th, 11];
-    const tl = p.tail || {}, wag = tl.wag || 0, ph = tl.phase || 0, lift = tl.lift || 0;
     const pts = [base[0]]; let acc = 0;
     for (let i = 1; i < base.length; i++) {
       acc += (wag * Math.sin(ph - i * 0.7) * 0.09 + lift * 0.07) * i;
-      const v = [base[i][0] - base[i - 1][0], base[i][1] - base[i - 1][1]], r = rot(v, [0, 0], -acc);
+      const v = [base[i][0] - base[i - 1][0], base[i][1] - base[i - 1][1]], r = rot(v, [0, 0], acc);   // + lift / up raises the tail
       pts.push([pts[i - 1][0] + r[0], pts[i - 1][1] + r[1]]);
     }
     const up = [], dn = [];
@@ -85,6 +89,8 @@
     const tip = pts[pts.length - 1], a0 = Math.atan2(tip[1] - pts[3][1], tip[0] - pts[3][0]), cap = [];
     for (let k = 1; k < 8; k++) { const a = a0 + Math.PI / 2 - k / 8 * Math.PI; cap.push([tip[0] + Math.cos(a) * capR, tip[1] + Math.sin(a) * capR]); }
     const poly = [[up[0][0] + 14, up[0][1] - 4], ...up.slice(1), ...cap, ...dn.slice(1).reverse(), [dn[0][0] + 14, dn[0][1] + 4]];
+    if (tl.wagArcs) { const T = pts[pts.length - 1]; for (const sgn of [-1, 1]) stroke([[T[0] + sgn * 12, T[1] + 6], [T[0] + sgn * 16, T[1] - 2], [T[0] + sgn * 14, T[1] - 10]], { w: 1.6, j: 0.2, seed: 44 + sgn }); }
+    A.rex2._tailTip = pts[pts.length - 1];
     if (openRoot) { part(poly, C.rex, 41, { line: false }); stroke(poly.slice(2, -2), { w: 3, seed: 41 }); } else part(poly, C.rex, 41);
     // spots along the top at 30 / 55 / 75 % of the length
     [[0.3, 6, 4.5], [0.55, 5, 4], [0.75, 4, 3]].forEach(([f, rx, ry], i) => {
@@ -96,21 +102,23 @@
   }
 
   /* ---------- arms: 2 segments + mitten, parented to the body ---------- */
-  function arm(sh, up, fore, k, col, seed) {
-    const e = [sh[0] + Math.cos(up) * 15 * k, sh[1] + Math.sin(up) * 15 * k], w = [e[0] + Math.cos(fore) * 15 * k, e[1] + Math.sin(fore) * 15 * k];
+  function arm(sh, up, fore, k, col, seed, spread = false) {
+    const e = [sh[0] + Math.cos(up) * 18 * k, sh[1] + Math.sin(up) * 18 * k], w = [e[0] + Math.cos(fore) * 16 * k, e[1] + Math.sin(fore) * 16 * k];
     const seg = (a, b, t0, t1) => { const dx = b[0] - a[0], dy = b[1] - a[1], n = Math.hypot(dx, dy), nx = -dy / n, ny = dx / n;
       return [[a[0] + nx * t0 / 2, a[1] + ny * t0 / 2], [b[0] + nx * t1 / 2, b[1] + ny * t1 / 2], [b[0] - nx * t1 / 2, b[1] - ny * t1 / 2], [a[0] - nx * t0 / 2, a[1] - ny * t0 / 2]]; };
-    const hand = ell(w[0] + Math.cos(fore) * 3 * k, w[1] + Math.sin(fore) * 3 * k, 6 * k, 5.5 * k, 14, fore);
-    fill(seg(sh, e, 12 * k, 10 * k), col); fill(seg(e, w, 10 * k, 9 * k), col); fill(hand, col);
-    stroke([[sh[0], sh[1] - 5 * k], [e[0] + Math.sin(up) * 5 * k, e[1] - Math.cos(up) * 5 * k], [w[0] + Math.sin(fore) * 4.5 * k, w[1] - Math.cos(fore) * 4.5 * k]], { w: 2.2, seed });
-    stroke([[sh[0], sh[1] + 6 * k], [e[0] - Math.sin(up) * 5 * k, e[1] + Math.cos(up) * 5 * k], [w[0] - Math.sin(fore) * 4.5 * k, w[1] + Math.cos(fore) * 4.5 * k]], { w: 2.2, seed: seed + 1 });
+    const hand = ell(w[0] + Math.cos(fore) * 3 * k, w[1] + Math.sin(fore) * 3 * k, 5.5 * k, 5 * k, 14, fore);
+    fill(seg(sh, e, 11 * k, 9 * k), col); fill(seg(e, w, 9 * k, 8 * k), col); fill(hand, col);
+    stroke([[sh[0] + Math.sin(up) * 5.5 * k, sh[1] - Math.cos(up) * 5.5 * k], [e[0] + Math.sin(up) * 4.5 * k, e[1] - Math.cos(up) * 4.5 * k], [w[0] + Math.sin(fore) * 4 * k, w[1] - Math.cos(fore) * 4 * k]], { w: 2.2, seed });
+    stroke([[sh[0] - Math.sin(up) * 5.5 * k, sh[1] + Math.cos(up) * 5.5 * k], [e[0] - Math.sin(up) * 4.5 * k, e[1] + Math.cos(up) * 4.5 * k], [w[0] - Math.sin(fore) * 4 * k, w[1] + Math.cos(fore) * 4 * k]], { w: 2.2, seed: seed + 1 });
     stroke(hand.slice(14 * 0).concat([hand[0]]), { w: 2.2, seed: seed + 2, closed: false });
     const hx = w[0] + Math.cos(fore) * 7 * k, hy = w[1] + Math.sin(fore) * 7 * k;
-    for (const o of [-2, 2]) fill(ell(hx + Math.cos(fore + 1.57) * o * k, hy + Math.sin(fore + 1.57) * o * k, 1.6 * k, 2 * k, 8, fore), C.claw);
-    return w;
+    for (const o of (spread ? [-3, 0, 3] : [-2, 2])) fill(ell(hx + Math.cos(fore + 1.57) * o * k, hy + Math.sin(fore + 1.57) * o * k, 1.6 * k, 2 * k, 8, fore), C.claw);
+    return [w[0] + Math.cos(fore) * 3 * k, w[1] + Math.sin(fore) * 3 * k];
   }
 
   /* ---------- eyes (lids clipped inside, highlights fixed to the light) ---------- */
+  let SKIN_PAINT = null;   // paints the skin under the eyes in the current head's coordinates (set by head() / headYaw())
+  function skinFill(poly) { if (!SKIN_PAINT) return fill(poly, C.skin); ctx.save(); path(poly, true); ctx.clip(); SKIN_PAINT(); ctx.restore(); }
   function eye(cx, cy, rx, ry, r0, f, i, flip, pkO) {
     const lidUp = Math.min(1.15, sidev(f.lidUp ?? 1, i)), lidLo = Math.min(0.45, sidev(f.lidLo ?? 0, i) + 0.3 * (f.cheek || 0)), closed = f.closed;
     const tilt = Math.max(-0.6, sidev(f.browTilt ?? 0, i)), th = tilt * 0.40 * (i === 0 ? -1 : 1), pk = pkO ?? (i === 1 ? 0.7 : 1);
@@ -124,10 +132,14 @@
       return;
     }
     const E = ell(cx, cyy, rx, ry2, 30, r0);
-    if (lidLo > 0.15) { const ly0 = cyy + ry2 - lidLo * ry2; ctx.save(); ctx.beginPath(); ctx.rect(cx - rx - 10, cyy - ry2 - 10, 2 * rx + 20, ly0 - (cyy - ry2 - 10) + 1); ctx.clip(); fill(E, C.eyeW); ctx.restore(); }
-    else fill(E, C.eyeW);
-    ctx.save(); path(E, true); ctx.clip();
-    // pupil + highlights
+    const top0 = cyy - ry2, lidY0 = top0 + (1 - Math.min(1, lidUp)) * 2 * ry2, tiltOn = Math.abs(tilt) > 0.05;
+    ctx.save();
+    if (lidUp < 1 || tiltOn) { ctx.beginPath(); ctx.rect(cx - rx - 20, lidY0 - (lidUp >= 1 ? 0.25 * rx : 0) - Math.abs(th) * rx - 1, 2 * rx + 40, 2 * ry2 + 40); ctx.clip(); }
+    if (lidLo > 0.15) { const ly0 = cyy + ry2 - lidLo * ry2; ctx.beginPath(); ctx.rect(cx - rx - 10, cyy - ry2 - 10, 2 * rx + 20, ly0 - (cyy - ry2 - 10) + 1); ctx.clip(); }
+    fill(E, C.eyeW);
+    ctx.restore();
+    ctx.save(); path(ell(cx, cyy, rx + 1.5, ry2 + 1.5, 30, r0), true); ctx.clip();
+    ctx.save(); path(E, true); ctx.clip();   // pupil + highlights stay inside the eye
     const pr = (f.pupil ?? 0.58) * ry, look = f.look || [0.15, 0], cross = (f.cross || 0) * (i === 0 ? 1 : -1);
     const px = cx + (look[0] + cross * 0.8) * 0.32 * ry, py = cyy + look[1] * 0.32 * ry - (lidLo > 0.2 && lidUp >= 0.9 ? 0.15 * ry : 0);
     fill(ell(px, py, pr * pk, pr, 22), C.pupil);
@@ -136,13 +148,14 @@
     fill(ell(px - hx * 0.76 * pr * pk, py - hy * 0.68 * pr, 0.16 * pr * pk, 0.16 * pr, 10), C.eyeW);
     for (let k = 0; k < Math.round(f.sparkle || 0) * 2; k++) fill(ell(px + Math.cos(k * 2.4) * 0.5 * pr, py + Math.sin(k * 2.4) * 0.5 * pr, 0.1 * pr, 0.1 * pr, 8), C.eyeW);
     if (f.wet) fill(ell(cx, cyy + ry2 * 0.82, rx * 0.9, ry2 * 0.16, 16), C.tear, 0.8 * f.wet);
+    ctx.restore();
     // upper lid (skin) and lower lid (smile squint)
     const top = cyy - ry2, lidY = top + (1 - Math.min(1, lidUp)) * 2 * ry2;
     // upper lid edge: an arc (sag 0.25 rx) tilted with the brow, inner end up for sad / worried
     const lidOn = lidUp < 1 || Math.abs(tilt) > 0.05;
     const edge = [-1, -0.5, 0, 0.5, 1].map(u => rot([cx + u * (rx + 1), lidY + 0.25 * rx * (1 - u * u) - (lidUp >= 1 ? 0.25 * rx : 0)], [cx, lidY], th));
-    if (lidOn) fill([[edge[0][0] - 4, top - 40], [edge[4][0] + 4, top - 40], [edge[4][0] + 4, edge[4][1]], ...edge.slice().reverse(), [edge[0][0] - 4, edge[0][1]]], C.skin);
-    if (lidLo > 0.15) { const ly = cyy + ry2 - lidLo * ry2 * 1.0; fill([[cx - rx - 4, cyy + ry2 + 10], [cx + rx + 4, cyy + ry2 + 10], [cx + rx + 4, ly + 4], [cx + rx * 0.5, ly], [cx, ly - 1.5], [cx - rx * 0.5, ly], [cx - rx - 4, ly + 4]], C.skin); }
+    if (lidOn) skinFill([[edge[0][0] - 4, top - 40], [edge[4][0] + 4, top - 40], [edge[4][0] + 4, edge[4][1]], ...edge.slice().reverse(), [edge[0][0] - 4, edge[0][1]]]);
+    if (lidLo > 0.15) { const ly = cyy + ry2 - lidLo * ry2 * 1.0; skinFill([[cx - rx - 4, cyy + ry2 + 10], [cx + rx + 4, cyy + ry2 + 10], [cx + rx + 4, ly + 4], [cx + rx * 0.5, ly], [cx, ly - 1.5], [cx - rx * 0.5, ly], [cx - rx - 4, ly + 4]]); }
     ctx.restore();
     const lowEdge = lidLo > 0.15 ? (() => { const ly = cyy + ry2 - lidLo * ry2 * 1.0; return [[cx - rx - 4, ly + 4], [cx - rx * 0.5, ly], [cx, ly - 1.5], [cx + rx * 0.5, ly], [cx + rx + 4, ly + 4]]; })() : null;
     const clipPoly = (P, inverse) => { ctx.beginPath(); if (inverse) ctx.rect(-1000, -1000, 2000, 2000); ctx.moveTo(P[0][0], P[0][1]); for (const q of P.slice(1)) ctx.lineTo(q[0], q[1]); ctx.closePath(); ctx.clip(inverse ? 'evenodd' : 'nonzero'); };
@@ -232,6 +245,7 @@
         SIL = [...HEAD.slice(0, 12), [81, 12], [80, 22], [Math.max(ml.F[0] + 4, 76), ml.F[1] - 1], ml.F, lowLip[lowLip.length - 1], ...jawFront.slice(1), ...HEAD.slice(19)];
       } else SIL = [...HEAD.slice(0, 12), [81, 12], [80, 22], ...jawFront, ...HEAD.slice(19)];   // oval mouths: the jaw drops, no lip notch
     }
+    SKIN_PAINT = () => { ctx.fillStyle = C.rex; ctx.fillRect(-300, -300, 600, 600); soft(22, 8, 56, 36, C.face, 0.6, 0.55); if (isOpen) soft(34, 42, 36, 18, C.face, 0.45); };
     // 1) skin, shadow hatch (never in the face zone), face glow, spots
     fill(SIL, C.rex);
     ctx.save(); path(SIL, true); ctx.clip(); shadowClip(SIL, 0.3);
@@ -268,9 +282,10 @@
       if (ml.tick) stroke([ml.A, ml.tick], { w: 2.2, j: 0.2, seed: 374, face: true });
       if (ml.tickF) stroke([ml.F, ml.tickF], { w: 2.2, j: 0.2, seed: 375, face: true });
     }
-    // the silhouette outline: one closed path, heavier on the shadow side
-    stroke(SIL, { closed: true, w: 3, seed: 51, ghost: true });
-    ctx.save(); shadowClip(SIL, 0.45); stroke(SIL, { closed: true, w: 3.6, seed: 51 }); ctx.restore();
+    // the silhouette outline: one path, heavier on the shadow side; with lips apart it is left open across the mouth opening
+    const fi = lipped && isOpen ? SIL.indexOf(ml.F) : -1, OUT = fi >= 0 ? SIL.slice(fi + 1).concat(SIL.slice(0, fi + 1)) : SIL;
+    stroke(OUT, { closed: fi < 0, w: 3, seed: 51, ghost: true });
+    ctx.save(); shadowClip(SIL, 0.45); stroke(OUT, { closed: fi < 0, w: 3.6, seed: 51 }); ctx.restore();
     // 3) cheeks, blush (cold: also the snout tip), nostrils
     ctx.save(); path(SIL, true); ctx.clip();
     if (f.blush) { const ba = Math.min(1, 0.5 + 0.5 * f.blush); soft(-22, 30, 12, 7, C.blush, ba, 0.5); soft(60, 6, 7, 5, C.blush, ba, 0.5); }
@@ -294,7 +309,7 @@
     tears(f, t);
     if (f.sweat) { const k = 0.6 + 0.4 * f.sweat, D = [[-56, -8 - 7 * k], [-56 + 5 * k, -8 + 2 * k], [-56, -8 + 7 * k], [-56 - 5 * k, -8 + 2 * k]]; fill(D, C.tear, Math.min(1, f.sweat + 0.3)); stroke(D, { closed: true, w: 1.4, dark: 0.6, j: 0, seed: 397, face: true }); fill(ell(-57.5, -7, 1.2, 1.6, 6), C.eyeW, f.sweat); }
     streams(f, t, SIL);
-    if (f.breath) { const B = ell(98, 26, 16, 10, 16); fill(B, '#ffffff', 0.7 * f.breath); stroke(B.slice(8, 16), { w: 1.2, dark: 0.3, j: 0.3, seed: 398, face: true }); }
+    if (f.breath) { const B = ell(90, 30, 14, 9, 16); fill(B, '#ffffff', 0.7 * f.breath); stroke(B.slice(8, 16), { w: 1.2, dark: 0.3, j: 0.3, seed: 398, face: true }); }
   }
 
   /* ===================== Turnaround (Bible §4, §12.2a): pose.yaw 0 | 45 (master) | 90 | 135 | 180 ===================== */
@@ -356,6 +371,7 @@
     const mo = MOUTH[f.mouth || 'M1'] || MOUTH.M1, op = yaw < 22.5 ? Math.max(0, Math.min(1, f.open ?? mo.open)) : 0;
     const SIL = outlineAt(yaw).map(q => q[1] > 26 ? [q[0], q[1] + op * 8 * Math.max(0, 1 - (q[0] / 52) ** 2)] : q), face = fade(yaw, 116, 122), INNER = outlineAt(yaw, 3);   // face pieces slide round the head and are gone by ~120°
     const fz = K(yaw, [[0, 14, 50, 36], [22, 8, 56, 36], [40, 8, 46, 34], [56, 8, 30, 30], [60, 8, 20, 20]]);
+    SKIN_PAINT = () => { ctx.fillStyle = C.rex; ctx.fillRect(-300, -300, 600, 600); if (face > 0) soft(fz[0], fz[1], fz[2], fz[3], C.face, 0.6 * face, 0.55); };
     skull(SIL, face > 0 ? fz : null);
     ctx.save(); path(SIL, true); ctx.clip();
     if (face > 0) soft(fz[0], fz[1], fz[2], fz[3], C.face, 0.6 * face, 0.55);
@@ -411,15 +427,23 @@
     // eyes: the near eye always (to 115°); the far eye slides behind the snout bridge (65–80°), never squashed
     if (face > 0) {
       ctx.save(); ctx.globalAlpha *= face; path(yaw > 90 ? INNER : SIL, true); ctx.clip();
-      const look = f.look || [li(yaw, 0, 0.15, 0.4), 0], ff = { ...f, look };
+      const look = f.look || [li(yaw, 0, 0.15, 0.4), 0], ff = { ...f, look, ...(yaw < 22.5 && f.lidUp != null ? { lidUp: Array.isArray(f.lidUp) ? f.lidUp.map(v => Math.min(v, 1.05)) : Math.min(f.lidUp, 1.05) } : {}) };
       const wideK = yaw < 22.5 && sidev(f.lidUp ?? 1, 0) > 1 ? 0.88 : 1, nE0 = K(yaw, [[-33, 0, 20, 26], [-6, 2, 22, 26], [26, 2, 15, 25], [84, 2, 15, 25], [84, 2, 15, 25]]);
       const nE = [nE0[0] * (wideK < 1 ? 0.95 : 1), nE0[1], nE0[2] * wideK, nE0[3]];
+      // front view: shrink the eye width until its outer edge keeps >= 6 units inside the head outline (computed)
+      let eyeRx = null;
+      if (yaw < 22.5) {
+        const lu = Math.min(1.05, sidev(f.lidUp ?? 1, 0)), ry2 = nE[3] * (lu > 1 ? 1 + (lu - 1) * 0.67 : 1), cyy = nE[1] - (ry2 - nE[3]);
+        const gapAt = rx => Math.min(...[-0.85, -0.5, 0, 0.5, 0.85].map(u => { const y = cyy + u * ry2; return rightAt(SIL, y) - (Math.abs(nE[0]) + rx * Math.sqrt(1 - u * u)); }));
+        eyeRx = nE[2]; while (gapAt(eyeRx) < 6 && eyeRx > 12) eyeRx -= 0.5;
+        nE[2] = eyeRx; STATS.eyeGap = Math.round(gapAt(eyeRx) * 10) / 10;
+      }
       eye(nE[0], nE[1], nE[2], nE[3], 0, ff, 0, p.flip, li(yaw, 1, 1, 0.7));
       ctx.restore();
       STATS.eyeRy = nE[3];
       const fE = K(Math.min(90, yaw), [[33, 0, 20, 26], [38, 0, 15, 22], [68, -18, 12, 20], [68, -18, 12, 20], [68, -18, 12, 20]]);
       const inner = outlineAt(yaw, 3), vis = Math.min(2 * fE[2], rightAt(inner, fE[1]) - (fE[0] - fE[2])), fa = yaw < 60 ? 1 : clamp01((vis - 3) / 3);
-      if (fa > 0 && yaw < 90) { ctx.save(); ctx.globalAlpha *= fa * face; path(inner, true); ctx.clip(); eye(fE[0], fE[1], fE[2], fE[3], li(yaw, 0, 0.08, 0.1), ff, 1, p.flip, li(yaw, 1, 0.7, 0.5)); ctx.restore(); }
+      if (fa > 0 && yaw < 90) { ctx.save(); ctx.globalAlpha *= fa * face; path(inner, true); ctx.clip(); eye(fE[0] * (wideK < 1 ? 0.95 : 1), fE[1], eyeRx ?? fE[2] * wideK, fE[3], li(yaw, 0, 0.08, 0.1), ff, 1, p.flip, li(yaw, 1, 0.7, 0.5)); ctx.restore(); }
       const brows = [[K(yaw, [-33, -6, 26, 84, 84]), -32, li(yaw, 34, 34, 22), 1, face], [li(yaw, 33, 38, 66), li(yaw, -32, -30, -46), li(yaw, 34, 24, 14), -1, (yaw < 60 ? 1 : fa) * fade(yaw, 70, 80)]];
       brows.forEach(([bx, by, len, innerDir, al0], i) => { let al = al0;
         if (al <= 0) return;
@@ -454,7 +478,10 @@
       const body = pear(0, 54, 54, false); part(body, C.rex, 63, { ghost: true });
       ctx.save(); path(body, true); ctx.clip(); const b = ell(0, -66, 34, 44, 28); fill(b, C.belly); plates(0, -66, 34, 44); stroke(b.slice(20).concat(b.slice(0, 9)), { w: 1.6, dark: 0.55, seed: 67 }); ctx.restore();
       for (const sx of [-1, 1]) { part(ell(30 * sx, -30, 26, 28, 24), C.rex, 90 + sx, { band: 0.4 }); part(ell(32 * sx, -7, 20, 7, 20), C.rex, 93 + sx, { hatch: false }); nubs([32 * sx - 7, 32 * sx, 32 * sx + 7]); }
-      arm([40, -106], 1.28, 1.0, 1, C.rex, 100); arm([-40, -106], Math.PI - 1.28, Math.PI - 1.0, 1, C.rex, 104);
+      const an = ar.near || [1.28, 1.0], af = ar.far || [1.28, 1.0], wv = ar.wave ? Math.sin((p.t || 0) * 9) * 0.35 : 0;
+      const hR = arm([40, -104], an[0], an[1] + wv, 1, C.rex, 100, p.spread), hL = arm([-40, -104], Math.PI - af[0], Math.PI - af[1], 1, C.rex, 104, p.spread);
+      const hClear = h => { const d = Math.hypot(h[0] / 62, (h[1] + 166) / 56); return Math.round(((d - 1) * 59 - 5.5) * 10) / 10; };
+      STATS.handClear = Math.min(hClear(hR), hClear(hL));
       STATS.bumps = 0; STATS.spots = 0;
       onHead(0, p, () => headYaw(yaw, p, f));
     } else if (yaw < 67.5) {
@@ -505,66 +532,140 @@
     ctx.translate(x, y);
     const m = ctx.getTransform(); S = Math.hypot(m.a, m.b) * s;
     // contact shadow (§3.4): under the feet, wider and lighter in the air
-    if (p.shadow) { const h = p.air; ctx.save(); ctx.scale(s, s); fill(ell(2 * (p.flip ? -1 : 1), 0, 58 * (1 + h / 200), 8, 24), '#3a3328', 0.22 * Math.max(0, 1 - h / 150)); ctx.restore(); }
+    if (p.shadow) { const h = p.air; ctx.save(); ctx.scale(s, s); fill(ell(2 * (p.flip ? -1 : 1) + (p.lie ? -60 : 0), 0, (p.curl ? 90 : 58 * (1 + h / 200)) * (p.lie ? 1.9 : 1), 8, 24), '#3a3328', 0.22 * Math.max(0, 1 - h / 150)); ctx.restore(); }
     ctx.translate(0, -p.air * s);
-    ctx.scale(s * (p.flip ? -1 : 1), s); ctx.rotate(p.lean); ctx.scale(1 + p.squash * 0.6, 1 - p.squash);
-    if (p.yaw != null && (p.yaw < 22.5 || p.yaw >= 67.5) && turn(p, f)) { A.rex2.stats = STATS; ctx.restore(); return; }
+    ctx.scale(s * (p.flip ? -1 : 1), s);
+    // volume-keeping squash (§7 rig rules): sy = 1 − q, sx = 1 / (1 − q); the head keeps 40 % of it
+    const q = Math.max(-0.4, Math.min(0.4, p.squash)), sx = 1 / (1 - q), sy = 1 - q;
+    if (p.yaw != null && (p.yaw < 22.5 || p.yaw >= 67.5)) { ctx.rotate(p.lean); ctx.scale(sx, sy); if (turn(p, f)) { A.rex2.stats = STATS; ctx.restore(); return; } }
+    if (p.curl) { curl(p, f); ctx.restore(); return; }
+    if (p.lie) {   // lying on his side: rotate the whole figure, then rest its lowest point on the ground
+      ctx.translate(-30, -54); ctx.rotate(1.3 * p.lie);   // belly-down on his side, head resting forward
+    }
+    ctx.scale(sx, sy);
     STATS = { yaw: 45, skull: 'width 141 (¾)', eyeRy: 26, hatW: 63, bumps: 5, spots: 9 };
     A.rex2.stats = STATS;
-    tail(p);
-    // far leg
-    part(ell(-22, -32, 24, 27, 22), C.shade, 61, { band: 0.4 });
-    part([[-50, 0], [6, 0], [8, -6], [2, -12], [-44, -12], [-52, -6]], C.shade, 62, { hatch: false });
-    // far arm (behind the body)
-    const ar = p.arms || {}, fa = ar.far || [1.15, 0.45], na = ar.near || [0.96, 0.26];
-    arm([24, -106], fa[0], fa[1], 0.85, C.shade, 70);
+    const heelsV = Array.isArray(p.heels) ? p.heels : [p.heels || 0, p.heels || 0], bend = (p.bend ?? 0) + (p.lean || 0), heels = Math.max(...heelsV) * (Array.isArray(p.heels) ? 0.5 : 1), sit = p.sit || 0, tuck = p.tuck || 0, wide = p.stance || 0;
+    const lift = -heels - tuck * 0.5 + sit * 14;                    // the body group moves up on tiptoe / down when sitting
+    const bodyT = () => { ctx.translate(0, lift); ctx.translate(0, -40); ctx.rotate(bend); ctx.translate(0, 40); };   // spine bend about the hip
+    // a leg: thigh + foot (tiptoe: the foot rotates about its toe; sitting: legs forward, soles a little toward us)
+    function leg(near) {
+      const dx = (near ? 1 : -1) * wide / 2, col = near ? C.rex : C.shade, sd = near ? 90 : 61;
+      ctx.save(); ctx.translate(dx, -tuck);
+      if (sit) {
+        ctx.translate(0, 0);
+        part(near ? ell(34, -24 + 2, 28, 24, 24) : ell(-4, -26, 24, 22, 22), col, sd, { band: 0.4 });
+        ctx.save(); ctx.translate(near ? 46 : 18, -6); ctx.rotate(-0.5);
+        const sole = ell(10, -6, 13, 9, 18); part(near ? [[0, 0], [28, 0], [32, -6], [26, -14], [4, -13], [-2, -6]] : [[0, 0], [24, 0], [28, -6], [22, -13], [4, -12], [-2, -6]], col, sd + 1, { hatch: false });
+        if (near) { fill(sole, C.belly, 0.55); stroke(sole.slice(0, 10), { w: 1.4, dark: 0.4, seed: 92 }); stroke([[4, -3], [8, -8], [6, -12]], { w: 1.4, dark: 0.5, j: 0.2, seed: 93 });
+          for (const ny of [-12, -7, -2]) { const nub = [[30, ny - 2.5], [30, ny + 2.5], [34, ny + 2.5], [36, ny], [34, ny - 2.5]]; fill(nub, C.claw); stroke(nub, { closed: true, w: 1.4, j: 0.3, seed: 96 + ny }); } }
+        ctx.restore();
+      } else {
+        const hT = near ? heelsV[0] : heelsV[1] * (Array.isArray(p.heels) ? 1 : 0.8);
+        ctx.save(); ctx.translate(0, -hT * 0.7);
+        part(near ? ell(24, -30, 28, 30, 24) : ell(-22, -32, 24, 27, 22), col, sd, { band: 0.4 });
+        ctx.restore();
+        const foot = near ? [[2, 0], [54, 0], [58, -4], [56, -9], [48, -13], [40, -14], [20, -14], [4, -12], [0, -6]] : [[-50, 0], [6, 0], [8, -6], [2, -12], [-44, -12], [-52, -6]];
+        const toe = near ? [56, 0] : [8, 0];
+        ctx.save(); ctx.translate(toe[0], toe[1]); ctx.rotate(Math.atan2(hT, 52)); ctx.translate(-toe[0], -toe[1]);
+        part(foot, col, sd + 1, { hatch: false });
+        if (near) for (const cx of [40, 47, 54]) { const nub = [[cx - 2.5, 0], [cx + 2.5, 0], [cx + 2.5, -4], [cx, -6], [cx - 2.5, -4]]; fill(nub, C.claw); stroke(nub, { closed: true, w: 1.4, j: 0.3, seed: 95 + cx }); }
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+    // tail behind everything (sitting: flat on the ground behind, with a gap above the ground line)
+    const tailBase = sit ? [[-30, -30], [-62, -20], [-94, -16], [-118, -15], [-132, -17]] : undefined;
+    tail(p, tailBase);
+    STATS.tailTipY = Math.round(A.rex2._tailTip[1] * sy);
+    leg(false);
+    const ar = p.arms || {}, lim = a => p.contact ? a : [Math.max(-0.70, a[0]), a[1]];   // raised-arm rule: ≤ 40° above the facing direction
+    const fa = lim(ar.far || [1.15, 0.45]), na = lim(ar.near || [0.96, 0.26]);
+    let handN = null, handF = null;
+    ctx.save(); bodyT();
+    handF = arm([28, -100], fa[0], fa[1], 0.85, C.shade, 70, p.spread);
     // body: a pear, flatter in the front-lower quarter
     const body = A.blobPts(0, -74, a => { const s2 = Math.sin(a), k = Math.min(1, Math.max(0, (s2 + 0.3) / 0.6)); let rx = lerp(44, 54, k); const ry = s2 < 0 ? 58 : 60;
-      if (Math.cos(a) > 0 && s2 > 0) rx -= 6 * Math.sin(2 * a); return [rx, ry]; }, 40);
+      if (Math.cos(a) > 0 && s2 > 0) rx -= 6 * Math.sin(2 * a) - (p.belly || 0) * Math.sin(2 * a); return [rx, ry]; }, 40);
     part(body, C.rex, 63, { ghost: true });
-    // belly patch with 3 bowed plate lines
-    const belly = ell(16, -66, 30, 42, 28);
+    const belly = ell(16 + (p.belly || 0) * 0.6, -66, 30, 42, 28);
     ctx.save(); path(body, true); ctx.clip(); fill(belly, C.belly);
     for (let k = 0; k < 3; k++) { const yy = -96 + k * 22, hw = Math.sqrt(Math.max(0, 1 - Math.pow((yy + 66) / 42, 2))) * 30 - 4; stroke([[16 - hw, yy], [16, yy + 4], [16 + hw, yy]], { w: 1.4, dark: 0.3, j: 0.4, seed: 64 + k }); }
     stroke(belly.slice(20).concat(belly.slice(0, 9)), { w: 1.6, dark: 0.55, seed: 67 });
-    // body spots
-    [[-22, -110, 7, 5], [-26, -90, 6, 4.5], [-30, -66, 5, 4]].forEach(([sx, sy, rx, ry]) => fill(ell(sx, sy, rx, ry, 12), C.spot));
+    [[-22, -110, 7, 5], [-26, -90, 6, 4.5], [-30, -66, 5, 4]].forEach(([bx, by, rx, ry]) => fill(ell(bx, by, rx, ry, 12), C.spot));
     ctx.restore();
-    // back bumps: on the back contour, outer half-outline only
-    const headW = HEAD.map(q => rot([q[0] + HC[0], q[1] + HC[1]], NECK, p.headTilt));
-    const dSeg = (q, a, b) => { const vx = b[0] - a[0], vy = b[1] - a[1], u = Math.max(0, Math.min(1, ((q[0] - a[0]) * vx + (q[1] - a[1]) * vy) / (vx * vx + vy * vy))); return Math.hypot(q[0] - a[0] - u * vx, q[1] - a[1] - u * vy); };
+    const headW = HEAD.map(q2 => rot([q2[0] + HC[0], q2[1] + HC[1]], NECK, p.headTilt));
+    const dSeg = (q2, a, b) => { const vx = b[0] - a[0], vy = b[1] - a[1], u = Math.max(0, Math.min(1, ((q2[0] - a[0]) * vx + (q2[1] - a[1]) * vy) / (vx * vx + vy * vy))); return Math.hypot(q2[0] - a[0] - u * vx, q2[1] - a[1] - u * vy); };
     [[-36, -114, 7.5], [-43, -100, 7], [-47, -85, 6.5], [-50, -70, 5.5], [-50, -55, 5]].forEach(([bx, by, r], i) => {
       const dh = Math.min(...headW.map((a, k) => dSeg([bx, by], a, headW[(k + 1) % headW.length])));
-      if (dh - r < 4) return;   // too close to the head outline
+      if (dh - r < 4) return;
       const E = ell(bx, by, r, r * 0.75, 14); fill(E, C.shade); stroke(E.slice(4, 12), { w: 1.6, seed: 80 + i });
     });
-    if (p.shiverTicks) for (const [x, y, dx] of [[-50, -96, -1], [-54, -78, -1], [-52, -60, -1], [52, -96, 1], [55, -78, 1], [53, -60, 1]]) { const ph = Math.sin((p.t || 0) * 60 + y) * 1.5; stroke([[x + dx * 3, y + ph], [x + dx * 9, y - 2 + ph]], { w: 1.8, dark: 0.7, j: 0, seed: 140 + y }); }
-    // near leg: thigh + foot (sole exactly on y = 0) + 3 claw nubs
-    part(ell(24, -30, 28, 30, 24), C.rex, 90, { band: 0.4 });
-    const foot = [[2, 0], [54, 0], [58, -4], [56, -9], [48, -13], [40, -14], [20, -14], [4, -12], [0, -6]];
-    part(foot, C.rex, 91, { hatch: false });
-    for (const cx of [40, 47, 54]) { const nub = [[cx - 2.5, 0], [cx + 2.5, 0], [cx + 2.5, -4], [cx, -6], [cx - 2.5, -4]]; fill(nub, C.claw); stroke(nub, { closed: true, w: 1.4, j: 0.3, seed: 95 + cx }); }
-    // near arm
-    arm([36, -104], na[0], na[1], 1, C.rex, 100);
-    // head on the neck pivot
-    ctx.save(); ctx.translate(NECK[0], NECK[1]); ctx.rotate(p.headTilt); ctx.translate(HC[0] - NECK[0], HC[1] - NECK[1]);
-    head(p, f);
-    // hat: parented to the head, small spring wobble
-    const hat = p.hat || {};
-    if (hat.on !== false) {
-      const wob = Math.max(-0.15, Math.min(0.15, hat.wob || 0));
-      ctx.save(); ctx.translate(-16 + (hat.dx || 0), -48 + (hat.dy || 0)); ctx.rotate(-0.28 + wob); ctx.scale(1.05, 1.05);
-      const cap = [[-30, 8], [-26, -16], [-14, -28], [0, -32], [14, -28], [26, -16], [30, 8], [20, 0], [12, 9], [2, -1], [-8, 9], [-18, 0]];
-      fill(cap, C.hat); fill(ell(-10, -18, 3.5, 2.5, 10), C.hatSpot); fill(ell(8, -14, 3, 2.2, 10), C.hatSpot);
-      ctx.save(); path(cap, true); ctx.clip(); shadowClip(cap, 0.3); A.hatch(cap, { gap: 6, dark: 0.12, seed: 120 }); ctx.restore();
-      stroke(cap, { closed: true, w: 2.4, seed: 121 });
-      ctx.restore();
+    if (p.shiverTicks) for (const [tx, ty, dx] of [[-50, -96, -1], [-54, -78, -1], [-52, -60, -1], [52, -96, 1], [55, -78, 1], [53, -60, 1]]) { const ph = Math.sin((p.t || 0) * 60 + ty) * 1.5; stroke([[tx + dx * 3, ty + ph], [tx + dx * 9, ty - 2 + ph]], { w: 1.8, dark: 0.7, j: 0, seed: 140 + ty }); }
+    ctx.restore();
+    leg(true);
+    // the wrapped tail passes in front of the feet
+    if ((p.tail || {}).wrap) { ctx.save(); ctx.beginPath(); ctx.rect(-48, -26, 140, 60); ctx.clip(); tail(p, tailBase); ctx.restore(); }
+    ctx.save(); bodyT();
+    const armFront = p.handFront || na[0] < -0.45;
+    if (!armFront) handN = arm([42, -98], na[0], na[1], 1, C.rex, 100, p.spread);
+    // head on the neck pivot: counter-rotates half the spine bend; keeps 40 % of the squash; can sink into the shoulders
+    ctx.save(); ctx.translate(NECK[0], NECK[1] + (p.neckDrop || 0)); ctx.rotate(p.headTilt - bend * 0.5);
+    const qh = q * 0.4; ctx.scale((1 / (1 - qh)) / sx, (1 - qh) / sy);
+    ctx.translate(HC[0] - NECK[0], HC[1] - NECK[1]);
+    if (p.headYaw != null && p.headYaw !== 45) { headYaw(p.headYaw, p, f); }
+    else {
+      head(p, f);
+      const hat = p.hat || {};
+      if (hat.on !== false) {
+        const wob = Math.max(-0.15, Math.min(0.15, hat.wob || 0));
+        ctx.save(); ctx.translate(-16 + (hat.dx || 0), -48 + (hat.dy || 0)); ctx.rotate(-0.28 + wob + (hat.rot || 0)); ctx.scale(1.05, 1.05);
+        const cap = [[-30, 8], [-26, -16], [-14, -28], [0, -32], [14, -28], [26, -16], [30, 8], [20, 0], [12, 9], [2, -1], [-8, 9], [-18, 0]];
+        fill(cap, C.hat); fill(ell(-10, -18, 3.5, 2.5, 10), C.hatSpot); fill(ell(8, -14, 3, 2.2, 10), C.hatSpot);
+        ctx.save(); path(cap, true); ctx.clip(); shadowClip(cap, 0.3); A.hatch(cap, { gap: 6, dark: 0.12, seed: 120 }); ctx.restore();
+        stroke(cap, { closed: true, w: 2.4, seed: 121 });
+        ctx.restore();
+      }
+    }
+    ctx.restore();
+    if (armFront) handN = arm([42, -98], na[0], na[1], 1, C.rex, 100, p.spread);   // a hand at the mouth / a raised arm is in front of the head
+    {
+      const hr = bend * -0.5 + p.headTilt, hd = HEAD.map(q => { const r = rot([q[0] + HC[0] - NECK[0], q[1] + HC[1] - NECK[1]], [0, 0], hr); return [r[0] + NECK[0], r[1] + NECK[1] + (p.neckDrop || 0)]; });
+      const inside = (P, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const a = poly[i], b = poly[j]; if ((a[1] > P[1]) !== (b[1] > P[1]) && P[0] < (b[0] - a[0]) * (P[1] - a[1]) / (b[1] - a[1]) + a[0]) c = !c; } return c; };
+      const dist = (P, poly) => { let m = Infinity; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], vx = b[0] - a[0], vy = b[1] - a[1], u = Math.max(0, Math.min(1, ((P[0] - a[0]) * vx + (P[1] - a[1]) * vy) / (vx * vx + vy * vy))); m = Math.min(m, Math.hypot(P[0] - a[0] - u * vx, P[1] - a[1] - u * vy)); } return inside(P, poly) ? -m : m; };
+      const clear = h => h ? Math.min(dist(h, hd), dist(h, body)) - 5.5 : Infinity;
+      // near hand: against head and body; far hand (drawn behind the body): only where it shows, against the head
+      const r1 = v => Math.round(v * 10) / 10;
+      const farShows = handF && !inside(handF, body);
+      STATS.handClear = `near ${r1(clear(handN))} / far ${farShows ? r1(dist(handF, hd) - 5.5) : 'hidden'}`;
     }
     ctx.restore();
     ctx.restore();
   };
-
-  // measurements straight from the rig (for the guides readout)
+  // P11 sleep curl (Bible v1.7): a round mound on its belly, the tail round the front, the head resting on the tail
+  function curl(p, f) {
+    const br = Math.sin((p.t || 0) / 2.4 * Math.PI * 2) * 1.5;
+    const mound = A.blobPts(0, -42, a => [64, (Math.sin(a) > 0 ? 36 : 42) + br], 40).map(q => [q[0], Math.min(q[1], 0)]);
+    part(mound, C.rex, 63, { ghost: true });
+    ctx.save(); path(mound, true); ctx.clip();
+    [[-14, -76, 7, 5], [-30, -66, 6, 4.5], [-44, -50, 5, 4]].forEach(([x, y, rx, ry]) => fill(ell(x, y, rx, ry, 12), C.spot));
+    ctx.restore();
+    [[-10, -84, 7], [-28, -78, 6.5], [-44, -68, 6], [-56, -54, 5.5], [-62, -38, 5]].forEach(([bx, by, r], i) => { const E = ell(bx, by - br, r, r * 0.75, 14); fill(E, C.shade); stroke(E.slice(4, 12), { w: 1.6, seed: 80 + i }); });
+    part(ell(10, -26, 26, 22, 24), C.rex, 90, { band: 0.4 });
+    ctx.save(); ctx.translate(36, -8); ctx.rotate(-0.4);
+    const sole = [[-10, 6], [12, 6], [16, 0], [12, -7], [-8, -7], [-13, 0]]; part(sole, C.rex, 91, { hatch: false });
+    for (const cx of [4, 9, 14]) { const nub = [[cx - 2.5, 0], [cx + 2.5, 0], [cx + 2.5, -4], [cx, -6], [cx - 2.5, -4]].map(q => [q[1] + 16, q[0] - 8]); fill(nub, C.claw); stroke(nub, { closed: true, w: 1.4, j: 0.3, seed: 95 + cx }); }
+    ctx.restore();
+    tail({ ...p, tail: {} }, [[-60, -22], [-70, -8], [-36, -5], [14, -5], [58, -9], [70, -20]], [34, 28, 22, 17, 13], 6);
+    const hand = ell(62, -26, 5.5, 5, 14); fill(hand, C.rex); stroke(hand, { closed: true, w: 2.2, seed: 102 });
+    ctx.save(); ctx.translate(70, -60 - 1 * Math.sin(((p.t || 0) - 0.2) / 2.4 * Math.PI * 2)); ctx.rotate(0.25);
+    head(p, { ...f, closed: 'down', mouth: 'M0', corners: 0.3, blush: f.blush ?? 0.3 });
+    ctx.save(); ctx.translate(-16, -48); ctx.rotate(-0.55); ctx.scale(1.05, 1.05);
+    const cap = [[-30, 8], [-26, -16], [-14, -28], [0, -32], [14, -28], [26, -16], [30, 8], [20, 0], [12, 9], [2, -1], [-8, 9], [-18, 0]];
+    fill(cap, C.hat); fill(ell(-10, -18, 3.5, 2.5, 10), C.hatSpot); fill(ell(8, -14, 3, 2.2, 10), C.hatSpot); stroke(cap, { closed: true, w: 2.4, seed: 121 });
+    ctx.restore(); ctx.restore();
+    STATS = { handClear: 'contact' }; A.rex2.stats = STATS;
+  }
   // just the head at any yaw 0…90 (head-turn strips): HC at (x, y)
   A.rex2.head = (x, y, s, pose = {}) => {
     ctx = A.ctx();

@@ -49,7 +49,7 @@
       headCell(160 + col * 320, 135 + row * 270, 320, 270, 1.15, { face: f, headTilt: b.headTilt || 0, t: 0.1 }, `${k} ${n}`); });
   } });
   F.episode('r3front', { ...base, draw() {
-    ['E1', 'E2', 'E3', 'E10', 'E13'].forEach((k, i) => { const [n, f, b] = E[k]; headCell(192 + i * 384, 470, 384, 620, 2.2, { yaw: 0, face: f, headTilt: (b.headTilt || 0) * 0.5 }, `${k} ${n} (front)`); });
+    ['E1', 'E2', 'E3', 'E10', 'E13'].forEach((k, i) => { const [n, f, b] = E[k]; headCell(192 + i * 384, 470, 384, 620, 2.2, { yaw: 0, face: f, headTilt: (b.headTilt || 0) * 0.5 }, `${k} ${n} (front)`); label(`eyeGap ${(A.rex2.stats || {}).eyeGap}`, 192 + i * 384, 820, 24, '#c62828'); });
   } });
   F.episode('r3body', { ...base, draw() {
     const ctx = A.ctx(); ctx.save(); ctx.strokeStyle = 'rgba(42,39,36,0.5)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(40, 880); ctx.lineTo(1880, 880); ctx.stroke(); ctx.restore();

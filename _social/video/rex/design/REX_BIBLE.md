@@ -1,7 +1,7 @@
 # REX BIBLE v1: the master spec for Rex, the baby T-Rex
 
 Owner of this document: the design expert. The animator implements it; the expert reviews against it.
-Status: **v1.6 (2026-10-18)**, written after the round 0 audit (`design/reviews/round0_audit.md`) and amended after the round 1–3 reviews. See the changelog at the end.
+Status: **v1.8 (2026-10-18)**, written after the round 0 audit (`design/reviews/round0_audit.md`) and amended after the round 1–4 reviews. See the changelog at the end.
 If code and Bible disagree, the Bible wins, unless the expert changes the Bible.
 
 ---
@@ -81,10 +81,15 @@ Draw the head outline as one closed polygon through these points (HC-relative, c
 - **Near foot**: the sole runs along **y = 0** from x 2 to x 54, the toe is rounded up to (56,-8), the top is at (40,-14) and the heel at (4,-12). **Far foot**: x -50 to -2, height 12, shade colour; the near foot overlaps it by 4 units (no point-touch tangent between the feet).
 - **Claws**: 3 cream nubs `#fbf6e8` per foot at the toe front, each 5 wide × 6 tall, rounded. Their bottoms sit on y = 0 (never below the ground). Hands have 2 nubs, 3 × 4.
 - **Arms**: they are parented to the **body**, not the head, and drawn after the body but **before the head** (the chin may overlap the far shoulder, never the reverse).
-  - Near shoulder (36,-104), on the front contour 10 units below the chin. The upper arm is 15 long (10 thick → 8), the forearm 15 long (8 → 7), and the hand a mitten 8 × 7.
-  - Rest pose: the upper arm points 55° below the facing direction, the forearm 15° below it, and the hand ends near (61,-88). That leaves **≥ 6 units of air** between the hand and the belly outline.
-  - The far shoulder is at (24,-106); the far arm is scale 0.85, shade colour, and drawn behind the near arm.
-  - Reach: hand to mouth works with `headTilt ≥ +0.2` (chin down) and the upper arm at -1.4 rad. **Test it on the pose sheet.**
+  - **(v1.7)** Near shoulder **(42,-98)**, on the front contour about 14 units below the chin. The upper arm is **18** long (11 → 9 thick), the forearm **16** long (9 → 8), and the hand a mitten **9 × 8** with 2 claw nubs. The total reach is about 43, which is 19 % of his height and still a tiny T-Rex arm next to the 141-wide head.
+  - Rest pose: the upper arm points 55° below the facing direction and the forearm 15° below it; the hand ends near (70,-80). That leaves **≥ 6 units of air** between the hand and the belly outline.
+  - The far shoulder is at **(28,-100)**; the far arm is scale 0.85, shade colour, and drawn behind the near arm.
+  - Reach: hand to mouth works with `headTilt ≥ +0.2` (chin down) and the upper arm at -1.4 rad. The hand may overlap the head here (a deliberate contact).
+  - **Raised-arm rule (v1.7)**:
+    - In the ¾ and side views, arms rise **forward-up**, never straight up into the head. The upper-arm elevation is limited to 40° above the facing direction (−0.70 rad).
+    - The hand must end **≥ 6 units outside the head silhouette** and ≥ 6 outside the body outline, except for deliberate contacts (P19, P12, hands clasped at the chin). The rig computes this; the guides sheet prints a per-pose value `handClear` (in units, negative = inside).
+    - Poses that need hands **above the shoulders** (reach up, wave, both arms up) are staged in the **front view (yaw 0)**, or in the ¾ view with the head turned to yaw ≥ 20° toward camera plus a head-back tilt, so the hand clears the head.
+    - **No arm stretching** on held poses. Only motion smear frames (≤ 2 f) may stretch an arm, up to 1.25×.
 
 ### 2.7 Tail (¾ view)
 - Centreline: (-30,-40) → (-62,-36) → (-94,-36) → (-118,-42) → tip (-132,-52).
@@ -353,24 +358,24 @@ Each pose has a named line of action (LoA) and must read as a solid black silhou
 |---|---|---|
 | P01 | Neutral stand | LoA a gentle C; headTilt 0; tail per §2.7; arms at rest |
 | P02 | Curious lean | spine bend +0.10 (forward); head yaw +10°, tilt 0.18; the near arm lifts 0.4; tail up 0.1 for counterweight |
-| P03 | Excited | stretch 0.06; arms out (upper -0.6 rad), air ≥ 10 units; tail up 0.35; heels up 4 |
-| P04 | Sad slump | head down 0.25; spine bend +0.06; squash 0.04; tail droop -0.4; arms hang straight down |
-| P05 | Scared crouch | squash 0.12; lean back -0.1; arms to the chest; tail wrapped forward around the far foot; head pulled into the shoulders 6 |
-| P06 | Proud | lean back -0.06; chin up -0.15; belly +4; arms back 0.3; tail up 0.2 |
+| P03 | Excited | **(v1.8) Grounded**: both soles on y 0, heels 0, tight contact shadow. Stretch 0.06; **arms in a wide V**, forward-up at the −0.70 limit with the forearm +0.25 open, handClear ≥ 10; head up −0.1; mouth M2/M4; **tail up 0.6, tip curling up**; a little bounce in animation |
+| P04 | Sad slump | **(v1.8)**: head down **0.35**, spine bend forward **+0.12**, so the head drops in front of the chest line; squash 0.05; shoulders down 4; arms hang; **tail droop −0.55, straight and low, no upward tip curl** (tip ≥ 10 above the ground) |
+| P05 | Scared crouch | **(v1.8)**: squash 0.15; **lean back −0.15** (away from the threat); head pulled in (neckDrop 8); **both hands up in front of the chest, held out ≥ 6 from the body** (handClear ≥ 6); tail wrapped forward around the feet; eyes wide; tremble in animation |
+| P06 | Proud | **(v1.8)**: **lean back −0.14**, chin up −0.25, belly +8; arms back 0.3 (behind the body); **tail up +0.35, straight, pointing up-back** (no curl); feet planted wide (stance +6) |
 | P07 | Hop anticipation | squash 0.15; head down 0.1; tail down -0.15; arms back |
-| P08 | Hop air | stretch 0.10; arms up and out; tail trailing down -0.2; feet tucked 6 |
+| P08 | Hop air | **(v1.8) Clearly airborne**: the soles are **≥ 30 units** above the ground (air 30–36); legs tucked together (tuck 10); stretch 0.10; arms up and out; **tail trailing down −0.3 (tip below the hip)**; a light, wide contact shadow far below |
 | P09 | Land | squash 0.18 (head squash 0.07); arms forward and down; tail whip up +0.2 |
 | P10 | Sit | hip y -26 → the bottom on the ground; legs forward (feet at x +40, soles toward the camera 30 %); tail flat on the ground behind with **a visible gap** at the ground line (no tangent) |
-| P11 | Sleep curl | lying on his side; body rotated -1.3 rad; tail around the front; hat tilted -0.6, still on |
+| P11 | Sleep curl | **(v1.7) A dedicated curled shape, not a rotated stand.** Side-on view (facing right), lying on his belly, curled: **Body**: a mound ellipse at (0,−42), rx 64, ry 42, flattened 6 at the bottom on y 0. · **Legs**: near thigh oval (10,−26), 26 × 22; foot tucked forward, sole toward the camera at (36,−8), 3 nubs visible. · **Tail**: wraps round the front along the ground. Centreline (−60,−22) → (−70,−8) → (−36,−5) → (14,−5) → (58,−9) → tip curled up at (70,−20); thickness 34 → 12; it lies in front of the foot. · **Head**: resting **on the tail**, HC at (70,−60), rotated +0.25 (chin down); closed 'down' eyes (∪), M0 with corners +0.3, blush 0.3. · **Hat**: tilted −0.55, still on, overlapping the skull 8. · **Arms**: hidden except the near hand under the chin, on the tail. · **Breathing**: the body ry swells ±1.5 every 2.4 s; the head rises 1, lagging 6 f. · **Contact shadow**: a long ellipse, rx 90. · **Silhouette**: a round mound with a head bump and a tail curl. |
 | P12 | Peek | only the head (above the eyes) + 2 hands show over an object's edge; the hands overlap the edge by 4 |
-| P13 | Reach up | on tiptoe (heels up 8); stretch 0.08; arms up at max; head up -0.3 |
+| P13 | Reach up | **front view (yaw 0)**: on tiptoe (heels up 8); stretch 0.08; both arms up beside the head (upper −2.4 / +2.4 rad from down in front space), hands ≥ 6 outside the head outline at about (±70,−150); head up −0.3 (the features shift up 6), look up; tail tip peeks out on one side |
 | P14 | Balance | arms straight out; lean ±0.15; the tail counter-swings ∓0.3; stance width +12 |
 | P15 | Hug-self (cold) | arms crossed at the chest; squash 0.06; tail curled round the feet; head down 0.1 |
 | P16 | Look up (wonder) | head up -0.35; spine bend back -0.08; arms slightly up; tail down -0.1 |
 | P17 | Shake-dry key | head rotated 0.35 the other way to the body (counter-twist); tail whipped up |
-| P18 | Wave | the near arm up (upper -2.2 rad), forearm waving; the far arm at rest |
-| P19 | Hand to mouth | headTilt +0.2; the near hand at the mouth corner (the giggle/thinking test) |
-| P20 | Cute roar | E24 body: stretch, arms up, tail up |
+| P18 | Wave | **front view (yaw 0)**, or ¾ with headYaw ≥ 20° toward the camera: the near arm raised out to the side beside the head (hand at about (+72,−148), handClear ≥ 8), forearm waving ±0.35 rad; the far arm at rest; E2 face; head tilt 0.1 toward the waving hand |
+| P19 | Hand to mouth | **(v1.8)**: upright (bend 0, **no crouch**); head down 0.2 and turned 10° toward the camera; the near hand pokes **≥ 4 units in front of the snout outline**, at the mouth; the far arm at rest; **tail relaxed behind, tip curled up +0.2 (no wrap)**; one foot turned in |
+| P20 | Cute roar | ¾ view: E24 face; head back −0.15; stretch 0.06; **both arms forward-up at the −0.70 limit** with claws spread (3 nubs per hand), handClear ≥ 8; tail up 0.5; one heel up 4 |
 
 Rig rules used by the poses:
 - **Spine bend** replaces the old rigid `lean`: the body rotates about the hip (0,-40) by the bend amount, the head counter-rotates by 50 % of it, and the feet stay planted.
@@ -680,3 +685,12 @@ After round 7 is APPROVED: migrate the episodes from `A.rex` to `A.rex2` (the ex
   - open-mouth amendment (no lip notch, overbite ≤ 5, a new jaw front);
   - upper-lid outline rule (no empty rings; wide eyes stay ≥ 6 inside the outline);
   - E13 and E22 body cue for the arms (§7 note).
+- **v1.7 (round 4 decision)**:
+  - arms: option (b) + staging; shoulder (42,−98), arm 18 + 16 + hand 9 × 8; raised-arm rule; no stretch on holds;
+  - P11 is a dedicated curl shape;
+  - P03, P04, P13, P18 and P20 re-specified.
+- **v1.8 (round 4b key)**: the confused pairs P03/P08, P04/P06 and P05/P19 have new, distinct silhouette rules.
+- **v1.8a (round 4c key)**: P03 / P17 / P20 have unique silhouette features (see `reviews/round4c_review.md` §5); these override the P03, P17 and P20 rows in §7. Only P03's tail may rise above y −120.
+- **v1.8b (round 4d)**:
+  - P16 look up: headTilt −0.45, bend −0.12, both hands forward-up (−0.3, handClear ≥ 8), tail −0.15, M6 open 0.5. Signature: the snout points at the sky.
+  - P01: bend 0, headTilt 0 (the reference).
