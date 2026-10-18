@@ -431,6 +431,157 @@ const SHORTS = {
       { start: 28, cls: 'end', html: endCardEn('Try our free Sukanya calculator! 🧮', 'కూతుళ్ళ తల్లిదండ్రులకు షేర్ చేయండి') },
     ],
   },
+
+  // ---------------------------------------------------------------- Short 10: PM Fasal Bima, AP Rabi 2026-27 (English)
+  10: {
+    file: 'short-10-fasal-bima-en', lang: 'en', duration: 35, tag: '⏰ AP: enrol by 15 Dec', tagColor: '#d97706', music: { root: 55, seed: 1 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Andhra Pradesh farmers:</div>
+        <div class="h1" data-in="0.25">Insure your Rabi crop for just</div>
+        <div class="mega gold" data-in="0.6" data-fx="pop" data-pulse>1.5%</div>
+        <div class="sub" data-in="1.1">maximum premium for Rabi food and oilseed crops<br><span class="te">ఏపీ రైతులు: రబీ పంట బీమా, ప్రీమియం గరిష్ఠంగా 1.5%</span></div>
+        <div class="pill" data-in="1.8" data-fx="pop">⏰ Enrol by 15 December</div>` },
+      { start: 4.5, html: `
+        <div class="label" data-in="0.1">PM Fasal Bima Yojana · AP Rabi 2026-27</div>
+        <div class="h2" data-in="0.2">Last dates to enrol</div>
+        <div class="row" style="gap:30px">
+          <div class="datecard" data-in="0.8" data-fx="pop" style="min-width:380px"><div class="top">RABI CROPS</div><div class="day">15</div><div class="mon">December</div></div>
+          <div class="datecard" data-in="1.3" data-fx="pop" style="min-width:380px"><div class="top">PADDY</div><div class="day">31</div><div class="mon">December</div></div>
+        </div>
+        <div class="para" data-in="2.2">Miss the date and your crop is not covered for the whole season.</div>
+        <div class="sub te" data-in="2.5">చివరి తేదీ దాటితే ఈ సీజన్ మొత్తం బీమా ఉండదు</div>
+        <div class="sub" data-in="3.4" style="font-size:36px">Telangana: no notification with dates yet</div>` },
+      { start: 11, dark: true, html: `
+        <div class="label" data-in="0.1">What does it cost?</div>
+        <div class="h2" data-in="0.2">Sum insured ₹50,000 a hectare?</div>
+        <div class="card teal-bg" data-in="0.8" data-fx="pop" style="background:rgba(255,255,255,.12)">
+          <div class="kicker" style="font-size:46px">You pay at most</div>
+          <div class="mega gold" data-in="1.1" data-fx="count" data-count="750" data-prefix="₹">₹750</div>
+          <div class="cap">per hectare for Rabi<br><span class="te" style="font-size:36px">హెక్టారుకు గరిష్ఠంగా ₹750</span></div>
+        </div>
+        <div class="sub" data-in="2.4">The Central and State governments pay the rest.</div>` },
+      { start: 18.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">How to enrol</div>
+        <div class="h2" data-in="0.2">Enrol early</div>
+        ${point(1, 'Bank, CSC or Rythu Seva Kendram', 'Or pmfby.gov.in / Crop Insurance app · బ్యాంకు, CSC లేదా RSK', 1.0)}
+        ${point(2, 'Agristack farmer ID needed in AP', 'అగ్రిస్టాక్ రైతు ఐడీ తప్పనిసరి', 2.6)}
+        ${point(3, 'Land record, Aadhaar, bank passbook', 'And the crop you have sown · భూమి పత్రం, ఆధార్, బ్యాంకు పాస్‌బుక్', 4.2)}
+        <div class="warn" data-in="6.0" data-fx="pop">🌧️ Crop damaged? Report within 72 hours on 14447<div class="e te">పంట నష్టం జరిగితే 72 గంటల్లో 14447 కి చెప్పండి</div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with farmer friends! 🌾', 'రైతు మిత్రులకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 11: PM Surya Ghar rooftop solar (English)
+  11: {
+    file: 'short-11-surya-ghar-en', lang: 'en', duration: 35, tag: '☀️ Open till March 2027', tagColor: '#ca8a04', music: { root: 62, seed: 2 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Rooftop solar subsidy, up to</div>
+        <div class="mega gold" data-in="0.25" data-fx="count" data-count="78000" data-prefix="₹" data-pulse>₹78,000</div>
+        <div class="h1" data-in="0.9">for your home!</div>
+        <div class="sub te" data-in="1.2">ఇంటి పైకప్పుపై సోలార్‌కి ₹78,000 వరకు సబ్సిడీ</div>
+        <div class="pill" data-in="1.8" data-fx="pop" style="background:#ca8a04">☀️ Up to 300 units a month</div>` },
+      { start: 4.5, html: `
+        <div class="label" data-in="0.1">PM Surya Ghar Muft Bijli Yojana</div>
+        <div class="h2" data-in="0.2">How much subsidy?</div>
+        <div class="chips">
+          ${chip('☀️', '1 kW → ₹30,000', '1 కిలోవాట్', 1.0)}
+          ${chip('☀️', '2 kW → ₹60,000', '2 కిలోవాట్లు', 1.8)}
+          ${chip('🌞', '3 kW or more → ₹78,000 (max)', '3 కిలోవాట్లు లేదా ఎక్కువ', 2.6)}
+        </div>
+        <div class="sub" data-in="3.6">1–2 kW suits up to 150 units a month; 2–3 kW suits 150–300 units.</div>` },
+      { start: 11, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Who can apply?</div>
+        <div class="h2" data-in="0.2">You need</div>
+        ${point('✓', 'Your own house with a suitable roof', 'సొంత ఇల్లు, సోలార్‌కి సరిపోయే పైకప్పు', 1.0)}
+        ${point('✓', 'Electricity connection in your name', 'మీ పేరుతో కరెంట్ కనెక్షన్', 2.6)}
+        ${point('✓', 'No other solar subsidy taken', 'ఇంతకు ముందు సోలార్ సబ్సిడీ తీసుకోకూడదు', 4.2)}` },
+      { start: 18.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">How to apply</div>
+        <div class="h2" data-in="0.2">Apply online, free</div>
+        ${point(1, 'Register on pmsuryaghar.gov.in', 'With your electricity consumer number · కరెంట్ కన్స్యూమర్ నంబర్‌తో', 1.0)}
+        ${point(2, 'Install through a registered vendor', 'పోర్టల్‌లోని వెండర్ ద్వారానే', 2.4)}
+        ${point(3, 'Net metering → subsidy to your bank', 'సబ్సిడీ నేరుగా బ్యాంకు ఖాతాలోకి', 3.8)}
+        <div class="warn" data-in="5.4" data-fx="pop">Applying is free. Don't pay anyone promising "free solar".<div class="e">Helpline 15555 · <span class="te">దరఖాస్తు ఉచితం</span></div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with homeowners you know! ☀️', 'ఇల్లు ఉన్నవారికి షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 12: Kisan Credit Card (English)
+  12: {
+    file: 'short-12-kcc-en', lang: 'en', duration: 35, tag: '💳 For farmers', tagColor: '#15803d', music: { root: 57, seed: 3 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Kisan Credit Card: farm loan at</div>
+        <div class="mega gold" data-in="0.3" data-fx="pop" data-pulse>4%</div>
+        <div class="h1" data-in="0.9">if you repay on time!</div>
+        <div class="sub" data-in="1.2">7% a year, with 3% back for on-time repayment<br><span class="te">కిసాన్ క్రెడిట్ కార్డ్: సమయానికి కడితే 4% వడ్డీ</span></div>
+        <div class="pill" data-in="1.8" data-fx="pop" style="background:#15803d">💳 No collateral up to ₹2 lakh</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Interest and limits</div>
+        <div class="h2" data-in="0.2">What you get</div>
+        <div class="chips">
+          ${chip('💰', '7% interest on loans up to ₹3 lakh', '₹5 lakh limit announced, ask your bank · ₹3 లక్షల వరకు 7%', 1.0)}
+          ${chip('⏱️', 'Repay on time: effectively 4%', 'సమయానికి కడితే 4% మాత్రమే', 2.0)}
+          ${chip('🔓', 'No collateral up to ₹2 lakh', 'తాకట్టు లేకుండా ₹2 లక్షల వరకు', 3.0)}
+          ${chip('💳', 'RuPay card, valid 5 years', '5 ఏళ్లు చెల్లుబాటు', 4.0)}
+        </div>` },
+      { start: 11, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Who can get one?</div>
+        <div class="h2" data-in="0.2">Not just landowners</div>
+        ${point('✓', 'Farmers who own land', 'భూమి ఉన్న రైతులు', 1.0)}
+        ${point('✓', 'Tenant farmers and sharecroppers', 'కౌలు రైతులు కూడా', 2.5)}
+        ${point('✓', 'Dairy, poultry, goat and fish farmers', 'పాడి, కోళ్లు, మేకలు, చేపల పెంపకం', 4.0)}` },
+      { start: 18.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">How to apply</div>
+        <div class="h2" data-in="0.2">At your bank</div>
+        ${point(1, 'Visit your bank branch', 'Or get the KCC form on pmkisan.gov.in · బ్యాంకు శాఖకు వెళ్ళండి', 1.0)}
+        ${point(2, 'Aadhaar, photo, land records', 'Or tenancy papers, plus crop details · ఆధార్, ఫోటో, భూమి పత్రాలు', 2.6)}
+        ${point(3, 'Decision in about 14 days', 'సుమారు 14 రోజుల్లో నిర్ణయం', 4.2)}
+        <div class="warn" data-in="6.0" data-fx="pop">No processing fee up to ₹3 lakh at most banks. Don't pay agents.<div class="e te">ఏజెంట్లకు డబ్బు ఇవ్వకండి</div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with farmer friends! 🌾', 'రైతు మిత్రులకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 13: Ujjwala subsidy change (English)
+  13: {
+    file: 'short-13-ujjwala-en', lang: 'en', duration: 35, tag: '🔥 Changed in June 2026', tagColor: '#dc2626', music: { root: 58, seed: 1 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Ujjwala gas subsidy has changed!</div>
+        <div class="mega gold" data-in="0.3" data-fx="pop"><span class="strike" data-in="1.0" data-fx="strike" style="color:rgba(255,255,255,.55)">9</span> → 4</div>
+        <div class="h1" data-in="1.2">subsidised refills a year</div>
+        <div class="sub te" data-in="1.5">ఉజ్వల: ₹300 సబ్సిడీ ఇప్పుడు ఏడాదికి 4 సిలిండర్లకే</div>
+        <div class="pill" data-in="2.0" data-fx="pop" style="background:#dc2626">🔥 From June 2026</div>` },
+      { start: 4.5, html: `
+        <div class="label" data-in="0.1">What you get now</div>
+        <div class="mega teal" data-in="0.3" data-fx="count" data-count="300" data-prefix="₹" style="font-size:170px">₹300</div>
+        <div class="para" data-in="0.9" style="margin-top:0">subsidy per 14.2 kg cylinder</div>
+        <div class="chips">
+          ${chip('🔥', '4 refills a year → up to ₹1,200', 'ఏడాదికి 4 సిలిండర్లు · ₹1,200 వరకు', 1.6)}
+          ${chip('💸', 'After the 4th: normal price', '5వ సిలిండర్ నుంచి పూర్తి ధర', 2.5)}
+          ${chip('🏦', 'Credited to your bank account', 'నేరుగా బ్యాంకు ఖాతాలోకి', 3.4)}
+        </div>` },
+      { start: 11, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">PM Ujjwala Yojana</div>
+        <div class="h2" data-in="0.2">Free gas connection</div>
+        <div class="chips">
+          ${chip('🎁', 'Free connection, first refill and stove', 'Ujjwala 2.0 · ఉచిత కనెక్షన్, స్టవ్', 1.0)}
+          ${chip('👩', 'Woman 18+ from a poor family', 'పేద కుటుంబంలో 18 ఏళ్లు నిండిన మహిళ', 2.0)}
+          ${chip('🏠', 'No LPG connection at home already', 'ఇంట్లో ఇప్పటికే గ్యాస్ ఉండకూడదు', 3.0)}
+          ${chip('📝', 'Apply at pmuy.gov.in or your distributor', 'pmuy.gov.in లేదా గ్యాస్ డిస్ట్రిబ్యూటర్', 4.0)}
+        </div>` },
+      { start: 18.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Keep your subsidy coming</div>
+        <div class="h2" data-in="0.2">Check these</div>
+        ${point('✓', 'Aadhaar eKYC with your gas distributor', 'డిస్ట్రిబ్యూటర్ దగ్గర ఈకేవైసీ', 1.0)}
+        ${point('✓', 'Bank account linked to Aadhaar', 'బ్యాంకు ఖాతా ఆధార్‌తో లింక్', 2.6)}
+        ${point('✓', 'AP: Deepam-2 · TS: ₹500 cylinder', 'State help is separate · రాష్ట్ర పథకాలు వేరు', 4.2)}
+        <div class="warn" data-in="6.0" data-fx="pop">The connection is free. Don't pay agents.<div class="e te">కనెక్షన్ ఉచితం, ఏజెంట్లకు డబ్బు ఇవ్వకండి</div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with families who use Ujjwala! 🔥', 'ఉజ్వల వాడే కుటుంబాలకు షేర్ చేయండి') },
+    ],
+  },
 };
 
 // Step 2 of the checker demo: fields fill in after each tap, then the button is pressed.
