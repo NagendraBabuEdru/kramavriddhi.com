@@ -1,0 +1,176 @@
+{
+ "start-empty": {
+  "height": 1688
+ },
+ "start-name": {
+  "height": 1688,
+  "tap": [
+   390,
+   1134
+  ]
+ },
+ "start-gate": {
+  "height": 1688
+ },
+ "start-gate-full": {
+  "height": 3954
+ },
+ "dash-top": {
+  "height": 1688
+ },
+ "dash-untouched": {
+  "height": 1688
+ },
+ "syllabus-full": {
+  "height": 8340
+ },
+ "syllabus-top": {
+  "height": 1688
+ },
+ "syllabus-topics": {
+  "height": 1688
+ },
+ "topic-top": {
+  "height": 1688
+ },
+ "topic-full": {
+  "height": 4946
+ },
+ "mock-top": {
+  "height": 1688
+ },
+ "mock-blueprint": {
+  "height": 1688
+ },
+ "practice-setup": {
+  "height": 1688
+ },
+ "practice-q": {
+  "height": 1688
+ },
+ "practice-explained": {
+  "height": 1688
+ },
+ "practice-explained-full": {
+  "height": 2852
+ },
+ "practice-result": {
+  "height": 1688
+ },
+ "mockq-1": {
+  "height": 1688,
+  "tap": [
+   390,
+   1010
+  ]
+ },
+ "mockq-1-picked": {
+  "height": 1688
+ },
+ "mockq-7": {
+  "height": 1688,
+  "tap": [
+   390,
+   1017
+  ]
+ },
+ "mock-palette": {
+  "height": 1688
+ },
+ "mock-result": {
+  "height": 1688
+ },
+ "mock-result-full": {
+  "height": 12038
+ },
+ "dash-data": {
+  "height": 1688
+ },
+ "dash-fix": {
+  "height": 1688
+ },
+ "analytics-top": {
+  "height": 1688
+ },
+ "analytics-full": {
+  "height": 6154
+ },
+ "mistakes": {
+  "height": 1688
+ },
+ "revise-q": {
+  "height": 1688,
+  "tap": [
+   390,
+   974
+  ]
+ },
+ "revise-a": {
+  "height": 1688,
+  "tap": [
+   482,
+   994
+  ]
+ },
+ "revise-q2": {
+  "height": 1688
+ },
+ "revise-week": {
+  "height": 1688
+ },
+ "revise-top": {
+  "height": 1688
+ },
+ "settings-full": {
+  "height": 6512
+ },
+ "mockq-7-picked": {
+  "height": 1688
+ },
+ "chilaka-dash-1": {
+  "height": 1688,
+  "tap": [
+   672,
+   1366
+  ]
+ },
+ "chilaka-dash-2": {
+  "height": 1688
+ },
+ "chilaka-dash-3": {
+  "height": 1688
+ },
+ "chilaka-dash-4": {
+  "height": 1688
+ },
+ "chilaka-syllabus-1": {
+  "height": 1688
+ },
+ "chilaka-mock-1": {
+  "height": 1688
+ },
+ "chilaka-mock-2": {
+  "height": 1688
+ },
+ "chilaka-revise-1": {
+  "height": 1688
+ },
+ "chilaka-revise-2": {
+  "height": 1688
+ },
+ "chilaka-analytics-1": {
+  "height": 1688
+ },
+ "chilaka-topic-1": {
+  "height": 1688
+ },
+ "chilaka-topic-2": {
+  "height": 1688
+ },
+ "chilaka-topic-3": {
+  "height": 1688
+ },
+ "chilaka-topic-4": {
+  "height": 1688
+ }
+}

@@ -1,0 +1,87 @@
+/* GPAT Prep reels: 1080x1920. Brand colours from the Kramavriddhi Shorts (_social/video/style.css).
+   Important text stays inside the safe box (left 70, right 170, top 220, bottom 400). */
+:root {
+  --teal: #0f766e; --teal-dark: #0b4f4a; --ink: #14201e; --gold: #f5b83d; --orange: #d97706;
+  --green: #22c55e; --red: #f87171; --app: #6b8afd;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--teal-dark); }
+body { font-family: 'Segoe UI', 'Nirmala UI', sans-serif; color: #fff; }
+body.te { font-family: 'Nirmala UI', 'Segoe UI', sans-serif; }
+.en { font-family: 'Segoe UI', 'Nirmala UI', sans-serif; }
+.te-t { font-family: 'Nirmala UI', 'Segoe UI', sans-serif; }
+.emo { font-family: 'Segoe UI Emoji', sans-serif; }
+
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+  background: radial-gradient(1200px 900px at 80% 10%, #13867c 0%, transparent 60%), linear-gradient(165deg, #0b4f4a 0%, #0a3d3a 55%, #0b1220 100%); }
+#steps { position: absolute; width: 1500px; height: 1500px; left: 120px; top: 520px; }
+#steps path { stroke-width: 2.4; stroke: rgba(255,255,255,.06); }
+#dots { position: absolute; inset: 0; }
+#dots i { position: absolute; border-radius: 50%; background: rgba(245,184,61,.18); }
+#progress { position: absolute; left: 0; top: 0; width: 100%; height: 12px; background: rgba(255,255,255,.1); z-index: 9; }
+#progress i { display: block; height: 100%; width: 0; background: var(--gold); }
+
+#brand { position: absolute; left: 70px; top: 110px; display: flex; align-items: center; gap: 18px; font-size: 40px; z-index: 5; }
+#brand .logo { width: 72px; height: 72px; display: block; }
+#brand .logo svg { width: 100%; height: 100%; display: block; }
+#tag { margin-left: 14px; padding: 10px 26px; border-radius: 40px; font-size: 30px; font-weight: 700; color: #fff; background: var(--app); }
+
+/* Text scenes */
+.scene { position: absolute; left: 70px; top: 230px; width: 860px; display: flex; flex-direction: column; z-index: 4; }
+.scene.full { height: 1290px; justify-content: center; }
+.scene.top { height: 370px; justify-content: flex-start; }
+.scene > * { will-change: transform, opacity; }
+.kicker { font-size: 68px; font-weight: 700; line-height: 1.3; }
+.h1 { font-size: 96px; font-weight: 800; line-height: 1.2; letter-spacing: -1px; }
+body.te .h1 { font-size: 84px; line-height: 1.35; letter-spacing: 0; }
+.head { font-size: 62px; font-weight: 800; line-height: 1.22; }
+body.te .head { font-size: 56px; line-height: 1.38; }
+.sub { font-size: 40px; font-weight: 600; line-height: 1.35; color: rgba(255,255,255,.84); margin-top: 14px; }
+.mega { font-size: 190px; font-weight: 800; line-height: 1.05; letter-spacing: -3px; color: var(--gold); font-family: 'Segoe UI', sans-serif; }
+.gold { color: var(--gold); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.mt { margin-top: 40px; }
+.note { font-size: 30px; font-weight: 600; color: rgba(255,255,255,.7); margin-top: 16px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 36px; }
+.chip { display: flex; align-items: center; gap: 18px; background: rgba(255,255,255,.12); border-radius: 26px; padding: 22px 32px;
+  font-size: 50px; font-weight: 700; }
+.chip .ic { font-size: 56px; font-family: 'Segoe UI Emoji', sans-serif; }
+.chip.big { font-size: 64px; padding: 26px 40px; }
+.stack { display: flex; flex-direction: column; gap: 26px; margin-top: 40px; }
+.stamp { align-self: flex-start; border: 8px solid var(--gold); color: var(--gold); border-radius: 26px; padding: 14px 36px;
+  font-size: 80px; font-weight: 800; letter-spacing: 1px; }
+body.te .stamp { font-size: 66px; }
+
+.days { display: flex; gap: 14px; align-items: center; margin-top: 20px; }
+.days .d { background: var(--gold); color: var(--teal-dark); border-radius: 22px; padding: 10px 24px; font-size: 52px; font-weight: 800; font-family: 'Segoe UI', sans-serif; }
+.days .a { font-size: 40px; color: rgba(255,255,255,.7); }
+
+/* Phone with the real app screens */
+#phone { position: absolute; left: 210px; top: 610px; width: 660px; height: 1340px; border-radius: 80px; background: #05080d;
+  padding: 22px; box-shadow: 0 40px 90px rgba(0,0,0,.5), 0 0 0 3px rgba(255,255,255,.12) inset; z-index: 3; opacity: 0; }
+#phone .notch { position: absolute; left: 50%; top: 34px; width: 150px; height: 34px; margin-left: -75px; border-radius: 20px; background: #05080d; z-index: 3; }
+#screen { position: relative; width: 616px; height: 1296px; border-radius: 60px; overflow: hidden; background: #0f1422; }
+#screen .layer { position: absolute; left: 0; top: 0; width: 616px; transform-origin: 0 0; }
+#screen .layer img { display: block; width: 616px; }
+.tapring { position: absolute; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%;
+  background: rgba(245,184,61,.45); border: 7px solid var(--gold); opacity: 0; z-index: 4; pointer-events: none; }
+.hand { position: absolute; font-size: 90px; font-family: 'Segoe UI Emoji', sans-serif; opacity: 0; z-index: 5; }
+
+/* Floating label pinned on top of the phone */
+.callout { position: absolute; z-index: 6; background: var(--gold); color: var(--ink); border-radius: 26px; padding: 16px 30px;
+  font-size: 42px; font-weight: 800; box-shadow: 0 16px 40px rgba(0,0,0,.35); opacity: 0; white-space: nowrap; }
+
+/* End card */
+.end { align-items: center; text-align: center; }
+.end .parrot { width: 260px; height: 260px; }
+.end .title { font-size: 104px; font-weight: 800; margin-top: 10px; letter-spacing: -1px; }
+.end .what { font-size: 44px; font-weight: 600; color: rgba(255,255,255,.88); margin-top: 6px; line-height: 1.35; }
+.end .url { margin-top: 40px; background: #fff; color: var(--teal-dark); border-radius: 30px; padding: 22px 40px; font-size: 54px; font-weight: 800;
+  font-family: 'Segoe UI', sans-serif; letter-spacing: -0.5px; }
+.end .link { margin-top: 26px; font-size: 46px; font-weight: 700; color: var(--gold); }
+.end .safe { margin-top: 56px; border-top: 4px solid rgba(255,255,255,.18); padding-top: 32px; font-size: 34px; line-height: 1.45;
+  font-weight: 600; color: rgba(255,255,255,.85); }
+.end .safe .s2 { font-size: 29px; color: rgba(255,255,255,.65); margin-top: 8px; }
+.bigparrot { width: 300px; height: 300px; }
