@@ -134,10 +134,8 @@ async function main() {
   await go(page, '/analytics');
   await shot(page, 'analytics-top', { scrollTo: 0 });
   await shot(page, 'analytics-full', { full: true });
-  // The wide table makes this page 1152 px wide; crop its left part (subject → accuracy) to phone width
-  const top = await page.evaluate(() => { const h = [...document.querySelectorAll('h2,h3')].find(e => e.textContent.startsWith('Weightage vs')); return h.getBoundingClientRect().top + scrollY; });
-  require('child_process').execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', path.join(OUT, 'analytics-full.jpg'),
-    '-vf', `crop=840:1818:0:${Math.round(top * DPR - 60)},scale=780:1688`, '-q:v', '3', path.join(OUT, 'analytics-table.jpg')]);
+  // The weightage table scrolls inside its own box, so a phone-size shot shows subject → accuracy
+  await shot(page, 'analytics-table', { scrollTo: 'Weightage vs performance' });
   await go(page, '/mistakes');
   await shot(page, 'mistakes', { scrollTo: 0 });
 
