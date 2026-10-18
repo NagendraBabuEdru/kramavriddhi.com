@@ -4136,7 +4136,7 @@ apy_rows = "\n".join(
 write("tools/atal-pension-calculator/index.html",
     head(page_title("Atal Pension Calculator: Contribution by Age"),
          "APY calculator: enter your age to see the monthly, quarterly and half-yearly contribution for a ₹1,000 to ₹5,000 pension, based on the official chart.",
-         "/tools/atal-pension-calculator/",
+         "/tools/atal-pension-calculator/", alternates={"en": "/tools/atal-pension-calculator/", "te": "/te/tools/atal-pension-calculator/"},
          image=og_card("atal-pension-calculator", "Atal Pension Calculator", "👴", "Free calculator",
                        [("Pension", "₹1,000–₹5,000 / month"), ("Join at", "Age 18–40"), ("Based on", "Official APY chart")], foot="Free · No sign-up · Works on any phone"))
     + nav("tools") + f'''
@@ -4145,7 +4145,8 @@ write("tools/atal-pension-calculator/index.html",
       <article>
         <div class="eyebrow">👴 Calculator</div>
         <h1>Atal Pension Yojana Calculator</h1>
-        <p class="lede">Find out how much you need to pay to get a guaranteed pension of ₹1,000 to ₹5,000 a month after 60. Based on the official APY contribution chart.</p>{share_bar("/tools/atal-pension-calculator/", "Atal Pension Yojana calculator: see how much you pay each month for a ₹1,000 to ₹5,000 pension after 60.")}
+        <p class="lede">Find out how much you need to pay to get a guaranteed pension of ₹1,000 to ₹5,000 a month after 60. Based on the official APY contribution chart.</p>
+        <p class="lang-switch"><a href="/te/tools/atal-pension-calculator/" lang="te">తెలుగులో చూడండి →</a></p>{share_bar("/tools/atal-pension-calculator/", "Atal Pension Yojana calculator: see how much you pay each month for a ₹1,000 to ₹5,000 pension after 60.")}
 
         <div class="calc">
           <label>Your age today
@@ -4224,7 +4225,7 @@ write("tools/atal-pension-calculator/index.html",
 write("tools/sukanya-samriddhi-calculator/index.html",
     head(page_title("Sukanya Samriddhi Calculator: Maturity Amount"),
          "SSY calculator: enter your yearly deposit to see the maturity amount, total interest and year-by-year growth of a Sukanya Samriddhi account at the current 8.2% rate.",
-         "/tools/sukanya-samriddhi-calculator/",
+         "/tools/sukanya-samriddhi-calculator/", alternates={"en": "/tools/sukanya-samriddhi-calculator/", "te": "/te/tools/sukanya-samriddhi-calculator/"},
          image=og_card("sukanya-samriddhi-calculator", "Sukanya Samriddhi Calculator", "👧", "Free calculator",
                        [("Interest", "8.2% (Oct–Dec 2026)"), ("Deposit", "₹250–₹1.5 lakh / year"), ("Shows", "Maturity amount")], foot="Free · No sign-up · Works on any phone"))
     + nav("tools") + '''
@@ -4233,7 +4234,8 @@ write("tools/sukanya-samriddhi-calculator/index.html",
       <article>
         <div class="eyebrow">👧 Calculator</div>
         <h1>Sukanya Samriddhi Yojana Calculator</h1>
-        <p class="lede">See how much a Sukanya Samriddhi account could grow to when it matures after 21 years.</p>''' + share_bar("/tools/sukanya-samriddhi-calculator/", "Sukanya Samriddhi calculator: see how much your daughter's SSY account can grow to in 21 years.") + '''
+        <p class="lede">See how much a Sukanya Samriddhi account could grow to when it matures after 21 years.</p>
+        <p class="lang-switch"><a href="/te/tools/sukanya-samriddhi-calculator/" lang="te">తెలుగులో చూడండి →</a></p>''' + share_bar("/tools/sukanya-samriddhi-calculator/", "Sukanya Samriddhi calculator: see how much your daughter's SSY account can grow to in 21 years.") + '''
 
         <div class="calc">
           <label>Yearly deposit (₹250 to ₹1,50,000)
@@ -4289,6 +4291,170 @@ write("tools/sukanya-samriddhi-calculator/index.html",
       })();
     </script>
 ''' + FOOTER)
+
+
+# ---- Telugu calculators (added 18 Oct 2026): same official APY chart and SSY maths as the English pages
+write("te/tools/atal-pension-calculator/index.html",
+    head(page_title("అటల్ పెన్షన్ కాలిక్యులేటర్: వయసు వారీ చందా"),
+         "అటల్ పెన్షన్ యోజన కాలిక్యులేటర్ తెలుగులో: మీ వయసు ఇస్తే ₹1,000 నుంచి ₹5,000 పింఛన్‌కు నెలకు, మూడు నెలలకు, ఆరు నెలలకు ఎంత కట్టాలో అధికారిక చార్ట్ ఆధారంగా చూపిస్తుంది.",
+         "/te/tools/atal-pension-calculator/", lang="te",
+         alternates={"en": "/tools/atal-pension-calculator/", "te": "/te/tools/atal-pension-calculator/"},
+         image=og_card("atal-pension-calculator", "అటల్ పెన్షన్ కాలిక్యులేటర్", "👴", "ఉచిత కాలిక్యులేటర్",
+                       [("పింఛన్", "₹1,000–₹5,000 / నెల"), ("చేరే వయసు", "18–40 ఏళ్ళు"), ("ఆధారం", "అధికారిక APY చార్ట్")], lang="te",
+                       foot="ఉచితం · సైన్-అప్ అవసరం లేదు · ఏ ఫోన్‌లోనైనా"))
+    + nav("tools", lang="te") + f'''
+    <div class="narrow">
+      <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › అటల్ పెన్షన్ కాలిక్యులేటర్</p>
+      <article>
+        <div class="eyebrow">👴 కాలిక్యులేటర్</div>
+        <h1>అటల్ పెన్షన్ యోజన కాలిక్యులేటర్</h1>
+        <p class="lede">60 ఏళ్ళ తర్వాత నెలకు ₹1,000 నుంచి ₹5,000 హామీ పింఛన్ రావాలంటే మీరు ఎంత కట్టాలో తెలుసుకోండి. అధికారిక APY చందా చార్ట్ ఆధారంగా.</p>
+        <p class="lang-switch"><a href="/tools/atal-pension-calculator/" lang="en">Use in English →</a></p>{share_bar("/te/tools/atal-pension-calculator/", "అటల్ పెన్షన్ యోజన కాలిక్యులేటర్: 60 ఏళ్ళ తర్వాత ₹1,000 నుంచి ₹5,000 పింఛన్‌కు నెలకు ఎంత కట్టాలో చూడండి.", "te")}
+
+        <div class="calc">
+          <label>మీ ప్రస్తుత వయసు
+            <input type="number" id="age" min="18" max="40" value="25" inputmode="numeric">
+          </label>
+          <label>60 తర్వాత కావలసిన పింఛన్
+            <select id="pension">
+              <option value="0">నెలకు ₹1,000</option>
+              <option value="1">నెలకు ₹2,000</option>
+              <option value="2">నెలకు ₹3,000</option>
+              <option value="3">నెలకు ₹4,000</option>
+              <option value="4" selected>నెలకు ₹5,000</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="result" id="result" aria-live="polite"></div>
+
+        <h2>మీ వయసుకు అన్ని పింఛన్ ఆప్షన్లు</h2>
+        <div class="table-wrap">
+        <table class="simple" id="compare"></table>
+        </div>
+
+        <h2>పూర్తి అధికారిక చార్ట్ (నెలవారీ చందా)</h2>
+        <details>
+          <summary>18 నుంచి 40 ఏళ్ళ చార్ట్ చూపించు</summary>
+          <div class="table-wrap">
+          <table class="simple">
+            <tr><th>వయసు</th><th>₹1,000</th><th>₹2,000</th><th>₹3,000</th><th>₹4,000</th><th>₹5,000</th></tr>
+{apy_rows}
+          </table>
+          </div>
+        </details>
+
+        <div class="note">ఈ కాలిక్యులేటర్ అధికారిక నెలవారీ చందా చార్ట్‌ను వాడుతుంది. పింఛన్ మొత్తానికి కేంద్ర ప్రభుత్వం హామీ ఇస్తుంది. 1 అక్టోబర్ 2022 నుంచి ఆదాయపు పన్ను కట్టేవారు APYలో చేరలేరు.</div>
+        <p>పథకం గురించి ఇంకా తెలుసుకోవాలా? మా <a href="/te/schemes/atal-pension-yojana/">అటల్ పెన్షన్ యోజన గైడ్</a> చదవండి.</p>
+      </article>
+    </div>
+    <script>
+      (function () {{
+        var CHART = {json.dumps(APY_CHART)};
+        var PENSIONS = [1000, 2000, 3000, 4000, 5000];
+        var CORPUS = ["₹1.7 లక్షలు", "₹3.4 లక్షలు", "₹5.1 లక్షలు", "₹6.8 లక్షలు", "₹8.5 లక్షలు"];
+        var ageEl = document.getElementById('age'), penEl = document.getElementById('pension');
+        var out = document.getElementById('result'), cmp = document.getElementById('compare');
+        function inr(n) {{ return '₹' + Math.round(n).toLocaleString('en-IN'); }}
+        function render() {{
+          var age = parseInt(ageEl.value, 10);
+          if (isNaN(age) || age < 18 || age > 40) {{
+            out.innerHTML = '<strong>18 నుంచి 40 మధ్య వయసు ఇవ్వండి.</strong> ఈ వయసులో మాత్రమే APYలో చేరవచ్చు.';
+            cmp.innerHTML = '';
+            return;
+          }}
+          var i = parseInt(penEl.value, 10), m = CHART[age][i][0], years = 60 - age;
+          out.innerHTML =
+            '<div class="big">' + inr(m) + ' <small>నెలకు</small></div>' +
+            '<p>జీవితాంతం <strong>నెలకు ' + inr(PENSIONS[i]) + '</strong> పింఛన్ రావాలంటే <strong>' + years + ' ఏళ్ళు</strong> (వయసు ' + age + ' నుంచి 60 వరకు) ప్రతి నెలా ఇంత కట్టాలి.</p>' +
+            '<ul><li>మీరు కట్టే మొత్తం: సుమారు <strong>' + inr(m * 12 * years) + '</strong></li>' +
+            '<li>మీ తర్వాత మీ భార్య/భర్తకు అదే పింఛన్ వస్తుంది.</li>' +
+            '<li>మీ ఇద్దరి తర్వాత మీ నామినీకి <strong>' + CORPUS[i] + '</strong> వస్తుంది.</li></ul>';
+          var h = '<tr><th>పింఛన్</th><th>నెలకు</th><th>3 నెలలకు</th><th>6 నెలలకు</th></tr>';
+          for (var k = 0; k < 5; k++) {{
+            var v = CHART[age][k];
+            h += '<tr' + (k === i ? ' class="hl"' : '') + '><td>' + inr(PENSIONS[k]) + '</td><td>' + inr(v[0]) + '</td><td>' + inr(v[1]) + '</td><td>' + inr(v[2]) + '</td></tr>';
+          }}
+          cmp.innerHTML = h;
+        }}
+        ageEl.addEventListener('input', render);
+        penEl.addEventListener('change', render);
+        render();
+      }})();
+    </script>
+''' + footer("te"))
+
+write("te/tools/sukanya-samriddhi-calculator/index.html",
+    head(page_title("సుకన్య సమృద్ధి కాలిక్యులేటర్: మెచ్యూరిటీ మొత్తం"),
+         "సుకన్య సమృద్ధి యోజన కాలిక్యులేటర్ తెలుగులో: ఏటా జమ చేసే మొత్తం ఇస్తే ప్రస్తుత 8.2% వడ్డీతో మెచ్యూరిటీ మొత్తం, మొత్తం వడ్డీ, ఏడాది వారీ పెరుగుదల చూపిస్తుంది.",
+         "/te/tools/sukanya-samriddhi-calculator/", lang="te",
+         alternates={"en": "/tools/sukanya-samriddhi-calculator/", "te": "/te/tools/sukanya-samriddhi-calculator/"},
+         image=og_card("sukanya-samriddhi-calculator", "సుకన్య సమృద్ధి కాలిక్యులేటర్", "👧", "ఉచిత కాలిక్యులేటర్",
+                       [("వడ్డీ", "8.2% (అక్టోబర్–డిసెంబర్ 2026)"), ("డిపాజిట్", "ఏటా ₹250–₹1.5 లక్షలు"), ("చూపేది", "మెచ్యూరిటీ మొత్తం")], lang="te",
+                       foot="ఉచితం · సైన్-అప్ అవసరం లేదు · ఏ ఫోన్‌లోనైనా"))
+    + nav("tools", lang="te") + '''
+    <div class="narrow">
+      <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › సుకన్య సమృద్ధి కాలిక్యులేటర్</p>
+      <article>
+        <div class="eyebrow">👧 కాలిక్యులేటర్</div>
+        <h1>సుకన్య సమృద్ధి యోజన కాలిక్యులేటర్</h1>
+        <p class="lede">21 ఏళ్ళ తర్వాత మెచ్యూర్ అయ్యేటప్పుడు సుకన్య సమృద్ధి ఖాతా ఎంతకు పెరగవచ్చో చూడండి.</p>
+        <p class="lang-switch"><a href="/tools/sukanya-samriddhi-calculator/" lang="en">Use in English →</a></p>''' + share_bar("/te/tools/sukanya-samriddhi-calculator/", "సుకన్య సమృద్ధి కాలిక్యులేటర్: మీ కూతురి SSY ఖాతా 21 ఏళ్ళలో ఎంత అవుతుందో చూడండి.", "te") + '''
+
+        <div class="calc">
+          <label>ఏటా జమ (₹250 నుంచి ₹1,50,000)
+            <input type="number" id="dep" min="250" max="150000" step="50" value="60000" inputmode="numeric">
+          </label>
+          <label>ఖాతా తెరిచే సంవత్సరం
+            <input type="number" id="start" min="2015" max="2040" value="2026" inputmode="numeric">
+          </label>
+          <label>వడ్డీ రేటు (ఏడాదికి %)
+            <input type="number" id="rate" min="1" max="15" step="0.1" value="8.2" inputmode="decimal">
+          </label>
+        </div>
+        <p class="muted" style="font-size:0.9rem">అక్టోబర్–డిసెంబర్ 2026కు అధికారిక రేటు 8.2%. ప్రభుత్వం ప్రతి త్రైమాసికం సమీక్షిస్తుంది.</p>
+
+        <div class="result" id="result" aria-live="polite"></div>
+
+        <details>
+          <summary>ఏడాది వారీ పెరుగుదల చూపించు</summary>
+          <div class="table-wrap"><table class="simple" id="years"></table></div>
+        </details>
+
+        <div class="note">ఇది అంచనా మాత్రమే. 15 ఏళ్ళు ప్రతి ఆర్థిక సంవత్సరం మొదట్లో అదే మొత్తం జమ చేస్తారని, 21 ఏళ్ళూ వడ్డీ రేటు అలాగే ఉంటుందని తీసుకుంటుంది. అసలు మొత్తం భవిష్యత్ వడ్డీ రేట్లు, మీరు జమ చేసే సమయాన్ని బట్టి మారుతుంది. వడ్డీ, మెచ్యూరిటీ మొత్తంపై పన్ను ఉండదు.</div>
+        <p>SSY గురించి కొత్తా? మా <a href="/te/schemes/sukanya-samriddhi-yojana/">సుకన్య సమృద్ధి యోజన గైడ్</a> చదవండి.</p>
+      </article>
+    </div>
+    <script>
+      (function () {
+        var dep = document.getElementById('dep'), start = document.getElementById('start'), rate = document.getElementById('rate');
+        var out = document.getElementById('result'), yrs = document.getElementById('years');
+        function inr(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+        function render() {
+          var d = parseFloat(dep.value), r = parseFloat(rate.value) / 100, s = parseInt(start.value, 10);
+          if (isNaN(d) || d < 250 || d > 150000) {
+            out.innerHTML = '<strong>ఏటా జమ ₹250 నుంచి ₹1,50,000 మధ్య ఇవ్వండి.</strong>';
+            yrs.innerHTML = ''; return;
+          }
+          if (isNaN(r) || r <= 0 || isNaN(s)) { out.innerHTML = '<strong>సంవత్సరం, వడ్డీ రేటు సరిచూడండి.</strong>'; yrs.innerHTML = ''; return; }
+          var bal = 0, paid = 0, rows = '<tr><th>ఏడాది</th><th>జమ</th><th>వడ్డీ</th><th>బ్యాలెన్స్</th></tr>';
+          for (var y = 0; y < 21; y++) {
+            var add = y < 15 ? d : 0; bal += add; paid += add;
+            var intr = bal * r; bal += intr;
+            rows += '<tr><td>' + (y + 1) + ' (' + (s + y) + '-' + String(s + y + 1).slice(2) + ')</td><td>' + (add ? inr(add) : '—') + '</td><td>' + inr(intr) + '</td><td>' + inr(bal) + '</td></tr>';
+          }
+          out.innerHTML =
+            '<div class="big">' + inr(bal) + ' <small>మెచ్యూరిటీకి</small></div>' +
+            '<ul><li>మీరు జమ చేసేది: 15 ఏళ్ళలో <strong>' + inr(paid) + '</strong></li>' +
+            '<li>వచ్చే వడ్డీ: <strong>' + inr(bal - paid) + '</strong></li>' +
+            '<li>ఖాతా మెచ్యూర్ అయ్యే సంవత్సరం: <strong>' + (s + 21) + '</strong></li></ul>';
+          yrs.innerHTML = rows;
+        }
+        [dep, start, rate].forEach(function (el) { el.addEventListener('input', render); });
+        render();
+      })();
+    </script>
+''' + footer("te"))
 
 # ---------------------------------------------------------------- Telugu pages (added 6 Oct 2026)
 TE_STATE = {"central": "కేంద్ర ప్రభుత్వ పథకం", "ap": "ఆంధ్రప్రదేశ్ ప్రభుత్వ పథకం", "ts": "తెలంగాణ ప్రభుత్వ పథకం"}
@@ -4443,7 +4609,7 @@ write("te/schemes/index.html",
       <div class="eyebrow">తెలుగులో పథకాలు</div>
       <h1>ప్రభుత్వ పథకాలు, సులభమైన తెలుగులో</h1>
       <p>కేంద్ర ప్రభుత్వ, ఆంధ్రప్రదేశ్, తెలంగాణ పథకాల గురించి స్పష్టమైన గైడ్‌లు: ఎవరు అర్హులు, ఏం లభిస్తుంది, ఏ పత్రాలు కావాలి, అధికారిక పోర్టల్‌లో ఎలా దరఖాస్తు చేయాలి.</p>
-      <p class="lang-switch"><a href="/schemes/" lang="en">All schemes in English →</a></p>
+      <p class="lang-switch"><a href="/schemes/" lang="en">All schemes in English →</a> &nbsp;·&nbsp; <a href="/te/updates/">⏰ తాజా సమాచారం &amp; చివరి తేదీలు →</a></p>
     </header>
     <a class="cta" href="/te/schemes/for-women/" style="margin-bottom:12px"><span>👩</span><div><strong>బాలికలు & మహిళలకు పథకాలు</strong><br><span class="muted" style="font-size:0.9rem">స్కాలర్‌షిప్‌లు, వ్యాపార రుణాలు, SHG సాయం, ఉచిత బస్సు, ఇంకా.</span></div></a>
     <a class="cta" href="/te/schemes/for-youth/" style="margin-bottom:12px"><span>🧑‍💼</span><div><strong>యువతకు అవకాశాలు</strong><br><span class="muted" style="font-size:0.9rem">జీతంతో ఇంటర్న్‌షిప్‌లు, అగ్నివీర్, ఉచిత నైపుణ్య శిక్షణ, రుణాలు.</span></div></a>
@@ -4588,7 +4754,7 @@ UPDATES_JS = """
 write("updates/index.html",
     head(page_title("Scheme Deadlines & Instalment Dates 2026"),
          "Latest government scheme news: application deadlines, expected instalment dates, interest rate changes and new rules for central, Andhra Pradesh and Telangana schemes.",
-         "/updates/",
+         "/updates/", alternates={"en": "/updates/", "te": "/te/updates/"},
          image=og_card("updates", "Latest updates & deadlines", "⏰", "Updates",
                        [("Deadlines", "Scholarships, gas & more"), ("Expected", "Instalment dates"), ("Last checked", UPDATES_CHECKED)], foot="Deadlines · Expected payments · New rules"))
     + nav("schemes") + f"""
@@ -4596,7 +4762,8 @@ write("updates/index.html",
       <div class="eyebrow">Updates</div>
       <h1>Latest updates &amp; deadlines</h1>
       <p>Important dates, expected payments and new rules for the schemes on Kramavriddhi. We check official sources regularly and update this page.</p>
-      <p class="muted" style="font-size:0.9rem">Last checked: {UPDATES_CHECKED}</p>{share_bar("/updates/", "Latest government scheme deadlines and expected payment dates (Central, AP and Telangana) in one place:")}
+      <p class="muted" style="font-size:0.9rem">Last checked: {UPDATES_CHECKED}</p>
+      <p class="lang-switch"><a href="/te/updates/" lang="te">తెలుగులో చదవండి →</a></p>{share_bar("/updates/", "Latest government scheme deadlines and expected payment dates (Central, AP and Telangana) in one place:")}
     </header>
     <div class="updates">
 {"".join(update_item(u) for u in UPDATES)}    </div>
@@ -4606,6 +4773,89 @@ write("updates/index.html",
 
 with open(os.path.join(os.path.dirname(__file__), "home_updates.html"), "w", encoding="utf-8") as f:
     f.write("".join(update_item(u) for u in UPDATES[:4]) + "    </div>\n" + UPDATES_JS)
+
+
+# ---- Telugu updates page (added 18 Oct 2026). Every item in UPDATES needs a Telugu entry here (keyed by the English title).
+TE_UPDATES = {
+    "AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)": ("ఏపీ రబీ పంటల బీమా: 15 డిసెంబర్ లోపు చేరండి (వరికి 31 డిసెంబర్)",
+        "పీఎం ఫసల్ బీమా యోజన కింద రబీ ఆహార, నూనెగింజల పంటలకు రైతు గరిష్ఠంగా 1.5% ప్రీమియం కడతారు. బ్యాంకు, CSC లేదా రైతు సేవా కేంద్రంలో చేరండి; అగ్రిస్టాక్ రైతు ఐడీ అవసరం."),
+    "Annadata Sukhibhava 2nd instalment expected around Dasara": ("అన్నదాత సుఖీభవ రెండో విడత దసరా సమయంలో రావచ్చు",
+        "పీఎం కిసాన్ 24వ విడతతో కలిపి ఇస్తారని వార్తలు చెబుతున్నాయి, కొన్ని 17 అక్టోబర్ అంటున్నాయి. తేదీ, మొత్తం అధికారికంగా ఖరారు కాలేదు. రైతు సేవా కేంద్రంలో ఈకేవైసీ పూర్తి చేయండి."),
+    "Thalliki Vandanam: ₹13,000 for new Class 1 and Inter students before Dasara": ("తల్లికి వందనం: కొత్త 1వ తరగతి, ఇంటర్ విద్యార్థులకు దసరా లోపు ₹13,000",
+        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న మంజూరు ఉత్తర్వు వచ్చింది; ఖచ్చితమైన తేదీ ఇంకా లేదు."),
+    "Central Sector Scholarship: apply by 31 October": ("సెంట్రల్ సెక్టార్ స్కాలర్‌షిప్: 31 అక్టోబర్ లోపు దరఖాస్తు చేయండి",
+        "12వ తరగతి బోర్డులో టాప్ 20%లో ఉండి, కుటుంబ ఆదాయం ₹4.5 లక్షల వరకు ఉన్న కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000. నేషనల్ స్కాలర్‌షిప్ పోర్టల్‌లో దరఖాస్తు చేయండి."),
+    "Pragati Scholarship for girls: apply by 31 October": ("అమ్మాయిలకు ప్రగతి స్కాలర్‌షిప్: 31 అక్టోబర్ లోపు దరఖాస్తు చేయండి",
+        "AICTE డిగ్రీ, డిప్లొమా కోర్సుల అమ్మాయిలకు ఏడాదికి ₹50,000. 2026-27 దరఖాస్తులు నేషనల్ స్కాలర్‌షిప్ పోర్టల్‌లో 31 అక్టోబర్ 2026తో ముగుస్తాయి."),
+    "PM-KISAN 24th instalment: no official date yet": ("పీఎం కిసాన్ 24వ విడత: ఇంకా అధికారిక తేదీ లేదు",
+        "అక్టోబర్–నవంబర్‌లో రావచ్చని అంచనా. వార్తల్లో, సోషల్ మీడియాలో కనిపించే 17 లేదా 20 అక్టోబర్ వంటి తేదీలను ప్రభుత్వం నిర్ధారించలేదు. ఈకేవైసీ, ల్యాండ్ సీడింగ్, ఆధార్ బ్యాంకు లింక్ పూర్తి చేసుకోండి."),
+    "AP Auto Drivers Sevalo: 2026 payment date not announced": ("ఏపీ ఆటో డ్రైవర్ల సేవలో: 2026 చెల్లింపు తేదీ ప్రకటించలేదు",
+        "గత ఏడాది సొంత ఆటో, ట్యాక్సీ, మ్యాక్సీ క్యాబ్ డ్రైవర్లకు 4 అక్టోబర్ 2025న ₹15,000 ఇచ్చారు. ఈ ఏడాది చెల్లింపుకు అధికారిక తేదీ ఇంకా ఇవ్వలేదు."),
+    "Nethanna Sevalo 2nd phase: ₹25,000 for weavers, date awaited": ("నేతన్నల సేవలో రెండో విడత: నేతన్నలకు ₹25,000, తేదీ కోసం ఎదురుచూపు",
+        "రెండో విడతకు 36,632 మంది చేనేత కార్మికులు దరఖాస్తు చేశారు, జాబితా 3 అక్టోబర్ నాటికి ఖరారు కావాలి. చెల్లింపు తేదీ ఇంకా ప్రకటించలేదు."),
+    "Deepam-2: book your free gas cylinder by 30 November": ("దీపం-2: 30 నవంబర్ లోపు ఉచిత గ్యాస్ సిలిండర్ బుక్ చేయండి",
+        "ఏపీ కుటుంబాలు ఆగస్టు–నవంబర్ కాలంలో ఉన్నాయి. వాడని ఉచిత సిలిండర్ తర్వాతి కాలానికి రాదు."),
+    "Telangana: senior citizens' pension still ₹2,016": ("తెలంగాణ: వృద్ధుల పింఛన్ ఇంకా ₹2,016",
+        "హామీ ఇచ్చిన ₹4,000 పెంపు వృద్ధులకు అమలు కాలేదు, 2026 చేయూత నమోదులో వృద్ధులను చేర్చలేదు."),
+    "Telangana plans crop insurance from Yasangi 2026-27": ("యాసంగి 2026-27 నుంచి తెలంగాణలో పంటల బీమా ప్రణాళిక",
+        "యాసంగి సీజన్ నుంచి పంటల బీమా మళ్ళీ తెస్తామని ప్రభుత్వం చెప్పింది. అధికారిక నోటిఫికేషన్, చివరి తేదీ ఇంకా రాలేదు."),
+    "Sukanya Samriddhi interest stays at 8.2% for Oct–Dec 2026": ("అక్టోబర్–డిసెంబర్ 2026కు సుకన్య సమృద్ధి వడ్డీ 8.2%",
+        "వడ్డీ రేటును ప్రతి త్రైమాసికం సమీక్షిస్తారు. తర్వాతి ప్రకటన డిసెంబర్ చివర్లో రావచ్చు."),
+    "Rajiv Yuva Vikasam: first phase planned from 19 November": ("రాజీవ్ యువ వికాసం: 19 నవంబర్ నుంచి మొదటి విడత ప్రణాళిక",
+        "₹1 లక్ష వరకు యూనిట్లకు ముందు, 19 నవంబర్ 2026 నుంచి సాయం ఇస్తామని ఉప ముఖ్యమంత్రి చెప్పారు. తుది లబ్ధిదారుల జాబితా ఇంకా రాలేదు, దరఖాస్తు చేసినంత మాత్రాన ఎంపిక కాదు."),
+    "Kalyana Lakshmi and Shaadi Mubarak continue after High Court order": ("హైకోర్టు ఉత్తర్వు తర్వాత కళ్యాణ లక్ష్మి, షాదీ ముబారక్ కొనసాగుతున్నాయి",
+        "పెళ్ళి సాయం పథకాలను నిలిపిన సింగిల్ జడ్జి ఉత్తర్వుపై డివిజన్ బెంచ్ స్టే ఇచ్చింది. తులం బంగారం హామీ ఇంకా అమలు కాలేదు."),
+    "PM-KISAN continued until 2030-31": ("పీఎం కిసాన్ 2030-31 వరకు కొనసాగింపు",
+        "₹3.15 లక్షల కోట్లతో 2026-27 నుంచి 2030-31 వరకు పీఎం కిసాన్ కొనసాగింపును కేంద్ర మంత్రివర్గం ఆమోదించింది."),
+    "Ujjwala: ₹300 gas subsidy now on only 4 refills a year": ("ఉజ్వల: ₹300 గ్యాస్ సబ్సిడీ ఇప్పుడు ఏడాదికి 4 రీఫిల్స్‌కే",
+        "ఉజ్వల సబ్సిడీ రీఫిల్స్‌ను కేంద్రం ఏడాదికి 9 నుంచి 4కి తగ్గించింది, అంటే కుటుంబానికి ఏడాదికి గరిష్ఠంగా ₹1,200."),
+    "Telangana: interest-free SHG loans raised to ₹10 lakh": ("తెలంగాణ: SHGలకు వడ్డీ లేని రుణాలు ₹10 లక్షలకు పెంపు",
+        "ఇందిరా మహిళా శక్తి కింద ₹10 లక్షల వరకు SHG బ్యాంకు రుణాలపై వడ్డీని ప్రభుత్వం కడుతుంది (గతంలో ₹5 లక్షలు)."),
+    "PM Internship: final-year students can now apply": ("పీఎం ఇంటర్న్‌షిప్: ఫైనల్ ఇయర్ విద్యార్థులు ఇప్పుడు దరఖాస్తు చేయవచ్చు",
+        "18–25 ఏళ్ళ ఫైనల్ ఇయర్ యూజీ, పీజీ విద్యార్థులు కాలేజీ NOCతో దరఖాస్తు చేయవచ్చు. ఇంటర్న్‌లకు నెలకు కనీసం ₹9,000."),
+}
+KIND_LABEL_TE = {"deadline": "⏰ చివరి తేదీ", "expected": "📅 అంచనా", "news": "📰 వార్త", "rate": "📈 రేటు"}
+_missing = [u["title"] for u in UPDATES if u["title"] not in TE_UPDATES]
+assert not _missing, f"Add Telugu text to TE_UPDATES for: {_missing}"
+
+def te_month_date(d):
+    """'14 Oct 2026' or '18 October 2026' -> '14 అక్టోబర్ 2026'"""
+    day, mon, year = d.split()
+    m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].index(mon[:3])
+    return f"{day} {MONTHS['te'][m]} {year}"
+
+def update_item_te(u):
+    title, text = TE_UPDATES[u["title"]]
+    slug = u["link"].strip("/").split("/")[-1]
+    link = f"/te/schemes/{slug}/" if slug in TE else u["link"]
+    until = f' data-until="{u["until"]}"' if u.get("until") else ""
+    return f"""        <a class="update {u["kind"]}" href="{link}"{until} lang="te">
+          <div class="update-top"><span class="update-kind">{KIND_LABEL_TE[u["kind"]]}</span><span class="update-date">{te_month_date(u["date"])}</span></div>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </a>
+"""
+
+write("te/updates/index.html",
+    head(page_title("పథకాల తాజా సమాచారం, చివరి తేదీలు 2026"),
+         "ప్రభుత్వ పథకాల తాజా సమాచారం తెలుగులో: దరఖాస్తుల చివరి తేదీలు, రావాల్సిన విడతల తేదీలు, వడ్డీ రేట్ల మార్పులు, కేంద్ర, ఆంధ్రప్రదేశ్, తెలంగాణ పథకాల కొత్త నిబంధనలు.",
+         "/te/updates/", lang="te", alternates={"en": "/updates/", "te": "/te/updates/"},
+         image=og_card("updates", "తాజా సమాచారం, చివరి తేదీలు", "⏰", "తాజా సమాచారం",
+                       [("చివరి తేదీలు", "స్కాలర్‌షిప్‌లు, గ్యాస్, ఇంకా"), ("అంచనా", "విడతల తేదీలు"), ("చివరిగా చూసింది", te_month_date(UPDATES_CHECKED))],
+                       lang="te", foot="చివరి తేదీలు · రావాల్సిన చెల్లింపులు · కొత్త నిబంధనలు"))
+    + nav("schemes", lang="te") + f"""
+    <header class="page-head">
+      <div class="eyebrow">తాజా సమాచారం</div>
+      <h1>తాజా సమాచారం &amp; చివరి తేదీలు</h1>
+      <p>క్రమవృద్ధిలోని పథకాల ముఖ్యమైన తేదీలు, రావాల్సిన చెల్లింపులు, కొత్త నిబంధనలు. అధికారిక మూలాలను తరచుగా చూసి ఈ పేజీని అప్‌డేట్ చేస్తాం.</p>
+      <p class="muted" style="font-size:0.9rem">చివరిగా చూసింది: {te_month_date(UPDATES_CHECKED)}</p>
+      <p class="lang-switch"><a href="/updates/" lang="en">Read in English →</a></p>{share_bar("/te/updates/", "ప్రభుత్వ పథకాల చివరి తేదీలు, రావాల్సిన చెల్లింపుల తేదీలు (కేంద్రం, ఏపీ, తెలంగాణ) ఒకే చోట:", "te")}
+    </header>
+    <div class="updates">
+{"".join(update_item_te(u) for u in UPDATES)}    </div>
+    <div class="note" style="margin-top:28px">"అంచనా" అని ఉన్న తేదీలు గత పద్ధతులు, వార్తల ఆధారంగా ఇచ్చినవి, అధికారిక ప్రకటనలు కావు. ప్రతి గైడ్‌లో ఇచ్చిన అధికారిక పోర్టల్‌లో తప్పకుండా నిర్ధారించుకోండి.</div>
+    <div style="height:40px"></div>
+{UPDATES_JS.replace("✔ Closed", "✔ ముగిసింది")}""" + footer("te"))
 
 # ---------------------------------------------------------------- apps (added 13 Oct 2026)
 APPS_LIVE = [
@@ -4783,11 +5033,11 @@ def lastmod(u):
     if u.startswith(("/schemes/", "/te/schemes/")) and slug in BY_SLUG:
         return guide_iso(slug)
     if u in ("/", "/updates/", "/schemes/", "/te/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/",
-             "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/"):
+             "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/"):
         return SITE_ISO
     return UPDATED_ISO
 
-urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/tools/scheme-eligibility-checker/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/", "/te/tools/scheme-eligibility-checker/", "/te/tools/atal-pension-calculator/", "/te/tools/sukanya-samriddhi-calculator/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{lastmod(u)}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")

@@ -130,6 +130,7 @@ def social_links(lang="en"):
 def footer(lang="en"):
     if lang == "te":
         links = '''          <li><a href="/te/schemes/">తెలుగు పథకాలు</a></li>
+          <li><a href="/te/updates/">తాజా సమాచారం</a></li>
           <li><a href="/schemes/">Schemes (English)</a></li>
           <li><a href="/tools/">సాధనాలు</a></li>
           <li><a href="/apps/">యాప్‌లు</a></li>
