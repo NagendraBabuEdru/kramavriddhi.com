@@ -259,3 +259,7 @@ TE.update(TE5)
 # Batch 6: housing, Mudra, Jan Dhan and insurance
 from te_content6 import TE6
 TE.update(TE6)
+
+# Batch 7: fee reimbursement, NTR Vaidya Seva, promised AP schemes
+from te_content7 import TE7
+TE.update(TE7)

@@ -91,6 +91,16 @@ SEO = {
         "Kalyana Lakshmi & Shaadi Mubarak Telangana: ₹1,00,116 marriage help. Income limits, documents, how to apply and check status on ePASS."),
     "pm-fasal-bima-yojana": ("PM Fasal Bima Yojana: Rabi 2026 Last Date & Premium",
         "PM Fasal Bima Yojana: crop insurance at 1.5% Rabi, 2% Kharif premium. AP Rabi 2026-27 last date 15 Dec (paddy 31 Dec). How to enrol and claim."),
+    "ap-fee-reimbursement": ("AP Fee Reimbursement 2026: Eligibility, MTF, Jnanabhumi",
+        "AP fee reimbursement (RTF) and post-matric scholarship (MTF): full tuition fee, ₹10,000–₹20,000 maintenance, ₹2.5 lakh income limit, Jnanabhumi status."),
+    "ts-fee-reimbursement": ("Telangana Fee Reimbursement 2026: ePASS Eligibility",
+        "Telangana fee reimbursement and post-matric scholarship on ePASS: official income limits, 2026-27 direct payment to students, documents, how to apply."),
+    "ap-ntr-vaidya-seva": ("NTR Vaidya Seva 2026: ₹25 Lakh Free Treatment, Eligibility",
+        "Dr NTR Vaidya Seva (Aarogyasri) AP: cashless treatment up to ₹25 lakh per family, 3,257 procedures, universal health policy status, how to get treatment."),
+    "ap-aadabidda-nidhi": ("Aadabidda Nidhi ₹1,500: Status October 2026",
+        "Aadabidda Nidhi AP: ₹1,500 a month promised for women 18+. Status: not started as of October 2026, no application. Avoid fake registration sites."),
+    "ap-nirudyoga-bhruthi": ("Nirudyoga Bhruthi ₹3,000: Status October 2026",
+        "Nirudyoga Bhruthi AP unemployment allowance: ₹3,000 a month promised. Status: not started as of October 2026. Job and skill schemes you can use now."),
 }
 
 # Telugu page titles (the Telugu description in te_content*.py is kept as it is).
@@ -135,4 +145,9 @@ SEO_TE = {
     "pm-jan-dhan-yojana": "జన్ ధన్ ఖాతా: లాభాలు, పత్రాలు, ఎలా తెరవాలి",
     "pm-jeevan-jyoti-bima-yojana": "PMJJBY: ₹436కు ₹2 లక్షల జీవిత బీమా",
     "pm-suraksha-bima-yojana": "PMSBY: ₹20కు ₹2 లక్షల ప్రమాద బీమా",
+    "ap-fee-reimbursement": "ఏపీ ఫీజు రీయింబర్స్‌మెంట్ 2026: అర్హత, MTF",
+    "ts-fee-reimbursement": "తెలంగాణ ఫీజు రీయింబర్స్‌మెంట్ 2026: ePASS అర్హత",
+    "ap-ntr-vaidya-seva": "ఎన్టీఆర్ వైద్య సేవ: ₹25 లక్షల ఉచిత వైద్యం, అర్హత",
+    "ap-aadabidda-nidhi": "ఆడబిడ్డ నిధి ₹1,500: అక్టోబర్ 2026 స్థితి",
+    "ap-nirudyoga-bhruthi": "నిరుద్యోగ భృతి ₹3,000: అక్టోబర్ 2026 స్థితి",
 }

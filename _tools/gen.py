@@ -16,6 +16,8 @@ GUIDE_UPDATED = {
                      "agnipath-agniveer", "pm-vishwakarma"], "2026-10-08"),
     **dict.fromkeys(["central-sector-scholarship", "pm-viksit-bharat-rozgar-yojana", "e-shram-card",
                      "pm-shram-yogi-maandhan", "pm-svanidhi", "ap-auto-drivers-sevalo"], "2026-10-13"),
+    # batch D (added 18 Oct 2026)
+    **dict.fromkeys(["ap-fee-reimbursement", "ts-fee-reimbursement", "ap-ntr-vaidya-seva", "ap-aadabidda-nidhi", "ap-nirudyoga-bhruthi"], "2026-10-18"),
     # batch A (added 15 Oct 2026) and the Rajiv Yuva Vikasam update
     **dict.fromkeys(["ts-rajiv-yuva-vikasam", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ts-kalyana-lakshmi-shaadi-mubarak", "pm-fasal-bima-yojana"], "2026-10-15"),
     # 14 Oct 2026 fact check
@@ -169,6 +171,21 @@ SCHEMES = [
     dict(slug="pm-fasal-bima-yojana", name="PM Fasal Bima Yojana (Crop Insurance)", short="PM Fasal Bima Yojana",
          cat="farmers", cat_label="Farmers & Agriculture", icon="🌦️",
          summary="Low-cost crop insurance against drought, floods, pests and unseasonal rain. AP Rabi 2026-27: enrol by 15 Dec (paddy 31 Dec)."),
+    dict(slug="ap-fee-reimbursement", name="Fee Reimbursement & Post-Matric Scholarships (Andhra Pradesh)", short="AP Fee Reimbursement",
+         state="ap", cat="education", cat_label="Education & Skills", icon="🏫",
+         summary="Full tuition fee for college students from families earning up to ₹2.5 lakh, plus ₹10,000–₹20,000 a year for food and hostel to the mother."),
+    dict(slug="ts-fee-reimbursement", name="Fee Reimbursement & Post-Matric Scholarships (Telangana)", short="TS Fee Reimbursement",
+         state="ts", cat="education", cat_label="Education & Skills", icon="🏫",
+         summary="Tuition fee and maintenance for SC, ST, BC, EBC, minority and disabled students through ePASS. From 2026-27, paid to students' accounts."),
+    dict(slug="ap-ntr-vaidya-seva", name="Dr NTR Vaidya Seva Health Scheme (Andhra Pradesh)", short="NTR Vaidya Seva",
+         state="ap", cat="health", cat_label="Health", icon="🏥",
+         summary="Cashless treatment up to ₹25 lakh per family a year for 3,257 procedures. New universal health policy approved; start not yet confirmed."),
+    dict(slug="ap-aadabidda-nidhi", name="Aadabidda Nidhi ₹1,500 for Women (Andhra Pradesh)", short="Aadabidda Nidhi",
+         state="ap", cat="women", cat_label="Women & Girls", icon="👩",
+         summary="₹1,500 a month promised for women aged 18+ in the 2024 Super Six. Not started as of October 2026: no order, no application."),
+    dict(slug="ap-nirudyoga-bhruthi", name="Nirudyoga Bhruthi Unemployment Allowance (Andhra Pradesh)", short="Nirudyoga Bhruthi",
+         state="ap", cat="jobs", cat_label="Jobs & Internships", icon="🧑‍🎓",
+         summary="₹3,000 a month promised for unemployed youth in the 2024 Super Six. Not started as of October 2026: no order, no application."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -2110,23 +2127,23 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 # Scheme lists for the collection pages (shared by the English and Telugu versions)
 COLL = {
     "for-women": [
-        ["sukanya-samriddhi-yojana", "cbse-single-girl-child-scholarship", "aicte-pragati-scholarship", "ap-thalliki-vandanam"],
+        ["sukanya-samriddhi-yojana", "cbse-single-girl-child-scholarship", "aicte-pragati-scholarship", "ap-thalliki-vandanam", "ap-fee-reimbursement", "ts-fee-reimbursement"],
         ["lakhpati-didi", "ts-indira-mahila-shakti", "pm-mudra-yojana"],
-        ["ts-kalyana-lakshmi-shaadi-mubarak", "ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana"],
+        ["ts-kalyana-lakshmi-shaadi-mubarak", "ts-mahalakshmi", "ap-stree-shakti", "ap-deepam-2", "ap-ntr-bharosa-pension", "ts-cheyutha-pension", "pm-jan-dhan-yojana", "ap-aadabidda-nidhi"],
     ],
     "for-youth": [
-        ["pm-internship-scheme", "agnipath-agniveer"],
-        ["pm-kaushal-vikas-yojana", "aicte-pragati-scholarship"],
+        ["pm-internship-scheme", "agnipath-agniveer", "ap-nirudyoga-bhruthi"],
+        ["pm-kaushal-vikas-yojana", "aicte-pragati-scholarship", "ap-fee-reimbursement", "ts-fee-reimbursement"],
         ["pm-mudra-yojana", "pm-vishwakarma", "ts-rajiv-yuva-vikasam"],
         ["pm-jan-dhan-yojana", "atal-pension-yojana", "pm-jeevan-jyoti-bima-yojana", "pm-suraksha-bima-yojana"],
     ],
     "for-men": [
-        ["central-sector-scholarship", "pm-kaushal-vikas-yojana", "pm-internship-scheme"],
+        ["central-sector-scholarship", "ap-fee-reimbursement", "ts-fee-reimbursement", "pm-kaushal-vikas-yojana", "pm-internship-scheme"],
         ["pm-viksit-bharat-rozgar-yojana", "agnipath-agniveer"],
         ["e-shram-card", "pm-shram-yogi-maandhan", "atal-pension-yojana", "pm-suraksha-bima-yojana", "pm-jeevan-jyoti-bima-yojana"],
         ["pm-svanidhi", "pm-mudra-yojana", "pm-vishwakarma", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam"],
         ["pm-kisan", "pm-fasal-bima-yojana", "ap-annadata-sukhibhava", "ts-rythu-bharosa"],
-        ["ayushman-bharat-pm-jay", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana"],
+        ["ayushman-bharat-pm-jay", "ap-ntr-vaidya-seva", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana"],
     ],
 }
 
@@ -3166,6 +3183,277 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Eenadu: Telangana to bring crop insurance from Yasangi (29 Sep 2026)", "https://www.eenadu.net/telugu-news/telangana/general/1899/126176012"),
     ]))
 
+# ---------------------------------------------------------------- batch D: fee reimbursement, NTR Vaidya Seva, promised AP schemes (added 15 Oct 2026)
+
+# ---- AP: Fee reimbursement & post-matric scholarships
+s = BY_SLUG["ap-fee-reimbursement"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="In Andhra Pradesh, college students from poorer families can get their full tuition fee paid by the government (RTF) and a yearly maintenance grant for food and hostel costs (MTF). Applications go through the Jnanabhumi portal with the help of your college.",
+    description="AP fee reimbursement (RTF) and post-matric scholarship (MTF) explained: full tuition fee, ₹10,000–₹20,000 maintenance, ₹2.5 lakh income limit, land rules, Jnanabhumi, 2026 status.",
+    facts=[("Tuition (RTF)", "Full fee, paid to college"), ("Maintenance (MTF)", "₹10,000 – ₹20,000 / year"), ("Family income", "Up to ₹2.5 lakh"), ("Apply through", "Jnanabhumi + college")],
+    body='''
+        <h2>What is fee reimbursement in AP?</h2>
+        <p>Andhra Pradesh runs two kinds of post-matric support for students after Class 10, in ITI, polytechnic, degree, engineering, medicine, PG and similar courses:</p>
+        <ul>
+          <li><strong>RTF (Reimbursement of Tuition Fee):</strong> full fee reimbursement, covering tuition, special fees, other fees and exam fees fixed by the competent authority.</li>
+          <li><strong>MTF (Maintenance):</strong> a yearly grant for food and hostel costs: <strong>₹10,000</strong> for ITI, <strong>₹15,000</strong> for polytechnic and <strong>₹20,000</strong> for degree and higher courses. It is credited to the <strong>mother's</strong> bank account.</li>
+        </ul>
+        <p>Earlier these were called Jagananna Vidya Deevena and Vasathi Deevena. Applications and payments are handled through the <strong>Jnanabhumi</strong> portal.</p>
+
+        <h2>Latest update</h2>
+        <ul>
+          <li>On <strong>10 February 2026</strong> the state released about <strong>₹1,200 crore</strong> for fee reimbursement and scholarships of the <strong>2024-25</strong> academic year (₹736 crore for BC students, ₹365 crore for EWS and ₹99 crore for minority students).</li>
+          <li>The present government pays the tuition fee to the <strong>college managements</strong> instead of to students' mothers, as the earlier government did.</li>
+          <li>Dates for 2026-27 applications are announced through colleges and the Jnanabhumi portal. Ask your college's scholarship section.</li>
+        </ul>
+
+        <h2>Who is eligible?</h2>
+        <p>According to the government order and the Jnanabhumi portal, for SC, ST, BC, EBC/EWS, Kapu, minority and differently-abled students:</p>
+        <ul>
+          <li>Total family income <strong>₹2.5 lakh a year or less</strong>.</li>
+          <li>Family land below <strong>10 acres of wet land</strong>, or <strong>25 acres of dry land</strong>, or 25 acres of wet and dry together.</li>
+          <li>No family member is a <strong>government employee or pensioner</strong> (sanitary workers are eligible) or an <strong>income-tax payer</strong>.</li>
+          <li>No family member owns a <strong>four-wheeler</strong> (taxi, tractor and auto are allowed).</li>
+          <li>In towns, the family owns no property or less than <strong>1,500 sq ft</strong> of built-up area.</li>
+          <li>At least <strong>75% attendance</strong> is needed for the money to be released.</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>After admission, give your details to your <strong>college's scholarship section</strong>. The college registers eligible students on <a href="https://jnanabhumi.ap.gov.in" target="_blank" rel="noopener">jnanabhumi.ap.gov.in</a>.</li>
+          <li>Keep ready: Aadhaar, rice card / income certificate, caste certificate, previous marks memos, the mother's Aadhaar-linked bank account, and admission details.</li>
+          <li>Your details are verified by the welfare department and the village/ward secretariat (household data).</li>
+          <li>Check your status on the Jnanabhumi portal or at your secretariat.</li>
+        </ol>
+        <div class="note">There is no fee for fee reimbursement. Never pay anyone to "get your fee reimbursement sanctioned." If your college refuses admission or certificates because of pending reimbursement, complain to the welfare department or the district collector.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://jnanabhumi.ap.gov.in" target="_blank" rel="noopener">jnanabhumi.ap.gov.in</a><br>
+          <strong>Help:</strong> your college scholarship section, the district Social / BC / Minority welfare office, or your village/ward secretariat
+        </div>
+''',
+    faqs=[
+        ("What is the income limit for fee reimbursement in AP?", "Total family income of ₹2.5 lakh a year or less, plus land and other conditions."),
+        ("How much is the MTF (maintenance) amount in AP?", "₹10,000 a year for ITI, ₹15,000 for polytechnic and ₹20,000 for degree and higher courses, credited to the mother's account."),
+        ("Is fee reimbursement paid to the college or to the mother?", "The present government pays the tuition fee (RTF) to the college. The maintenance grant (MTF) goes to the mother's account."),
+        ("When was AP fee reimbursement last released?", "On 10 February 2026, about ₹1,200 crore was released for the 2024-25 academic year."),
+        ("Where do I apply for AP fee reimbursement?", "Through your college, which registers eligible students on the Jnanabhumi portal (jnanabhumi.ap.gov.in)."),
+    ],
+    sources=[
+        ("Jnanabhumi portal (Government of Andhra Pradesh)", "https://jnanabhumi.ap.gov.in"),
+        ("Govt of AP: Post-matric scholarships eligibility (via APDASCAC)", "https://apdascac.ap.gov.in/assets/doc/Schemes/Scholarships.pdf"),
+        ("The South First: AP releases ₹1,200 crore for fee reimbursement (11 Feb 2026)", "https://thesouthfirst.com/andhrapradesh/andhra-pradesh-releases-rs-1200-crore-for-fee-reimbursement-scholarships/"),
+        ("Telugu360: Fee reimbursement now paid to colleges (Feb 2026)", "https://www.telugu360.com/andhra-pradesh-releases-%E2%82%B91200-crore-for-fee-reimbursement-lokesh-assures-students-of-continued-support/"),
+    ]))
+
+# ---- TS: Fee reimbursement & post-matric scholarships
+s = BY_SLUG["ts-fee-reimbursement"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="In Telangana, SC, ST, BC, EBC, minority and disabled students in colleges can get their tuition fee reimbursed and a monthly maintenance allowance through the ePASS portal. From 2026-27, the government says it will pay the money directly into students' bank accounts.",
+    description="Telangana fee reimbursement and post-matric scholarship (ePASS) explained: official income limits, who is not eligible, 2026-27 direct payment to students, documents and how to apply.",
+    facts=[("SC family income", "Up to ₹2.5 lakh"), ("ST family income", "Up to ₹2 lakh"), ("BC/EBC/Minority", "₹1.5 lakh village · ₹2 lakh town"), ("Apply on", "Telangana ePASS")],
+    body='''
+        <h2>What is fee reimbursement in Telangana?</h2>
+        <p>Under the post-matric scholarship schemes, the Telangana government reimburses the <strong>tuition fee</strong> of eligible students in courses after Class 10 (Intermediate, degree, engineering, pharmacy, PG and others) and pays a <strong>maintenance allowance</strong>. Everything is handled on the <strong>ePASS</strong> portal of the welfare departments.</p>
+
+        <h2>Latest update (2026-27)</h2>
+        <ul>
+          <li>Through <strong>G.O. No. 9</strong> (June 2026), the government decided to credit the fee reimbursement <strong>directly to students' Aadhaar-linked bank accounts</strong>; students then pay their colleges.</li>
+          <li>Private colleges challenged parts of this order. In July 2026 the High Court said colleges must admit students for 2026-27 <strong>without asking for fees upfront</strong>, and may collect fees directly only if the government misses its payment deadlines. The case is still in court.</li>
+          <li>Colleges say about ₹2,800 crore of older reimbursement is still pending. There have been repeated college bandhs over these dues since 2024.</li>
+        </ul>
+
+        <h2>Who is eligible?</h2>
+        <p>From the official ePASS portal:</p>
+        <div class="table-wrap">
+        <table class="simple">
+          <tr><th>Category</th><th>Annual family income</th></tr>
+          <tr><td>SC</td><td>₹2,50,000 or less</td></tr>
+          <tr><td>ST</td><td>₹2,00,000 or less</td></tr>
+          <tr><td>BC, EBC and Minority (village)</td><td>₹1,50,000 or less</td></tr>
+          <tr><td>BC, EBC and Minority (town)</td><td>₹2,00,000 or less</td></tr>
+          <tr><td>Disabled (DW)</td><td>₹1,00,000 or less (parents' income)</td></tr>
+        </table>
+        </div>
+        <ul>
+          <li>For renewal: <strong>75% attendance</strong> at the end of each quarter and promotion to the next year.</li>
+        </ul>
+        <h3>Who is not eligible?</h3>
+        <ul>
+          <li>Part-time, online and correspondence courses.</li>
+          <li>Sponsored seats, management quota seats and spot admissions.</li>
+          <li>Students already getting a stipend or scholarship under another scheme.</li>
+          <li>BC, EBC and disabled students in open university / distance courses or category-B seats in MBBS and BDS.</li>
+          <li>Students studying a course at the same level again.</li>
+        </ul>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Go to <a href="https://telanganaepass.cgg.gov.in" target="_blank" rel="noopener">telanganaepass.cgg.gov.in</a> and choose the post-matric scholarship <strong>fresh registration</strong> (or <strong>renewal</strong>) for your category.</li>
+          <li>Fill in your personal, course and family income details and upload documents. Note your application ID.</li>
+          <li>Complete <strong>biometric (Aadhaar) authentication</strong> at a MeeSeva centre if asked, and submit the printout and documents to your college.</li>
+          <li>Your college and the welfare officer verify the application. Track it with "Know Your Application Status" on the portal.</li>
+        </ol>
+        <h3>Documents usually needed</h3>
+        <ul>
+          <li>Aadhaar (your name must match your SSC certificate exactly)</li>
+          <li>Income certificate and caste certificate from MeeSeva (a fresh income certificate for the year)</li>
+          <li>SSC / Intermediate marks memos and study (bonafide) certificates</li>
+          <li>Aadhaar-seeded bank account in your name</li>
+          <li>Admission or allotment order (for EAMCET, ECET and other CET seats)</li>
+        </ul>
+        <div class="note">Applying on ePASS is free. Keep your bank account Aadhaar-seeded, because from 2026-27 the money is meant to come to your account. If a college stops your admission or certificates over fees, contact the district welfare officer.</div>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://telanganaepass.cgg.gov.in" target="_blank" rel="noopener">telanganaepass.cgg.gov.in</a> · <strong>Technical help:</strong> 040-23120311<br>
+          <strong>Help:</strong> your college, or the district SC / ST / BC / Minority welfare office
+        </div>
+''',
+    faqs=[
+        ("What is the income limit for fee reimbursement in Telangana?", "₹2.5 lakh for SC, ₹2 lakh for ST, ₹1.5 lakh (village) or ₹2 lakh (town) for BC, EBC and minority students, and ₹1 lakh for disabled students, as per the ePASS portal."),
+        ("Is fee reimbursement paid to students or colleges in Telangana from 2026-27?", "The government's G.O. No. 9 (June 2026) says it will be credited to students' Aadhaar-linked bank accounts, and students pay their colleges. Parts of the order are being heard in the High Court."),
+        ("Can colleges ask for fees upfront in 2026-27?", "In July 2026 the High Court said colleges must admit students without demanding fees upfront, and can collect fees directly only if the government misses its deadlines."),
+        ("Are management quota students eligible?", "No. Sponsored seats, management quota seats and spot admissions are not eligible."),
+        ("Where do I apply?", "On telanganaepass.cgg.gov.in, then submit the printout and documents to your college for verification."),
+    ],
+    sources=[
+        ("Telangana ePASS: Who are eligible (official)", "https://telanganaepass.cgg.gov.in"),
+        ("Manabadi: Telangana fee reimbursement 2026, G.O. 9 and High Court orders (Jul 2026)", "https://www.manabadi.co.in/entrance-exams/telangana-fee-reimbursement-scholarship-2026/"),
+        ("Telangana Today: Private degree colleges bandh over fee reimbursement dues", "https://telanganatoday.com/telangana-private-degree-colleges-announce-indefinite-bandh-boycott-exams-over-fee-reimbursement-dues"),
+    ]))
+
+# ---- AP: Dr NTR Vaidya Seva
+s = BY_SLUG["ap-ntr-vaidya-seva"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Dr NTR Vaidya Seva (earlier Dr YSR Aarogyasri) is Andhra Pradesh's free health scheme. Eligible poor families get cashless treatment for serious illnesses and surgeries at network hospitals, with cover of up to ₹25 lakh per family per year.",
+    description="Dr NTR Vaidya Seva (Andhra Pradesh) explained: free treatment up to ₹25 lakh per family, 3,257 procedures, who is eligible, the new universal health policy and its status, how to get treatment.",
+    facts=[("Cover", "Up to ₹25 lakh / family / year"), ("Procedures", "3,257"), ("For", "BPL (rice card) families"), ("Helpline", "104")],
+    body='''
+        <h2>What is Dr NTR Vaidya Seva?</h2>
+        <p>Dr NTR Vaidya Seva is run by the Dr NTR Vaidya Seva Trust of the Andhra Pradesh government. It was renamed from Dr YSR Aarogyasri in 2024. Cover was raised to <strong>₹25 lakh per family per year</strong> from December 2023. Treatment is <strong>cashless</strong>: the family does not pay for covered procedures at network (empanelled) hospitals. It works together with the Centre's <a href="/schemes/ayushman-bharat-pm-jay/">Ayushman Bharat PM-JAY</a>.</p>
+
+        <h2>New universal health policy: approved, start not confirmed</h2>
+        <ul>
+          <li>In <strong>September 2025</strong> the State Cabinet approved a <strong>universal health policy</strong>: an insurance company would pay the first <strong>₹2.5 lakh</strong> of treatment, and the NTR Vaidya Seva Trust would pay from ₹2.5 lakh up to <strong>₹25 lakh</strong>, for <strong>3,257</strong> procedures, with approvals within six hours of admission.</li>
+          <li>The Chief Minister said it would start on <strong>1 April 2026</strong>. As of 15 October 2026 we could not find an official confirmation that the new insurance system has started. Private hospitals have also protested over pending dues and have at times suspended services.</li>
+          <li>Until the new system is confirmed, use your existing health card and the network hospital's Aarogyamitra desk.</li>
+        </ul>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Poor (BPL) families in Andhra Pradesh, generally <strong>rice card</strong> families with a Vaidya Seva / health card.</li>
+          <li>The universal policy is meant to cover about <strong>5 crore people</strong> in the state once it starts; check with your secretariat for current enrolment.</li>
+        </ul>
+
+        <h2>How to get treatment</h2>
+        <ol>
+          <li>Go to a <strong>network hospital</strong> (government or empanelled private) with your health card or Aadhaar and rice card.</li>
+          <li>Meet the <strong>Aarogyamitra</strong> at the hospital's NTR Vaidya Seva desk. They register you and send the request for approval.</li>
+          <li>After approval, treatment, medicines and stay for the covered procedure are free.</li>
+          <li>If a hospital asks you to pay for a covered procedure, call <strong>104</strong> or complain to the Trust.</li>
+        </ol>
+        <div class="note">You don't need to pay anyone to get a health card or treatment approved. Beware of agents.</div>
+
+        <div class="official">
+          <strong>Official site:</strong> <a href="https://drntrvaidyaseva.ap.gov.in" target="_blank" rel="noopener">drntrvaidyaseva.ap.gov.in</a> · <strong>Helpline:</strong> 104<br>
+          <strong>Help:</strong> your village/ward secretariat or the Aarogyamitra at a network hospital
+        </div>
+''',
+    faqs=[
+        ("How much cover does NTR Vaidya Seva give?", "Up to ₹25 lakh per family per year for covered treatments at network hospitals, cashless."),
+        ("Is NTR Vaidya Seva the same as Aarogyasri?", "Yes. Dr YSR Aarogyasri was renamed Dr NTR Vaidya Seva in 2024."),
+        ("Has the AP universal health policy started?", "It was approved in September 2025 with a planned start of 1 April 2026, but as of 15 October 2026 we could not find official confirmation that the new insurance system has started."),
+        ("Who is eligible for NTR Vaidya Seva?", "Poor (BPL) families in Andhra Pradesh, generally rice card families with a health card."),
+        ("What should I do if a hospital asks for money?", "For covered procedures treatment is free. Call 104 or complain to the NTR Vaidya Seva Trust."),
+    ],
+    sources=[
+        ("Dr NTR Vaidya Seva Trust (official)", "https://drntrvaidyaseva.ap.gov.in"),
+        ("The Hans India: Cabinet okays universal health policy (5 Sep 2025)", "https://www.thehansindia.com/andhra-pradesh/cabinet-okays-universal-health-policy-to-provide-free-treatment-1003520"),
+        ("Business Standard: Andhra cabinet clears universal health policy up to ₹25 lakh (Sep 2025)", "https://www.business-standard.com/india-news/andhra-cabinet-clears-universal-health-policy-offering-cover-up-to-25-lakh-125090401659_1.html"),
+        ("The News Minute: Aarogyasri cover raised to ₹25 lakh (Dec 2023)", "https://www.thenewsminute.com/andhra-pradesh/andhra-govt-enhances-insurance-coverage-under-aarogyasri-scheme-to-rs-25-lakh"),
+        ("The Hans India: Specialty hospitals to suspend NTR Vaidya Seva over dues", "https://www.thehansindia.com/andhra-pradesh/specialty-hospitals-to-suspend-ntr-vaidya-seva-from-oct-10-1009583"),
+    ]))
+
+# ---- AP: Aadabidda Nidhi (promised, not started)
+s = BY_SLUG["ap-aadabidda-nidhi"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Aadabidda Nidhi is the ₹1,500 a month for women aged 18 and above that was promised in the 2024 Super Six. As of October 2026 it has not started: there is no government order, no application and no payment.",
+    description="Aadabidda Nidhi (Andhra Pradesh) status: ₹1,500 a month promised for women 18+, not started as of October 2026, what the government said, and how to avoid fake registration sites.",
+    facts=[("Promised", "₹1,500 / month"), ("For", "Women aged 18+"), ("Status (Oct 2026)", "Not started"), ("Applications", "None open")],
+    body='''
+        <div class="note"><strong>Status: not started (15 October 2026).</strong> There is no government order, no official application and no payment for Aadabidda Nidhi yet. Any website or person "registering" you for it is not official.</div>
+
+        <h2>What was promised?</h2>
+        <p>In the 2024 election manifesto (Super Six), the TDP-led alliance promised <strong>₹1,500 per month</strong> to every woman aged <strong>18 and above</strong> in Andhra Pradesh, under the name Aadabidda Nidhi.</p>
+
+        <h2>What has happened so far</h2>
+        <ul>
+          <li>On <strong>25 February 2026</strong>, Minister Kondapalli Srinivas told the Legislative Council that the scheme is <strong>under the government's consideration</strong>. No start date was given.</li>
+          <li>The <strong>2026-27 state budget</strong> (February 2026) made no announcement for Aadabidda Nidhi, while increasing funds for other Super Six schemes like Thalliki Vandanam, Annadata Sukhibhava, Stree Shakti and NTR Bharosa pensions.</li>
+          <li>Opposition parties have demanded its implementation. We will update this page if the government issues an order.</li>
+        </ul>
+
+        <h2>Help for women that is running now</h2>
+        <ul>
+          <li><a href="/schemes/ap-stree-shakti/">Stree Shakti</a>: free APSRTC bus travel for women.</li>
+          <li><a href="/schemes/ap-deepam-2/">Deepam-2</a>: three free gas cylinders a year.</li>
+          <li><a href="/schemes/ap-thalliki-vandanam/">Thalliki Vandanam</a>: ₹13,000 per school child to the mother.</li>
+          <li><a href="/schemes/ap-ntr-bharosa-pension/">NTR Bharosa pension</a> for widows and single women.</li>
+          <li><a href="/schemes/lakhpati-didi/">Lakhpati Didi</a> loans and training for SHG women.</li>
+        </ul>
+        <div class="note">Never share your Aadhaar, bank details or OTP on sites that claim to register you for Aadabidda Nidhi. When the scheme starts, it will be announced by the government and handled through your village/ward secretariat.</div>
+''',
+    faqs=[
+        ("Has Aadabidda Nidhi started in Andhra Pradesh?", "No. As of 15 October 2026 there is no government order, application or payment. In February 2026 the minister said the scheme is under consideration."),
+        ("How much is Aadabidda Nidhi?", "₹1,500 per month was promised for women aged 18 and above in the 2024 Super Six manifesto."),
+        ("Where can I apply for Aadabidda Nidhi?", "Nowhere yet. There is no official application. Don't trust websites asking you to register or pay."),
+        ("Was Aadabidda Nidhi in the 2026-27 budget?", "No announcement was made for it in the February 2026 budget."),
+    ],
+    sources=[
+        ("Andhra Jyothy: Minister's reply on Aadabidda Nidhi in the Legislative Council (26 Feb 2026)", "https://www.andhrajyothy.com/2026/andhra-pradesh/minister-kondapalli-srinivas-clarifies-on-aadabidda-nidhi-scheme-in-legislative-council-1498461.html"),
+        ("Oneindia Telugu: Pending promises not in the 2026-27 budget (14 Feb 2026)", "https://telugu.oneindia.com/news/andhra-pradesh/ap-govt-no-mention-over-pending-assurances-for-women-youth-in-budget-2026-27-details-here-472977.html"),
+        ("Deccan Herald: NDA manifesto promises, Super Six (2024)", "https://www.deccanherald.com/amp/story/elections%2Fandhra-pradesh%2Fandhra-assembly-elections-2024-nda-manifestopromises-super-six-3001476"),
+    ]))
+
+# ---- AP: Nirudyoga Bhruthi (promised, not started)
+s = BY_SLUG["ap-nirudyoga-bhruthi"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Nirudyoga Bhruthi is the ₹3,000 a month unemployment allowance for jobless youth that was promised in the 2024 Super Six. As of October 2026 it has not started: there is no government order, no application and no payment.",
+    description="Nirudyoga Bhruthi (AP unemployment allowance) status: ₹3,000 a month promised for unemployed youth, not started as of October 2026, and job and skill schemes you can use now.",
+    facts=[("Promised", "₹3,000 / month"), ("For", "Unemployed youth"), ("Status (Oct 2026)", "Not started"), ("Applications", "None open")],
+    body='''
+        <div class="note"><strong>Status: not started (15 October 2026).</strong> There is no government order, official website or application for Nirudyoga Bhruthi yet. Sites asking you to "apply now" are not official.</div>
+
+        <h2>What was promised?</h2>
+        <p>In the 2024 Super Six manifesto, the TDP-led alliance promised an unemployment allowance (Nirudyoga Bhruthi) of <strong>₹3,000 per month</strong> to unemployed youth until they find a job.</p>
+
+        <h2>What has happened so far</h2>
+        <ul>
+          <li>The <strong>2026-27 state budget</strong> (February 2026) gave no clarity on Nirudyoga Bhruthi.</li>
+          <li>No eligibility rules (age, education, income) have been officially announced. Numbers you see on other websites are guesses.</li>
+          <li>We will update this page if the government issues an order.</li>
+        </ul>
+
+        <h2>What you can use now</h2>
+        <ul>
+          <li><a href="/schemes/pm-internship-scheme/">PM Internship Scheme</a>: at least ₹9,000 a month for ages 18–25.</li>
+          <li><a href="/schemes/pm-kaushal-vikas-yojana/">PMKVY</a>: free skill training with a certificate.</li>
+          <li><a href="/schemes/pm-viksit-bharat-rozgar-yojana/">PM Viksit Bharat Rozgar Yojana</a>: up to ₹15,000 for your first job with PF.</li>
+          <li><a href="/schemes/agnipath-agniveer/">Agniveer</a> and <a href="/schemes/pm-mudra-yojana/">Mudra loans</a> to start your own work.</li>
+        </ul>
+        <div class="note">Never pay or share your Aadhaar, bank details or OTP with anyone offering to register you for Nirudyoga Bhruthi.</div>
+''',
+    faqs=[
+        ("Has Nirudyoga Bhruthi started in AP?", "No. As of 15 October 2026 there is no government order, official website, application or payment."),
+        ("How much is the AP unemployment allowance?", "₹3,000 per month was promised in the 2024 Super Six manifesto. The rules have not been announced."),
+        ("What is the age limit for Nirudyoga Bhruthi?", "No official rules have been announced yet. Age limits shown on other websites are not official."),
+        ("What can unemployed youth use now?", "PM Internship Scheme, free PMKVY training, PM Viksit Bharat Rozgar Yojana for first jobs, Agniveer recruitment and Mudra loans."),
+    ],
+    sources=[
+        ("Oneindia Telugu: Pending promises not in the 2026-27 budget (14 Feb 2026)", "https://telugu.oneindia.com/news/andhra-pradesh/ap-govt-no-mention-over-pending-assurances-for-women-youth-in-budget-2026-27-details-here-472977.html"),
+        ("Deccan Herald: NDA manifesto promises, Super Six (2024)", "https://www.deccanherald.com/amp/story/elections%2Fandhra-pradesh%2Fandhra-assembly-elections-2024-nda-manifestopromises-super-six-3001476"),
+    ]))
+
 # ---- Collection: For boys & men
 write("schemes/for-men/index.html",
     head(page_title("Government Schemes for Men: Scholarships, Jobs, Loans"),
@@ -3365,6 +3653,9 @@ CHECKER_TEXT = {
             apNethanna="BPL handloom weaver families who own a loom get ₹25,000 a year.",
             apMatsya="Sea fishermen families get ₹20,000 during the April–June fishing ban.",
             tsKalyana="₹1,00,116 for the marriage of a girl from a poor SC, ST, BC, EBC or minority family (income limit ₹2 lakh; BC/EBC in villages ₹1.5 lakh).",
+            apFee="College students from families earning up to ₹2.5 lakh can get full tuition fee and a yearly maintenance grant.",
+            tsFee="SC, ST, BC, EBC, minority and disabled college students within the income limits can get tuition fee and maintenance through ePASS.",
+            apVaidya="Rice card families get cashless treatment up to ₹25 lakh a year at network hospitals.",
         ),
     ),
     "te": dict(
@@ -3460,6 +3751,9 @@ CHECKER_TEXT = {
             apNethanna="సొంత మగ్గం ఉన్న BPL చేనేత కుటుంబాలకు ఏడాదికి ₹25,000.",
             apMatsya="సముద్ర వేటపై ఆధారపడిన మత్స్యకార కుటుంబాలకు ఏప్రిల్–జూన్ వేట నిషేధ సమయంలో ₹20,000.",
             tsKalyana="పేద ఎస్సీ, ఎస్టీ, బీసీ, ఈబీసీ, మైనారిటీ కుటుంబాల అమ్మాయి పెళ్ళికి ₹1,00,116 (ఆదాయ పరిమితి ₹2 లక్షలు; గ్రామాల్లో బీసీ/ఈబీసీలకు ₹1.5 లక్షలు).",
+            apFee="₹2.5 లక్షల లోపు ఆదాయం ఉన్న కుటుంబాల కాలేజీ విద్యార్థులకు పూర్తి ట్యూషన్ ఫీజు, ఏటా నిర్వహణ సాయం.",
+            tsFee="ఆదాయ పరిమితిలోపు ఉన్న ఎస్సీ, ఎస్టీ, బీసీ, ఈబీసీ, మైనారిటీ, దివ్యాంగ కాలేజీ విద్యార్థులకు ePASS ద్వారా ట్యూషన్ ఫీజు, నిర్వహణ సాయం.",
+            apVaidya="బియ్యం కార్డు కుటుంబాలకు నెట్‌వర్క్ ఆసుపత్రుల్లో ఏటా ₹25 లక్షల వరకు నగదు రహిత వైద్యం.",
         ),
     ),
 }
@@ -3583,6 +3877,8 @@ def checker_page(lang):
             if (f.driver) add('ap-auto-drivers-sevalo', 'apAuto');
             if (f.weaver && poor) add('ap-nethanna-sevalo', 'apNethanna');
             if (f.fisher) add('ap-matsyakarula-sevalo', 'apMatsya');
+            if ((f.college || f.techstudent) && !f.govtjob && !f.incometax && inc <= 3) add('ap-fee-reimbursement', 'apFee');
+            if (poor) add('ap-ntr-vaidya-seva', 'apVaidya');
           }}
           // Telangana
           if (state === 'ts') {{
@@ -3591,6 +3887,7 @@ def checker_page(lang):
             if (poor && !f.pucca && inc <= 1) add('ts-indiramma-indlu', 'tsIndiramma');
             if (woman && age >= 18 && poor) add('ts-indira-mahila-shakti', 'tsMahilaShakti');
             if (f.marriage && inc <= 1) add('ts-kalyana-lakshmi-shaadi-mubarak', 'tsKalyana');
+            if ((f.college || f.techstudent) && inc <= 3) add('ts-fee-reimbursement', 'tsFee');
             if (poor) add('ts-gruha-jyothi', 'tsGruha');
             if (poor) add('ts-rajiv-aarogyasri', 'tsAarogya');
             if (poor && (f.widow || f.disabled)) add('ts-cheyutha-pension', f.disabled ? 'tsCheyDis' : 'tsCheyWidow');
@@ -4062,7 +4359,7 @@ UPDATES = [
          text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
          link="/schemes/pm-internship-scheme/"),
 ]
-UPDATES_CHECKED = "15 October 2026"  # change when you re-check the list
+UPDATES_CHECKED = "18 October 2026"  # change when you re-check the list
 KIND_LABEL = {"deadline": "⏰ Deadline", "expected": "📅 Expected", "news": "📰 News", "rate": "📈 Rate"}
 
 def update_item(u):
