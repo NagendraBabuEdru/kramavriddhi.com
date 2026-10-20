@@ -13,13 +13,13 @@
     tail3: [[415, 403], [386, 440], [350, 492], [334, 562], [444, 564], [432, 520], [420, 470], [414, 440]],
     tail2: [[334, 556], [350, 642], [396, 702], [422, 730], [494, 612], [470, 596], [448, 574], [446, 556]],
     tail1: [[416, 720], [458, 754], [520, 794], [566, 772], [598, 712], [608, 650], [598, 598], [562, 612], [520, 622], [492, 606]],
-    armL: [[680, 596], [746, 590], [766, 640], [760, 714], [722, 720], [694, 696], [680, 640]],
-    armR: [[846, 600], [910, 590], [946, 640], [944, 710], [904, 718], [866, 696], [846, 640]],
+    armL: [[668, 640], [690, 618], [722, 614], [748, 624], [764, 646], [764, 692], [752, 718], [728, 722], [706, 704], [690, 672], [672, 664]],
+    armR: [[846, 642], [858, 624], [882, 612], [902, 620], [906, 646], [898, 668], [884, 704], [872, 716], [856, 714], [842, 690], [838, 662]],
     legL: [[540, 826], [684, 832], [692, 905], [698, 994], [642, 1018], [560, 1020], [440, 1004], [428, 948], [480, 900], [530, 886]],
     legR: [[828, 832], [956, 826], [970, 876], [1030, 900], [1076, 930], [1090, 990], [1000, 1014], [900, 1014], [822, 994], [816, 930], [828, 880]],
   };
-  const PIV = { head: [780, 512], tail1: [596, 660], tail2: [458, 668], tail3: [388, 560], armL: [722, 606], armR: [882, 606], legL: [612, 846], legR: [896, 846] };
-  const EYE = [{ c: [642, 208], rx: 50, ry: 70, iris: [657, 220], r: 41 }, { c: [903, 182], rx: 50, ry: 62, iris: [890, 191], r: 41 }];
+  const PIV = { head: [780, 512], tail1: [596, 660], tail2: [458, 668], tail3: [388, 560], armL: [690, 630], armR: [898, 632], legL: [612, 846], legR: [896, 846] };
+  const EYE = [{ c: [650, 218], rx: 58, ry: 68, iris: [660, 221], irx: 34, iry: 49 }, { c: [902, 186], rx: 56, ry: 64, iris: [888, 190], irx: 37, iry: 49 }];
   const LIDS = [[645, 211, 54, 64], [903, 176, 52, 63]];
   const JAW_Y = 330, TAIL_ROOT = [640, 700];   // the lower face (below the upper teeth) stretches for the jaw
   const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
@@ -43,19 +43,23 @@
   }
   function build(img) {
     IMG = img; L = {};
-    const GROW = { head: 4, tail: 9, armL: 5, armR: 5, legL: 6, legR: 6 };
+    const GROW = { head: 4, tail: 9, armL: 4, armR: 4, legL: 6, legR: 6 };
     for (const k of ['tail', 'armL', 'armR', 'legL', 'legR']) L[k] = cut(POLY[k], GROW[k]);
     for (const k of ['legL', 'legR']) cleanFeet(L[k]);
     // head: cut, then lift out the irises (their place is filled with eye-white) as separate layers
     const h = cut(POLY.head, GROW.head), hc = h.getContext('2d');
-    L.iris = EYE.map(e => { const l = mk(1536, 1024), c = l.getContext('2d'); c.save(); c.beginPath(); c.arc(e.iris[0], e.iris[1], e.r, 0, Math.PI * 2); c.clip(); c.drawImage(IMG, 0, 0); c.restore(); return l; });
-    for (const e of EYE) { hc.save(); hc.beginPath(); hc.ellipse(e.c[0], e.c[1], e.rx - 5, e.ry - 5, 0, 0, Math.PI * 2); hc.clip(); hc.beginPath(); hc.arc(e.iris[0], e.iris[1], e.r + 1.5, 0, Math.PI * 2); hc.fillStyle = '#fdfdfb'; hc.fill(); hc.restore(); }
+    L.iris = EYE.map(e => { const l = mk(1536, 1024), c = l.getContext('2d'); c.save(); c.beginPath(); c.ellipse(e.iris[0], e.iris[1], e.irx, e.iry, 0, 0, Math.PI * 2); c.clip(); c.drawImage(IMG, 0, 0); c.restore(); return l; });
+    hc.globalCompositeOperation = 'source-over';   // (cut() leaves destination-in set)
+    for (const e of EYE) { hc.save(); hc.beginPath(); hc.ellipse(e.c[0], e.c[1], e.rx - 3, e.ry - 3, 0, 0, Math.PI * 2); hc.clip(); hc.beginPath(); hc.ellipse(e.iris[0], e.iris[1], e.irx + 2.5, e.iry + 2.5, 0, 0, Math.PI * 2); hc.fillStyle = '#fbfbf8'; hc.fill(); hc.restore(); }
     L.head = h;
     // body: everything else; the ground scribbles below the feet line are removed (we draw our own shadow)
     const b = mk(1536, 1024), bc = b.getContext('2d'); bc.drawImage(IMG, 0, 0); bc.globalCompositeOperation = 'destination-out';
     for (const k of ['head', 'tail', 'armL', 'armR', 'legL', 'legR']) bc.drawImage(mask(POLY[k], 1.5, GROW[k] + 1), 0, 0);   // erase exactly what the part took (no ghost copy left behind)
     bc.globalCompositeOperation = 'source-over';   // holes under the arms: the belly's soft tone (no white slivers when they move)
-    for (const k of ['armL', 'armR']) { bc.save(); bc.globalCompositeOperation = 'destination-over'; bc.drawImage(maskTint(POLY[k], GROW[k] + 1, '#ebe9e4'), 0, 0); bc.restore(); }
+    for (const k of ['armL', 'armR']) { bc.save(); bc.globalCompositeOperation = 'destination-over'; bc.drawImage(maskTint(POLY[k], GROW[k] + 1, '#f7f6f3'), 0, 0); bc.restore(); }
+    // under the head: the original drawing as a backing, so a tilt never opens a white gap at the neck
+    { const u = mk(1536, 1024), uc = u.getContext('2d'); uc.drawImage(IMG, 0, 0); uc.globalCompositeOperation = 'destination-in'; uc.drawImage(mask(POLY.head, 2, GROW.head + 1), 0, 0); uc.globalCompositeOperation = 'destination-out'; uc.fillRect(0, 0, 1536, 430);
+      bc.save(); bc.globalCompositeOperation = 'destination-over'; bc.drawImage(u, 0, 0); bc.restore(); }
     bc.globalCompositeOperation = 'destination-out';
     bc.fillRect(0, 900, 1536, 124); bc.fillRect(0, 0, 330, 1024); bc.fillRect(1090, 0, 446, 1024);
     L.body = b;
@@ -126,5 +130,5 @@
     for (let i = 1, n = Math.round(t * 120); i <= n; i++) { const g = target(i * dt); v += (w * w * (g - x) - 2 * zeta * w * v) * dt; x += v * dt; }
     return x;
   }
-  window.REX = { build, draw, spring, POLY, PIV };
+  window.REX = { build, draw, spring, POLY, PIV, layers: () => L };
 })();

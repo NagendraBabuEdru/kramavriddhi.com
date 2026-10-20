@@ -42,12 +42,12 @@ function keyed(t) {
   const wag = win(t, 21.6, 24.2, 0.3, 0.3);
   // head tilt (target): curious tilt, laugh bob, lean toward the wave, dance sway
   const tilt = 0.06 * win(t, 4.4, 7.2, 0.5, 0.5) - 0.04 * win(t, 2.8, 3.8) + 0.035 * win(t, 1.8, 2.8)
-    + laugh * 0.04 * Math.sin(t * 2 * Math.PI * 2.6) - wave * 0.07 + dance * 0.08 * Math.sin((t - 17.6) * Math.PI * 1.25);
+    + laugh * 0.04 * Math.sin(t * 2 * Math.PI * 2.6) - wave * 0.07 + dance * 0.05 * Math.sin((t - 17.6) * Math.PI * 1.25);
   // the jaw: laughs in bursts "ha-ha-ha", a little chatter while waving
   const jaw = laugh * (0.45 + 0.45 * Math.abs(Math.sin(t * Math.PI * 2.6))) + wave * 0.15 * Math.abs(Math.sin(t * 7)) - 0.1 * win(t, 4.4, 7.2);
   // arms: paddles while laughing; the right arm waves; both pump while dancing
-  const armL = laugh * 0.12 * Math.sin(t * 16) + dance * 0.1 * Math.sin((t - 17.6) * Math.PI * 2.5) + 0.03 * br;
-  const armR = laugh * 0.12 * Math.sin(t * 16 + 1) - wave * (0.9 + 0.35 * Math.sin((t - 14) * 2 * Math.PI * 1.6)) + dance * 0.1 * Math.sin((t - 17.6) * Math.PI * 2.5 + Math.PI) + 0.03 * br;
+  const armL = laugh * 0.12 * Math.sin(t * 16) + dance * 0.2 * Math.sin((t - 17.6) * Math.PI * 2.5) + 0.03 * br;
+  const armR = laugh * 0.12 * Math.sin(t * 16 + 1) - wave * (0.22 + 0.2 * Math.sin((t - 14) * 2 * Math.PI * 2.2)) + dance * 0.2 * Math.sin((t - 17.6) * Math.PI * 2.5 + Math.PI) + 0.03 * br;
   // legs: dance steps (alternating), tucked in the air on hops
   const stepPh = (t - 17.6) * 2.5, stepL = dance * Math.max(0, Math.sin(stepPh * Math.PI)) * 22, stepR = dance * Math.max(0, -Math.sin(stepPh * Math.PI)) * 22;
   // lean: dance sway, a little weight shift when stepping, and the wag wiggle
@@ -70,8 +70,8 @@ function sim(T) {
     [S.t1, S.v1] = sp(S.t1, S.v1, k.tailDrive + push * 0.06 + k.lean * 0.6, 3.0, 0.45);
     [S.t2, S.v2] = sp(S.t2, S.v2, S.t1 * 0.85, 3.4, 0.38);
     [S.t3, S.v3] = sp(S.t3, S.v3, S.t2 * 0.85, 4.0, 0.32);
-    [S.aL, S.vaL] = sp(S.aL, S.vaL, k.armL * 0.7 - push * 0.2, 4.2, 0.42);
-    [S.aR, S.vaR] = sp(S.aR, S.vaR, k.armR * 0.7 - push * 0.2, 4.2, 0.42);
+    [S.aL, S.vaL] = sp(S.aL, S.vaL, Math.max(-0.35, Math.min(0.35, k.armL - push * 0.15)), 5, 0.42);
+    [S.aR, S.vaR] = sp(S.aR, S.vaR, Math.max(-0.45, Math.min(0.35, k.armR - push * 0.15)), 5, 0.42);
     [S.hy, S.vhy] = sp(S.hy, S.vhy, push * 14, 4.5, 0.45);
     [S.ht, S.vht] = sp(S.ht, S.vht, k.tilt + k.lean * 0.6, 3.2, 0.5);
     [S.j, S.vj] = sp(S.j, S.vj, k.jaw, 7, 0.55);
