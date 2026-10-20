@@ -1,0 +1,84 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Rex puppet</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// Cut-out puppet made from the owner's artwork (rex_front.png, 1536 × 1024).
+// Parts (head, tail, near/far arm) are cut with soft-edged polygon masks and moved on pivots; the body layer has those
+// parts erased. Eyelids are drawn over the eyes to blink. Everything is composed on white, then multiplied onto paper.
+const SRC = { head: [[700, 60], [770, 8], [832, 36], [900, 36], [962, 66], [1012, 150], [1004, 222], [1024, 282], [1038, 342], [1022, 412], [962, 452], [900, 482], [850, 502], [780, 512], [700, 500], [640, 472], [580, 442], [538, 392], [518, 320], [528, 250], [548, 200], [560, 150], [600, 100], [652, 68]],
+  tail: [[415, 405], [388, 440], [352, 492], [336, 562], [352, 642], [398, 702], [458, 752], [520, 792], [566, 770], [596, 712], [606, 650], [596, 600], [562, 612], [520, 622], [470, 602], [430, 562], [410, 502], [413, 450]],
+  armL: [[684, 600], [742, 596], [760, 640], [752, 700], [722, 702], [698, 680], [684, 640]],
+  armR: [[850, 604], [906, 596], [940, 640], [936, 694], [904, 700], [872, 680], [852, 640]] };
+const PIV = { head: [780, 520], tail: [590, 660], armL: [722, 608], armR: [882, 608] };
+const EYES = [[645, 211, 54, 64], [903, 176, 52, 63]];
+const W = 1920, H = 1080, cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const img = new Image(); img.src = 'rex_front.png';
+const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+let LAY = null, ROOM = null, PAPER = null;
+function poly(c, pts) { c.beginPath(); pts.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); }
+function maskOf(pts, blur = 3, grow = 0) { const m = mk(1536, 1024), c = m.getContext('2d'); c.filter = `blur(${blur}px)`; c.fillStyle = '#000'; c.strokeStyle = '#000'; c.lineWidth = grow * 2; poly(c, pts); c.fill(); if (grow) c.stroke(); return m; }
+function cut(name) { const l = mk(1536, 1024), c = l.getContext('2d'); c.drawImage(img, 0, 0); c.globalCompositeOperation = 'destination-in'; c.drawImage(maskOf(SRC[name], 2.5, 3), 0, 0); return l; }
+function build() {
+  LAY = { head: cut('head'), tail: cut('tail'), armL: cut('armL'), armR: cut('armR') };
+  const b = mk(1536, 1024), c = b.getContext('2d'); c.drawImage(img, 0, 0);
+  c.globalCompositeOperation = 'destination-out'; for (const k of ['head', 'tail', 'armL', 'armR']) c.drawImage(maskOf(SRC[k], 3, 1), 0, 0);
+  c.globalCompositeOperation = 'destination-over'; c.fillStyle = '#fff'; c.fillRect(0, 0, 1536, 1024);   // erased parts become white
+  LAY.body = b;
+  ROOM = mk(W, H); PAPER = mk(W, H);
+  const p = PAPER.getContext('2d'); p.fillStyle = '#f4f1ea'; p.fillRect(0, 0, W, H);
+  const d = p.getImageData(0, 0, W, H); for (let i = 0; i < d.data.length; i += 4) { const n = (Math.sin(i * 12.9898) * 43758.5453 % 1) * 10; d.data[i] += n; d.data[i + 1] += n; d.data[i + 2] += n - 1; } p.putImageData(d, 0, 0);
+}
+const rot = (c, [px, py], a, fn) => { c.save(); c.translate(px, py); c.rotate(a); c.translate(-px, -py); fn(); c.restore(); };
+function lids(c, lid) {   // lid: 1 open … 0 shut. The lid is skin (white, like his face) and covers the eye's outline too.
+  if (lid >= 0.99) return;
+  for (const [ex, ey, rx, ry] of EYES) {
+    const R = [rx + 9, ry + 9], top = ey - R[1], shut = ey + ry * 0.25, edge = top + (1 - lid) * (shut - top);
+    c.save(); c.beginPath(); c.ellipse(ex, ey, R[0], R[1], 0, 0, Math.PI * 2); c.clip();
+    c.fillStyle = '#fbfaf7'; c.beginPath(); c.moveTo(ex - R[0], top - 4); c.lineTo(ex + R[0], top - 4); c.lineTo(ex + R[0], edge); c.quadraticCurveTo(ex, edge + ry * 0.45 * (1 - lid), ex - R[0], edge); c.closePath(); c.fill();
+    if (lid < 0.05) { c.fillRect(ex - R[0], edge - 2, 2 * R[0], R[1] * 2); }   // fully shut: the whole eye area is skin
+    // skin texture on the lid: faint scale arcs like the rest of his face, and a soft shadow under the brow
+    c.strokeStyle = 'rgba(40,38,36,0.16)'; c.lineWidth = 1.1;
+    for (let k = 0; k < 26; k++) { const x = ex - R[0] + ((k * 37) % (2 * R[0])), y = top + 6 + ((k * 53) % Math.max(8, edge - top - 4)); if (y < edge - 3) { c.beginPath(); c.arc(x, y, 5 + (k % 3), 0.2, Math.PI - 0.2); c.stroke(); } }
+    const g = c.createLinearGradient(0, top, 0, top + R[1]); g.addColorStop(0, 'rgba(60,55,50,0.22)'); g.addColorStop(1, 'rgba(60,55,50,0)'); c.fillStyle = g; c.fillRect(ex - R[0], top - 4, 2 * R[0], Math.max(0, edge - top + 4));
+    c.restore();
+    c.save(); c.strokeStyle = '#2a2724'; c.lineCap = 'round';
+    if (lid < 0.05) {   // a shut eye: a soft curve with little lashes at the outer end
+      c.lineWidth = 6; c.beginPath(); c.moveTo(ex - rx * 0.85, shut - 8); c.quadraticCurveTo(ex, shut + ry * 0.35, ex + rx * 0.85, shut - 8); c.stroke();
+      c.lineWidth = 2; c.strokeStyle = 'rgba(42,39,36,0.45)'; c.beginPath(); c.moveTo(ex - rx * 0.7, ey - ry * 0.45); c.quadraticCurveTo(ex, ey - ry * 0.75, ex + rx * 0.7, ey - ry * 0.45); c.stroke();
+    } else { c.lineWidth = 6; c.beginPath(); c.moveTo(ex - R[0] * 0.92, edge); c.quadraticCurveTo(ex, edge + ry * 0.45 * (1 - lid), ex + R[0] * 0.92, edge); c.stroke(); }
+    c.restore();
+  }
+}
+// motion: idle breathing, blinks, head tilt + bob, tail wag, arm paddles, and a happy hop
+const BL = [0.9, 2.6, 4.1, 4.25, 5.6];
+function blink(t) { let v = 1; for (const b of BL) { const f = Math.floor((t - b) * 30); if (f >= 0 && f < 5) v = Math.min(v, [0.4, 0, 0, 0.5, 1][f]); } return v; }
+const sm = u => u < 0 ? 0 : u > 1 ? 1 : u * u * (3 - 2 * u);
+window.renderFrame = t => {
+  if (!LAY) build();
+  const c = ROOM.getContext('2d'); c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = '#fff'; c.fillRect(0, 0, W, H);
+  const br = Math.sin(t * Math.PI * 2 / 2.4);
+  // the hop at 3.0–3.6 s: crouch, up, land
+  const hp = t - 3.0, hop = hp > 0.15 && hp < 0.55 ? Math.sin((hp - 0.15) / 0.4 * Math.PI) * 60 : 0;
+  const squash = hp > 0 && hp < 0.15 ? 0.06 * Math.sin(hp / 0.15 * Math.PI) : hp > 0.55 && hp < 0.75 ? 0.07 * Math.sin((hp - 0.55) / 0.2 * Math.PI) : 0;
+  const S = 0.98, ox = (W - 1536 * S) / 2 + 40, oy = H - 1024 * S + 20;
+  c.translate(ox, oy - hop); c.scale(S, S);
+  c.translate(768, 990); c.scale(1 + squash * 0.6, 1 - squash - 0.008 * br); c.translate(-768, -990);
+  // tail (behind the body): a wag
+  rot(c, PIV.tail, Math.sin(t * Math.PI * 2 / 1.6) * 0.07 + (hop ? 0.06 : 0), () => c.drawImage(LAY.tail, 0, 0));
+  c.save(); c.globalCompositeOperation = 'multiply'; c.drawImage(LAY.body, 0, 0); c.restore();
+  // arms: little paddles, faster when happy-hopping
+  const ap = hop ? -0.25 : Math.sin(t * Math.PI * 2 / 2.4 - 0.6) * 0.05;
+  rot(c, PIV.armL, ap - Math.sin(t * 5) * 0.04, () => c.drawImage(LAY.armL, 0, 0));
+  rot(c, PIV.armR, -ap + Math.sin(t * 5 + 1) * 0.04, () => c.drawImage(LAY.armR, 0, 0));
+  // head: bob with the breath (lagging), a curious tilt, a nod after landing
+  const tilt = 0.05 * sm((t - 0.6) / 0.6) - 0.09 * sm((t - 1.8) / 0.6) + 0.04 * sm((t - 4.6) / 0.6) + (hp > 0.55 && hp < 1 ? Math.sin((hp - 0.55) / 0.45 * Math.PI) * 0.05 : 0);
+  c.save(); c.translate(0, -4 * Math.sin(t * Math.PI * 2 / 2.4 - 0.5));
+  rot(c, PIV.head, tilt, () => { c.drawImage(LAY.head, 0, 0); lids(c, blink(t)); });
+  c.restore();
+  // final: paper, then the drawing multiplied on top, and a soft contact shadow
+  const o = cv.getContext('2d'); o.setTransform(1, 0, 0, 1, 0, 0); o.globalCompositeOperation = 'source-over'; o.drawImage(PAPER, 0, 0);
+  o.globalCompositeOperation = 'multiply'; o.drawImage(ROOM, 0, 0); o.globalCompositeOperation = 'source-over';
+};
+window.ready = new Promise(r => { img.onload = () => { build(); r(); }; });
+</script></body></html>

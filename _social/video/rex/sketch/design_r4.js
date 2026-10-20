@@ -24,7 +24,7 @@
     ['P13 reach up', { face: { ...face('E6'), look: [0, -1] }, yaw: 0, squash: -0.08, headTilt: -0.15, arms: { near: [-0.5, -0.95], far: [-0.5, -0.95] } }],
     ['P14 balance', { face: { ...N, browTilt: 0.4, lidUp: 1.05, mouth: 'M8', open: 0.05, wobble: 0.4 }, bend: -0.12, stance: 16, heels: [0, 8], arms: { near: [-0.05, -0.05], far: [Math.PI + 0.25, Math.PI + 0.25] }, tail: { up: 0.35 } }],
     ['P15 hug-self (cold)', { contactLbl: true, face: face('E22'), squash: 0.06, headTilt: 0.1, shiverTicks: true, arms: { near: [1.4, -1.9], far: [1.3, -0.4] }, tail: { wrap: 1 } }],
-    ['P16 look up (wonder)', { face: face('E6'), headTilt: -0.35, bend: -0.08, arms: { near: [0.5, 0.2], far: [0.5, 0.2] }, tail: { up: -0.1 } }],
+    ['P16 look up (wonder)', { face: { ...face('E6'), mouth: 'M6', open: 0.5 }, headTilt: -0.45, bend: -0.12, arms: { near: [-0.3, -0.35], far: [-0.3, -0.35] }, tail: { up: -0.15 } }],
     ['P17 shake-dry key', { face: { ...N, closed: 'squeeze', mouth: 'M14', open: 0.1 }, headYaw: 85, bend: 0.12, arms: { near: [0.9, 1.6], far: [0.9, 1.6] }, tail: { points: [[-30, -40], [-62, -22], [-94, -20], [-118, -28], [-132, -40]] }, droplets: true }],
     ['P18 wave', { face: face('E2'), yaw: 0, headTilt: 0.1, arms: { near: [-0.45, -1.0], far: [1.28, 1.0] }, t: 0.25 }],
     ['P19 hand to mouth', { face: face('E4'), headTilt: 0.2, headYaw: 55, handFront: true, arms: { near: [-0.6, -0.55] }, tail: { up: 0.2 } }],
@@ -66,6 +66,10 @@
     ctx.restore();
     order.forEach((pi, k) => { const col = k % 5, row = Math.floor(k / 5); drawPose(pi, 192 + col * 384, 232 + row * 270, 0.8, named); });
     if (!named) order.forEach((pi, k) => label(String.fromCharCode(65 + k), 60 + (k % 5) * 384, 60 + Math.floor(k / 5) * 270, 30));
+  } });
+  F.episode('r5pair', { ...base, draw() {   // C4: P01 neutral vs P16 look up
+    const c = A.ctx(); c.save(); c.strokeStyle = 'rgba(42,39,36,0.4)'; c.lineWidth = 2; c.beginPath(); c.moveTo(60, 860); c.lineTo(1860, 860); c.stroke(); c.restore();
+    [[0, 560], [15, 1360]].forEach(([pi, x]) => { drawPose(pi, x, 860, 1.6, false); label(P[pi][0] + (MODE() === 'guides' ? `   handClear ${(A.rex2.stats || {}).handClear}` : ''), x, 930, 30); });
   } });
   F.episode('r4poses', grid([...Array(20).keys()], true));
   F.episode('r4shuffled', grid([9, 16, 0, 19, 5, 12, 2, 14, 7, 3, 17, 11, 8, 1, 18, 6, 15, 10, 4, 13], false));

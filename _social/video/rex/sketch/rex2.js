@@ -17,6 +17,12 @@
   const HEAD = [[-60, 0], [-57, -20], [-48, -38], [-33, -51], [-14, -56], [6, -55], [24, -49], [38, -39], [50, -27], [62, -17], [72, -10], [79, 0],
     [81, 12], [78, 24], [70, 33], [56, 40], [38, 46], [18, 52], [-2, 54], [-22, 52], [-40, 44], [-52, 32], [-58, 16]];
   const rs = A.rnd;
+  // ¾-view face layout (head-local, HC = 0,0). mouth: anchors are remapped x' = cx + (x − 44)·k, y' = y + dy
+  const FACE0 = { nearEye: [-6, 2, 22, 26], farEye: [38, 0, 15, 22, 0.08], browN: [-6, -32, 34], browF: [38, -30, 24],
+    nose1: [64, -4], nose2: [74, -2], mouth: { cx: 44, k: 1, dy: 0 }, blushN: [-22, 30], blushF: [60, 6] };
+  A.REX_FACE0 = FACE0; A.REX_FACE = JSON.parse(JSON.stringify(FACE0));
+  const FL = () => A.REX_FACE;
+  const MX = x => FL().mouth.cx + (x - 44) * FL().mouth.k, MY = y => y + FL().mouth.dy;
   let ctx, S = 1, KEYB = 0, KEYF = 0, L = [-0.6, -0.8];   // L: light direction in local (unflipped) space
 
   /* ---------- drawing helpers: closed outlines (no gaps), clamped widths, boil on threes / sixes ---------- */
@@ -75,7 +81,7 @@
     th = [...th, 11];
     const pts = [base[0]]; let acc = 0;
     for (let i = 1; i < base.length; i++) {
-      acc += (wag * Math.sin(ph - i * 0.7) * 0.09 + lift * 0.07) * i;
+      acc += (wag * Math.sin(ph - i * 0.7) * 0.09 + lift * 0.07) * i + ((tl.seg || [])[i - 1] || 0);
       const v = [base[i][0] - base[i - 1][0], base[i][1] - base[i - 1][1]], r = rot(v, [0, 0], acc);   // + lift / up raises the tail
       pts.push([pts[i - 1][0] + r[0], pts[i - 1][1] + r[1]]);
     }
@@ -191,7 +197,7 @@
   };
   function mouthLine(m, f) {
     const c = ((f.corners ?? m.corners ?? 0) + 0.3 * (f.cheek || 0)) * 7, wd = f.width ?? 1, sd = (f.side || 0) * 10, mid = m.B[0];
-    const sc = p => [mid + (p[0] - mid) * wd + sd, p[1]];
+    const sc = p => [MX(mid + (p[0] - mid) * wd + sd), MY(p[1])];
     const k = c / 7;   // corners: up raises the far end and deepens the middle; the near corner never rises above y 22
     return { A: sc([m.A[0], Math.max(22, m.A[1] + Math.max(0, -k) * 7)]), B: sc([m.B[0], m.B[1] + k * 4]), F: sc([m.F[0], m.F[1] - k * 7]), tick: m.tick && sc(m.tick), tickF: m.tickF && sc(m.tickF) };
   }
@@ -242,7 +248,8 @@
         const sag = (m.wail ? 6 : 3) + open * (m.wail ? 12 : 8);
         lowLip = upper.map((q, k) => { const r = jawT(q), u = k / (upper.length - 1); return [r[0] + (m.wail ? (u - 0.5) * 6 * open : 0), r[1] + sag * Math.sin(u * Math.PI)]; });
         // one path: snout tip (81,12) → (80,20) → (77,25) → far corner F → (mouth) → F2 → round, convex jaw front → chin → neck
-        SIL = [...HEAD.slice(0, 12), [81, 12], [80, 22], [Math.max(ml.F[0] + 4, 76), ml.F[1] - 1], ml.F, lowLip[lowLip.length - 1], ...jawFront.slice(1), ...HEAD.slice(19)];
+        if (ml.F[0] >= 70) SIL = [...HEAD.slice(0, 12), [81, 12], [80, 22], [Math.max(ml.F[0] + 4, 76), ml.F[1] - 1], ml.F, lowLip[lowLip.length - 1], ...jawFront.slice(1), ...HEAD.slice(19)];
+        else SIL = [...HEAD.slice(0, 12), [81, 12], [80, 22], ...jawFront, ...HEAD.slice(19)];   // a mouth set inside the face: it opens as a D within the head, the jaw dropping
       } else SIL = [...HEAD.slice(0, 12), [81, 12], [80, 22], ...jawFront, ...HEAD.slice(19)];   // oval mouths: the jaw drops, no lip notch
     }
     SKIN_PAINT = () => { ctx.fillStyle = C.rex; ctx.fillRect(-300, -300, 600, 600); soft(22, 8, 56, 36, C.face, 0.6, 0.55); if (isOpen) soft(34, 42, 36, 18, C.face, 0.45); };
@@ -264,18 +271,18 @@
       ctx.save(); path(inner, true); ctx.clip();
       if (tg > 0) { const lb = lowLip[3]; fill(ell(lb[0] - 2, lb[1] - 2, m.small ? 10 : 16, 3 + 7 * tg, 18), C.tongue); }
       ctx.restore();
-      if (teeth) for (const tx of [36, 50]) { const q = upper.reduce((b, pnt) => Math.abs(pnt[0] - tx) < Math.abs(b[0] - tx) ? pnt : b)[1];
+      if (teeth) for (const tx of [MX(36), MX(50)]) { const q = upper.reduce((b, pnt) => Math.abs(pnt[0] - tx) < Math.abs(b[0] - tx) ? pnt : b)[1];
         const th = m.roar ? 6 : (m.small ? 4 : 5.2), tw = m.small ? 2.5 : 3;
         const tooth = [[tx - tw, q - 1], [tx + tw, q - 1], [tx + tw, q + th * 0.55], [tx + tw * 0.5, q + th], [tx - tw * 0.5, q + th], [tx - tw, q + th * 0.55]]; fill(tooth, C.claw); stroke(tooth.slice(1, 5), { w: 1.0, dark: 0.35, j: 0, seed: 360 + tx, face: true }); }
       stroke(inner, { closed: true, w: 2.6, j: 0.4, seed: 371, face: true });
-      if (m.tongueOut) { const [tx, ty, rx, ry] = m.tongueOut, q = jawT([tx, ty]); const T = ell(q[0], q[1], rx, ry, 16, 0.4); fill(T, C.tongue); stroke(T.slice(2, 14), { w: 2.0, j: 0.3, seed: 376, face: true }); stroke([[q[0] - 2, q[1] - 2], [q[0] + 2, q[1] + 3]], { w: 1.2, dark: 0.5, j: 0, seed: 377, face: true }); }
+      if (m.tongueOut) { const [tx0, ty0, rx, ry] = m.tongueOut, q = jawT([MX(tx0), MY(ty0)]); const T = ell(q[0], q[1], rx, ry, 16, 0.4); fill(T, C.tongue); stroke(T.slice(2, 14), { w: 2.0, j: 0.3, seed: 376, face: true }); stroke([[q[0] - 2, q[1] - 2], [q[0] + 2, q[1] + 3]], { w: 1.2, dark: 0.5, j: 0, seed: 377, face: true }); }
     } else if (m.o) {
-      const [ox, oy, rx, ry] = m.o, c = jawT([ox, oy + ry * 0.4]), cy = lerp(oy, c[1] - ry * 0.4, 0.5), O = ell(ox, cy, rx, ry, 20);
+      const [ox0, oy0, rx, ry] = m.o, ox = MX(ox0), oy = MY(oy0), c = jawT([ox, oy + ry * 0.4]), cy = lerp(oy, c[1] - ry * 0.4, 0.5), O = ell(ox, cy, rx, ry, 20);
       fill(O, C.mouth);
       if (tg > 0) { ctx.save(); path(O, true); ctx.clip(); fill(ell(ox, cy + ry * 0.75, rx * 0.8, ry * 0.45 * (0.6 + tg), 16), C.tongue); ctx.restore(); }
       stroke(O, { closed: true, w: 2.6, j: 0.4, seed: 372, face: true });
     } else if (m.pucker) {
-      const [px, py, r] = m.pucker; fill(ell(px, py, r, r, 12), C.mouth); stroke(ell(px, py, r, r, 12), { closed: true, w: 2.6, j: 0.3, seed: 378, face: true });
+      const [px0, py0, r] = m.pucker, px = MX(px0), py = MY(py0); fill(ell(px, py, r, r, 12), C.mouth); stroke(ell(px, py, r, r, 12), { closed: true, w: 2.6, j: 0.3, seed: 378, face: true });
       for (const a of [-2.4, -0.8, 0.8, 2.4]) stroke([[px + Math.cos(a) * (r + 2), py + Math.sin(a) * (r + 2)], [px + Math.cos(a) * (r + 5), py + Math.sin(a) * (r + 5)]], { w: 1.4, j: 0, dark: 0.6, seed: 379, face: true });
     } else {
       stroke(upper, { w: 2.6, j: 0.4, seed: 373, face: true });
@@ -288,14 +295,14 @@
     ctx.save(); shadowClip(SIL, 0.45); stroke(OUT, { closed: fi < 0, w: 3.6, seed: 51 }); ctx.restore();
     // 3) cheeks, blush (cold: also the snout tip), nostrils
     ctx.save(); path(SIL, true); ctx.clip();
-    if (f.blush) { const ba = Math.min(1, 0.5 + 0.5 * f.blush); soft(-22, 30, 12, 7, C.blush, ba, 0.5); soft(60, 6, 7, 5, C.blush, ba, 0.5); }
+    if (f.blush) { const ba = Math.min(1, 0.5 + 0.5 * f.blush), bn = FL().blushN, bf = FL().blushF; soft(bn[0], bn[1], 12, 7, C.blush, ba, 0.5); soft(bf[0], bf[1], 7, 5, C.blush, ba, 0.5); }
     if (f.cold) soft(74, 4, 10, 6, C.blush, Math.min(1, 0.5 + 0.5 * f.cold), 0.5);
     ctx.restore();
     const fl = 1 + 0.6 * (f.flare || 0);
-    fill(ell(64, -4, 2.6 * fl, 1.8 * fl, 10, -0.3), C.pupil, 0.85); fill(ell(74, -2, 2.0 * fl, 1.4 * fl, 10, -0.3), C.pupil, 0.85);
+    { const n1 = FL().nose1, n2 = FL().nose2; fill(ell(n1[0], n1[1], 2.6 * fl, 1.8 * fl, 10, -0.3), C.pupil, 0.85); fill(ell(n2[0], n2[1], 2.0 * fl, 1.4 * fl, 10, -0.3), C.pupil, 0.85); }
     // 4) eyes, then brows
-    eye(-6, 2, 22, 26, 0, f, 0, p.flip); eye(38, 0, 15, 22, 0.08, f, 1, p.flip);
-    [[-6, -32, 34, 1], [38, -30, 24, -1]].forEach(([bx, by, len, inner], i) => {
+    { const e1 = FL().nearEye, e2 = FL().farEye; eye(e1[0], e1[1], e1[2], e1[3], 0, f, 0, p.flip); eye(e2[0], e2[1], e2[2], e2[3], e2[4], f, 1, p.flip); }
+    [[...FL().browN, 1], [...FL().browF, -1]].forEach(([bx, by, len, inner], i) => {
       const lift = sidev(f.browLift ?? 0, i), tilt = Math.max(-0.6, sidev(f.browTilt ?? 0, i)), curve = sidev(f.browCurve ?? 0.3, i);
       const dy = lift < 0 ? -lift * 6 : -lift * 10, arch = 3 + curve * 6;
       const ix = bx + inner * len / 2, ox = bx - inner * len / 2;
@@ -390,7 +397,7 @@
       const blush = f.blush || 0;
       if (blush) { const ba = Math.min(1, 0.5 + 0.5 * blush), b1 = lp(yaw, [-40, 16], [-22, 30], [34, 30]), b2 = lp(yaw, [40, 16], [60, 6], [70, 4]);
         soft(b1[0], b1[1], 12, 7, C.blush, ba, 0.5); soft(b2[0], b2[1], 7 * li(yaw, 1.7, 1, 0.5), 5, C.blush, ba * fade(yaw, 70, 80), 0.5); }
-      const n1 = K(yaw, [[-6, 20], [64, -4], [85, -2], [130, -2], [130, -2]]), n2 = lp(yaw, [6, 20], [74, -2], [88, -2]);
+      const n1 = K(yaw, [[-6, 20], FL().nose1, [85, -2], [130, -2], [130, -2]]), n2 = lp(yaw, [6, 20], FL().nose2, [88, -2]);
       fill(ell(n1[0], n1[1], li(yaw, 2.2, 2.6, 2.4), li(yaw, 1.6, 1.8, 1.8), 10, li(yaw, 0.3, -0.3, -0.3)), C.pupil, 0.85);
       fill(ell(n2[0], n2[1], li(yaw, 2.2, 2.0, 1.2), li(yaw, 1.6, 1.4, 1.0), 10, -0.3), C.pupil, 0.85 * fade(yaw, 70, 80));
       // the mouth follows the ¾ mouth: its offsets from M1 move the front / side keys (the front is symmetric)
@@ -428,7 +435,7 @@
     if (face > 0) {
       ctx.save(); ctx.globalAlpha *= face; path(yaw > 90 ? INNER : SIL, true); ctx.clip();
       const look = f.look || [li(yaw, 0, 0.15, 0.4), 0], ff = { ...f, look, ...(yaw < 22.5 && f.lidUp != null ? { lidUp: Array.isArray(f.lidUp) ? f.lidUp.map(v => Math.min(v, 1.05)) : Math.min(f.lidUp, 1.05) } : {}) };
-      const wideK = yaw < 22.5 && sidev(f.lidUp ?? 1, 0) > 1 ? 0.88 : 1, nE0 = K(yaw, [[-33, 0, 20, 26], [-6, 2, 22, 26], [26, 2, 15, 25], [84, 2, 15, 25], [84, 2, 15, 25]]);
+      const wideK = yaw < 22.5 && sidev(f.lidUp ?? 1, 0) > 1 ? 0.88 : 1, nE0 = K(yaw, [[-33, 0, 20, 26], FL().nearEye.slice(0, 4), [26, 2, 15, 25], [84, 2, 15, 25], [84, 2, 15, 25]]);
       const nE = [nE0[0] * (wideK < 1 ? 0.95 : 1), nE0[1], nE0[2] * wideK, nE0[3]];
       // front view: shrink the eye width until its outer edge keeps >= 6 units inside the head outline (computed)
       let eyeRx = null;
@@ -441,10 +448,10 @@
       eye(nE[0], nE[1], nE[2], nE[3], 0, ff, 0, p.flip, li(yaw, 1, 1, 0.7));
       ctx.restore();
       STATS.eyeRy = nE[3];
-      const fE = K(Math.min(90, yaw), [[33, 0, 20, 26], [38, 0, 15, 22], [68, -18, 12, 20], [68, -18, 12, 20], [68, -18, 12, 20]]);
+      const fE = K(Math.min(90, yaw), [[33, 0, 20, 26], FL().farEye.slice(0, 4), [68, -18, 12, 20], [68, -18, 12, 20], [68, -18, 12, 20]]);
       const inner = outlineAt(yaw, 3), vis = Math.min(2 * fE[2], rightAt(inner, fE[1]) - (fE[0] - fE[2])), fa = yaw < 60 ? 1 : clamp01((vis - 3) / 3);
       if (fa > 0 && yaw < 90) { ctx.save(); ctx.globalAlpha *= fa * face; path(inner, true); ctx.clip(); eye(fE[0] * (wideK < 1 ? 0.95 : 1), fE[1], eyeRx ?? fE[2] * wideK, fE[3], li(yaw, 0, 0.08, 0.1), ff, 1, p.flip, li(yaw, 1, 0.7, 0.5)); ctx.restore(); }
-      const brows = [[K(yaw, [-33, -6, 26, 84, 84]), -32, li(yaw, 34, 34, 22), 1, face], [li(yaw, 33, 38, 66), li(yaw, -32, -30, -46), li(yaw, 34, 24, 14), -1, (yaw < 60 ? 1 : fa) * fade(yaw, 70, 80)]];
+      const brows = [[K(yaw, [-33, FL().browN[0], 26, 84, 84]), li(yaw, -32, FL().browN[1], -32), li(yaw, 34, FL().browN[2], 22), 1, face], [li(yaw, 33, FL().browF[0], 66), li(yaw, -32, FL().browF[1], -46), li(yaw, 34, FL().browF[2], 14), -1, (yaw < 60 ? 1 : fa) * fade(yaw, 70, 80)]];
       brows.forEach(([bx, by, len, innerDir, al0], i) => { let al = al0;
         if (al <= 0) return;
         const lift = sidev(f.browLift ?? 0, i), tilt = Math.max(-0.6, sidev(f.browTilt ?? 0, i)), curve = sidev(f.browCurve ?? 0.3, i);
@@ -547,10 +554,10 @@
     A.rex2.stats = STATS;
     const heelsV = Array.isArray(p.heels) ? p.heels : [p.heels || 0, p.heels || 0], bend = (p.bend ?? 0) + (p.lean || 0), heels = Math.max(...heelsV) * (Array.isArray(p.heels) ? 0.5 : 1), sit = p.sit || 0, tuck = p.tuck || 0, wide = p.stance || 0;
     const lift = -heels - tuck * 0.5 + sit * 14;                    // the body group moves up on tiptoe / down when sitting
-    const bodyT = () => { ctx.translate(0, lift); ctx.translate(0, -40); ctx.rotate(bend); ctx.translate(0, 40); };   // spine bend about the hip
+    const bob = p.bob || 0, bodyT = () => { ctx.translate(0, lift + bob); ctx.translate(0, -40); ctx.rotate(bend); ctx.translate(0, 40); };   // spine bend about the hip
     // a leg: thigh + foot (tiptoe: the foot rotates about its toe; sitting: legs forward, soles a little toward us)
     function leg(near) {
-      const dx = (near ? 1 : -1) * wide / 2, col = near ? C.rex : C.shade, sd = near ? 90 : 61;
+      const dx = (near ? 1 : -1) * wide / 2, col = near ? C.rex : C.shade, sd = near ? 90 : 61, ft = (p.feet || {})[near ? 'near' : 'far'] || {};
       ctx.save(); ctx.translate(dx, -tuck);
       if (sit) {
         ctx.translate(0, 0);
@@ -562,12 +569,15 @@
         ctx.restore();
       } else {
         const hT = near ? heelsV[0] : heelsV[1] * (Array.isArray(p.heels) ? 1 : 0.8);
-        ctx.save(); ctx.translate(0, -hT * 0.7);
+        ctx.save(); ctx.translate((ft.dx || 0) * 0.55, -hT * 0.7 - (ft.lift || 0) * 0.5 + bob * 0.6);
         part(near ? ell(24, -30, 28, 30, 24) : ell(-22, -32, 24, 27, 22), col, sd, { band: 0.4 });
         ctx.restore();
+        ctx.translate(ft.dx || 0, -(ft.lift || 0));
+        if (near) A.rex2._foot = ctx.getTransform().transformPoint(new DOMPoint(30, 0));
+        else A.rex2._footF = ctx.getTransform().transformPoint(new DOMPoint(-20, 0));
         const foot = near ? [[2, 0], [54, 0], [58, -4], [56, -9], [48, -13], [40, -14], [20, -14], [4, -12], [0, -6]] : [[-50, 0], [6, 0], [8, -6], [2, -12], [-44, -12], [-52, -6]];
         const toe = near ? [56, 0] : [8, 0];
-        ctx.save(); ctx.translate(toe[0], toe[1]); ctx.rotate(Math.atan2(hT, 52)); ctx.translate(-toe[0], -toe[1]);
+        ctx.save(); ctx.translate(toe[0], toe[1]); ctx.rotate(Math.atan2(hT, 52) - (ft.rot || 0)); ctx.translate(-toe[0], -toe[1]);
         part(foot, col, sd + 1, { hatch: false });
         if (near) for (const cx of [40, 47, 54]) { const nub = [[cx - 2.5, 0], [cx + 2.5, 0], [cx + 2.5, -4], [cx, -6], [cx - 2.5, -4]]; fill(nub, C.claw); stroke(nub, { closed: true, w: 1.4, j: 0.3, seed: 95 + cx }); }
         ctx.restore();
@@ -576,8 +586,9 @@
     }
     // tail behind everything (sitting: flat on the ground behind, with a gap above the ground line)
     const tailBase = sit ? [[-30, -30], [-62, -20], [-94, -16], [-118, -15], [-132, -17]] : undefined;
-    tail(p, tailBase);
+    ctx.save(); ctx.translate(0, bob); tail(p, tailBase);
     STATS.tailTipY = Math.round(A.rex2._tailTip[1] * sy);
+    STATS.feet = null; STATS.track = { tail: ctx.getTransform().transformPoint(new DOMPoint(A.rex2._tailTip[0], A.rex2._tailTip[1])) }; STATS.area = Math.round(sx * sy * 1000) / 1000; ctx.restore();
     leg(false);
     const ar = p.arms || {}, lim = a => p.contact ? a : [Math.max(-0.70, a[0]), a[1]];   // raised-arm rule: ≤ 40° above the facing direction
     const fa = lim(ar.far || [1.15, 0.45]), na = lim(ar.near || [0.96, 0.26]);
@@ -604,6 +615,7 @@
     if (p.shiverTicks) for (const [tx, ty, dx] of [[-50, -96, -1], [-54, -78, -1], [-52, -60, -1], [52, -96, 1], [55, -78, 1], [53, -60, 1]]) { const ph = Math.sin((p.t || 0) * 60 + ty) * 1.5; stroke([[tx + dx * 3, ty + ph], [tx + dx * 9, ty - 2 + ph]], { w: 1.8, dark: 0.7, j: 0, seed: 140 + ty }); }
     ctx.restore();
     leg(true);
+    STATS.feet = { near: A.rex2._foot, far: A.rex2._footF };
     // the wrapped tail passes in front of the feet
     if ((p.tail || {}).wrap) { ctx.save(); ctx.beginPath(); ctx.rect(-48, -26, 140, 60); ctx.clip(); tail(p, tailBase); ctx.restore(); }
     ctx.save(); bodyT();
@@ -613,6 +625,7 @@
     ctx.save(); ctx.translate(NECK[0], NECK[1] + (p.neckDrop || 0)); ctx.rotate(p.headTilt - bend * 0.5);
     const qh = q * 0.4; ctx.scale((1 / (1 - qh)) / sx, (1 - qh) / sy);
     ctx.translate(HC[0] - NECK[0], HC[1] - NECK[1]);
+    { const M2 = ctx.getTransform(); STATS.track.head = M2.transformPoint(new DOMPoint(0, -56)); STATS.track.hat = M2.transformPoint(new DOMPoint(-16 + ((p.hat || {}).dx || 0), -62 + ((p.hat || {}).dy || 0))); }
     if (p.headYaw != null && p.headYaw !== 45) { headYaw(p.headYaw, p, f); }
     else {
       head(p, f);

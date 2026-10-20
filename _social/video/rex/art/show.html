@@ -1,0 +1,93 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Rex showreel</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="rig.js"></script>
+<script>
+// A 30-second showreel of the cut-out rig: idle, looking around, curious tilt, laughing (jaw), happy hops, waving,
+// dancing (steps + sway), tail wag, a big jump. Primary motion is keyed; follow-through comes from one physics sim.
+const W = 1920, H = 1080, cv = document.getElementById('c'), out = cv.getContext('2d');
+const ROOM = document.createElement('canvas'); ROOM.width = W; ROOM.height = H; const rc = ROOM.getContext('2d');
+const PAPER = document.createElement('canvas'); PAPER.width = W; PAPER.height = H;
+{ const p = PAPER.getContext('2d'); p.fillStyle = '#f4f1ea'; p.fillRect(0, 0, W, H); const d = p.getImageData(0, 0, W, H);
+  for (let i = 0; i < d.data.length; i += 4) { const n = (Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1 - 0.5) * 12; d.data[i] += n; d.data[i + 1] += n; d.data[i + 2] += n - 1; } p.putImageData(d, 0, 0); }
+const sm = u => u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
+const win = (t, a, b, fi = 0.3, fo = 0.3) => sm((t - a) / fi) * (1 - sm((t - (b - fo)) / fo));   // 0→1→0 window
+// keyed beats -------------------------------------------------------------------------------------------
+const HOPS = [[10.3, 70, 0.42], [11.2, 90, 0.46], [12.15, 70, 0.42], [24.6, 230, 0.8]];   // [take-off, height, air time]
+function hop(t) {   // returns { lift, squash, tuck }
+  let lift = 0, sq = 0, tuck = 0;
+  for (const [t0, h, d] of HOPS) {
+    const a = t - t0;
+    if (a > -0.2 && a < 0) sq += 0.12 * (h > 150 ? 1.5 : 1) * Math.sin((a + 0.2) / 0.2 * Math.PI / 2);   // wind-up crouch
+    if (a >= 0 && a < d) { const u = a / d; lift += 4 * h * u * (1 - u); sq -= 0.09 * (1 - Math.min(1, u * 2.5)); tuck += Math.sin(u * Math.PI) * (h > 150 ? 34 : 14); }
+    if (a >= d && a < d + 0.4) { const u = (a - d) / 0.4; sq += 0.13 * (h > 150 ? 1.4 : 1) * Math.exp(-u * 4) * Math.cos(u * 9); }   // land, bounce, settle
+  }
+  return { lift, sq, tuck };
+}
+const BLINKS = [1.3, 3.6, 5.9, 6.05, 9.0, 13.4, 16.8, 20.2, 23.1, 27.2, 28.9];
+function blink(t) { let v = 1; for (const b of BLINKS) { const f = Math.floor((t - b) * 30); if (f >= 0 && f < 5) v = Math.min(v, [0.4, 0, 0, 0.5, 1][f]); } return v; }
+function look(t) {   // [x, y]
+  if (t < 1.8) return [0, 0]; if (t < 2.8) return [-1, 0.1]; if (t < 3.8) return [1, 0.05]; if (t < 4.4) return [0, 0];
+  if (t < 7) return [0.3, -0.9];                       // looks up curiously
+  if (t > 14 && t < 17) return [0.8, -0.2];             // at the waving hand
+  if (t > 24 && t < 24.8) return [0, -1];               // eyeing the jump
+  return [0, 0];
+}
+function keyed(t) {
+  const hp = hop(t), br = Math.sin(t * Math.PI * 2 / 2.4);
+  const laugh = win(t, 7.2, 10, 0.3, 0.4);
+  const wave = win(t, 14, 17.2, 0.4, 0.4);
+  const dance = win(t, 17.6, 21.6, 0.4, 0.5);
+  const wag = win(t, 21.6, 24.2, 0.3, 0.3);
+  // head tilt (target): curious tilt, laugh bob, lean toward the wave, dance sway
+  const tilt = 0.06 * win(t, 4.4, 7.2, 0.5, 0.5) - 0.04 * win(t, 2.8, 3.8) + 0.035 * win(t, 1.8, 2.8)
+    + laugh * 0.04 * Math.sin(t * 2 * Math.PI * 2.6) - wave * 0.07 + dance * 0.08 * Math.sin((t - 17.6) * Math.PI * 1.25);
+  // the jaw: laughs in bursts "ha-ha-ha", a little chatter while waving
+  const jaw = laugh * (0.45 + 0.45 * Math.abs(Math.sin(t * Math.PI * 2.6))) + wave * 0.15 * Math.abs(Math.sin(t * 7)) - 0.1 * win(t, 4.4, 7.2);
+  // arms: paddles while laughing; the right arm waves; both pump while dancing
+  const armL = laugh * 0.12 * Math.sin(t * 16) + dance * 0.1 * Math.sin((t - 17.6) * Math.PI * 2.5) + 0.03 * br;
+  const armR = laugh * 0.12 * Math.sin(t * 16 + 1) - wave * (0.9 + 0.35 * Math.sin((t - 14) * 2 * Math.PI * 1.6)) + dance * 0.1 * Math.sin((t - 17.6) * Math.PI * 2.5 + Math.PI) + 0.03 * br;
+  // legs: dance steps (alternating), tucked in the air on hops
+  const stepPh = (t - 17.6) * 2.5, stepL = dance * Math.max(0, Math.sin(stepPh * Math.PI)) * 22, stepR = dance * Math.max(0, -Math.sin(stepPh * Math.PI)) * 22;
+  // lean: dance sway, a little weight shift when stepping, and the wag wiggle
+  const lean = dance * 0.05 * Math.sin(stepPh * Math.PI) + wag * 0.025 * Math.sin(t * 2 * Math.PI * 3);
+  const tailDrive = 0.025 * Math.sin(t * Math.PI * 2 / 1.9) + wag * 0.08 * Math.sin(t * 2 * Math.PI * 3) + dance * 0.05 * Math.sin(stepPh * Math.PI);
+  const sq = hp.sq + 0.01 * br + laugh * 0.025 * Math.abs(Math.sin(t * Math.PI * 2.6));
+  const lid = Math.min(blink(t), 1 - laugh * 0.62);
+  return { lift: hp.lift, tuck: hp.tuck, sq, tilt, jaw, armL, armR, stepL, stepR, lean, tailDrive, lid, look: look(t) };
+}
+// one physics sim for all the follow-through (integrated from 0 at 120 Hz, so any frame renders the same) ------------
+function sim(T) {
+  const dt = 1 / 120, n = Math.round(T * 120);
+  const S = { t1: 0, v1: 0, t2: 0, v2: 0, t3: 0, v3: 0, aL: 0, vaL: 0, aR: 0, vaR: 0, hy: 0, vhy: 0, ht: 0, vht: 0, j: 0, vj: 0, lx: 0, vlx: 0, ly: 0, vly: 0 };
+  let k = keyed(0), prevLift = 0, prevV = 0;
+  const sp = (x, v, g, hz, z) => { const w = 2 * Math.PI * hz; v += (w * w * (g - x) - 2 * z * w * v) * dt; return [x + v * dt, v]; };
+  for (let i = 1; i <= n; i++) {
+    k = keyed(i * dt);
+    const vel = (k.lift - prevLift) / dt, acc = (vel - prevV) / dt; prevLift = k.lift; prevV = vel;
+    const push = Math.max(-1, Math.min(1, acc / 9000));   // vertical acceleration → the soft parts lag
+    [S.t1, S.v1] = sp(S.t1, S.v1, k.tailDrive + push * 0.06 + k.lean * 0.6, 3.0, 0.45);
+    [S.t2, S.v2] = sp(S.t2, S.v2, S.t1 * 0.85, 3.4, 0.38);
+    [S.t3, S.v3] = sp(S.t3, S.v3, S.t2 * 0.85, 4.0, 0.32);
+    [S.aL, S.vaL] = sp(S.aL, S.vaL, k.armL * 0.7 - push * 0.2, 4.2, 0.42);
+    [S.aR, S.vaR] = sp(S.aR, S.vaR, k.armR * 0.7 - push * 0.2, 4.2, 0.42);
+    [S.hy, S.vhy] = sp(S.hy, S.vhy, push * 14, 4.5, 0.45);
+    [S.ht, S.vht] = sp(S.ht, S.vht, k.tilt + k.lean * 0.6, 3.2, 0.5);
+    [S.j, S.vj] = sp(S.j, S.vj, k.jaw, 7, 0.55);
+    [S.lx, S.vlx] = sp(S.lx, S.vlx, k.look[0], 9, 0.75); [S.ly, S.vly] = sp(S.ly, S.vly, k.look[1], 9, 0.75);
+  }
+  return { k, S };
+}
+let img = new Image(); img.src = 'rex_front.png';
+window.ready = new Promise(r => { img.onload = () => { REX.build(img); r(); }; });
+window.renderFrame = t => {
+  const { k, S } = sim(t);
+  rc.setTransform(1, 0, 0, 1, 0, 0); rc.clearRect(0, 0, W, H); rc.fillStyle = '#fff'; rc.fillRect(0, 0, W, H);
+  REX.draw(rc, { x: W / 2 + 30, y: 1050, s: 0.95, lift: k.lift, squash: k.sq, lean: k.lean,
+    head: { tilt: S.ht, dy: S.hy }, look: [S.lx, S.ly], lid: k.lid, jaw: S.j, tail: [S.t1, S.t2, S.t3],
+    arms: { L: S.aL, R: S.aR }, legs: { L: { lift: k.stepL + k.tuck, rot: (k.stepL ? -0.08 : 0) + (k.tuck ? 0.1 : 0) }, R: { lift: k.stepR + k.tuck, rot: (k.stepR ? 0.08 : 0) - (k.tuck ? 0.1 : 0) } } });
+  out.setTransform(1, 0, 0, 1, 0, 0); out.globalCompositeOperation = 'source-over'; out.drawImage(PAPER, 0, 0);
+  out.globalCompositeOperation = 'multiply'; out.drawImage(ROOM, 0, 0); out.globalCompositeOperation = 'source-over';
+};
+</script></body></html>
