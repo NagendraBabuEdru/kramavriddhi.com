@@ -210,3 +210,271 @@ Film on your phone in portrait, or show the post image and speak over it. Put **
 - Always: big number or date first, Telugu first, link in bio, "share with your family."
 - **Safety rule:** never ask followers for Aadhaar, OTP or money, and always tell them to apply only on official portals. This builds trust.
 - Reply to comments with the relevant guide link from kramavriddhi.com.
+
+---
+
+## 6. Instagram Reels captions (for the Shorts videos)
+
+Upload the same MP4 from `_social/videos/` as a **Reel**: Instagram app → **＋** → **Reel** → pick the video → **Next**.
+
+**Each time:**
+1. **Cover:** tap *Edit cover* and pick the frame with the big number (about 2 seconds in).
+2. **Caption:** paste the caption below. Instagram links in captions are **not clickable**, so the caption says "link in bio".
+3. **Hashtags:** Instagram now allows **at most 5**; each caption already has 5.
+4. **Audio:** keep the original audio. You can also add a trending sound in the editor at low volume.
+5. **Share to Facebook:** turn on only if you have a Kramavriddhi Facebook page.
+6. **Share** → then open the Reel → comment the "pinned comment" line → long-press it → **Pin**.
+
+**Bio (set once):** Edit profile → *Links* → add `https://kramavriddhi.com` (add a second link for a big deadline, e.g. the scholarship guide, while it is open). Suggested bio (under 150 characters):
+```
+ప్రభుత్వ పథకాలు సులభంగా · Govt schemes made simple 📢
+AP · Telangana · Central | Deadlines & how to apply
+Independent, not govt · Never share OTP 👇
+```
+
+**Before posting a dated Reel** (2, 5, 6): check the guide first. If the money has already been paid or an official date is out, skip that Reel and ask for an updated video.
+
+**Reel 1 – Pragati Scholarship (Telugu)** (`short-1-pragati.mp4`)
+```
+🎓 అమ్మాయిలకు ఏడాదికి ₹50,000 స్కాలర్‌షిప్! ⏰ చివరి తేదీ 31 అక్టోబర్
+
+✅ AICTE గుర్తింపు ఉన్న ఇంజినీరింగ్, ఫార్మసీ, పాలిటెక్నిక్ (డిగ్రీ / డిప్లొమా)
+✅ కుటుంబ ఆదాయం ₹8 లక్షల లోపు
+✅ ఒక కుటుంబంలో ఇద్దరు అమ్మాయిల వరకు
+📝 scholarships.gov.in లో దరఖాస్తు
+
+AICTE Pragati Scholarship: ₹50,000/year for girls. Last date 31 Oct 2026.
+పూర్తి వివరాలు 👉 బయోలో లింక్ (kramavriddhi.com)
+మీకు తెలిసిన అమ్మాయిలకు షేర్ చేయండి 💛
+
+⚠️ ప్రభుత్వ పేజీ కాదు. అధికారిక పోర్టల్‌లో మాత్రమే దరఖాస్తు చేయండి. మేము ఆధార్, OTP, డబ్బు అడగము.
+
+#PragatiScholarship #ScholarshipForGirls #AICTE #Scholarship2026 #Kramavriddhi
+```
+Pinned comment: `Pragati full guide: kramavriddhi.com/schemes/aicte-pragati-scholarship/ ⏰ 31 Oct`
+
+**Reel 2 – PM-KISAN 24th instalment (Telugu)** (`short-2-pm-kisan.mp4`)
+```
+🌾 పీఎం కిసాన్ 24వ విడత ఎప్పుడు? "20 అక్టోబర్" నిజమేనా?
+
+❌ అధికారిక తేదీ ఇంకా ప్రకటించలేదు
+📅 గత పద్ధతి ప్రకారం అక్టోబర్–నవంబర్‌లో రావచ్చు
+✅ ఇప్పుడే చేయండి: ఈకేవైసీ, ఆధార్–బ్యాంకు లింక్, ల్యాండ్ సీడింగ్
+
+PM-KISAN 24th instalment (₹2,000): no official date yet.
+స్టేటస్ ఎలా చూడాలి 👉 బయోలో లింక్
+ఎవరైనా ఫోన్ చేసి OTP అడిగితే చెప్పకండి!
+
+⚠️ ప్రభుత్వ పేజీ కాదు. అధికారిక పోర్టల్‌లో మాత్రమే దరఖాస్తు చేయండి. మేము ఆధార్, OTP, డబ్బు అడగము.
+
+#PMKisan #PMKisan24thInstallment #Farmers #eKYC #Kramavriddhi
+```
+Pinned comment: `Status check: kramavriddhi.com/schemes/pm-kisan/ · అధికారిక తేదీ వచ్చిన వెంటనే అప్‌డేట్ చేస్తాం`
+
+**Reel 3 – Eligibility checker (Telugu)** (`short-3-checker.mp4`)
+```
+✅ మీకు ఏ ప్రభుత్వ పథకాలు వస్తాయి? ఒక్క నిమిషంలో తెలుసుకోండి!
+
+1️⃣ 'నాకు ఏ పథకాలు వర్తిస్తాయి?' ఓపెన్ చేయండి
+2️⃣ రాష్ట్రం, వయసు, రేషన్ కార్డు వంటివి ఎంచుకోండి
+3️⃣ 'నా పథకాలు చూపించు' నొక్కండి
+
+🆓 పూర్తిగా ఉచితం · తెలుగు & ఇంగ్లీష్ · కేంద్ర, ఏపీ, తెలంగాణ
+🔒 మీ సమాధానాలు మీ ఫోన్‌లోనే ఉంటాయి
+
+Free scheme eligibility checker, about 1 minute.
+ఇప్పుడే ట్రై చేయండి 👉 బయోలో లింక్
+
+#GovtSchemes #SarkariYojana #APSchemes #TelanganaSchemes #Kramavriddhi
+```
+Pinned comment: `Try it: kramavriddhi.com/te/tools/scheme-eligibility-checker/ · మీకు ఏ పథకం వచ్చిందో కామెంట్ చేయండి 👇`
+
+**Reel 4 – Central Sector Scholarship (Telugu)** (`short-4-csss.mp4`)
+```
+🎓 కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000! ⏰ చివరి తేదీ 31 అక్టోబర్
+
+✅ 12వ తరగతిలో టాప్ 20%
+✅ కుటుంబ ఆదాయం ₹4.5 లక్షల లోపు
+✅ రెగ్యులర్ డిగ్రీ కోర్సు
+👦 అబ్బాయిలకు 50% · 👧 అమ్మాయిలకు 50%
+📝 scholarships.gov.in లో దరఖాస్తు
+
+Central Sector Scholarship (CSSS): last date 31 Oct 2026.
+పూర్తి వివరాలు 👉 బయోలో లింక్
+కాలేజీ ఫ్రెండ్స్‌కి షేర్ చేయండి 🎓
+
+⚠️ ప్రభుత్వ పేజీ కాదు. అధికారిక పోర్టల్‌లో మాత్రమే దరఖాస్తు చేయండి. మేము ఆధార్, OTP, డబ్బు అడగము.
+
+#CentralSectorScholarship #CSSS #Scholarship2026 #CollegeStudents #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/central-sector-scholarship/ ⏰ 31 Oct`
+
+**Reel 5 – Thalliki Vandanam phase 2 (Telugu)** (`short-5-thalliki-phase2.mp4`)
+```
+📚 తల్లికి వందనం రెండో విడత: ₹13,000 తల్లి ఖాతాలోకి!
+
+✅ 3,29,201 మంది విద్యార్థులకు: కొత్త 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరం, 22 జూలై రాని పిల్లలు
+📜 G.O.Ms.No.26 (10 అక్టోబర్) జారీ
+📅 కచ్చితమైన తేదీ ఇంకా ప్రకటించలేదు
+👉 తల్లి ఖాతా ఆధార్ / NPCI లింక్ + eKYC చూసుకోండి
+
+పూర్తి వివరాలు 👉 బయోలో లింక్
+మీకు డబ్బు వచ్చిందా? కామెంట్ చేయండి 👇
+
+⚠️ ప్రభుత్వ పేజీ కాదు. అధికారిక పోర్టల్‌లో మాత్రమే దరఖాస్తు చేయండి. మేము ఆధార్, OTP, డబ్బు అడగము.
+
+#ThallikiVandanam #TalliKiVandanam #APSchemes #AndhraPradesh #Kramavriddhi
+```
+Pinned comment: `Telugu guide: kramavriddhi.com/te/schemes/ap-thalliki-vandanam/ · OTP ఎవరికీ చెప్పకండి ⚠️`
+
+**Reel 6 – Farmer checklist (Telugu)** (`short-6-farmer-ekyc.mp4`)
+```
+🌾 పీఎం కిసాన్ / అన్నదాత సుఖీభవ తదుపరి విడతకు ముందు ఈ 3 చెక్ చేయండి!
+
+✅ ఈకేవైసీ (eKYC)
+✅ ఆధార్–బ్యాంకు (DBT) లింక్
+✅ ల్యాండ్ సీడింగ్
+👉 పెండింగ్ ఉంటే రైతు సేవా కేంద్రం (RSK)
+📅 త్వరలో రావచ్చు, అధికారిక తేదీ ఇంకా లేదు
+
+స్టేటస్: pmkisan.gov.in · annadathasukhibhava.ap.gov.in → Know Your Status
+స్టేటస్ ఎలా చూడాలి 👉 బయోలో లింక్
+
+⚠️ ప్రభుత్వ పేజీ కాదు. అధికారిక పోర్టల్‌లో మాత్రమే దరఖాస్తు చేయండి. మేము ఆధార్, OTP, డబ్బు అడగము.
+
+#PMKisan #AnnadataSukhibhava #APFarmers #eKYC #Kramavriddhi
+```
+Pinned comment: `Guides: kramavriddhi.com/schemes/pm-kisan/ · kramavriddhi.com/schemes/ap-annadata-sukhibhava/`
+
+**Reel 7 – Pragati Scholarship (English)** (`short-7-pragati-en.mp4`)
+```
+🎓 Girls get ₹50,000 every year! ⏰ Last date: 31 October
+
+✅ AICTE-approved degree or diploma: engineering, pharmacy, polytechnic
+✅ Family income below ₹8 lakh a year
+✅ Up to two girls per family
+📝 Apply free on scholarships.gov.in
+
+అమ్మాయిలకు ఏడాదికి ₹50,000 స్కాలర్‌షిప్. చివరి తేదీ 31 అక్టోబర్.
+Full details 👉 link in bio
+Share with girls who can apply 💛
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#PragatiScholarship #AICTE #ScholarshipForGirls #NSP #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/aicte-pragati-scholarship/ ⏰ 31 Oct`
+
+**Reel 8 – Central Sector Scholarship (English)** (`short-8-csss-en.mp4`)
+```
+🎓 College students get ₹12,000–₹20,000 a year! ⏰ Last date: 31 October
+
+✅ Top 20% in your Class 12 board
+✅ Family income up to ₹4.5 lakh
+✅ Regular degree course, no other scholarship
+👦 50% boys · 👧 50% girls
+🔁 Renew: 50% marks + 75% attendance
+
+కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000. చివరి తేదీ 31 అక్టోబర్.
+Full details 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#CentralSectorScholarship #CSSS #Scholarship2026 #CollegeStudents #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/central-sector-scholarship/ ⏰ 31 Oct`
+
+**Reel 9 – Sukanya Samriddhi (English)** (`short-9-sukanya-en.mp4`)
+```
+👧 Saving for your daughter? 8.2% interest, tax-free (Oct–Dec 2026)
+
+✅ Girl below 10 years
+💰 Deposit ₹250 – ₹1.5 lakh a year, for 15 years
+📅 Matures in 21 years
+🏤 Open at a post office or bank
+📈 ₹1,000/month → about ₹5.7 lakh at 21 years (illustration, if the rate stays 8.2%)
+
+సుకన్య సమృద్ధి: కూతురి కోసం 8.2% వడ్డీ, పన్ను లేదు.
+Try our free calculator 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#SukanyaSamriddhiYojana #SSY #SavingsForDaughter #PostOfficeScheme #Kramavriddhi
+```
+Pinned comment: `Calculator: kramavriddhi.com/tools/sukanya-samriddhi-calculator/ · తెలుగులో: kramavriddhi.com/te/tools/sukanya-samriddhi-calculator/`
+
+**Reel 10 – PM Fasal Bima, AP Rabi (English)** (`short-10-fasal-bima-en.mp4`)
+```
+🌾 AP farmers: insure your Rabi crop for at most 1.5% premium!
+
+⏰ Enrol by 15 December (paddy by 31 December)
+💰 Sum insured ₹50,000/hectare → premium at most ₹750
+📝 Bank, CSC or Rythu Seva Kendram · Agristack farmer ID needed
+🌧️ Crop damaged? Report within 72 hours on 14447
+ℹ️ Telangana: no notification yet
+
+ఏపీ రైతులు: రబీ పంట బీమాకు 15 డిసెంబర్ లోపు నమోదు చేసుకోండి.
+Full details 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#PMFBY #CropInsurance #APFarmers #RabiCrop #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/pm-fasal-bima-yojana/ · Don't wait for the last week! 🌾`
+
+**Reel 11 – PM Surya Ghar (English)** (`short-11-surya-ghar-en.mp4`)
+```
+☀️ Up to ₹78,000 subsidy for rooftop solar!
+
+☀️ 1 kW ₹30,000 · 2 kW ₹60,000 · 3 kW+ ₹78,000
+⚡ Up to 300 units a month
+✅ Own house + suitable roof + electricity connection in your name
+📝 Apply free on pmsuryaghar.gov.in · install via a registered vendor
+📅 Open till March 2027 · Helpline 15555
+
+ఇంటి పైకప్పుపై సోలార్‌కి ₹78,000 వరకు సబ్సిడీ.
+Full details 👉 link in bio
+Don't pay anyone promising "free solar".
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#PMSuryaGhar #RooftopSolar #SolarSubsidy #MuftBijliYojana #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/pm-surya-ghar/ ☀️`
+
+**Reel 12 – Kisan Credit Card (English)** (`short-12-kcc-en.mp4`)
+```
+💳 Farm loan at just 4% interest, if you repay on time!
+
+💰 7% a year up to ₹3 lakh, 3% back for on-time repayment
+🔓 No collateral up to ₹2 lakh
+✅ Landowners, tenant farmers, sharecroppers, dairy, poultry and fish farmers
+📝 Apply at your bank branch · decision in about 14 days
+
+కిసాన్ క్రెడిట్ కార్డ్: సమయానికి కడితే 4% వడ్డీ మాత్రమే.
+Full details 👉 link in bio
+Don't pay agents.
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#KisanCreditCard #KCC #FarmLoan #Farmers #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/kisan-credit-card/ 🌾`
+
+**Reel 13 – Ujjwala change (English)** (`short-13-ujjwala-en.mp4`)
+```
+🔥 Ujjwala gas subsidy changed: ₹300 now on only 4 refills a year (was 9)
+
+💰 Up to ₹1,200 a year · after the 4th, normal price
+🎁 Free connection, first refill and stove (Ujjwala 2.0)
+✅ Woman 18+ from a poor family, no LPG at home
+🔁 Do Aadhaar eKYC with your gas distributor
+
+ఉజ్వల: ₹300 సబ్సిడీ ఇప్పుడు ఏడాదికి 4 సిలిండర్లకే.
+Full details 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#PMUjjwalaYojana #Ujjwala #LPGSubsidy #GasCylinder #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/pm-ujjwala-yojana/ · The connection is free; don't pay agents 🔥`
