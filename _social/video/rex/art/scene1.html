@@ -1,0 +1,143 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Rex scene 1</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// Scene 1 (16 s) from the owner's artwork: Rex (front view, sheet11 left) stands on the river bank, breathes, blinks,
+// looks around; turns (blink + squash) to the side view (sheet11 right) and walks right along the bank while the camera
+// follows; stops, looks at the waterfall, happy little hop. Background: the river panorama from sheet12.
+const W = 1920, H = 1080, out = document.getElementById('c').getContext('2d');
+const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+const poly = (c, pts) => { c.beginPath(); pts.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); };
+const sm = u => u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
+const load = s => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = s; });
+let SRC, BG, L = {};
+function mask(pts, blur, grow) { const m = mk(1536, 1024), c = m.getContext('2d'); c.filter = `blur(${blur}px)`; c.fillStyle = c.strokeStyle = '#000'; c.lineJoin = 'round'; c.lineWidth = grow * 2; poly(c, pts); c.fill(); if (grow) c.stroke(); return m; }
+function cut(pts, grow = 4, clipPts) { const l = mk(1536, 1024), c = l.getContext('2d'); c.drawImage(SRC, 0, 0); c.globalCompositeOperation = 'destination-in'; c.drawImage(mask(pts, 2, grow), 0, 0); if (clipPts) c.drawImage(mask(clipPts, 0, 0), 0, 0); return l; }
+function rest(parts, keep) { const b = mk(1536, 1024), c = b.getContext('2d'); c.drawImage(SRC, 0, 0); c.globalCompositeOperation = 'destination-out'; for (const [p, g] of parts) c.drawImage(mask(p, 1.5, g + 1), 0, 0); c.globalCompositeOperation = 'destination-in'; c.drawImage(mask(keep, 0, 0), 0, 0); return b; }
+function irisCut(e) { const l = mk(1536, 1024), c = l.getContext('2d'); c.save(); c.beginPath(); c.ellipse(e.i[0], e.i[1], e.ir[0], e.ir[1], 0, 0, Math.PI * 2); c.clip(); c.drawImage(SRC, 0, 0); c.restore(); return l; }
+function holeIris(layer, eyes) { const c = layer.getContext('2d'); c.globalCompositeOperation = 'source-over'; for (const e of eyes) { c.save(); c.beginPath(); c.ellipse(e.c[0], e.c[1], e.r[0] - 3, e.r[1] - 3, 0, 0, Math.PI * 2); c.clip(); c.beginPath(); c.ellipse(e.i[0], e.i[1], e.ir[0] + 2.5, e.ir[1] + 2.5, 0, 0, Math.PI * 2); c.fillStyle = '#fbfbf8'; c.fill(); c.restore(); } }
+function lids(c, eyes, lid) {
+  if (lid >= 0.99) return;
+  for (const e of eyes) {
+    const [ex, ey] = e.c, [rx, ry] = e.r, R = [rx + 8, ry + 8], top = ey - R[1], shut = ey + ry * 0.25, edge = top + (1 - lid) * (shut - top);
+    c.save(); c.beginPath(); c.ellipse(ex, ey, R[0], R[1], 0, 0, Math.PI * 2); c.clip();
+    c.fillStyle = '#fbfaf7'; c.beginPath(); c.moveTo(ex - R[0], top - 4); c.lineTo(ex + R[0], top - 4); c.lineTo(ex + R[0], edge); c.quadraticCurveTo(ex, edge + ry * 0.45 * (1 - lid), ex - R[0], edge); c.closePath(); c.fill();
+    if (lid < 0.05) c.fillRect(ex - R[0], edge - 2, 2 * R[0], R[1] * 2);
+    const g = c.createLinearGradient(0, top, 0, top + R[1]); g.addColorStop(0, 'rgba(60,55,50,0.2)'); g.addColorStop(1, 'rgba(60,55,50,0)'); c.fillStyle = g; c.fillRect(ex - R[0], top - 4, 2 * R[0], Math.max(0, edge - top + 4));
+    c.restore();
+    c.save(); c.strokeStyle = '#2a2724'; c.lineCap = 'round'; c.lineWidth = 6; c.beginPath();
+    if (lid < 0.05) { c.moveTo(ex - rx * 0.85, shut - 8); c.quadraticCurveTo(ex, shut + ry * 0.35, ex + rx * 0.85, shut - 8); }
+    else { c.moveTo(ex - R[0] * 0.92, edge); c.quadraticCurveTo(ex, edge + ry * 0.45 * (1 - lid), ex + R[0] * 0.92, edge); }
+    c.stroke(); c.restore();
+  }
+}
+const rotAt = (c, [px, py], a) => { c.translate(px, py); c.rotate(a); c.translate(-px, -py); };
+
+// ---- FRONT (sheet11, x 0–700): head, tail, body; irises move; lids blink
+const F = {
+  head: [[150, 200], [190, 120], [260, 75], [340, 40], [400, 38], [470, 70], [540, 110], [575, 190], [600, 290], [600, 360], [560, 420], [490, 455], [400, 470], [300, 468], [210, 450], [150, 410], [128, 340], [132, 270]],
+  tail: [[85, 480], [60, 540], [40, 610], [70, 700], [125, 760], [165, 720], [180, 640], [170, 590], [120, 560], [95, 520]],
+  keep: [[0, 0], [700, 0], [700, 1000], [0, 1000]],
+  eyes: [{ c: [262, 236], r: [58, 66], i: [270, 232], ir: [34, 44] }, { c: [490, 236], r: [58, 66], i: [482, 232], ir: [34, 44] }],
+  neck: [360, 470], tailPiv: [175, 680], foot: [345, 975],
+};
+// ---- SIDE (sheet11, x 700–1536): head, tail, near/far lower legs (rotate at the knee), body
+const S = {
+  head: [[1040, 300], [1050, 200], [1110, 110], [1190, 65], [1260, 42], [1330, 60], [1400, 110], [1440, 205], [1515, 222], [1536, 280], [1525, 345], [1480, 378], [1420, 400], [1310, 425], [1230, 445], [1150, 445], [1085, 420]],
+  tail: [[705, 540], [730, 590], [790, 650], [880, 668], [975, 640], [1015, 700], [1000, 800], [905, 840], [800, 825], [725, 760], [700, 660]],
+  legN: [[1180, 830], [1260, 822], [1300, 860], [1345, 872], [1395, 900], [1405, 955], [1345, 968], [1235, 972], [1185, 958], [1172, 900]],
+  legF: [[985, 870], [1090, 862], [1150, 880], [1192, 930], [1172, 985], [1060, 990], [985, 978], [975, 915]],
+  keep: [[700, 0], [1536, 0], [1536, 1000], [700, 1000]],
+  eyes: [{ c: [1312, 245], r: [50, 58], i: [1318, 250], ir: [27, 36] }],
+  neck: [1200, 470], tailPiv: [995, 730], kneeN: [1235, 835], kneeF: [1075, 835], foot: [1190, 975],
+};
+function build() {
+  L.fHead = cut(F.head, 4); holeIris(L.fHead, F.eyes); L.fIris = F.eyes.map(irisCut);
+  L.fTail = cut(F.tail, 6); L.fBody = rest([[F.head, 4], [F.tail, 6]], F.keep);
+  L.sHead = cut(S.head, 4); holeIris(L.sHead, S.eyes); L.sIris = S.eyes.map(irisCut);
+  L.sTail = cut(S.tail, 6); L.sLegN = cut(S.legN, 5); L.sLegF = cut(S.legF, 5);
+  L.sBody = rest([[S.head, 4], [S.tail, 6], [S.legN, 5], [S.legF, 5]], S.keep);
+  // remove the drawn ground shading under the feet (we draw our own contact shadow)
+  for (const k of ['fBody', 'sBody', 'sLegN', 'sLegF']) { const c = L[k].getContext('2d'); c.globalCompositeOperation = 'destination-out'; c.fillStyle = '#000'; c.fillRect(0, 985, 1536, 60); }
+}
+// draw one figure: P = rig, parts, pose {x, y, s, look, lid, tilt, tail, squash, lift, legs:[aN, aF], liftN, liftF}
+function figure(c, R, side, p) {
+  const sq = p.squash || 0;
+  c.save(); c.translate(p.x, p.y); c.scale(p.s, p.s);
+  c.save(); c.globalAlpha = 0.25 * Math.max(0.4, 1 - (p.lift || 0) / 300); c.fillStyle = '#4a4238'; c.filter = 'blur(9px)'; c.beginPath(); c.ellipse(0, 0, side ? 260 : 230, 24, 0, 0, Math.PI * 2); c.fill(); c.restore();
+  c.translate(0, -(p.lift || 0)); c.scale(1 / (1 - sq), 1 - sq); c.translate(-R.foot[0], -R.foot[1]);
+  const T = side ? 's' : 'f';
+  c.save(); rotAt(c, R.tailPiv, p.tail || 0); c.drawImage(L[T + 'Tail'], 0, 0); c.restore();
+  if (side) { c.save(); c.translate(0, -(p.liftF || 0)); rotAt(c, R.kneeF, (p.legs || [0, 0])[1]); c.drawImage(L.sLegF, 0, 0); c.restore(); }
+  c.drawImage(L[T + 'Body'], 0, 0);
+  if (side) { c.save(); c.translate(0, -(p.liftN || 0)); rotAt(c, R.kneeN, (p.legs || [0, 0])[0]); c.drawImage(L.sLegN, 0, 0); c.restore(); }
+  c.save(); c.translate(0, p.headDy || 0); rotAt(c, R.neck, p.tilt || 0);
+  c.drawImage(L[T + 'Head'], 0, 0);
+  const lk = p.look || [0, 0];
+  R.eyes.forEach((e, i) => { c.save(); c.beginPath(); c.ellipse(e.c[0], e.c[1], e.r[0] - 3, e.r[1] - 3, 0, 0, Math.PI * 2); c.clip(); c.drawImage(L[T + 'Iris'][i], lk[0] * 12, lk[1] * 12); c.restore(); });
+  lids(c, R.eyes, p.lid ?? 1);
+  c.restore();
+  c.restore();
+}
+// ---- timeline -----------------------------------------------------------------------------------
+const BLINKS = [1.2, 3.3, 3.45, 5.05, 8.6, 12.4, 14.9];
+const blink = t => { let v = 1; for (const b of BLINKS) { const f = Math.floor((t - b) * 30); if (f >= 0 && f < 5) v = Math.min(v, [0.4, 0, 0, 0.5, 1][f]); } return v; };
+const TURN = 5.15, WALK0 = 5.6, WALK1 = 12.6, STEP = 0.5, A = 0.2, SPEED = 125;   // walk: leg swing ±A rad about the knee; body travel image-units/s
+function spring(target, t, hz, z) { const w = 2 * Math.PI * hz, dt = 1 / 120; let x = target(0), v = 0; for (let i = 1, n = Math.round(t * 120); i <= n; i++) { v += (w * w * (target(i * dt) - x) - 2 * z * w * v) * dt; x += v * dt; } return x; }
+const walkAmt = t => sm((t - WALK0) / 0.5) * (1 - sm((t - (WALK1 - 0.4)) / 0.5));
+function travel(t) { // integral of speed × walkAmt
+  let x = 0; const dt = 1 / 60; for (let u = WALK0; u < Math.min(t, WALK1 + 0.6); u += dt) x += SPEED * walkAmt(u) * dt; return x;
+}
+function pose(t) {
+  const br = Math.sin(t * Math.PI * 2 / 2.4), lid = blink(t);
+  if (t < TURN) {   // front: breathe, look left, right, up; a curious tilt
+    const look = t < 1.6 ? [0, 0] : t < 2.6 ? [-1, 0.1] : t < 3.6 ? [1, 0.05] : t < 4.4 ? [0.4, -0.8] : [1, 0];
+    const lx = spring(g => (g < 1.6 ? 0 : g < 2.6 ? -1 : g < 3.6 ? 1 : g < 4.4 ? 0.4 : 1), t, 6, 0.8), ly = spring(g => (g < 3.6 ? 0.05 : g < 4.4 ? -0.8 : 0), t, 6, 0.8);
+    const tilt = spring(g => 0.05 * (g > 1.6 && g < 2.6) - 0.05 * (g > 2.6 && g < 3.6) + 0.07 * (g > 3.6 && g < 4.6), t, 2.5, 0.55);
+    const sq = 0.008 * br + (t > TURN - 0.25 ? 0.08 * sm((t - (TURN - 0.25)) / 0.25) : 0);
+    return { side: false, look: [lx, ly], lid, tilt, tail: 0.04 * Math.sin(t * 2.6), squash: sq, headDy: -3 * Math.sin(t * Math.PI * 2 / 2.4 - 0.5) };
+  }
+  // side: walk, then stop, look up at the waterfall, hop
+  const w = walkAmt(t), ph = Math.max(0, t - WALK0) / (2 * STEP), uN = ph % 1, uF = (ph + 0.5) % 1;
+  const leg = u => u < 0.5 ? A * (1 - 4 * u) : A * (-1 + 4 * (u - 0.5));    // stance: front→back; swing: back→front
+  const lift = u => u >= 0.5 ? Math.sin((u - 0.5) * 2 * Math.PI) * 16 : 0;
+  const bob = Math.abs(Math.sin(ph * 2 * Math.PI)) * 9 * w;
+  const turnIn = sm((t - TURN) / 0.3);
+  const hop = t > 14.1 && t < 14.6 ? Math.sin((t - 14.1) / 0.5 * Math.PI) * 70 : 0;
+  const land = t > 14.6 && t < 15 ? 0.1 * Math.exp(-(t - 14.6) * 8) * Math.cos((t - 14.6) * 20) : 0;
+  const crouch = t > 13.9 && t < 14.1 ? 0.1 * Math.sin((t - 13.9) / 0.2 * Math.PI / 2) : 0;
+  const lookUp = sm((t - 13.0) / 0.4);
+  return { side: true, travel: travel(t), lid, look: [0.5 - 0.2 * lookUp, -0.9 * lookUp], tilt: -0.08 * lookUp + 0.03 * Math.sin(ph * 2 * Math.PI) * w,
+    tail: spring(g => 0.06 * Math.sin(Math.max(0, g - WALK0) / (2 * STEP) * 2 * Math.PI) * walkAmt(g) + (g > 14.1 && g < 14.6 ? -0.15 : 0), t, 3, 0.45),
+    legs: [leg(uN) * w, leg(uF) * w], liftN: lift(uN) * w, liftF: lift(uF) * w,
+    squash: 0.008 * br + (1 - turnIn) * 0.08 + 0.02 * w * Math.max(0, -Math.sin(ph * 4 * Math.PI)) + crouch + land - (hop ? 0.06 : 0), lift: bob * 0 + hop,
+    headDy: bob * 0.6 - 3 * Math.sin(t * Math.PI * 2 / 2.4 - 0.5) };
+}
+// ---- background panorama + camera
+function render(t) {
+  const p = pose(t), RS = 0.82;
+  const startX = 560, rexX = startX + (p.travel || 0) * RS;
+  const cam = Math.max(0, Math.min(1400, rexX - 760));   // follow Rex once he walks
+  out.setTransform(1, 0, 0, 1, 0, 0); out.globalCompositeOperation = 'source-over';
+  out.fillStyle = '#f4f1ea'; out.fillRect(0, 0, W, H);
+  // panorama 1536 × 249 → scaled 3.2 (4915 × 797), parallax 0.75 vs the ground
+  const k = 3.2, bw = 1536 * k, bh = 249 * k, by = H - bh - 40;
+  out.save(); out.filter = 'blur(1.6px) contrast(0.75) brightness(1.12)'; out.drawImage(BG, 0, 775, 1536, 249, -cam * 0.75 - 200, by, bw, bh); out.restore();
+  const g = out.createLinearGradient(0, by, 0, by + 260); g.addColorStop(0, '#f4f1ea'); g.addColorStop(1, 'rgba(244,241,234,0)'); out.fillStyle = g; out.fillRect(0, by - 2, W, 262);
+  out.fillStyle = '#f4f1ea'; out.fillRect(0, 0, W, by);
+  // near bank: a soft sand strip with pencil strokes
+  out.save(); out.globalAlpha = 0.9; const gg = out.createLinearGradient(0, H - 150, 0, H); gg.addColorStop(0, 'rgba(244,241,234,0)'); gg.addColorStop(0.35, '#efebe2'); gg.addColorStop(1, '#e6e0d4'); out.fillStyle = gg; out.fillRect(0, H - 150, W, 150); out.restore();
+  out.save(); out.strokeStyle = 'rgba(50,45,40,0.25)'; out.lineWidth = 1.2; for (let i = 0; i < 120; i++) { const x = ((i * 173 - cam) % 2200 + 2200) % 2200 - 140, y = H - 110 + (i * 37 % 100); out.beginPath(); out.moveTo(x, y); out.lineTo(x + 40 + (i % 5) * 10, y + 2); out.stroke(); } out.restore();
+  // Rex (drawn on white, multiplied so the paper shows through)
+  const R = mk(W, H), rc = R.getContext('2d');
+  figure(rc, p.side ? S : F, p.side, { ...p, x: rexX - cam, y: H - 70, s: RS });
+  out.drawImage(R, 0, 0);
+  // gentle vignette
+  const v = out.createRadialGradient(W / 2, H / 2, H * 0.5, W / 2, H / 2, H * 1.05); v.addColorStop(0, 'rgba(40,35,30,0)'); v.addColorStop(1, 'rgba(40,35,30,0.18)'); out.fillStyle = v; out.fillRect(0, 0, W, H);
+  if (t < 0.8) { out.fillStyle = `rgba(0,0,0,${1 - t / 0.8})`; out.fillRect(0, 0, W, H); }
+  if (t > 15.2) { out.fillStyle = `rgba(0,0,0,${Math.min(1, (t - 15.2) / 0.8)})`; out.fillRect(0, 0, W, H); }
+}
+window.ready = Promise.all([load('refs/sheet11_cut.png'), load('refs/sheet12.png')]).then(([a, b]) => { SRC = a; BG = b; build(); });
+window.renderFrame = t => render(t);
+</script></body></html>
