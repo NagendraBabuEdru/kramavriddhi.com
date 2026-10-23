@@ -1,0 +1,120 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Rex at the river</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Lilita+One&display=block" rel="stylesheet">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script>window.MOVIE = true;</script>
+<script src="scene1.js"></script>
+<script src="rig.js"></script>
+<script>
+// "Rex at the River" (48 s): a motion-design short assembled from the owner's artwork.
+// Shots: 1 establishing pan + title · 2 Rex looks around, turns, walks (scene1) · 3 close-ups: curious → determined ·
+// 4 stepping-stone jumps across the river (crouch / jump / land sprites on the panorama rocks) · 5 big laugh (grin rig) ·
+// 6 sits by the waterfall, sleepy · end card.
+const W = 1920, H = 1080, out = document.getElementById('c').getContext('2d');
+const sm = u => u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
+const lerp = (a, b, u) => a + (b - a) * u;
+const load = s => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = s; });
+const NAMES = ['front', 'side', 'sit', 'crouch', 'jump', 'land', 'h_curious', 'h_determined', 'h_thinking', 'h_sleepy', 'h_happy', 'h_surprised'];
+let CAST = {}, BG, GRIN, ROOM;
+const PAPER = '#f4f1ea';
+// the river panorama (sheet12 y 775–1024) drawn with a camera: k = scale, cx = left edge in band px
+function river(k, cx, by, soft = 1) {
+  out.save(); out.filter = `blur(${1.2 * soft}px) contrast(0.8) brightness(1.1)`; out.drawImage(BG, 0, 775, 1536, 249, -cx * k, by, 1536 * k, 249 * k); out.restore();
+  const g = out.createLinearGradient(0, by, 0, by + 200); g.addColorStop(0, PAPER); g.addColorStop(1, 'rgba(244,241,234,0)');
+  out.fillStyle = g; out.fillRect(0, by - 1, W, 201); out.fillStyle = PAPER; out.fillRect(0, 0, W, by);
+}
+function sprite(name, x, y, h, o = {}) {   // draw a cast sprite with its feet at (x, y), height h px
+  const im = CAST[name], s = h / im.height, sx = (o.sx || 1), sy = (o.sy || 1);
+  out.save(); out.translate(x, y); if (o.rot) out.rotate(o.rot); out.scale(s * sx * (o.flip ? -1 : 1), s * sy);
+  if (o.shadow !== false) { out.save(); out.globalAlpha = 0.22 * (o.shadowK ?? 1); out.fillStyle = '#4a4238'; out.filter = 'blur(6px)'; out.beginPath(); out.ellipse(0, (o.lift || 0) / s, im.width * 0.42, 9 / s * 1.2, 0, 0, Math.PI * 2); out.fill(); out.restore(); }
+  out.drawImage(im, -im.width / 2, -im.height - (o.lift || 0) / s / sy); out.restore();
+}
+function text(t, x, y, size, col = '#3a3530', font = 'Lilita One', a = 1) { out.save(); out.globalAlpha = a; out.font = `${size}px '${font}'`; out.fillStyle = col; out.textAlign = 'center'; out.fillText(t, x, y); out.restore(); }
+function vignette(a = 0.18) { const v = out.createRadialGradient(W / 2, H / 2, H * 0.5, W / 2, H / 2, H * 1.05); v.addColorStop(0, 'rgba(40,35,30,0)'); v.addColorStop(1, `rgba(40,35,30,${a})`); out.fillStyle = v; out.fillRect(0, 0, W, H); }
+function fade(a) { if (a > 0) { out.fillStyle = `rgba(0,0,0,${Math.min(1, a)})`; out.fillRect(0, 0, W, H); } }
+function paper() { out.setTransform(1, 0, 0, 1, 0, 0); out.globalCompositeOperation = 'source-over'; out.filter = 'none'; out.globalAlpha = 1; out.fillStyle = PAPER; out.fillRect(0, 0, W, H); }
+
+// ---- shot 1: establishing pan, title
+function shot1(t) {   // 0–4
+  paper(); const k = 4.34, cx = lerp(0, 1536 - W / k, sm(t / 4) * 0.55);
+  river(k, cx, 0, 1.4);
+  const a = sm((t - 0.6) / 0.8) * (1 - sm((t - 3.3) / 0.6));
+  out.save(); out.globalAlpha = 0.85 * a; out.fillStyle = PAPER; out.beginPath(); out.roundRect(W / 2 - 520, 380, 1040, 280, 30); out.fill(); out.restore();
+  text('Rex Adventures', W / 2, 520, 130, '#3a3530', 'Lilita One', a); text('Rex at the River', W / 2, 610, 54, '#5a5248', 'Patrick Hand', a);
+  vignette(0.25); fade(1 - t / 0.8);
+}
+// ---- shot 3: close-up heads over the soft river (a cross-dissolve between two faces, with a little bob)
+function closeup(t, a, b, t0, t1) {
+  paper(); river(4.34, 380, 0, 3.5);
+  out.fillStyle = 'rgba(244,241,234,0.45)'; out.fillRect(0, 0, W, H);
+  const u = sm((t - (t0 + t1) / 2 + 0.2) / 0.4), bob = Math.sin(t * 3) * 6, tilt = Math.sin(t * 1.4) * 0.03;
+  for (const [n, al] of [[a, 1 - u], [b, u]]) { if (al <= 0) continue; out.save(); out.globalAlpha = al; sprite(n, W / 2, 1000 + bob, 820, { shadow: false, rot: tilt }); out.restore(); }
+  vignette(0.3);
+}
+// ---- shot 4: stepping stones. Rocks in band coords (the top surface centre): A (270,168) B (640,190) C (870,196)
+const ROCKS = [[262, 172], [640, 194], [868, 200], [1060, 150]];
+const HOPS = [[2.2, 0, 1], [6.0, 1, 2], [9.6, 2, 3]];   // [time in shot, from rock, to rock]
+function shot4(t) {   // 0–13
+  paper(); const k = 3.6, by = H - 249 * k + 90;
+  // camera follows Rex's x in band coords
+  let rx = ROCKS[0][0], ry = ROCKS[0][1], pose = 'land', lift = 0, sy = 1;
+  for (const [h0, a, b] of HOPS) {
+    if (t >= h0 - 0.9 && t < h0) { rx = ROCKS[a][0]; ry = ROCKS[a][1]; pose = 'crouch'; sy = 1 - 0.06 * Math.sin((t - (h0 - 0.9)) / 0.9 * Math.PI / 2); }
+    else if (t >= h0 && t < h0 + 0.9) { const u = (t - h0) / 0.9; rx = lerp(ROCKS[a][0], ROCKS[b][0], u); ry = lerp(ROCKS[a][1], ROCKS[b][1], u); lift = Math.sin(u * Math.PI) * 170; pose = 'jump'; }
+    else if (t >= h0 + 0.9) { rx = ROCKS[b][0]; ry = ROCKS[b][1]; pose = 'land'; const d = t - h0 - 0.9; sy = d < 0.35 ? 1 - 0.1 * Math.exp(-d * 9) * Math.cos(d * 22) : 1; }
+  }
+  const camT = Math.max(0, Math.min(1536 - W / k, rx - (W / k) * 0.4));
+  river(k, camT, by, 0.6);
+  const X = (rx - camT) * k, Y = by + ry * k;
+  const H0 = pose === 'jump' ? 360 : pose === 'crouch' ? 300 : 360;
+  sprite(pose, X, Y + 8, H0, { lift, sy, shadowK: pose === 'jump' ? 0.4 : 1 });
+  // splash when landing / leaving
+  for (const [h0, a, b] of HOPS) for (const [tt, rk] of [[h0, a], [h0 + 0.9, b]]) {
+    const d = t - tt; if (d < 0 || d > 0.6) continue;
+    const sx = (ROCKS[rk][0] - camT) * k, sy2 = by + ROCKS[rk][1] * k + 6;
+    out.save(); out.strokeStyle = `rgba(60,70,80,${0.6 * (1 - d / 0.6)})`; out.lineWidth = 3; out.lineCap = 'round';
+    for (let i = 0; i < 7; i++) { const ang = Math.PI + (i + 0.5) / 7 * Math.PI, r = 40 + d * 160; out.beginPath(); out.moveTo(sx + Math.cos(ang) * r * 0.7, sy2 + Math.sin(ang) * r * 0.35); out.lineTo(sx + Math.cos(ang) * r, sy2 + Math.sin(ang) * r * 0.5); out.stroke(); }
+    out.restore();
+  }
+  vignette(0.2);
+}
+// ---- shot 5: the big laugh (the grin rig from the first picture)
+function shot5(t) {   // 0–5
+  paper(); river(4.34, 820, 0, 4); out.fillStyle = 'rgba(244,241,234,0.86)'; out.fillRect(0, 0, W, H);
+  const laugh = sm((t - 0.3) / 0.3) * (1 - sm((t - 4.2) / 0.5));
+  const hop = t > 2.4 && t < 2.9 ? Math.sin((t - 2.4) / 0.5 * Math.PI) * 70 : 0;
+  const rc = ROOM.getContext('2d'); rc.setTransform(1, 0, 0, 1, 0, 0); rc.clearRect(0, 0, W, H); rc.fillStyle = '#fff'; rc.fillRect(0, 0, W, H);
+  REX.draw(rc, { x: W / 2 + 40, y: 1060, s: 1.0, lift: hop, squash: 0.02 * laugh * Math.abs(Math.sin(t * 8)), look: [0, 0], lid: 1 - 0.62 * laugh,
+    jaw: laugh * (0.4 + 0.45 * Math.abs(Math.sin(t * Math.PI * 2.6))), head: { tilt: 0.04 * Math.sin(t * 2 * Math.PI * 2.6) * laugh }, tail: [0.05 * Math.sin(t * 9), 0.05 * Math.sin(t * 9 - 0.6), 0], arms: { L: 0.1 * Math.sin(t * 14), R: -0.1 * Math.sin(t * 14 + 1) }, legs: {} });
+  out.globalCompositeOperation = 'multiply'; out.drawImage(ROOM, 0, 0); out.globalCompositeOperation = 'source-over';
+  vignette(0.25);
+}
+// ---- shot 6: sits by the waterfall, gets sleepy; end card
+function shot6(t) {   // 0–8
+  paper(); const k = 3.4, camT = 1536 - W / k - 30 + sm(t / 6) * 20, by = H - 249 * k + 60;
+  river(k, camT, by, 0.8);
+  const X = (1250 - camT) * k, Y = H - 70;
+  const breathe = 1 + 0.012 * Math.sin(t * 2.6);
+  sprite('sit', X, Y, 520, { sy: breathe });
+  if (t > 2.2) { const a = sm((t - 2.2) / 0.6) * (1 - sm((t - 5) / 0.5)); out.save(); out.globalAlpha = a;
+    out.fillStyle = 'rgba(244,241,234,0.92)'; out.beginPath(); out.ellipse(X + 380, Y - 500, 150, 140, 0, 0, Math.PI * 2); out.fill();
+    out.strokeStyle = '#3a3530'; out.lineWidth = 3; out.stroke(); sprite('h_sleepy', X + 380, Y - 380, 220, { shadow: false });
+    text('z', X + 520, Y - 640 - (t * 20 % 40), 54, '#3a3530', 'Patrick Hand', a); out.restore(); }
+  vignette(0.25);
+  const e = sm((t - 5.2) / 0.8);
+  if (e > 0) { out.fillStyle = `rgba(244,241,234,${0.9 * e})`; out.fillRect(0, 0, W, H);
+    text('Rex Adventures', W / 2, 470, 120, '#3a3530', 'Lilita One', e); text('More adventures soon!', W / 2, 560, 54, '#5a5248', 'Patrick Hand', e);
+    text('youtube.com/@kramavriddhi', W / 2, 650, 40, '#5a5248', 'Patrick Hand', e); }
+  fade((t - 7.3) / 0.7);
+}
+const SHOTS = [[0, 4, shot1], [4, 17.6, t => { window.S1OPT.fades = false; S1.render(0.9 + t); if (t < 0.3) fade(1 - t / 0.3); }],
+  [17.6, 20.8, t => closeup(t, 'h_curious', 'h_determined', 0, 3.2)], [20.8, 34, shot4], [34, 39, shot5], [39, 47, shot6]];
+window.EPISODE_INFO = () => ({ duration: 47,
+  music: [[0, 4, 'title', 0.8], [4, 17.6, 'kalimba_curious', 0.7], [17.6, 20.8, 'flute_question', 0.7], [20.8, 34, 'joy_run', 0.8], [34, 39, 'kalimba_play', 0.9], [39, 47, 'end_note', 0.7]],
+  cues: [['water', 0, [47, 0.06]], ['birds', 1.5], ['falls', 30], ['sparkle', 9.4], ['tap', 12.6], ['tap', 13.6], ['tap', 14.6], ['hum', 18.6], ['whoosh', 20.2],
+    ['hop', 23.0], ['splash', 23.9], ['hop', 26.8], ['splash', 27.7], ['hop', 30.4], ['splash', 31.3], ['laugh', 34.4], ['giggle', 36.2], ['hop', 36.4], ['chime', 44.6]] });
+window.renderFrame = t => { for (const [a, b, fn] of SHOTS) if (t >= a && t < b) { fn(t - a); return; } shot6(8); };
+window.ready = Promise.all([S1.ready, ...NAMES.map(n => load('cast/' + n + '.png')), load('refs/sheet12.png'), load('rex_front.png'), document.fonts.load("120px 'Lilita One'"), document.fonts.load("40px 'Patrick Hand'")])
+  .then(r => { NAMES.forEach((n, i) => CAST[n] = r[1 + i]); BG = r[1 + NAMES.length]; GRIN = r[2 + NAMES.length]; REX.build(GRIN); ROOM = document.createElement('canvas'); ROOM.width = W; ROOM.height = H; });
+</script></body></html>
