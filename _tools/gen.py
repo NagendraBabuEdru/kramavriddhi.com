@@ -23,6 +23,11 @@ GUIDE_UPDATED = {
     # 14 Oct 2026 fact check
     **dict.fromkeys(["ap-thalliki-vandanam", "ts-rythu-bharosa"], "2026-10-14"),
     **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava"], "2026-10-15"),  # re-checked 15 Oct 2026
+    # 24 Oct 2026 fact check, and batch F
+    **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava", "ap-thalliki-vandanam", "ts-rythu-bharosa", "ts-rajiv-yuva-vikasam",
+                     "ap-nethanna-sevalo", "pm-fasal-bima-yojana", "ap-auto-drivers-sevalo", "ap-ntr-vaidya-seva",
+                     "ap-aadabidda-nidhi", "ap-nirudyoga-bhruthi",
+                     "pm-vidyalaxmi", "pm-kusum", "ts-indiramma-atmiya-bharosa"], "2026-10-24"),
 }
 MONTHS = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
           "te": ["జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్", "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్"]}
@@ -195,6 +200,15 @@ SCHEMES = [
     dict(slug="kisan-credit-card", name="Kisan Credit Card (KCC)", short="Kisan Credit Card",
          cat="farmers", cat_label="Farmers & Agriculture", icon="💳",
          summary="Crop loans for farmers, fish farmers and livestock farmers at 7% interest, 4% if repaid on time. Up to ₹2 lakh without collateral."),
+    dict(slug="pm-vidyalaxmi", name="PM Vidyalaxmi Education Loan Scheme", short="PM Vidyalaxmi",
+         cat="education", cat_label="Education & Skills", icon="🎓",
+         summary="Education loans with no collateral or guarantor for students in top colleges. 3% interest help if family income is up to ₹8 lakh."),
+    dict(slug="pm-kusum", name="PM-KUSUM (Solar Pumps for Farmers)", short="PM-KUSUM",
+         cat="farmers", cat_label="Farmers & Agriculture", icon="🌞",
+         summary="Up to 30% central subsidy for solar pumps, plus the state's share. Apply only through your state agency; beware fake websites."),
+    dict(slug="ts-indiramma-atmiya-bharosa", name="Indiramma Atmiya Bharosa (Telangana)", short="Indiramma Atmiya Bharosa",
+         state="ts", cat="farmers", cat_label="Farmers & Agriculture", icon="🤝",
+         summary="₹12,000 a year promised for landless farm labour families. Only part of the first instalment was paid in 2025; stalled since."),
 ]
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
@@ -381,7 +395,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 
         <h2>Latest update</h2>
         <p>The <strong>23rd instalment</strong> was released on <strong>20 June 2026</strong>. Instalments usually come about every four months, so the <strong>24th instalment</strong> (for August–November 2026) is expected in October–November 2026.</p>
-        <div class="note"><strong>No official date yet (15 October 2026).</strong> Some news reports say the 24th instalment may come around 17–18 October, and a "20 October" date is being shared on social media. None of these dates has been announced by the government. The real date is announced by the Ministry of Agriculture (PIB) and on pmkisan.gov.in a few days before the release. Until then, make sure your eKYC, land seeding and Aadhaar–bank link are done.</div>
+        <div class="note"><strong>Reported date: 30 October 2026 (not yet confirmed by PIB).</strong> News reports on 23 October 2026 say the Ministry of Agriculture announced on social media that the 24th instalment of ₹2,000 will be released on <strong>30 October 2026</strong>. As of 24 October we have not found a PIB press release. The final word comes from PIB and pmkisan.gov.in. Earlier dates shared online (17, 18 or 20 October) were not correct. Until then, make sure your eKYC, land seeding and Aadhaar–bank link are done.</div>
         <p>On <strong>31 July 2026</strong>, the Union Cabinet approved <strong>continuing PM-KISAN from 2026-27 to 2030-31</strong> with an outlay of ₹3.15 lakh crore, so the ₹6,000 a year support will continue.</p>
 
         <h2>Benefits</h2>
@@ -452,7 +466,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Is eKYC compulsory for PM-KISAN?", "Yes. eKYC is mandatory for all registered farmers. It can be done by OTP on pmkisan.gov.in, by biometrics at a CSC, or by face authentication in the PM-KISAN app."),
         ("Can a tenant farmer get PM-KISAN?", "The scheme is for land-holding farmer families whose names are in the state land records. Tenant farmers who do not own land are generally not covered."),
         ("Can both husband and wife get PM-KISAN separately?", "No. The benefit is per farmer family (husband, wife and minor children), so only one member of the family receives it."),
-        ("When will the PM-KISAN 24th instalment come?", "It is expected in October–November 2026. As of 15 October 2026 the government has not announced a date. Dates seen on social media, such as 20 October, are not confirmed."),
+        ("When will the PM-KISAN 24th instalment come?", "News reports on 23 October 2026 say it will be released on 30 October 2026, citing the Agriculture Ministry's social media. As of 24 October no PIB press release has been issued, so treat the date as reported, not final."),
         ("Why did my PM-KISAN instalment stop?", "Common reasons are pending eKYC, bank account not seeded with Aadhaar, land seeding not done, or the family falling into an exclusion category. Check 'Know Your Status' on pmkisan.gov.in."),
     ],
     sources=[
@@ -1207,7 +1221,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 
         <h2>Latest update</h2>
         <p>The <strong>first instalment for 2026-27</strong> was released in June 2026: ₹7,000 per family (₹5,000 from the state and ₹2,000 from PM-KISAN), a total of ₹3,125.47 crore to about <strong>46.86 lakh farmer families</strong>, including cultivators under the Forest Rights Act.</p>
-        <div class="note"><strong>2nd instalment (2026-27): not officially announced yet.</strong> News reports from late September and October 2026 say the state plans to pay it around Dasara, together with PM-KISAN's 24th instalment, and some name <strong>17 October</strong>. Some reports say this round will be <strong>₹6,000</strong> (₹4,000 from the state + ₹2,000 from PM-KISAN); last year the 2nd instalment was ₹7,000. The date and amount are confirmed only when the government releases the money. Complete your eKYC at the Rythu Seva Kendram so your payment is not held back.</div>
+        <div class="note"><strong>2nd instalment (2026-27): not officially announced yet.</strong> It was expected around Dasara but was not paid then. News reports from 23 October 2026 say the state plans to pay it on <strong>30 October 2026</strong>, the same day PM-KISAN's 24th instalment is reported to be released. Some reports say this round will be <strong>₹6,000</strong> (₹4,000 from the state + ₹2,000 from PM-KISAN); last year the 2nd instalment was ₹7,000. The date and amount are confirmed only when the government releases the money. Complete your eKYC at the Rythu Seva Kendram so your payment is not held back.</div>
 
         <h2>How the ₹20,000 is paid</h2>
         <div class="table-wrap">
@@ -1254,7 +1268,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much do farmers get under Annadata Sukhibhava?", "₹20,000 per farmer family per year: ₹14,000 from the Andhra Pradesh government and ₹6,000 from PM-KISAN."),
         ("When was the latest Annadata Sukhibhava instalment released?", "The first instalment for 2026-27 (₹7,000 per family) was released in June 2026 to about 46.86 lakh farmer families."),
-        ("When will the 2nd Annadata Sukhibhava instalment come?", "News reports say around Dasara in October 2026, together with PM-KISAN's 24th instalment (17 October has been mentioned). As of 15 October 2026 the government has not officially announced the date or amount."),
+        ("When will the 2nd Annadata Sukhibhava instalment come?", "It was not paid at Dasara. News reports on 23 October 2026 say it will be paid on 30 October 2026 together with PM-KISAN's 24th instalment. As of 24 October 2026 the government has not officially announced the date or amount."),
         ("Do I need PM-KISAN to get Annadata Sukhibhava?", "The two are paid together. Keeping your PM-KISAN registration and eKYC complete helps make sure you receive the full ₹20,000."),
         ("How do I check Annadata Sukhibhava status?", "On annadathasukhibhava.ap.gov.in, choose Know Your Status and enter your Aadhaar number, or ask at your Rythu Seva Kendram."),
         ("Are tenant farmers eligible?", "The government announced support for landless cultivators from the state budget, but payment status for tenant farmers has varied. Check with your Rythu Seva Kendram."),
@@ -1340,14 +1354,14 @@ s = BY_SLUG["ap-thalliki-vandanam"]
 write(f"schemes/{s['slug']}/index.html", article(s,
     lede="Thalliki Vandanam is the Andhra Pradesh government's education support scheme. For every school-going child in Classes 1 to 12, the mother gets ₹13,000 a year in her bank account, and ₹2,000 more goes to the school's maintenance.",
     description="Thalliki Vandanam (Andhra Pradesh) explained: ₹15,000 per child per year, ₹13,000 to mothers, eligibility, 75% attendance rule, 2026-27 release and how to check.",
-    facts=[("Per child", "₹15,000 / year"), ("To mother", "₹13,000"), ("1st phase 2026-27", "Paid 22 July 2026"), ("2nd phase", "Expected before Dasara")],
+    facts=[("Per child", "₹15,000 / year"), ("To mother", "₹13,000"), ("1st phase 2026-27", "Paid 22 July 2026"), ("2nd phase", "Delayed (not paid by 24 Oct)")],
     body='''
         <h2>What is Thalliki Vandanam?</h2>
         <p>Thalliki Vandanam (also written Talliki Vandanam) supports families so their children can keep going to school. The benefit is given <strong>for every eligible child</strong> in the family, with no limit on the number of children.</p>
 
         <h2>Latest update</h2>
         <p>For the <strong>2026-27</strong> academic year, the first phase was paid on <strong>22 July 2026</strong>: about <strong>64.77 lakh students</strong>, with the money credited to the accounts of about 42.70 lakh mothers. Beneficiary lists were displayed at village (Swarna Gramam) and ward offices.</p>
-        <p><strong>2nd phase (new admissions):</strong> students who newly joined <strong>Class 1</strong> or <strong>Intermediate first year</strong>, and students left out of the first phase because of incomplete records, are paid in a second phase. It was due on 30 August 2026 but was delayed. In early October the State Cabinet approved a revised sanction for <strong>3,29,201 second-phase students</strong>, raising the year's total to about 68.06 lakh students (₹10,208.69 crore), and on <strong>10 October 2026</strong> the School Education Department issued the order (G.O.Ms.No.26). News reports say the ₹13,000 will be credited <strong>before Dasara</strong>; no exact date has been announced.</p>
+        <p><strong>2nd phase (new admissions):</strong> students who newly joined <strong>Class 1</strong> or <strong>Intermediate first year</strong>, and students left out of the first phase because of incomplete records, are paid in a second phase. It was due on 30 August 2026 but was delayed. In early October the State Cabinet approved a revised sanction for <strong>3,29,201 second-phase students</strong>, raising the year's total to about 68.06 lakh students (₹10,208.69 crore), and on <strong>10 October 2026</strong> the School Education Department issued the order (G.O.Ms.No.26). News reports said the ₹13,000 would be credited before Dasara (20 October), but as of <strong>24 October 2026</strong> we found no confirmation that it has been paid, and no new date has been announced.</p>
 
         <h2>Benefits</h2>
         <ul>
@@ -1386,7 +1400,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much money is given under Thalliki Vandanam?", "₹15,000 per child per year: ₹13,000 is credited to the mother's account and ₹2,000 goes to school maintenance."),
         ("When was Thalliki Vandanam 2026-27 released?", "The first phase was paid on 22 July 2026 to about 64.77 lakh students."),
-        ("When will new Class 1 and Inter first-year students get Thalliki Vandanam?", "In the second phase, for 3,29,201 students. The sanction order was issued on 10 October 2026 and news reports say the money will be credited before Dasara. No exact date has been announced."),
+        ("When will new Class 1 and Inter first-year students get Thalliki Vandanam?", "In the second phase, for 3,29,201 students. The sanction order was issued on 10 October 2026. News reports said the money would be credited before Dasara, but as of 24 October 2026 it is not confirmed as paid and no new date has been announced."),
         ("Is Thalliki Vandanam given for all children in a family?", "Yes. The benefit is given for every eligible school-going child, not just one."),
         ("Do private school students get Thalliki Vandanam?", "Students in recognised private schools are covered along with government and aided schools, subject to the family meeting the eligibility conditions."),
         ("What if my child's name is not in the list?", "Contact your village or ward secretariat or the school with the child's and mother's Aadhaar to check and correct the details."),
@@ -1410,7 +1424,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 
         <h2>Latest update</h2>
         <p>The Telangana government released Rythu Bharosa funds for the <strong>2026 Kharif (Vanakalam) season</strong> from 30 June 2026. A ₹500 per quintal bonus for notified fine rice varieties was also approved for the Kharif season.</p>
-        <p><strong>Next: Rabi (Yasangi) 2026-27.</strong> As of 14 October 2026 the government has not announced when the Yasangi payment will be released. Last Yasangi, payments began on 22 March 2026 (Ugadi) and were released in phases by acreage. Dates on unofficial websites are guesses.</p>
+        <p><strong>Next: Rabi (Yasangi) 2026-27.</strong> As of 24 October 2026 the government has not announced when the Yasangi payment will be released. Last Yasangi, payments began on 22 March 2026 (Ugadi) and were released in phases by acreage. Dates on unofficial websites are guesses.</p>
 
         <h2>Benefits</h2>
         <ul>
@@ -1452,7 +1466,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much is Rythu Bharosa per acre?", "₹12,000 per acre per year, paid as ₹6,000 per acre for each of the Kharif and Rabi seasons."),
         ("When was Rythu Bharosa released for Kharif 2026?", "The Telangana government began releasing Kharif 2026 Rythu Bharosa funds from 30 June 2026."),
-        ("When will Rythu Bharosa for Yasangi (Rabi) 2026-27 come?", "Not announced yet (14 October 2026). Last Yasangi, payments started on 22 March 2026 and were released in phases."),
+        ("When will Rythu Bharosa for Yasangi (Rabi) 2026-27 come?", "Not announced yet (24 October 2026). Last Yasangi, payments started on 22 March 2026 and were released in phases."),
         ("Is Rythu Bharosa paid for non-agricultural land?", "No. Real-estate layouts, industrial and mining lands and non-cultivable land are excluded."),
         ("Do I need to apply every season for Rythu Bharosa?", "Usually not. Farmers are identified from land records. If payment is missing, contact your Agriculture Extension Officer."),
         ("Is Rythu Bharosa the same as Rythu Bandhu?", "Rythu Bharosa replaced Rythu Bandhu, with a higher amount and changes in which lands qualify."),
@@ -2142,16 +2156,16 @@ COLL = {
     ],
     "for-youth": [
         ["pm-internship-scheme", "agnipath-agniveer", "ap-nirudyoga-bhruthi"],
-        ["pm-kaushal-vikas-yojana", "aicte-pragati-scholarship", "ap-fee-reimbursement", "ts-fee-reimbursement"],
+        ["pm-kaushal-vikas-yojana", "aicte-pragati-scholarship", "pm-vidyalaxmi", "ap-fee-reimbursement", "ts-fee-reimbursement"],
         ["pm-mudra-yojana", "pm-vishwakarma", "ts-rajiv-yuva-vikasam"],
         ["pm-jan-dhan-yojana", "atal-pension-yojana", "pm-jeevan-jyoti-bima-yojana", "pm-suraksha-bima-yojana"],
     ],
     "for-men": [
-        ["central-sector-scholarship", "ap-fee-reimbursement", "ts-fee-reimbursement", "pm-kaushal-vikas-yojana", "pm-internship-scheme"],
+        ["central-sector-scholarship", "pm-vidyalaxmi", "ap-fee-reimbursement", "ts-fee-reimbursement", "pm-kaushal-vikas-yojana", "pm-internship-scheme"],
         ["pm-viksit-bharat-rozgar-yojana", "agnipath-agniveer"],
-        ["e-shram-card", "pm-shram-yogi-maandhan", "atal-pension-yojana", "pm-suraksha-bima-yojana", "pm-jeevan-jyoti-bima-yojana"],
+        ["e-shram-card", "pm-shram-yogi-maandhan", "ts-indiramma-atmiya-bharosa", "atal-pension-yojana", "pm-suraksha-bima-yojana", "pm-jeevan-jyoti-bima-yojana"],
         ["pm-svanidhi", "pm-mudra-yojana", "pm-vishwakarma", "ap-nethanna-sevalo", "ap-matsyakarula-sevalo", "ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam"],
-        ["pm-kisan", "pm-fasal-bima-yojana", "kisan-credit-card", "ap-annadata-sukhibhava", "ts-rythu-bharosa"],
+        ["pm-kisan", "pm-fasal-bima-yojana", "kisan-credit-card", "pm-kusum", "ap-annadata-sukhibhava", "ts-rythu-bharosa"],
         ["ayushman-bharat-pm-jay", "ap-ntr-vaidya-seva", "ts-rajiv-aarogyasri", "sukanya-samriddhi-yojana", "pm-surya-ghar"],
     ],
 }
@@ -2443,7 +2457,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <h2>What is Rajiv Yuva Vikasam?</h2>
         <p>Rajiv Yuva Vikasam was announced by the Telangana government in 2025 to help unemployed youth from SC, ST, BC and minority communities set up self-employment units, with the government paying most of the cost.</p>
 
-        <div class="note"><strong>Current status (15 October 2026):</strong> About <strong>16 lakh</strong> applications were received. Sanction letters were announced for June 2025 but the rollout was stopped after complaints about ineligible names in the list, and in April 2026 the scheme had still <strong>not been implemented</strong>. In September 2026 the Deputy Chief Minister said the <strong>first phase</strong>, for units costing <strong>up to ₹1 lakh</strong>, will start on <strong>19 November 2026</strong>, with beneficiaries selected under the District Collector. <strong>No money has been paid yet</strong>, and the final list has not been published. Larger units (₹1–4 lakh) have no date.</div>
+        <div class="note"><strong>Current status (24 October 2026):</strong> About <strong>16 lakh</strong> applications were received. Sanction letters were announced for June 2025 but the rollout was stopped after complaints about ineligible names in the list, and in April 2026 the scheme had still <strong>not been implemented</strong>. In September 2026 the Deputy Chief Minister said the <strong>first phase</strong>, for units costing <strong>up to ₹1 lakh</strong>, will start on <strong>19 November 2026</strong>, with beneficiaries selected under the District Collector. <strong>No money has been paid yet</strong>, and the final list has not been published. Larger units (₹1–4 lakh) have no date.</div>
 
         <h2>Support that was announced</h2>
         <div class="table-wrap">
@@ -2477,7 +2491,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </div>
 ''',
     faqs=[
-        ("Has Rajiv Yuva Vikasam started?", "Not yet. About 16 lakh people applied. In September 2026 the Deputy Chief Minister said the first phase, for units up to ₹1 lakh, will start on 19 November 2026. No money had been paid as of 15 October 2026."),
+        ("Has Rajiv Yuva Vikasam started?", "Not yet. About 16 lakh people applied. In September 2026 the Deputy Chief Minister said the first phase, for units up to ₹1 lakh, will start on 19 November 2026. No money had been paid as of 24 October 2026."),
         ("Will everyone who applied get Rajiv Yuva Vikasam?", "No. Applying does not mean you are selected. Beneficiaries are chosen after verification under the District Collector, and the first phase covers only units up to ₹1 lakh."),
         ("How much support was announced under Rajiv Yuva Vikasam?", "₹50,000 to ₹4 lakh per unit, with a subsidy of 100% for units up to ₹50,000, falling to 70% for units up to ₹4 lakh."),
         ("Who could apply for Rajiv Yuva Vikasam?", "Unemployed SC, ST, BC and minority youth in Telangana with family income below ₹1.5 lakh (rural) or ₹2 lakh (urban), aged 21 to 55."),
@@ -2853,7 +2867,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <h2>What is Auto Drivers Sevalo?</h2>
         <p>The Andhra Pradesh government launched <strong>Auto Drivers Sevalo</strong> on <strong>4 October 2025</strong> in Vijayawada. About <strong>2.9 lakh drivers</strong> received <strong>₹15,000 each</strong> (about ₹436 crore in total) directly in their bank accounts. The government said the scheme supports drivers whose income was affected by <a href="/schemes/ap-stree-shakti/">Stree Shakti</a> free bus travel for women.</p>
 
-        <div class="note"><strong>2026-27 status:</strong> news reports say funds have been earmarked for Auto Drivers Sevalo in 2026-27, but as of 13 October 2026 we have not found an official date for the second year's payment. We will update this page when it is announced.</div>
+        <div class="note"><strong>2026-27 status:</strong> news reports say funds have been earmarked for Auto Drivers Sevalo in 2026-27, but as of 24 October 2026 we have not found an official date for the second year's payment. We will update this page when it is announced.</div>
 
         <h2>Who is eligible?</h2>
         <ul>
@@ -2882,7 +2896,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much do auto drivers get in Andhra Pradesh?", "₹15,000 a year under Auto Drivers Sevalo, paid directly to the bank account."),
         ("Who is eligible for Auto Drivers Sevalo?", "Auto, taxi and maxi-cab drivers who own and drive their own vehicle, with a valid licence and AP registration."),
-        ("When will the 2026 Auto Drivers Sevalo money come?", "As of 13 October 2026, no official date has been announced for the second year, though funds are reported as earmarked for 2026-27."),
+        ("When will the 2026 Auto Drivers Sevalo money come?", "As of 24 October 2026, no official date has been announced for the second year, though funds are reported as earmarked for 2026-27."),
         ("Can I apply if I drive someone else's auto?", "According to the government's clarification, the scheme is only for drivers who own and personally drive their vehicle."),
         ("I didn't get the money last year. What can I do?", "Contact your village or ward secretariat with your licence, RC and Aadhaar to have your eligibility checked."),
     ],
@@ -2910,7 +2924,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
           <li><strong>1st phase:</strong> on 7 August 2026 the government released about <strong>₹179 crore</strong> for <strong>71,536 handloom families</strong>.</li>
           <li><strong>2nd phase:</strong> <strong>36,632 applications</strong> were received from weavers left out of the first list. Handloom officials are checking them with home visits, and the deadline for finalising the list was extended to <strong>3 October 2026</strong>.</li>
         </ul>
-        <div class="note"><strong>2nd phase payment: date not announced (15 October 2026).</strong> The Handlooms Minister has said it will be paid "shortly" to all eligible weavers. We will update this page when the money is released.</div>
+        <div class="note"><strong>2nd phase payment: date not announced (24 October 2026).</strong> The Handlooms Minister has said it will be paid "shortly" to all eligible weavers. We will update this page when the money is released.</div>
 
         <h2>Who is eligible?</h2>
         <p>According to G.O.Ms.No.187:</p>
@@ -2954,7 +2968,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("How much do weavers get under Nethanna Sevalo?", "₹25,000 a year for each eligible handloom weaver family, paid to the head of the family by DBT."),
         ("Who is eligible for Nethanna Sevalo?", "BPL handloom weaver families in Andhra Pradesh who own a handloom, actually weave for a living and are in the Handlooms Department database. There is no age limit."),
         ("Do families with more than one loom get more money?", "No. Each weaver family gets only one benefit, however many looms it owns."),
-        ("When will the 2nd phase of Nethanna Sevalo be paid?", "No date has been announced as of 15 October 2026. 36,632 applications were received and the list was to be finalised by 3 October."),
+        ("When will the 2nd phase of Nethanna Sevalo be paid?", "No date has been announced as of 24 October 2026. 36,632 applications were received and the list was to be finalised by 3 October."),
         ("Is Nethanna Sevalo for power loom weavers?", "The ₹25,000 is for handloom weavers who own a handloom. Power loom units get separate free power support."),
     ],
     sources=[
@@ -3128,7 +3142,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
             </ul>
           </li>
           <li>In AP the state paid the full premium for farmers in 2023 and 2024, but stopped this in 2025. Farmers now pay their own small share.</li>
-          <li><strong>Telangana</strong> left PMFBY in 2019-20. In late September 2026 the state said it plans to bring back crop insurance from the <strong>Yasangi 2026-27</strong> season, but no official notification with dates has been issued yet (15 October 2026). Check with your Agriculture Extension Officer before relying on it.</li>
+          <li><strong>Telangana</strong> left PMFBY in 2019-20. In late September 2026 the state said it plans to bring back crop insurance from the <strong>Yasangi 2026-27</strong> season, but no official notification with dates has been issued yet (24 October 2026). Check with your Agriculture Extension Officer before relying on it.</li>
         </ul>
         <div class="note"><strong>Don't wait for the last week.</strong> If you miss the cut-off date, your crop is not covered for the whole season.</div>
 
@@ -3181,7 +3195,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much premium do farmers pay under PMFBY?", "At most 2% of the sum insured for Kharif food and oilseed crops, 1.5% for Rabi food and oilseed crops, and 5% for commercial and horticulture crops."),
         ("What is the last date for PMFBY Rabi 2026-27 in Andhra Pradesh?", "15 December 2026 for notified Rabi crops other than paddy, and 31 December 2026 for paddy."),
-        ("Is PM Fasal Bima Yojana available in Telangana?", "Telangana left PMFBY in 2019-20. In September 2026 it said it plans to bring back crop insurance from Yasangi 2026-27, but no official notification had been issued as of 15 October 2026."),
+        ("Is PM Fasal Bima Yojana available in Telangana?", "Telangana left PMFBY in 2019-20. In September 2026 it said it plans to bring back crop insurance from Yasangi 2026-27, but no official notification had been issued as of 24 October 2026."),
         ("Can tenant farmers get crop insurance?", "Yes. Tenant farmers and sharecroppers can enrol with the documents the state asks for, such as a tenancy agreement or sowing certificate."),
         ("How do I report crop damage?", "For damage on your own field, report within 72 hours to the insurance company through helpline 14447, the Crop Insurance app, your bank or the agriculture officer."),
     ],
@@ -3344,7 +3358,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <h2>New universal health policy: approved, start not confirmed</h2>
         <ul>
           <li>In <strong>September 2025</strong> the State Cabinet approved a <strong>universal health policy</strong>: an insurance company would pay the first <strong>₹2.5 lakh</strong> of treatment, and the NTR Vaidya Seva Trust would pay from ₹2.5 lakh up to <strong>₹25 lakh</strong>, for <strong>3,257</strong> procedures, with approvals within six hours of admission.</li>
-          <li>The Chief Minister said it would start on <strong>1 April 2026</strong>. As of 15 October 2026 we could not find an official confirmation that the new insurance system has started. Private hospitals have also protested over pending dues and have at times suspended services.</li>
+          <li>The Chief Minister said it would start on <strong>1 April 2026</strong>. As of 24 October 2026 we could not find an official confirmation that the new insurance system has started. Private hospitals have also protested over pending dues and have at times suspended services.</li>
           <li>Until the new system is confirmed, use your existing health card and the network hospital's Aarogyamitra desk.</li>
         </ul>
 
@@ -3371,7 +3385,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much cover does NTR Vaidya Seva give?", "Up to ₹25 lakh per family per year for covered treatments at network hospitals, cashless."),
         ("Is NTR Vaidya Seva the same as Aarogyasri?", "Yes. Dr YSR Aarogyasri was renamed Dr NTR Vaidya Seva in 2024."),
-        ("Has the AP universal health policy started?", "It was approved in September 2025 with a planned start of 1 April 2026, but as of 15 October 2026 we could not find official confirmation that the new insurance system has started."),
+        ("Has the AP universal health policy started?", "It was approved in September 2025 with a planned start of 1 April 2026, but as of 24 October 2026 we could not find official confirmation that the new insurance system has started."),
         ("Who is eligible for NTR Vaidya Seva?", "Poor (BPL) families in Andhra Pradesh, generally rice card families with a health card."),
         ("What should I do if a hospital asks for money?", "For covered procedures treatment is free. Call 104 or complain to the NTR Vaidya Seva Trust."),
     ],
@@ -3390,7 +3404,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     description="Aadabidda Nidhi (Andhra Pradesh) status: ₹1,500 a month promised for women 18+, not started as of October 2026, what the government said, and how to avoid fake registration sites.",
     facts=[("Promised", "₹1,500 / month"), ("For", "Women aged 18+"), ("Status (Oct 2026)", "Not started"), ("Applications", "None open")],
     body='''
-        <div class="note"><strong>Status: not started (15 October 2026).</strong> There is no government order, no official application and no payment for Aadabidda Nidhi yet. Any website or person "registering" you for it is not official.</div>
+        <div class="note"><strong>Status: not started (24 October 2026).</strong> There is no government order, no official application and no payment for Aadabidda Nidhi yet. Any website or person "registering" you for it is not official.</div>
 
         <h2>What was promised?</h2>
         <p>In the 2024 election manifesto (Super Six), the TDP-led alliance promised <strong>₹1,500 per month</strong> to every woman aged <strong>18 and above</strong> in Andhra Pradesh, under the name Aadabidda Nidhi.</p>
@@ -3413,7 +3427,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <div class="note">Never share your Aadhaar, bank details or OTP on sites that claim to register you for Aadabidda Nidhi. When the scheme starts, it will be announced by the government and handled through your village/ward secretariat.</div>
 ''',
     faqs=[
-        ("Has Aadabidda Nidhi started in Andhra Pradesh?", "No. As of 15 October 2026 there is no government order, application or payment. In February 2026 the minister said the scheme is under consideration."),
+        ("Has Aadabidda Nidhi started in Andhra Pradesh?", "No. As of 24 October 2026 there is no government order, application or payment. In February 2026 the minister said the scheme is under consideration."),
         ("How much is Aadabidda Nidhi?", "₹1,500 per month was promised for women aged 18 and above in the 2024 Super Six manifesto."),
         ("Where can I apply for Aadabidda Nidhi?", "Nowhere yet. There is no official application. Don't trust websites asking you to register or pay."),
         ("Was Aadabidda Nidhi in the 2026-27 budget?", "No announcement was made for it in the February 2026 budget."),
@@ -3431,7 +3445,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     description="Nirudyoga Bhruthi (AP unemployment allowance) status: ₹3,000 a month promised for unemployed youth, not started as of October 2026, and job and skill schemes you can use now.",
     facts=[("Promised", "₹3,000 / month"), ("For", "Unemployed youth"), ("Status (Oct 2026)", "Not started"), ("Applications", "None open")],
     body='''
-        <div class="note"><strong>Status: not started (15 October 2026).</strong> There is no government order, official website or application for Nirudyoga Bhruthi yet. Sites asking you to "apply now" are not official.</div>
+        <div class="note"><strong>Status: not started (24 October 2026).</strong> There is no government order, official website or application for Nirudyoga Bhruthi yet. Sites asking you to "apply now" are not official.</div>
 
         <h2>What was promised?</h2>
         <p>In the 2024 Super Six manifesto, the TDP-led alliance promised an unemployment allowance (Nirudyoga Bhruthi) of <strong>₹3,000 per month</strong> to unemployed youth until they find a job.</p>
@@ -3453,7 +3467,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <div class="note">Never pay or share your Aadhaar, bank details or OTP with anyone offering to register you for Nirudyoga Bhruthi.</div>
 ''',
     faqs=[
-        ("Has Nirudyoga Bhruthi started in AP?", "No. As of 15 October 2026 there is no government order, official website, application or payment."),
+        ("Has Nirudyoga Bhruthi started in AP?", "No. As of 24 October 2026 there is no government order, official website, application or payment."),
         ("How much is the AP unemployment allowance?", "₹3,000 per month was promised in the 2024 Super Six manifesto. The rules have not been announced."),
         ("What is the age limit for Nirudyoga Bhruthi?", "No official rules have been announced yet. Age limits shown on other websites are not official."),
         ("What can unemployed youth use now?", "PM Internship Scheme, free PMKVY training, PM Viksit Bharat Rozgar Yojana for first jobs, Agniveer recruitment and Mudra loans."),
@@ -3642,6 +3656,158 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("PIB: Cabinet approves continuation of MISS for 2025-26 (28 May 2025)", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2131988"),
         ("The Tribune: KCC interest subvention limit to be raised to ₹5 lakh (Budget 2025-26)", "https://www.tribuneindia.com/news/business/kisan-credit-card-interest-subvention-scheme-limit-to-be-raised-to-rs-5-lakh-sitharaman"),
         ("PM-KISAN portal: KCC form", "https://pmkisan.gov.in"),
+    ]))
+
+# ---- Batch F (added 24 Oct 2026): PM Vidyalaxmi, PM-KUSUM, TS Indiramma Atmiya Bharosa
+s = BY_SLUG["pm-vidyalaxmi"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM Vidyalaxmi helps students who get admission in India's top colleges take an education loan with no collateral and no guarantor. If your family earns up to ₹8 lakh a year, the government also pays 3% of the interest on loans up to ₹10 lakh while you study.",
+    description="PM Vidyalaxmi education loan explained: collateral-free, guarantor-free loans for top NIRF colleges, 75% government guarantee up to ₹7.5 lakh, 3% interest help for family income up to ₹8 lakh, how to apply.",
+    facts=[("Loan", "No collateral, no guarantor"), ("Interest help", "3% on up to ₹10 lakh"), ("Income limit", "₹8 lakh / year (for 3%)"), ("Colleges", "Top NIRF institutions")],
+    body='''
+        <h2>What is PM Vidyalaxmi?</h2>
+        <p>PM Vidyalaxmi is a central scheme approved by the Union Cabinet on <strong>6 November 2024</strong>. It makes banks give education loans to students who get a seat in a <strong>quality higher education institution (QHEI)</strong>, covering the <strong>full tuition fee and other course costs</strong>, without asking for property or a guarantor.</p>
+
+        <h2>Benefits</h2>
+        <ul>
+          <li><strong>Collateral-free, guarantor-free loan</strong> from banks and financial institutions for the full course cost.</li>
+          <li>For loans up to <strong>₹7.5 lakh</strong>, the Government of India gives the bank a <strong>75% credit guarantee</strong>. This makes banks more willing to lend.</li>
+          <li>If your <strong>family income is up to ₹8 lakh a year</strong> and you don't get any other government scholarship or interest scheme, the government pays <strong>3% interest subvention</strong> on loans up to <strong>₹10 lakh</strong> during the moratorium period (course period plus the grace period). This is given to <strong>1 lakh students a year</strong>, with preference for students in government institutions and technical or professional courses.</li>
+          <li>Families earning up to <strong>₹4.5 lakh</strong> a year in technical or professional courses already get <strong>full interest</strong> paid during the moratorium under the older CSIS scheme (PM-USP).</li>
+        </ul>
+
+        <h2>Which colleges are covered?</h2>
+        <ul>
+          <li>All government and private institutions ranked in the <strong>top 100 of NIRF</strong> (overall, category or subject rankings).</li>
+          <li><strong>State government</strong> institutions ranked <strong>101–200</strong> in NIRF.</li>
+          <li>All institutions run by the <strong>central government</strong> (IITs, NITs, IIMs, central universities and others).</li>
+        </ul>
+        <p>The list started with <strong>860 institutions</strong> and is updated every year with the latest NIRF ranking. Check whether your college is in the list on the PM-Vidyalaxmi portal.</p>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Get admission in an eligible institution.</li>
+          <li>Register on the <strong>PM-Vidyalaxmi portal</strong> (<a href="https://www.pmvidyalaxmi.co.in" target="_blank" rel="noopener">pmvidyalaxmi.co.in</a>) and fill one common education loan application.</li>
+          <li>Choose up to three banks, upload admission letter, fee details, Aadhaar, PAN and income certificate.</li>
+          <li>Apply for the interest subvention on the same portal if your family income is up to ₹8 lakh.</li>
+          <li>Track your application on the portal. The interest help is paid through e-vouchers and CBDC (digital rupee) wallets.</li>
+        </ol>
+        <div class="note">Applying on the portal is free. Don't pay agents or "loan consultants" who promise a sanctioned loan. Banks decide on the loan; the guarantee only makes it easier.</div>
+        <p>Also see: <a href="/schemes/central-sector-scholarship/">Central Sector Scholarship</a>, <a href="/schemes/aicte-pragati-scholarship/">Pragati Scholarship for girls</a>, and fee reimbursement in <a href="/schemes/ap-fee-reimbursement/">AP</a> and <a href="/schemes/ts-fee-reimbursement/">Telangana</a>.</p>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://www.pmvidyalaxmi.co.in" target="_blank" rel="noopener">pmvidyalaxmi.co.in</a><br>
+          <strong>Run by:</strong> Department of Higher Education, Ministry of Education
+        </div>
+''',
+    faqs=[
+        ("Who can get a PM Vidyalaxmi loan?", "Any student who gets admission in an eligible quality institution: NIRF top 100, state government institutions ranked 101–200, and all central government institutions."),
+        ("Is any collateral or guarantor needed?", "No. The scheme is for collateral-free, guarantor-free education loans. For loans up to ₹7.5 lakh the government gives banks a 75% guarantee."),
+        ("Who gets the 3% interest subvention?", "Students with family income up to ₹8 lakh a year who don't get another government scholarship or interest scheme, on loans up to ₹10 lakh, during the moratorium. It is given to 1 lakh students a year."),
+        ("What if my family income is below ₹4.5 lakh?", "Students in technical or professional courses with family income up to ₹4.5 lakh get full interest paid during the moratorium under the CSIS scheme."),
+        ("Where do I apply?", "On the PM-Vidyalaxmi portal, pmvidyalaxmi.co.in, with one common form for all banks."),
+    ],
+    sources=[
+        ("PM India: Cabinet approves PM-Vidyalaxmi scheme (6 Nov 2024)", "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-pm-vidyalaxmi-scheme-to-provide-financial-support-to-meritorious-students-so-that-financial-constraints-do-not-prevent-any-youth-of-india-from-pursuing-quality-higher-education/"),
+        ("PM-Vidyalaxmi portal", "https://www.pmvidyalaxmi.co.in"),
+    ]))
+
+s = BY_SLUG["pm-kusum"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="PM-KUSUM helps farmers replace diesel and electric pumps with solar. The central government pays up to 30% of the cost of a solar pump (50% in hill and North-East states), the state usually adds its own share, and farmers can also earn by setting up small solar plants on unused land.",
+    description="PM-KUSUM solar pump scheme explained: up to 30% central subsidy (50% in NE and hill states), standalone solar pumps, solarising grid pumps, solar plants on fallow land, status in 2026, fake website warning, how to apply in AP and Telangana.",
+    facts=[("Central subsidy", "Up to 30% (50% in NE / hill states)"), ("Solar plant", "Up to 2 MW on fallow land"), ("Apply through", "State nodal agency"), ("Toll free", "1800-180-3333")],
+    body='''
+        <h2>What is PM-KUSUM?</h2>
+        <p>PM-KUSUM (Pradhan Mantri Kisan Urja Suraksha evam Utthaan Mahabhiyan) is run by the <strong>Ministry of New and Renewable Energy (MNRE)</strong>. It aims to stop diesel use on farms and raise farmers' income through solar power. It is implemented by <strong>departments of each state government</strong>, not directly by the centre.</p>
+
+        <h2>The three parts of the scheme</h2>
+        <ul>
+          <li><strong>Component A:</strong> farmers, groups of farmers, FPOs, cooperatives and panchayats can set up grid-connected solar power plants of up to <strong>2 MW</strong> on barren or fallow land and <strong>sell the power to the DISCOM</strong> at a tariff fixed by the state regulator.</li>
+          <li><strong>Component B:</strong> <strong>standalone (off-grid) solar pumps</strong> for farmers, mainly where there is no grid power or where diesel pumps are used.</li>
+          <li><strong>Component C:</strong> <strong>solarising existing grid-connected pumps</strong>, either one pump at a time (IPS) or a whole agricultural feeder (FLS). Extra power can be sold to the DISCOM.</li>
+        </ul>
+
+        <h2>How much subsidy?</h2>
+        <ul>
+          <li>The central government gives <strong>up to 30%</strong> of the cost for standalone solar pumps and pump solarisation, and <strong>up to 50%</strong> in North-East, hill and island states and UTs.</li>
+          <li>The <strong>state government usually adds its own subsidy</strong>, and the farmer pays the rest. Part of the farmer's share can often be a bank loan.</li>
+          <li>The exact share, pump sizes (HP) and price are fixed by your state. Check the state-wise vendor list and rate card on the PM-KUSUM portal.</li>
+        </ul>
+
+        <h2>Status in 2026</h2>
+        <div class="note"><strong>Check with your state before you pay anything (24 October 2026).</strong> The scheme's main period ran to 31 March 2026. MNRE has since issued orders extending the time to finish projects that were already sanctioned. A new phase ("PM-KUSUM 2.0") has been reported in the news, but we have not found an official notification of it yet. Whether new solar pumps are being sanctioned in your district depends on your state's remaining target.</div>
+
+        <h2>How to apply</h2>
+        <ol>
+          <li>Contact your <strong>state nodal agency</strong>: <strong>NREDCAP</strong> in Andhra Pradesh, <strong>TGREDCO</strong> in Telangana, or your district agriculture or horticulture office. Links to state portals are on <a href="https://pmkusum.mnre.gov.in" target="_blank" rel="noopener">pmkusum.mnre.gov.in</a>.</li>
+          <li>Apply when the state opens applications. Usually you need Aadhaar, land records (pattadar passbook), bank details and a photo.</li>
+          <li>After approval, pay only your share, and only to the state agency or the empanelled vendor named by it.</li>
+        </ol>
+        <div class="note"><strong>Beware of fake PM-KUSUM websites.</strong> MNRE warns that fake websites and apps ask farmers for "registration fees" and pump money online. Examples it names: kusumyojanaonline.in.net, pmkisankusumyojana.co.in, onlinekusamyojana.org.in and pmkisankusumyojana.com. Don't pay on any such site. Call the MNRE toll-free number <strong>1800-180-3333</strong> if in doubt.</div>
+        <p>Also see: <a href="/schemes/pm-surya-ghar/">PM Surya Ghar</a> (rooftop solar for homes), <a href="/schemes/kisan-credit-card/">Kisan Credit Card</a> and <a href="/schemes/pm-kisan/">PM-KISAN</a>.</p>
+
+        <div class="official">
+          <strong>Official portal:</strong> <a href="https://pmkusum.mnre.gov.in" target="_blank" rel="noopener">pmkusum.mnre.gov.in</a> · <a href="https://mnre.gov.in" target="_blank" rel="noopener">mnre.gov.in</a><br>
+          <strong>Toll free:</strong> 1800-180-3333
+        </div>
+''',
+    faqs=[
+        ("How much subsidy is given for a solar pump under PM-KUSUM?", "The centre gives up to 30% of the cost (50% in North-East, hill and island states). The state usually adds its own share and the farmer pays the rest."),
+        ("Where do I apply for PM-KUSUM?", "Through your state's nodal agency (NREDCAP in AP, TGREDCO in Telangana) or the district agriculture office. Not on private websites."),
+        ("Is PM-KUSUM still open in 2026?", "MNRE has extended the time to complete projects already sanctioned. A new phase has been reported but not officially notified as of 24 October 2026. Ask your state agency whether new pumps are being sanctioned."),
+        ("Can I earn money from PM-KUSUM?", "Yes. Under Component A you can set up a solar plant of up to 2 MW on barren land and sell power to the DISCOM, and under Component C you can sell extra power from a solarised pump."),
+        ("A website is asking for a PM-KUSUM registration fee. Is it real?", "No. MNRE has warned about fake PM-KUSUM websites. Don't pay; call 1800-180-3333."),
+    ],
+    sources=[
+        ("PM-KUSUM national portal (MNRE): scheme details, subsidy, fake website warning", "https://pmkusum.mnre.gov.in"),
+        ("Ministry of New and Renewable Energy", "https://mnre.gov.in"),
+    ]))
+
+s = BY_SLUG["ts-indiramma-atmiya-bharosa"]
+write(f"schemes/{s['slug']}/index.html", article(s,
+    lede="Indiramma Atmiya Bharosa is Telangana's scheme to give ₹12,000 a year to landless farm labour families. It started on 26 January 2025, but only part of the first ₹6,000 instalment was paid before it stopped, and we have not found any confirmed payment since.",
+    description="Indiramma Atmiya Bharosa (Telangana) explained: ₹12,000 a year in two instalments for landless farm labour families with an MGNREGA job card, who is eligible, what was paid in 2025, and its status in October 2026.",
+    facts=[("Amount", "₹12,000 / year (2 × ₹6,000)"), ("For", "Landless farm labour families"), ("Paid so far", "Part of 1st instalment (2025)"), ("Status (Oct 2026)", "No confirmed payment since")],
+    body='''
+        <div class="note"><strong>Status: stalled (24 October 2026).</strong> Only part of the first instalment was paid in January–February 2025. We have not found any official order or report of further payments since then. We will update this page when the government releases money.</div>
+
+        <h2>What is the scheme?</h2>
+        <p>Indiramma Atmiya Bharosa gives <strong>₹12,000 a year</strong> to landless agricultural labour families in Telangana, in <strong>two instalments of ₹6,000</strong>, paid by DBT to the bank account of the head of the family. It was launched on <strong>26 January 2025</strong>, along with Rythu Bharosa, Indiramma Indlu and new ration cards. The Panchayat Raj and Rural Development department runs it.</p>
+
+        <h2>Who is eligible?</h2>
+        <ul>
+          <li>Families with <strong>no agricultural land</strong>. If any family member holds agricultural patta land, the family is not eligible.</li>
+          <li>The family must have an <strong>MGNREGA job card</strong> and must have done <strong>at least 20 days of work</strong> under MGNREGA in <strong>2023-24</strong>.</li>
+          <li>The family is the unit, identified through Aadhaar and the ration card.</li>
+        </ul>
+
+        <h2>What has been paid</h2>
+        <ul>
+          <li>On <strong>26 January 2025</strong>, the first ₹6,000 was paid to families in one village per mandal.</li>
+          <li>Payments then stopped because of the MLC election code. On <strong>26 February 2025</strong>, ₹39.98 crore more was paid to labourers in the erstwhile Ranga Reddy and Mahabubnagar districts, where the code was not in force.</li>
+          <li>News reports put the total at about <strong>83,420 families and ₹50.88 crore</strong> by the end of February 2025.</li>
+          <li>We have not found any official report of payments to the remaining families, or of a second instalment, as of 24 October 2026.</li>
+        </ul>
+
+        <h2>What you can do</h2>
+        <ul>
+          <li>Make sure your <strong>Aadhaar, job card and bank account</strong> details match and are linked; mismatches kept many families out in 2025.</li>
+          <li>Ask at your <strong>gram panchayat</strong> or <strong>MPDO office</strong> whether your name is on the beneficiary list.</li>
+          <li>Register on <a href="/schemes/e-shram-card/">e-Shram</a> and see <a href="/schemes/pm-shram-yogi-maandhan/">PM Shram Yogi Maandhan</a> for a pension.</li>
+        </ul>
+        <div class="note">There is no online application or fee for this scheme. Don't share your Aadhaar, bank details or OTP with anyone who offers to "add your name" for money.</div>
+''',
+    faqs=[
+        ("How much is Indiramma Atmiya Bharosa?", "₹12,000 a year, paid in two instalments of ₹6,000 to the head of the family."),
+        ("Who is eligible for Indiramma Atmiya Bharosa?", "Landless agricultural labour families with an MGNREGA job card who did at least 20 days of MGNREGA work in 2023-24. Families with any agricultural land are not eligible."),
+        ("Has the money been paid?", "Partly. About 83,420 families got the first ₹6,000 in January–February 2025. As of 24 October 2026 we have found no confirmed payment since then."),
+        ("How do I apply?", "There is no online application. Beneficiaries were identified from MGNREGA records and gram sabhas. Ask your gram panchayat or MPDO office."),
+    ],
+    sources=[
+        ("V6 Velugu: Indiramma Atmiya Bharosa guidelines, two instalments (14 Jan 2025)", "https://www.v6velugu.com/telangana-govt-unveils-indiramma-atmiya-bharosa-schemes-for-farmers"),
+        ("Andhra Jyothy: ₹39.98 crore released for Atmiya Bharosa (27 Feb 2025)", "https://www.andhrajyothy.com/2025/telangana/tg-govt-releases-3998-crore-for-indiramma-atmeya-bharosa-scheme-1375744.html"),
+        ("Deccan Chronicle: Telangana releases Atmiya Bharosa funds", "https://deccanchronicle.com/southern-states/telangana/telangana-releases-rs39-crore-atmiya-bharosa-funds-1863687"),
     ]))
 
 # ---- Collection: For boys & men
@@ -3849,6 +4015,9 @@ CHECKER_TEXT = {
             ujjwala="Women from poor families with no LPG connection can get a free connection and ₹300 subsidy on 4 refills a year.",
             suryaghar="You own a house: get up to ₹78,000 subsidy for rooftop solar and up to 300 units a month.",
             kcc="Farmers, fish farmers and livestock farmers can get crop loans at 7%, or 4% if repaid on time.",
+            kusum="You own farm land: a solar pump with up to 30% central subsidy plus the state's share. Apply only through your state agency.",
+            vidyalaxmi="You're in or joining college: education loans with no collateral at top institutions, and 3% interest help if family income is up to ₹8 lakh.",
+            tsAtmiya="Landless labour families with an MGNREGA job card were promised ₹12,000 a year, but payments have stalled since 2025.",
         ),
     ),
     "te": dict(
@@ -3950,6 +4119,9 @@ CHECKER_TEXT = {
             ujjwala="ఎల్పీజీ కనెక్షన్ లేని పేద కుటుంబాల మహిళలకు ఉచిత కనెక్షన్, ఏడాదికి 4 రీఫిల్స్‌కు ₹300 సబ్సిడీ.",
             suryaghar="మీకు సొంత ఇల్లు ఉంది: రూఫ్‌టాప్ సోలార్‌కు ₹78,000 వరకు సబ్సిడీ, నెలకు 300 యూనిట్ల వరకు కరెంటు.",
             kcc="రైతులు, చేపల పెంపకందారులు, పశువుల రైతులకు 7% వడ్డీకి పంట రుణాలు, సకాలంలో కడితే 4%.",
+            kusum="మీకు వ్యవసాయ భూమి ఉంది: 30% వరకు కేంద్ర సబ్సిడీ, రాష్ట్ర వాటాతో సోలార్ పంపు. రాష్ట్ర ఏజెన్సీ ద్వారానే దరఖాస్తు చేయండి.",
+            vidyalaxmi="మీరు కాలేజీలో చదువుతున్నారు లేదా చేరుతున్నారు: టాప్ సంస్థల్లో హామీ లేని విద్యా రుణం, కుటుంబ ఆదాయం ₹8 లక్షల వరకు ఉంటే 3% వడ్డీ సాయం.",
+            tsAtmiya="ఉపాధి హామీ జాబ్ కార్డు ఉన్న భూమిలేని కూలీ కుటుంబాలకు ఏడాదికి ₹12,000 హామీ ఇచ్చారు, కానీ 2025 తర్వాత చెల్లింపులు ఆగిపోయాయి.",
         ),
     ),
 }
@@ -4041,6 +4213,8 @@ def checker_page(lang):
           // Central schemes
           if (f.farmland && notRich && !f.govtjob) add('pm-kisan', 'kisan');
           if (f.farmland || f.fisher) add('kisan-credit-card', 'kcc');
+          if (f.farmland) add('pm-kusum', 'kusum');
+          if (f.college || f.techstudent) add('pm-vidyalaxmi', 'vidyalaxmi');
           if (woman && age >= 18 && !f.lpg && (poor || inc <= 1)) add('pm-ujjwala-yojana', 'ujjwala');
           if (f.pucca) add('pm-surya-ghar', 'suryaghar');
           if (f.farmland) add('pm-fasal-bima-yojana', state === 'ap' ? 'pmfbyAp' : (state === 'ts' ? 'pmfbyTs' : 'pmfby'));
@@ -4082,6 +4256,7 @@ def checker_page(lang):
           // Telangana
           if (state === 'ts') {{
             if (f.farmland) add('ts-rythu-bharosa', 'tsRythu');
+            if (f.labourer && !f.farmland && rural) add('ts-indiramma-atmiya-bharosa', 'tsAtmiya');
             if (woman || trans || (poor && f.lpg)) add('ts-mahalakshmi', (woman || trans) ? (poor && f.lpg ? 'tsMahaBusGas' : 'tsMahaBus') : 'tsMahaGas');
             if (poor && !f.pucca && inc <= 1) add('ts-indiramma-indlu', 'tsIndiramma');
             if (woman && age >= 18 && poor) add('ts-indira-mahila-shakti', 'tsMahilaShakti');
@@ -4655,18 +4830,22 @@ write("games/index.html",
 # ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
 # Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
 UPDATES = [
+    dict(kind="expected", date="24 Oct 2026",
+         title="PM-KISAN 24th instalment: 30 October reported",
+         text="News reports on 23 October say the Agriculture Ministry announced 30 October 2026 on social media. No PIB press release yet. Make sure your eKYC, land seeding and Aadhaar bank link are done.",
+         link="/schemes/pm-kisan/"),
+    dict(kind="expected", date="24 Oct 2026",
+         title="Annadata Sukhibhava 2nd instalment: 30 October reported",
+         text="It was not paid at Dasara. News reports say AP will pay it on 30 October together with PM-KISAN's 24th instalment. The date and amount are not officially confirmed yet. Complete your eKYC at the Rythu Seva Kendram.",
+         link="/schemes/ap-annadata-sukhibhava/"),
+    dict(kind="expected", date="24 Oct 2026",
+         title="Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed",
+         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not confirmed as paid by 24 October.",
+         link="/schemes/ap-thalliki-vandanam/"),
     dict(kind="deadline", date="15 Oct 2026", until="2026-12-31",
          title="AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)",
          text="Under PM Fasal Bima Yojana, farmers pay at most 1.5% premium for Rabi food and oilseed crops. Enrol through your bank, CSC or Rythu Seva Kendram; an Agristack farmer ID is needed.",
          link="/schemes/pm-fasal-bima-yojana/"),
-    dict(kind="expected", date="14 Oct 2026",
-         title="Annadata Sukhibhava 2nd instalment expected around Dasara",
-         text="News reports say AP will pay it with PM-KISAN's 24th instalment, and some mention 17 October. The date and amount are reported, not officially confirmed. Complete your eKYC at the Rythu Seva Kendram.",
-         link="/schemes/ap-annadata-sukhibhava/"),
-    dict(kind="expected", date="14 Oct 2026",
-         title="Thalliki Vandanam: ₹13,000 for new Class 1 and Inter students before Dasara",
-         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The sanction order was issued on 10 October; no exact payment date yet.",
-         link="/schemes/ap-thalliki-vandanam/"),
     dict(kind="deadline", date="13 Oct 2026", until="2026-10-31",
          title="Central Sector Scholarship: apply by 31 October",
          text="College students in the top 20% of their Class 12 board with family income up to ₹4.5 lakh can get ₹12,000–₹20,000 a year. Apply on the National Scholarship Portal.",
@@ -4675,11 +4854,7 @@ UPDATES = [
          title="Pragati Scholarship for girls: apply by 31 October",
          text="Girls in AICTE degree and diploma courses can get ₹50,000 a year. 2026-27 applications on the National Scholarship Portal close on 31 October 2026.",
          link="/schemes/aicte-pragati-scholarship/"),
-    dict(kind="expected", date="14 Oct 2026",
-         title="PM-KISAN 24th instalment: no official date yet",
-         text="Expected in October–November. Dates like 17 or 20 October in news and on social media are not confirmed by the government. Make sure your eKYC, land seeding and Aadhaar bank link are done.",
-         link="/schemes/pm-kisan/"),
-    dict(kind="news", date="14 Oct 2026",
+    dict(kind="news", date="24 Oct 2026",
          title="AP Auto Drivers Sevalo: 2026 payment date not announced",
          text="Last year auto, taxi and maxi-cab owner-drivers got ₹15,000 on 4 October 2025. No official date has been given for this year's payment yet.",
          link="/schemes/ap-auto-drivers-sevalo/"),
@@ -4728,7 +4903,7 @@ UPDATES = [
          text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
          link="/schemes/pm-internship-scheme/"),
 ]
-UPDATES_CHECKED = "18 October 2026"  # change when you re-check the list
+UPDATES_CHECKED = "24 October 2026"  # change when you re-check the list
 KIND_LABEL = {"deadline": "⏰ Deadline", "expected": "📅 Expected", "news": "📰 News", "rate": "📈 Rate"}
 
 def update_item(u):
@@ -4779,16 +4954,16 @@ with open(os.path.join(os.path.dirname(__file__), "home_updates.html"), "w", enc
 TE_UPDATES = {
     "AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)": ("ఏపీ రబీ పంటల బీమా: 15 డిసెంబర్ లోపు చేరండి (వరికి 31 డిసెంబర్)",
         "పీఎం ఫసల్ బీమా యోజన కింద రబీ ఆహార, నూనెగింజల పంటలకు రైతు గరిష్ఠంగా 1.5% ప్రీమియం కడతారు. బ్యాంకు, CSC లేదా రైతు సేవా కేంద్రంలో చేరండి; అగ్రిస్టాక్ రైతు ఐడీ అవసరం."),
-    "Annadata Sukhibhava 2nd instalment expected around Dasara": ("అన్నదాత సుఖీభవ రెండో విడత దసరా సమయంలో రావచ్చు",
-        "పీఎం కిసాన్ 24వ విడతతో కలిపి ఇస్తారని వార్తలు చెబుతున్నాయి, కొన్ని 17 అక్టోబర్ అంటున్నాయి. తేదీ, మొత్తం అధికారికంగా ఖరారు కాలేదు. రైతు సేవా కేంద్రంలో ఈకేవైసీ పూర్తి చేయండి."),
-    "Thalliki Vandanam: ₹13,000 for new Class 1 and Inter students before Dasara": ("తల్లికి వందనం: కొత్త 1వ తరగతి, ఇంటర్ విద్యార్థులకు దసరా లోపు ₹13,000",
-        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న మంజూరు ఉత్తర్వు వచ్చింది; ఖచ్చితమైన తేదీ ఇంకా లేదు."),
+    "Annadata Sukhibhava 2nd instalment: 30 October reported": ("అన్నదాత సుఖీభవ రెండో విడత: 30 అక్టోబర్ అని వార్తలు",
+        "దసరాకు రాలేదు. పీఎం కిసాన్ 24వ విడతతో కలిపి 30 అక్టోబర్‌న ఇస్తారని వార్తలు చెబుతున్నాయి. తేదీ, మొత్తం ఇంకా అధికారికంగా ఖరారు కాలేదు. రైతు సేవా కేంద్రంలో ఈకేవైసీ పూర్తి చేయండి."),
+    "Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed": ("తల్లికి వందనం రెండో విడత: కొత్త విద్యార్థులకు ₹13,000 ఆలస్యం",
+        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న ఉత్తర్వు వచ్చింది. దసరా లోపు వస్తుందనుకున్నా, 24 అక్టోబర్ నాటికి జమ అయినట్లు నిర్ధారణ లేదు."),
     "Central Sector Scholarship: apply by 31 October": ("సెంట్రల్ సెక్టార్ స్కాలర్‌షిప్: 31 అక్టోబర్ లోపు దరఖాస్తు చేయండి",
         "12వ తరగతి బోర్డులో టాప్ 20%లో ఉండి, కుటుంబ ఆదాయం ₹4.5 లక్షల వరకు ఉన్న కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000. నేషనల్ స్కాలర్‌షిప్ పోర్టల్‌లో దరఖాస్తు చేయండి."),
     "Pragati Scholarship for girls: apply by 31 October": ("అమ్మాయిలకు ప్రగతి స్కాలర్‌షిప్: 31 అక్టోబర్ లోపు దరఖాస్తు చేయండి",
         "AICTE డిగ్రీ, డిప్లొమా కోర్సుల అమ్మాయిలకు ఏడాదికి ₹50,000. 2026-27 దరఖాస్తులు నేషనల్ స్కాలర్‌షిప్ పోర్టల్‌లో 31 అక్టోబర్ 2026తో ముగుస్తాయి."),
-    "PM-KISAN 24th instalment: no official date yet": ("పీఎం కిసాన్ 24వ విడత: ఇంకా అధికారిక తేదీ లేదు",
-        "అక్టోబర్–నవంబర్‌లో రావచ్చని అంచనా. వార్తల్లో, సోషల్ మీడియాలో కనిపించే 17 లేదా 20 అక్టోబర్ వంటి తేదీలను ప్రభుత్వం నిర్ధారించలేదు. ఈకేవైసీ, ల్యాండ్ సీడింగ్, ఆధార్ బ్యాంకు లింక్ పూర్తి చేసుకోండి."),
+    "PM-KISAN 24th instalment: 30 October reported": ("పీఎం కిసాన్ 24వ విడత: 30 అక్టోబర్ అని వార్తలు",
+        "వ్యవసాయ మంత్రిత్వ శాఖ సోషల్ మీడియాలో 30 అక్టోబర్ 2026 అని ప్రకటించిందని 23 అక్టోబర్ వార్తలు చెబుతున్నాయి. PIB ప్రకటన ఇంకా రాలేదు. ఈకేవైసీ, ల్యాండ్ సీడింగ్, ఆధార్ బ్యాంకు లింక్ పూర్తి చేసుకోండి."),
     "AP Auto Drivers Sevalo: 2026 payment date not announced": ("ఏపీ ఆటో డ్రైవర్ల సేవలో: 2026 చెల్లింపు తేదీ ప్రకటించలేదు",
         "గత ఏడాది సొంత ఆటో, ట్యాక్సీ, మ్యాక్సీ క్యాబ్ డ్రైవర్లకు 4 అక్టోబర్ 2025న ₹15,000 ఇచ్చారు. ఈ ఏడాది చెల్లింపుకు అధికారిక తేదీ ఇంకా ఇవ్వలేదు."),
     "Nethanna Sevalo 2nd phase: ₹25,000 for weavers, date awaited": ("నేతన్నల సేవలో రెండో విడత: నేతన్నలకు ₹25,000, తేదీ కోసం ఎదురుచూపు",

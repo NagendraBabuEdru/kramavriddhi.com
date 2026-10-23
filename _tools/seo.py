@@ -107,6 +107,12 @@ SEO = {
         "PM Surya Ghar Muft Bijli Yojana: rooftop solar subsidy ₹30,000 per kW up to ₹78,000, up to 300 units a month, eligibility, loans, how to apply."),
     "kisan-credit-card": ("Kisan Credit Card 2026: 4% Interest, Limit & Apply",
         "Kisan Credit Card: crop loans at 7%, 4% on prompt repayment, ₹2 lakh without collateral, ₹5 lakh limit announced, dairy and fisheries KCC, how to apply."),
+    "pm-vidyalaxmi": ("PM Vidyalaxmi Education Loan: No Collateral, 3% Interest Help",
+        "PM Vidyalaxmi: collateral-free, guarantor-free education loans for top NIRF colleges, 75% guarantee up to ₹7.5 lakh, 3% interest help for income up to ₹8 lakh."),
+    "pm-kusum": ("PM-KUSUM Solar Pump Subsidy 2026: Status & How to Apply",
+        "PM-KUSUM: up to 30% central subsidy for solar pumps (50% in NE/hill states), solar plants on fallow land, 2026 status, AP/TS agencies, fake website warning."),
+    "ts-indiramma-atmiya-bharosa": ("Indiramma Atmiya Bharosa ₹12,000: Status October 2026",
+        "Indiramma Atmiya Bharosa Telangana: ₹12,000 a year for landless farm labour families with a job card. Who is eligible, what was paid in 2025, status now."),
 }
 
 # Telugu page titles (the Telugu description in te_content*.py is kept as it is).
@@ -159,4 +165,7 @@ SEO_TE = {
     "pm-ujjwala-yojana": "పీఎం ఉజ్వల యోజన: ఉచిత గ్యాస్ కనెక్షన్, ₹300 సబ్సిడీ",
     "pm-surya-ghar": "పీఎం సూర్య ఘర్: రూఫ్‌టాప్ సోలార్‌కు ₹78,000 సబ్సిడీ",
     "kisan-credit-card": "కిసాన్ క్రెడిట్ కార్డు: 4% వడ్డీ, పరిమితి, దరఖాస్తు",
+    "pm-vidyalaxmi": "పీఎం విద్యాలక్ష్మి: హామీ లేని విద్యా రుణం, 3% వడ్డీ సాయం",
+    "pm-kusum": "పీఎం కుసుమ్ సోలార్ పంపు సబ్సిడీ 2026: స్థితి, దరఖాస్తు",
+    "ts-indiramma-atmiya-bharosa": "ఇందిరమ్మ ఆత్మీయ భరోసా ₹12,000: అక్టోబర్ 2026 స్థితి",
 }
