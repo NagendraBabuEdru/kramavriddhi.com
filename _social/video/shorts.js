@@ -229,7 +229,7 @@ const SHORTS = {
         <div class="mega gold" data-in="0.25" data-fx="count" data-count="13000" data-prefix="₹" data-pulse>₹13,000</div>
         <div class="h1" data-in="0.9">తల్లి ఖాతాలోకి!</div>
         <div class="sub en" data-in="1.2">Thalliki Vandanam phase 2: ₹13,000 to the mother</div>
-        <div class="pill" data-in="1.8" data-fx="pop">📅 దసరా ముందు రావచ్చు</div>` },
+        <div class="pill" data-in="1.8" data-fx="pop">📅 ఇంకా జమ కాలేదు</div>` },
       { start: 4.5, html: `
         <div class="label en" data-in="0.1">Who gets it now?</div>
         <div class="h2" data-in="0.2">ఈ విడతలో ఎవరికి?</div>
@@ -246,7 +246,7 @@ const SHORTS = {
         <div class="chips">
           ${chip('📜', 'ఉత్తర్వు G.O.Ms.No.26 జారీ', 'Government order issued 10 October 2026', 0.8)}
           ${chip('🏛️', 'క్యాబినెట్ ఆమోదం', 'Revised sanction: 68.06 lakh students, ₹10,208.69 crore', 1.8)}
-          ${chip('📅', 'దసరా ముందు రావచ్చు', 'Expected before Dasara, as per news reports', 2.8)}
+          ${chip('📅', 'దసరాకు రాలేదు, తేదీ ఇంకా లేదు', 'Not paid at Dasara; no date yet (24 Oct)', 2.8)}
         </div>
         <div class="warn" data-in="4.0" data-fx="pop">కచ్చితమైన తేదీ ఇంకా ప్రకటించలేదు<div class="e en">No exact date has been announced yet</div></div>` },
       { start: 18, cls: 'compact', html: `
@@ -580,6 +580,261 @@ const SHORTS = {
         ${point('✓', 'AP: Deepam-2 · TS: ₹500 cylinder', 'State help is separate · రాష్ట్ర పథకాలు వేరు', 4.2)}
         <div class="warn" data-in="6.0" data-fx="pop">The connection is free. Don't pay agents.<div class="e te">కనెక్షన్ ఉచితం, ఏజెంట్లకు డబ్బు ఇవ్వకండి</div></div>` },
       { start: 28, cls: 'end', html: endCardEn('Share with families who use Ujjwala! 🔥', 'ఉజ్వల వాడే కుటుంబాలకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ================= Batch 3 (made 24 Oct 2026; facts from the guides checked that day), English-primary
+  // ---------------------------------------------------------------- Short 14: PM-KISAN 24th + Annadata, 30 Oct reported
+  14: {
+    file: 'short-14-pm-kisan-30oct-en', lang: 'en', duration: 35, tag: '📅 Reported date', tagColor: '#2563eb', music: { root: 55, seed: 2 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">PM-KISAN 24th instalment</div>
+        <div class="row">
+          <div class="datecard" data-in="0.3" data-fx="pop" data-pulse><div class="top">REPORTED</div><div class="day">30</div><div class="mon">October</div></div>
+        </div>
+        <div class="h1 mt" data-in="1.0">₹2,000 for farmers</div>
+        <div class="sub te" data-in="1.3">పీఎం కిసాన్ 24వ విడత: 30 అక్టోబర్ (వార్తల ప్రకారం)</div>
+        <div class="pill" data-in="1.9" data-fx="pop">⚠️ PIB confirmation awaited</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Fact check · 24 October</div>
+        <div class="h2" data-in="0.2">What we know</div>
+        ${point('✓', 'News: Agriculture Ministry posted 30 Oct', 'On social media, 23 October · వ్యవసాయ శాఖ ప్రకటన (వార్తలు)', 1.0)}
+        ${point('!', 'No PIB press release yet', 'అధికారిక PIB ప్రకటన ఇంకా లేదు', 2.6)}
+        ${point('✗', '17, 18, 20 October were wrong', 'ఆ తేదీలు తప్పు', 4.2)}
+        <div class="warn" data-in="5.8" data-fx="pop">Final word: PIB and pmkisan.gov.in<div class="e te">తుది సమాచారం: PIB, pmkisan.gov.in</div></div>` },
+      { start: 12, dark: true, html: `
+        <div class="label" data-in="0.1">Andhra Pradesh farmers</div>
+        <div class="h2" data-in="0.2">Annadata Sukhibhava 2nd instalment</div>
+        <div class="para" data-in="0.9">News reports say AP plans to pay it on the same day, 30 October.</div>
+        <div class="sub te" data-in="1.2">అన్నదాత సుఖీభవ 2వ విడత కూడా 30 అక్టోబర్‌న రావచ్చు (వార్తలు)</div>
+        <div class="warn" data-in="2.4" data-fx="pop">Date and amount are not officially confirmed yet<div class="e te">తేదీ, మొత్తం ఇంకా అధికారికంగా నిర్ధారణ కాలేదు</div></div>` },
+      { start: 19, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Do this before 30 October</div>
+        <div class="h2" data-in="0.2">So your money isn't held back</div>
+        ${point(1, 'eKYC done', 'ఈకేవైసీ పూర్తి', 1.0)}
+        ${point(2, 'Aadhaar–bank (DBT) link', 'ఆధార్–బ్యాంకు లింక్', 2.2)}
+        ${point(3, 'Land seeding', 'ల్యాండ్ సీడింగ్ · AP: ask at your Rythu Seva Kendram', 3.4)}
+        <div class="warn" data-in="5.0" data-fx="pop">Check status: pmkisan.gov.in → Know Your Status<div class="e">Never share your OTP · <span class="te">OTP ఎవరికీ చెప్పకండి</span></div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with farmer friends! 🌾', 'రైతు మిత్రులకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 15: Deepam-2, book by 30 Nov (AP)
+  15: {
+    file: 'short-15-deepam-en', lang: 'en', duration: 35, tag: '⏰ AP: book by 30 Nov', tagColor: '#d97706', music: { root: 60, seed: 1 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">AP families: your free gas cylinder</div>
+        <div class="row">
+          <div class="datecard" data-in="0.3" data-fx="pop" data-pulse><div class="top">BOOK BY</div><div class="day">30</div><div class="mon">November</div></div>
+        </div>
+        <div class="h1 mt" data-in="1.0">Deepam-2</div>
+        <div class="sub te" data-in="1.3">దీపం-2: ఈ విడత ఉచిత సిలిండర్ 30 నవంబర్ లోపు బుక్ చేయండి</div>
+        <div class="pill" data-in="1.9" data-fx="pop">🔥 3 free cylinders a year</div>` },
+      { start: 4.5, html: `
+        <div class="label" data-in="0.1">How it works</div>
+        <div class="h2" data-in="0.2">Book, pay, get it back</div>
+        ${point(1, 'Book with your gas agency as usual', 'Phone, app or SMS · మామూలుగా బుక్ చేయండి', 1.0)}
+        ${point(2, 'Pay at delivery', 'డెలివరీ సమయంలో డబ్బు కట్టండి', 2.6)}
+        ${point(3, 'Full amount back in 48 hours', 'To your bank account · 48 గంటల్లో డబ్బు వాపసు', 4.2)}` },
+      { start: 11.5, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">One free cylinder in each period</div>
+        <div class="h2" data-in="0.2">Book by the last date</div>
+        <div class="chips">
+          ${chip('1️⃣', 'December – March → by 31 March', 'డిసెంబర్–మార్చి', 0.8)}
+          ${chip('2️⃣', 'April – July → by 31 July', 'ఏప్రిల్–జూలై', 1.6)}
+          ${chip('👉', 'August – November → by 30 November', 'ఇప్పుడు ఈ విడత · this period now', 2.4)}
+        </div>
+        <div class="warn" data-in="3.8" data-fx="pop">An unused free cylinder does not carry over<div class="e te">వాడుకోకపోతే తర్వాతి విడతకు రాదు</div></div>` },
+      { start: 19, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Who can get it?</div>
+        <div class="h2" data-in="0.2">You need</div>
+        ${point('✓', 'A rice card', 'బియ్యం కార్డు', 1.0)}
+        ${point('✓', 'An active LPG connection', 'గ్యాస్ కనెక్షన్', 2.2)}
+        ${point('✓', 'Aadhaar linked to gas, rice card and bank', 'అన్నీ ఆధార్‌తో లింక్', 3.4)}
+        <div class="warn" data-in="5.0" data-fx="pop">Refund didn't come? Call 1967<div class="e te">డబ్బు రాకపోతే 1967 కి ఫోన్ చేయండి</div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with AP families! 🔥', 'ఏపీ కుటుంబాలకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 16: Ayushman Bharat PM-JAY
+  16: {
+    file: 'short-16-ayushman-en', lang: 'en', duration: 35, tag: '🏥 All India', tagColor: '#0f766e', music: { root: 62, seed: 3 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Free hospital treatment up to</div>
+        <div class="mega gold" data-in="0.3" data-fx="pop" data-pulse>₹5 lakh</div>
+        <div class="h1" data-in="0.9">a year, per family</div>
+        <div class="sub te" data-in="1.2">ఆయుష్మాన్ భారత్: కుటుంబానికి ఏడాదికి ₹5 లక్షల ఉచిత వైద్యం</div>
+        <div class="pill" data-in="1.8" data-fx="pop" style="background:#7c3aed">👴 Everyone 70+ covered, any income</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Ayushman Bharat PM-JAY</div>
+        <div class="h2" data-in="0.2">What you get</div>
+        <div class="chips">
+          ${chip('🏥', 'Cashless at govt and empanelled private hospitals', 'డబ్బు కట్టకుండా చికిత్స', 1.0)}
+          ${chip('🗺️', 'Works in any state in India', 'ఏ రాష్ట్రంలోనైనా', 1.9)}
+          ${chip('✅', 'Old illnesses covered from day one', 'ముందున్న వ్యాధులకూ వర్తిస్తుంది', 2.8)}
+          ${chip('💊', '3 days before + 15 days after hospital costs', 'ముందు, తర్వాత ఖర్చులు కూడా', 3.7)}
+        </div>` },
+      { start: 11.5, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Who is covered?</div>
+        <div class="h2" data-in="0.2">Check if you're eligible</div>
+        ${point('✓', 'Poor families in the SECC 2011 list', 'Many states added more families · రాష్ట్ర జాబితాలు కూడా', 1.0)}
+        ${point('✓', 'Every citizen aged 70+, any income', 'Ayushman Vay Vandana card · 70 ఏళ్లు పైబడిన అందరికీ', 2.8)}` },
+      { start: 19, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Get your Ayushman card</div>
+        <div class="h2" data-in="0.2">Free, online or at a hospital</div>
+        ${point(1, 'beneficiary.nha.gov.in or Ayushman App', 'Search with Aadhaar, then eKYC · ఆధార్‌తో చెక్ చేయండి', 1.0)}
+        ${point(2, 'Or Ayushman Mitra desk / CSC', 'With Aadhaar and ration card', 2.6)}
+        ${point(3, "At hospital: don't pay for covered treatment", 'కవర్ అయిన చికిత్సకు డబ్బు కట్టకండి', 4.2)}
+        <div class="warn" data-in="5.8" data-fx="pop">Helpline 14555 (toll-free)<div class="e te">సహాయం: 14555</div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with your family, especially elders! 👴', 'ఇంట్లో పెద్దలకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 17: Atal Pension Yojana
+  17: {
+    file: 'short-17-atal-pension-en', lang: 'en', duration: 35, tag: '👴 Pension at 60', tagColor: '#2563eb', music: { root: 57, seed: 1 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Guaranteed pension up to</div>
+        <div class="mega gold" data-in="0.25" data-fx="count" data-count="5000" data-prefix="₹" data-pulse>₹5,000</div>
+        <div class="h1" data-in="0.9">a month after 60</div>
+        <div class="sub te" data-in="1.2">అటల్ పెన్షన్: 60 ఏళ్ల తర్వాత నెలకు ₹5,000 వరకు పెన్షన్</div>
+        <div class="pill" data-in="1.8" data-fx="pop" style="background:#2563eb">Join between 18 and 40</div>` },
+      { start: 4.5, html: `
+        <div class="label" data-in="0.1">For a ₹5,000 pension you pay</div>
+        <div class="h2" data-in="0.2">The earlier, the cheaper</div>
+        <div class="chips">
+          ${chip('🧑', 'Join at 18 → ₹210 a month', '18 ఏళ్లకు చేరితే నెలకు ₹210', 1.0)}
+          ${chip('🧔', 'Join at 30 → ₹577 a month', '30 ఏళ్లకు చేరితే ₹577', 1.8)}
+          ${chip('👨', 'Join at 40 → ₹1,454 a month', '40 ఏళ్లకు చేరితే ₹1,454', 2.6)}
+        </div>
+        <div class="sub" data-in="3.6">Smaller pensions (₹1,000–₹4,000) cost less. Official APY chart.</div>` },
+      { start: 11.5, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Triple benefit</div>
+        <div class="h2" data-in="0.2">Guaranteed by the Government of India</div>
+        ${point(1, 'Your pension, for life', 'మీకు జీవితాంతం పెన్షన్', 1.0)}
+        ${point(2, 'Then your spouse gets the same', 'తర్వాత భార్య / భర్తకు అదే పెన్షన్', 2.6)}
+        ${point(3, 'Then your nominee gets ₹1.7–8.5 lakh', 'నామినీకి ₹1.7–8.5 లక్షలు', 4.2)}` },
+      { start: 19, cls: 'compact', html: `
+        <div class="label" data-in="0.1">How to join · at your bank or post office</div>
+        ${point('✓', 'Indian citizen, age 18 to 40', '18–40 ఏళ్ల వయసు', 1.0)}
+        ${point('✓', 'Savings account + Aadhaar + mobile', 'ఖాతా నుంచి ఆటో-డెబిట్', 2.4)}
+        ${point('✗', 'Not for income-tax payers', 'Since 1 Oct 2022 · ఆదాయపు పన్ను కట్టేవారికి కాదు', 3.8)}
+        <div class="warn" data-in="5.4" data-fx="pop">Your exact amount: free APY calculator 👉 link in description</div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with young workers you know! 💼', 'యువతకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 18: PM Vidyalaxmi education loan
+  18: {
+    file: 'short-18-vidyalaxmi-en', lang: 'en', duration: 35, tag: '🎓 Education loan', tagColor: '#7c3aed', music: { root: 60, seed: 2 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Got a seat in a top college?</div>
+        <div class="h1" data-in="0.3">Education loan with</div>
+        <div class="mega gold" data-in="0.6" data-fx="pop" data-pulse style="font-size:118px;line-height:1.1;white-space:nowrap">no collateral</div>
+        <div class="kicker" data-in="1.1">no guarantor</div>
+        <div class="sub te" data-in="1.4">పీఎం విద్యాలక్ష్మి: తాకట్టు, హామీదారు లేకుండా విద్యా రుణం</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">PM Vidyalaxmi</div>
+        <div class="h2" data-in="0.2">What you get</div>
+        <div class="chips">
+          ${chip('🎓', 'Loan for full tuition and course costs', 'పూర్తి కోర్సు ఖర్చుకు రుణం', 1.0)}
+          ${chip('🛡️', 'Govt guarantees 75% of loans up to ₹7.5 lakh', 'బ్యాంకులకు ప్రభుత్వ హామీ', 1.9)}
+          ${chip('💸', 'Family income up to ₹8 lakh: govt pays 3% interest', 'On loans up to ₹10 lakh, during the course · 3% వడ్డీ ప్రభుత్వం', 2.8)}
+        </div>
+        <div class="sub" data-in="4.0" style="font-size:36px">3% help goes to 1 lakh students a year; not if you get another govt scholarship.</div>` },
+      { start: 11.5, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Which colleges?</div>
+        <div class="h2" data-in="0.2">Quality institutions only</div>
+        ${point('✓', 'Top 100 in NIRF rankings', 'Govt and private · NIRF టాప్ 100', 1.0)}
+        ${point('✓', 'State govt institutions ranked 101–200', 'రాష్ట్ర ప్రభుత్వ సంస్థలు 101–200', 2.4)}
+        ${point('✓', 'Central institutions: IITs, NITs, IIMs…', 'కేంద్ర సంస్థలు', 3.8)}` },
+      { start: 19, cls: 'compact', html: `
+        <div class="label" data-in="0.1">How to apply</div>
+        <div class="card white" data-in="0.3" data-fx="pop">
+          <div class="portal"><div class="ic">🎓</div><div><div class="t">PM-Vidyalaxmi portal</div><div class="u">pmvidyalaxmi.co.in</div></div></div>
+        </div>
+        ${point(1, 'One common loan application', 'ఒకే దరఖాస్తు', 1.0)}
+        ${point(2, 'Choose up to 3 banks', '3 బ్యాంకుల వరకు ఎంచుకోండి', 2.2)}
+        ${point(3, 'Admission letter, fees, Aadhaar, PAN, income certificate', 'పత్రాలు అప్‌లోడ్ చేయండి', 3.4)}` },
+      { start: 28, cls: 'end', html: endCardEn('Share with students and parents! 🎓', 'విద్యార్థులకు, తల్లిదండ్రులకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 19: Rajiv Yuva Vikasam (Telangana), status
+  19: {
+    file: 'short-19-rajiv-yuva-vikasam-en', lang: 'en', duration: 35, tag: '📢 Telangana · status', tagColor: '#2563eb', music: { root: 58, seed: 3 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Telangana: Rajiv Yuva Vikasam</div>
+        <div class="row">
+          <div class="datecard" data-in="0.3" data-fx="pop" data-pulse><div class="top">1ST PHASE PLANNED</div><div class="day">19</div><div class="mon">November</div></div>
+        </div>
+        <div class="sub te mt" data-in="1.1">రాజీవ్ యువ వికాసం: మొదటి దశ 19 నవంబర్ నుంచి (ప్రకటన)</div>
+        <div class="pill" data-in="1.8" data-fx="pop" style="background:#dc2626">⚠️ Nothing paid yet</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Status · 24 October 2026</div>
+        <div class="h2" data-in="0.2">What we know</div>
+        ${point('✓', 'About 16 lakh people applied', 'సుమారు 16 లక్షల దరఖాస్తులు', 1.0)}
+        ${point('✓', '1st phase: units up to ₹1 lakh, from 19 Nov', 'Said by the Deputy CM, Sept 2026 · ₹1 లక్ష వరకు యూనిట్లు', 2.6)}
+        ${point('!', 'Final list not published yet', 'తుది జాబితా ఇంకా రాలేదు', 4.2)}
+        ${point('!', 'Bigger units (₹1–4 lakh): no date', 'పెద్ద యూనిట్లకు తేదీ లేదు', 5.4)}` },
+      { start: 12.5, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Support announced (SC, ST, BC, minority youth)</div>
+        <div class="h2" data-in="0.2">Subsidy on your unit cost</div>
+        <div class="chips">
+          ${chip('💯', 'Up to ₹50,000 → 100%', '₹50,000 వరకు 100%', 0.8)}
+          ${chip('🟢', 'Up to ₹1 lakh → 90%', '₹1 లక్ష వరకు 90%', 1.5)}
+          ${chip('🟡', 'Up to ₹2 lakh → 80%', '₹2 లక్షల వరకు 80%', 2.2)}
+          ${chip('🟠', 'Up to ₹4 lakh → 70%', '₹4 లక్షల వరకు 70%', 2.9)}
+        </div>
+        <div class="sub" data-in="3.8" style="font-size:36px">The rest is a bank loan. Applying doesn't guarantee selection.</div>` },
+      { start: 20, cls: 'compact', html: `
+        <div class="label" data-in="0.1">What to do now</div>
+        <div class="h2" data-in="0.2">If you applied</div>
+        ${point(1, 'Keep your application number safe', 'దరఖాస్తు నంబర్ దాచుకోండి', 1.0)}
+        ${point(2, 'Watch your district welfare office', 'Official announcements only · అధికారిక ప్రకటనలు మాత్రమే', 2.4)}
+        <div class="warn" data-in="4.0" data-fx="pop">Never pay anyone who promises to get your unit sanctioned<div class="e te">యూనిట్ ఇప్పిస్తామంటే డబ్బు ఇవ్వకండి</div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with Telangana youth! 🚀', 'తెలంగాణ యువతకు షేర్ చేయండి') },
+    ],
+  },
+
+  // ---------------------------------------------------------------- Short 20: Dr NTR Vaidya Seva (AP)
+  20: {
+    file: 'short-20-ntr-vaidya-seva-en', lang: 'en', duration: 35, tag: '🏥 AP health', tagColor: '#0f766e', music: { root: 62, seed: 1 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">AP: free treatment up to</div>
+        <div class="mega gold" data-in="0.3" data-fx="pop" data-pulse style="font-size:180px;white-space:nowrap">₹25 lakh</div>
+        <div class="h1" data-in="0.9">per family, per year</div>
+        <div class="sub te" data-in="1.2">డాక్టర్ ఎన్టీఆర్ వైద్య సేవ: కుటుంబానికి ఏడాదికి ₹25 లక్షల వరకు ఉచిత వైద్యం</div>
+        <div class="pill" data-in="1.8" data-fx="pop" style="background:#2563eb">🏥 Helpline 104</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Dr NTR Vaidya Seva</div>
+        <div class="h2" data-in="0.2">What you get</div>
+        <div class="chips">
+          ${chip('🏥', 'Cashless at network hospitals', 'నెట్‌వర్క్ ఆసుపత్రుల్లో ఉచితం', 1.0)}
+          ${chip('🩺', '3,257 procedures and surgeries', '3,257 చికిత్సలు', 1.9)}
+          ${chip('🍚', 'For rice card (BPL) families with a health card', 'బియ్యం కార్డు కుటుంబాలకు', 2.8)}
+          ${chip('🤝', 'Works with Ayushman Bharat', 'ఆయుష్మాన్ భారత్‌తో కలిపి', 3.7)}
+        </div>` },
+      { start: 11.5, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">How to get treatment</div>
+        <div class="h2" data-in="0.2">At the hospital</div>
+        ${point(1, 'Go with your health card, or Aadhaar + rice card', 'హెల్త్ కార్డు లేదా ఆధార్ + బియ్యం కార్డు', 1.0)}
+        ${point(2, 'Meet the Aarogyamitra desk', 'ఆరోగ్యమిత్రను కలవండి', 2.6)}
+        ${point(3, 'After approval, treatment is free', 'అనుమతి తర్వాత ఉచిత చికిత్స', 4.2)}` },
+      { start: 19, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Good to know</div>
+        <div class="warn" data-in="0.4" data-fx="pop">Asked to pay for a covered procedure? Call 104<div class="e te">కవర్ అయిన చికిత్సకు డబ్బు అడిగితే 104 కి ఫోన్ చేయండి</div></div>
+        <div class="para" data-in="1.8">The new insurance system announced for April 2026 is not confirmed yet. Use your existing health card.</div>
+        <div class="sub te" data-in="2.2">కొత్త బీమా విధానం ఇంకా నిర్ధారణ కాలేదు. ఇప్పటి హెల్త్ కార్డు వాడండి.</div>
+        <div class="sub" data-in="3.2">Don't pay agents for a health card.</div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with AP families! 🏥', 'ఏపీ కుటుంబాలకు షేర్ చేయండి') },
     ],
   },
 };

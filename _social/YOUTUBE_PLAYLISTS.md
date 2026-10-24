@@ -132,6 +132,23 @@ Free learning apps and games by Kramavriddhi: demos, tutorials and launch news.
 
 ---
 
+## 9. Health, Pension & Insurance
+
+**Title:**
+```
+🏥 ఆరోగ్యం, పెన్షన్ & బీమా | Health, Pension & Insurance Schemes
+```
+**Description:**
+```
+ఉచిత వైద్యం, పెన్షన్, బీమా పథకాలు: ఆయుష్మాన్ భారత్, ఎన్టీఆర్ వైద్య సేవ, ఆరోగ్యశ్రీ, అటల్ పెన్షన్, బీమా యోజనలు.
+Free treatment, pension and insurance schemes explained simply: Ayushman Bharat, NTR Vaidya Seva, Aarogyasri, Atal Pension and more.
+
+📌 Guides: https://kramavriddhi.com/schemes/
+⚠️ Independent channel. Health cards are free. We never ask for Aadhaar, OTP or money.
+```
+
+---
+
 ## Video titles: a pattern that works
 
 `[Big number or question in Telugu] | [Scheme name in English] [year]`

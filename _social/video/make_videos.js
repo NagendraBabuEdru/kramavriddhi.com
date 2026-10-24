@@ -31,7 +31,13 @@ async function capture(browser, id) {
   await page.setViewport({ width: W, height: H, deviceScaleFactor: 1 });
   await page.goto('file:///' + path.join(__dirname, 'short.html').replace(/\\/g, '/') + `?id=${id}&capture`);
   await page.evaluate(() => window.READY);
-  const shot = async t => { await page.evaluate(t => window.renderFrame(t), t); return page.screenshot({ type: 'jpeg', quality: 95 }); };
+  // A screenshot occasionally fails under load; retry a few times before giving up
+  const shot = async t => {
+    for (let tries = 1; ; tries++) {
+      try { await page.evaluate(t => window.renderFrame(t), t); return await page.screenshot({ type: 'jpeg', quality: 95 }); }
+      catch (e) { if (tries >= 4) throw e; await new Promise(r => setTimeout(r, 500 * tries)); }
+    }
+  };
 
   if (stills) {
     fs.mkdirSync(path.join(OUT, 'frames'), { recursive: true });
@@ -64,5 +70,7 @@ async function capture(browser, id) {
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  await Promise.all((ids.length ? ids : Object.keys(SHORTS)).map(render));
+  // At most 3 browsers at once: more can exhaust memory and crash screenshots
+  const queue = [...(ids.length ? ids : Object.keys(SHORTS))];
+  await Promise.all(Array.from({ length: Math.min(3, queue.length) }, async () => { while (queue.length) await render(queue.shift()); }));
 })().catch(e => { console.error(e); process.exit(1); });

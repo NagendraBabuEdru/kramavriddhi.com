@@ -155,7 +155,7 @@ AICTE Pragati Scholarship 🎓
 
 ✅ 3,29,201 మంది విద్యార్థులకు: కొత్తగా 1వ తరగతిలో చేరిన పిల్లలు, ఇంటర్ మొదటి సంవత్సరం విద్యార్థులు, 22 జూలై చెల్లింపులో రాని పిల్లలు
 📜 ప్రభుత్వ ఉత్తర్వు G.O.Ms.No.26 (10 అక్టోబర్ 2026) జారీ అయింది
-📅 వార్తల ప్రకారం దసరా ముందు రావచ్చు, కచ్చితమైన తేదీ ఇంకా ప్రకటించలేదు
+📅 దసరాకు జమ కాలేదు, కచ్చితమైన తేదీ ఇంకా ప్రకటించలేదు
 👉 తల్లి బ్యాంకు ఖాతా ఆధార్ / NPCI తో లింక్ అయి, eKYC పూర్తి అయి ఉండాలి
 
 పూర్తి వివరాలు 👉 link in bio
@@ -254,6 +254,7 @@ AICTE Pragati Scholarship: ₹50,000/year for girls. Last date 31 Oct 2026.
 Pinned comment: `Pragati full guide: kramavriddhi.com/schemes/aicte-pragati-scholarship/ ⏰ 31 Oct`
 
 **Reel 2 – PM-KISAN 24th instalment (Telugu)** (`short-2-pm-kisan.mp4`)
+> ⚠️ Don't post (outdated on 24 Oct 2026). Post Reel 14 instead.
 ```
 🌾 పీఎం కిసాన్ 24వ విడత ఎప్పుడు? "20 అక్టోబర్" నిజమేనా?
 
@@ -328,6 +329,7 @@ Pinned comment: `Full guide: kramavriddhi.com/schemes/central-sector-scholarship
 Pinned comment: `Telugu guide: kramavriddhi.com/te/schemes/ap-thalliki-vandanam/ · OTP ఎవరికీ చెప్పకండి ⚠️`
 
 **Reel 6 – Farmer checklist (Telugu)** (`short-6-farmer-ekyc.mp4`)
+> ⚠️ Don't post (outdated on 24 Oct 2026). Post Reel 14 instead.
 ```
 🌾 పీఎం కిసాన్ / అన్నదాత సుఖీభవ తదుపరి విడతకు ముందు ఈ 3 చెక్ చేయండి!
 
@@ -478,3 +480,134 @@ Full details 👉 link in bio
 #PMUjjwalaYojana #Ujjwala #LPGSubsidy #GasCylinder #Kramavriddhi
 ```
 Pinned comment: `Full guide: kramavriddhi.com/schemes/pm-ujjwala-yojana/ · The connection is free; don't pay agents 🔥`
+
+**Reel 14 – PM-KISAN 24th + Annadata, 30 Oct reported, English** (`short-14-pm-kisan-30oct-en.mp4`)
+```
+🌾 PM-KISAN 24th instalment: 30 October? Here's what we know
+
+✓ News (23 Oct): Agriculture Ministry posted 30 October on social media
+! No PIB press release yet (24 Oct)
+✗ 17, 18, 20 October dates were wrong
+🌱 AP: Annadata Sukhibhava 2nd instalment may come the same day (not confirmed)
+✅ Do now: eKYC, Aadhaar–bank link, land seeding
+
+పీఎం కిసాన్ 24వ విడత 30 అక్టోబర్‌న రావచ్చు (వార్తలు). PIB ప్రకటన ఇంకా లేదు.
+Status check 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#PMKisan #PMKisan24thInstallment #AnnadataSukhibhava #Farmers #Kramavriddhi
+```
+Pinned comment: `Status: kramavriddhi.com/schemes/pm-kisan/ · We'll update when PIB confirms 🌾`
+
+**Reel 15 – Deepam-2, book by 30 Nov, English** (`short-15-deepam-en.mp4`)
+```
+🔥 AP families: book your free gas cylinder by 30 November!
+
+✅ Deepam-2: 3 free cylinders a year, one each period
+💰 Pay at delivery, full amount back in 48 hours
+📅 Aug–Nov period → book by 30 Nov (unused one doesn't carry over)
+🍚 Rice card + LPG connection, all linked to Aadhaar
+📞 Refund didn't come? Call 1967
+
+దీపం-2: ఈ విడత ఉచిత సిలిండర్ 30 నవంబర్ లోపు బుక్ చేయండి.
+Full details 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#Deepam2 #FreeGasCylinder #APSchemes #AndhraPradesh #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/ap-deepam-2/ · Book by 30 Nov 🔥`
+
+**Reel 16 – Ayushman Bharat PM-JAY, English** (`short-16-ayushman-en.mp4`)
+```
+🏥 Free hospital treatment up to ₹5 lakh a year, per family!
+
+✅ Cashless at govt and empanelled private hospitals
+🗺️ Works in any state in India
+👴 Every citizen aged 70+ is covered, any income
+📲 Get your card: beneficiary.nha.gov.in or the Ayushman App
+📞 Helpline 14555
+
+ఆయుష్మాన్ భారత్: కుటుంబానికి ఏడాదికి ₹5 లక్షల ఉచిత వైద్యం.
+Full details 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#AyushmanBharat #AyushmanCard #PMJAY #HealthInsurance #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/ayushman-bharat-pm-jay/ · The card is free 👴`
+
+**Reel 17 – Atal Pension Yojana, English** (`short-17-atal-pension-en.mp4`)
+```
+👴 Guaranteed pension up to ₹5,000 a month after 60!
+
+💰 For ₹5,000: join at 18 → ₹210/month · at 30 → ₹577 · at 40 → ₹1,454
+👪 Then your spouse gets the same pension, then your nominee gets ₹1.7–8.5 lakh
+✅ Age 18–40, savings account, not an income-tax payer
+📝 Join at your bank or post office
+
+అటల్ పెన్షన్: 60 ఏళ్ల తర్వాత నెలకు ₹5,000 వరకు పెన్షన్.
+Free calculator 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#AtalPensionYojana #APY #Pension #RetirementPlanning #Kramavriddhi
+```
+Pinned comment: `Calculator: kramavriddhi.com/tools/atal-pension-calculator/ · తెలుగులో: kramavriddhi.com/te/tools/atal-pension-calculator/`
+
+**Reel 18 – PM Vidyalaxmi education loan, English** (`short-18-vidyalaxmi-en.mp4`)
+```
+🎓 Got a seat in a top college? Education loan with no collateral, no guarantor!
+
+✅ Loan for full tuition and course costs
+🛡️ Govt guarantees 75% of loans up to ₹7.5 lakh
+💸 Family income up to ₹8 lakh: govt pays 3% interest (loans up to ₹10 lakh)
+🏫 NIRF top 100, state institutions 101–200, IITs, NITs, IIMs
+📝 Apply on pmvidyalaxmi.co.in
+
+పీఎం విద్యాలక్ష్మి: తాకట్టు లేకుండా విద్యా రుణం.
+Full details 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#PMVidyalaxmi #EducationLoan #StudentLoan #HigherEducation #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/pm-vidyalaxmi/ 🎓`
+
+**Reel 19 – Rajiv Yuva Vikasam (Telangana) status, English** (`short-19-rajiv-yuva-vikasam-en.mp4`)
+```
+🚀 Telangana: Rajiv Yuva Vikasam first phase planned from 19 November
+
+✅ About 16 lakh applied
+📅 1st phase: units up to ₹1 lakh (Deputy CM, Sept 2026)
+⚠️ Nothing paid yet · final list not out · bigger units no date
+💰 Subsidy 70–100%, rest bank loan · applying doesn't guarantee selection
+
+రాజీవ్ యువ వికాసం: మొదటి దశ 19 నవంబర్ నుంచి (ప్రకటన). ఇంకా డబ్బు రాలేదు.
+Latest status 👉 link in bio
+Never pay anyone who promises a sanction.
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#RajivYuvaVikasam #Telangana #TelanganaSchemes #SelfEmployment #Kramavriddhi
+```
+Pinned comment: `Status: kramavriddhi.com/schemes/ts-rajiv-yuva-vikasam/ · Don't pay agents ⚠️`
+
+**Reel 20 – Dr NTR Vaidya Seva (AP), English** (`short-20-ntr-vaidya-seva-en.mp4`)
+```
+🏥 AP: free treatment up to ₹25 lakh per family, per year!
+
+✅ Dr NTR Vaidya Seva: cashless at network hospitals
+🩺 3,257 procedures · rice card families with a health card
+👉 Go with your health card → Aarogyamitra desk → free treatment after approval
+📞 Asked to pay for a covered procedure? Call 104
+
+ఎన్టీఆర్ వైద్య సేవ: ₹25 లక్షల వరకు ఉచిత వైద్యం.
+Full details 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#NTRVaidyaSeva #Aarogyasri #APHealth #AndhraPradesh #Kramavriddhi
+```
+Pinned comment: `Full guide: kramavriddhi.com/schemes/ap-ntr-vaidya-seva/ · Helpline 104 🏥`
