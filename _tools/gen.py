@@ -5044,6 +5044,9 @@ APPS_LIVE = [
     dict(name="Rex's Big Adventure", emoji="🦖", url="/games/rex-adventure/",
          tags=["Game", "For kids", "Free"],
          summary="Help Rex the T-Rex rescue his friends and grow bigger. Pick your dino buddy and play right in your browser."),
+    dict(name="Azure Data Engineering Course", emoji="📊", url="/courses/azure-data-engineering/", cta="See course plan",
+         tags=["Course", "Free", "YouTube"],
+         summary="A free YouTube course from basics to advanced: Azure Data Factory, Databricks, Microsoft Fabric, Delta Lake, streaming, governance and CI/CD, with a hands-on project at every level."),
 ]
 APPS_SOON = [
     dict(name="VYAYAM", emoji="💪",
@@ -5066,7 +5069,7 @@ def app_card(a, live=True):
           <p>{a["summary"]}</p>
           {note}
           <div class="tags">{tags}</div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open {"game" if "Game" in a.get("tags", []) else "app"} →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">{a.get("cta") or ("Open game" if "Game" in a.get("tags", []) else "Open app")} →</span>
         </a>
 """
     return f"""        <div class="card game soon">
@@ -5101,6 +5104,110 @@ write("apps/index.html",
 # cards for the home page "Apps & games" section (live apps only)
 with open(os.path.join(os.path.dirname(__file__), "home_apps.html"), "w", encoding="utf-8") as f:
     f.write("".join(app_card(a) for a in APPS_LIVE))
+
+# ---------------------------------------------------------------- courses (added 24 Oct 2026)
+# Azure Data Engineering course plan for the YouTube series. Each module: (code, name, lessons, lab, videos).
+ADE_LEVELS = [
+    dict(name="Level 1: Basic", who="Freshers, career switchers, and BI or SQL people new to the cloud", weeks=6, exam="DP-900 (Azure Data Fundamentals)",
+         outcome="Load CSV and API data into a data lake and a SQL database with a scheduled Azure Data Factory pipeline.",
+         check="Explain the architecture in 2 minutes, run the pipeline, and fix a failed Copy activity from the monitor logs.",
+         modules=[
+             ("B1", "Data engineering and cloud foundations", "What a data engineer does; OLTP vs OLAP; batch vs streaming; ETL vs ELT; warehouse vs lake vs lakehouse; IaaS, PaaS, SaaS", "Draw the course project architecture", 4),
+             ("B2", "Azure essentials for data people", "Free account, subscriptions, resource groups, regions; portal, Cloud Shell, Azure CLI; pricing calculator and budget alerts; Entra ID and RBAC basics", "Create a resource group, budget alert and role assignment", 5),
+             ("B3", "SQL for data engineers", "SELECT, filters, joins, GROUP BY; window functions; CTEs; DDL vs DML; indexes and keys", "Write 20 queries on the retail sample data", 6),
+             ("B4", "Python for data engineers", "Variables, lists, dicts, loops, functions; reading CSV and JSON; pandas basics; calling a REST API", "Clean a messy CSV and pull data from a public API", 5),
+             ("B5", "Azure Storage and ADLS Gen2", "Blob vs ADLS Gen2; containers, folders, access tiers; CSV, JSON, Parquet, Delta; keys vs SAS vs managed identity", "Build raw, processed and curated folders", 4),
+             ("B6", "Azure SQL Database", "SQL DB vs Managed Instance vs SQL on VM; DTU vs vCore, serverless; firewall and Entra sign-in; star schema", "Create a serverless Azure SQL DB with a star schema", 4),
+             ("B7", "Azure Data Factory fundamentals", "Pipelines, activities, datasets, linked services, integration runtimes; Copy activity; triggers; monitoring and alerts", "Copy CSV from ADLS to Azure SQL every day", 5),
+             ("B8", "Basic mini project", "End-to-end walkthrough; parameters and simple error handling; cost cleanup; showing it on GitHub and LinkedIn", "Retail sales batch pipeline", 2),
+         ]),
+    dict(name="Level 2: Intermediate", who="Basic graduates and junior data engineers", weeks=8, exam="DP-700 (Fabric Data Engineer) part 1, Databricks Data Engineer Associate",
+         outcome="Build a bronze, silver and gold lakehouse in Azure Databricks and Microsoft Fabric, run by Data Factory.",
+         check="Explain when to use Databricks vs Fabric, write an incremental MERGE, and debug a slow Spark job in the Spark UI.",
+         modules=[
+             ("I1", "Data modelling for analytics", "Star and snowflake schemas; slowly changing dimensions (SCD 1 and 2); surrogate keys; data vault overview; medallion architecture", "Model the retail gold layer", 4),
+             ("I2", "Advanced Data Factory", "Parameters and expressions; Lookup, ForEach, If, Until; metadata-driven pipelines; watermark and CDC incremental loads; Mapping Data Flows; self-hosted IR", "Incremental load of 10 tables from metadata", 6),
+             ("I3", "Apache Spark fundamentals", "Driver, executors, partitions; lazy evaluation; DataFrames and Spark SQL; joins, aggregations, UDFs", "Transform sales data with PySpark", 5),
+             ("I4", "Azure Databricks", "Workspaces, clusters, serverless; notebooks and Git folders; secrets with Key Vault; Unity Catalog external locations; Jobs", "Bronze-to-silver notebooks as a Databricks job", 5),
+             ("I5", "Delta Lake", "ACID and the transaction log; MERGE, time travel, schema evolution; OPTIMIZE, liquid clustering, VACUUM; SCD 2 with MERGE", "SCD 2 customer dimension in Delta", 4),
+             ("I6", "Microsoft Fabric for data engineers", "OneLake, workspaces, capacities; Lakehouse vs Warehouse; shortcuts and mirroring; Fabric notebooks; Dataflows Gen2; Fabric pipelines", "Rebuild the medallion pipeline in Fabric", 6),
+             ("I7", "Synapse and Fabric Warehouse SQL", "Dedicated vs serverless SQL pools (legacy); T-SQL in Fabric Warehouse; COPY INTO, CTAS; distribution and statistics", "Load gold tables into Fabric Warehouse", 3),
+             ("I8", "Serving and reporting", "Power BI basics for engineers; semantic models; Direct Lake mode; row-level security handoff", "Direct Lake report on the gold layer", 3),
+             ("I9", "Data quality and testing", "Null, duplicate and range checks; Great Expectations or Databricks expectations; logging and alerts; reprocessing failed loads", "Add quality checks and an alert email", 4),
+         ]),
+    dict(name="Level 3: Advanced", who="Working data engineers aiming for senior roles", weeks=8, exam="DP-700 part 2, Databricks Data Engineer Professional",
+         outcome="Run a production-grade platform: streaming and batch, governed, deployed by CI/CD, cost-controlled and ready for AI.",
+         check="Whiteboard a full platform, defend Databricks vs Fabric vs Synapse choices, and deploy changes without touching the portal.",
+         modules=[
+             ("A1", "Real-time streaming", "Event Hubs and the Kafka endpoint; Structured Streaming, watermarks, checkpoints; Auto Loader; Fabric Real-Time Intelligence (Eventstream, Eventhouse, KQL)", "Live order stream to a real-time dashboard", 5),
+             ("A2", "Declarative pipelines", "Lakeflow Declarative Pipelines (formerly Delta Live Tables); expectations; streaming tables and materialized views; Change Data Feed; dbt overview", "Rebuild silver and gold as a declarative pipeline", 4),
+             ("A3", "Governance and security", "Unity Catalog grants and lineage; Microsoft Purview scans and classification; private endpoints; managed identities; Key Vault; column masks and row filters", "Lock down the lakehouse with least privilege", 5),
+             ("A4", "Performance tuning", "Partitioning, file sizes, the small-file problem; broadcast joins, skew, AQE; caching; Photon; Spark UI deep dive; Fabric capacity metrics", "Make a slow job 5x faster, measured", 4),
+             ("A5", "CI/CD and DevOps for data", "Git branching for data teams; Azure DevOps and GitHub Actions; ADF publishing; Databricks Asset Bundles; Fabric deployment pipelines; pytest", "Automated dev to test to prod deployment", 5),
+             ("A6", "Infrastructure as code", "Terraform and Bicep for ADLS, ADF, Databricks and Key Vault; environments and state; policy and tagging", "Deploy the whole platform from one repo", 3),
+             ("A7", "Monitoring, reliability and cost", "Azure Monitor, Log Analytics, KQL alerts; Databricks system tables; retries and SLAs; cluster policies, auto-termination, reservations, capacity sizing", "Cost and failure dashboard with alerts", 3),
+             ("A8", "AI-ready data engineering", "Feature tables; embeddings and vector search pipelines; RAG data preparation; Azure AI Foundry and Fabric data agents; agentic AI over the lakehouse", "Product-docs embedding pipeline", 4),
+             ("A9", "System design and interview prep", "Design cases (e-commerce, IoT, banking); trade-offs; 50 common interview questions; resume and portfolio review", "Mock design interview", 2),
+         ]),
+]
+ADE_PROJECTS = [
+    ("Basic", "Retail sales batch pipeline: daily store CSVs and a currency API land in ADLS and load into an Azure SQL star schema", "ADLS Gen2, ADF, Azure SQL, Python"),
+    ("Intermediate", "Retail lakehouse: incremental loads into bronze, silver and gold Delta tables, SCD 2 customers, Power BI Direct Lake report", "ADF or Fabric pipelines, Databricks or Fabric Spark, Delta Lake, Power BI"),
+    ("Advanced", "Real-time retail platform: live order stream, governed lakehouse, CI/CD with infrastructure as code, cost dashboard, product Q&amp;A embeddings", "Event Hubs, Structured Streaming or Fabric RTI, Unity Catalog, Purview, Terraform, Azure DevOps or GitHub Actions"),
+]
+
+def ade_level(lv):
+    rows = "".join(f"<tr><td>{c}</td><td><strong>{n}</strong><br><span class=\"muted\">{les}</span></td><td>{lab}</td><td>{v}</td></tr>\n" for c, n, les, lab, v in lv["modules"])
+    videos = sum(m[4] for m in lv["modules"])
+    return f'''        <h2>{lv["name"]}</h2>
+        <p><strong>For:</strong> {lv["who"]}. <strong>Time:</strong> about {lv["weeks"]} weeks, {len(lv["modules"])} modules, about {videos} videos. <strong>Exam:</strong> {lv["exam"]}.</p>
+        <p>{lv["outcome"]}</p>
+        <div class="table-wrap"><table class="simple">
+<tr><th>#</th><th>Module and lessons</th><th>Hands-on lab</th><th>Videos</th></tr>
+{rows}        </table></div>
+        <p class="muted"><strong>You are ready for the next level when you can:</strong> {lv["check"]}</p>
+'''
+
+ADE_VIDEOS = sum(m[4] for lv in ADE_LEVELS for m in lv["modules"])
+write("courses/azure-data-engineering/index.html",
+    head("Free Azure Data Engineering Course (Basic to Advanced) | Kramavriddhi",
+         "Free Azure Data Engineering course plan on YouTube: Data Factory, Databricks, Microsoft Fabric, Delta Lake, streaming, governance and CI/CD, from basic to advanced with projects.",
+         "/courses/azure-data-engineering/")
+    + nav("apps") + f'''
+    <div class="narrow">
+      <article>
+        <p class="crumbs"><a href="/">Home</a> › <a href="/apps/">Apps</a> › Azure Data Engineering Course</p>
+        <div class="eyebrow">Free course · YouTube</div>
+        <h1>Azure Data Engineering Course: Basic to Advanced</h1>
+        <p class="lede">A free course that takes you from zero to job-ready Azure data engineer in three levels and about {ADE_VIDEOS} videos. Every module adds a piece to one retail project, so you finish with a real portfolio.</p>
+        <div class="official">
+          <strong>Watch on YouTube:</strong> <a href="https://www.youtube.com/@kramavriddhi" target="_blank" rel="noopener">youtube.com/@kramavriddhi</a><br>
+          Videos are released level by level. Subscribe to get each new lesson.
+        </div>
+        <h2>Before you start</h2>
+        <ul>
+          <li><strong>Basic:</strong> comfortable with a computer and Excel. No cloud or coding needed.</li>
+          <li><strong>Intermediate:</strong> SQL joins and grouping, basic Python, or the Basic level.</li>
+          <li><strong>Advanced:</strong> a year of hands-on pipelines, Spark and Git basics.</li>
+        </ul>
+        <p>You need an Azure free account or pay-as-you-go subscription with a budget alert, a Microsoft Fabric trial, Databricks (Free Edition is fine for practice), VS Code, Git and Python 3.11 or newer.</p>
+        <div class="note"><strong>Watch your Azure bill.</strong> Labs create paid resources. Set a budget alert first and delete resources after each lab; most learners spend about $10 to $20 a month this way.</div>
+{"".join(ade_level(lv) for lv in ADE_LEVELS)}
+        <h2>Projects</h2>
+        <p>Each level ends with a portfolio project that grows the same retail platform.</p>
+        <div class="table-wrap"><table class="simple">
+<tr><th>Level</th><th>Project</th><th>Tools</th></tr>
+{"".join(f"<tr><td>{l}</td><td>{p}</td><td>{t}</td></tr>" + chr(10) for l, p, t in ADE_PROJECTS)}        </table></div>
+        <h2>Certifications this course prepares you for</h2>
+        <ul>
+          <li>Microsoft DP-900 Azure Data Fundamentals (Basic)</li>
+          <li>Microsoft DP-700 Fabric Data Engineer Associate (Intermediate and Advanced); it replaced DP-203</li>
+          <li>Databricks Certified Data Engineer Associate (Intermediate) and Professional (Advanced)</li>
+        </ul>
+        <p class="muted">Exam names and content change. Always check the official Microsoft Learn and Databricks exam pages before you book.</p>
+      </article>
+    </div>
+''' + FOOTER)
 
 # ---------------------------------------------------------------- simple pages
 def simple(path, title, desc, active, h1, eyebrow, body):
@@ -5210,9 +5317,11 @@ def lastmod(u):
     if u in ("/", "/updates/", "/schemes/", "/te/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/",
              "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/"):
         return SITE_ISO
+    if u == "/courses/azure-data-engineering/":
+        return "2026-10-24"
     return UPDATED_ISO
 
-urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/", "/te/tools/scheme-eligibility-checker/", "/te/tools/atal-pension-calculator/", "/te/tools/sukanya-samriddhi-calculator/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/apps/gpat/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/", "/te/tools/scheme-eligibility-checker/", "/te/tools/atal-pension-calculator/", "/te/tools/sukanya-samriddhi-calculator/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/apps/gpat/", "/courses/azure-data-engineering/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{lastmod(u)}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
