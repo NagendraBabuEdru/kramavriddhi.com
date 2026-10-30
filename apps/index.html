@@ -24,18 +24,20 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:site_name" content="Kramavriddhi">
   <meta property="og:locale" content="en_IN">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23a46400'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css?v=11d9d231">
-  <script src="/assets/site.js?v=11d9d231" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tokens.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/base.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/style.css?v=02a98478">
+  <script src="/assets/site.js?v=02a98478" defer></script>
 </head>
 <body>
   <div class="wrap">
-    <nav class="top">
+    <nav class="top" aria-label="Main">
       <a class="brand" href="/">
         <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Kramavriddhi
+        <span>Kramavriddhi</span>
       </a>
       <ul>
         <li><a href="/schemes/">Schemes</a></li>
@@ -46,65 +48,62 @@
       </ul>
     </nav>
 
+    <p class="crumbs"><a href="/">Home</a> › Apps &amp; games</p>
     <header class="page-head">
-      <div class="eyebrow">Apps &amp; games</div>
       <h1>Apps that help you grow</h1>
       <p>Free apps and games made by Kramavriddhi. They open right in your browser on phone or computer, with no download or sign-up.</p>
     </header>
-    <section style="padding:8px 0 40px;border-top:0">
+    <section class="first">
       <div class="section-head"><h2>Try now</h2></div>
       <div class="grid">
         <a class="card game" href="https://nagendrababuedru.github.io/DevOps/" target="_blank" rel="noopener">
-          <div class="game-art" aria-hidden="true">☁️</div>
+
           <h3>DevOps Academy</h3>
           <p>Learn Cloud (Azure, AWS, GCP), AI & LLMs, DevOps and Data Engineering with hands-on terminal labs, real-world scenarios, 320+ interview questions with audio, and timed challenges.</p>
           
           <div class="tags"><span class="tag">Learning</span><span class="tag">Free</span><span class="tag">Works offline</span></div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open app →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open app</span>
         </a>
         <a class="card game" href="/apps/gpat/">
-          <div class="game-art" aria-hidden="true">💊</div>
+
           <h3>GPAT Prep</h3>
           <p>Revision and self-testing for the Graduate Pharmacy Aptitude Test: notes, topic-wise practice, mock tests, spaced revision and progress analytics. Progress stays on your device.</p>
-          <p class="app-note">⚠️ Study material in this app is AI-generated and not reviewed by subject experts. Use it alongside your textbooks, never as clinical guidance.</p>
+          <p class="app-note">Study material in this app is AI-generated and not reviewed by subject experts. Use it alongside your textbooks, never as clinical guidance.</p>
           <div class="tags"><span class="tag">Exam prep</span><span class="tag">Free</span><span class="tag">No sign-up</span></div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open app →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open app</span>
         </a>
         <a class="card game" href="/games/rex-adventure/">
-          <div class="game-art" aria-hidden="true">🦖</div>
+
           <h3>Rex's Big Adventure</h3>
           <p>Help Rex the T-Rex rescue his friends and grow bigger. Pick your dino buddy and play right in your browser.</p>
           
           <div class="tags"><span class="tag">Game</span><span class="tag">For kids</span><span class="tag">Free</span></div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open game →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open game</span>
         </a>
         <a class="card game" href="/courses/azure-data-engineering/">
-          <div class="game-art" aria-hidden="true">📊</div>
+
           <h3>Azure Data Engineering Course</h3>
           <p>A free YouTube course from basics to advanced: Azure Data Factory, Databricks, Microsoft Fabric, Delta Lake, streaming, governance and CI/CD, with a hands-on project at every level.</p>
           
           <div class="tags"><span class="tag">Course</span><span class="tag">Free</span><span class="tag">YouTube</span></div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">See course plan →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">See course plan</span>
         </a>
       </div>
     </section>
-    <section style="padding:40px 0">
+    <section class="group">
       <div class="section-head"><h2>Coming soon</h2><p>Apps we are building. Follow us on <a href="https://www.youtube.com/@kramavriddhi" target="_blank" rel="noopener">YouTube</a> for launch news.</p></div>
       <div class="grid">
         <div class="card game soon">
-          <div class="game-art" aria-hidden="true" style="opacity:.75">💪</div>
           <h3>VYAYAM</h3>
           <p>A voice-guided fitness and wellness companion for every age: exercise routines, nutrition targets, gentle daily reminders, and yoga and mindfulness sessions that talk you through.</p>
           <span class="status">In development</span>
         </div>
         <div class="card game soon">
-          <div class="game-art" aria-hidden="true" style="opacity:.75">✅</div>
           <h3>TaskFlow</h3>
           <p>Task management for small teams: admins assign tasks, employees submit work with attachments, plus real-time chat, notifications and progress charts.</p>
           <span class="status">In development</span>
         </div>
         <div class="card game soon">
-          <div class="game-art" aria-hidden="true" style="opacity:.75">🎬</div>
           <h3>Video Editing</h3>
           <p>Simple tools to trim, edit and share your videos from your phone.</p>
           <span class="status">In development</span>
@@ -114,8 +113,9 @@
     <div style="height:24px"></div>
 
     <footer class="site">
+      <p class="mast"><a href="/">Kramavriddhi</a></p>
       <div class="cols">
-        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <p class="motto"><span lang="sa">क्रमेण वर्धामहे</span><br>© 2026 Kramavriddhi</p>
         <ul>
           <li><a href="/schemes/">Schemes</a></li>
           <li><a href="/updates/">Updates</a></li>

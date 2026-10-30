@@ -64,9 +64,8 @@
     el.setAttribute("aria-label", "Calculator suggestion");
     el.innerHTML =
       '<button class="nudge-x" type="button" aria-label="Close">×</button>' +
-      '<div class="nudge-icon" aria-hidden="true">' + n.icon + '</div>' +
       '<div class="nudge-body"><strong>' + n.title + '</strong><p>' + n.text + '</p>' +
-      '<a class="btn primary" href="' + n.href + '">' + n.cta + ' →</a></div>';
+      '<a class="btn primary" href="' + n.href + '">' + n.cta + '</a></div>';
     document.body.appendChild(el);
     el.querySelector(".nudge-x").addEventListener("click", function () { close(true); });
     el.querySelector("a").addEventListener("click", function () {

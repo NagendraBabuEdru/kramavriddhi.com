@@ -1,12 +1,12 @@
 # Shared page shell for Kramavriddhi static pages
 LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23a46400'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"
 
 import hashlib, html, os
 from urllib.parse import quote
 from og import DEFAULT_URL as OG_DEFAULT
 _ASSETS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets")
-ASSET_VERSION = hashlib.md5(b"".join(open(os.path.join(_ASSETS, n), "rb").read() for n in ("style.css", "site.js"))).hexdigest()[:8]
+ASSET_VERSION = hashlib.md5(b"".join(open(os.path.join(_ASSETS, n), "rb").read() for n in ("tokens.css", "base.css", "style.css", "site.js"))).hexdigest()[:8]
 
 GA_ID = "G-S6RF0STQM2"  # Google Analytics 4 measurement ID
 GA_TAG = f'''
@@ -18,9 +18,11 @@ GA_TAG = f'''
     gtag('config', '{GA_ID}');
   </script>'''
 
+# Hallmark redesign (Editorial theme): Bricolage Grotesque heads and labels, Source Serif 4 reading text
+_FONTS_EN = "family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400"
 FONTS = {
-    "en": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600",
-    "te": "family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&family=Noto+Sans+Telugu:wght@400;600;700",
+    "en": _FONTS_EN,
+    "te": _FONTS_EN + "&family=Noto+Sans+Telugu:wght@400;700",
 }
 
 def head(title, desc, path, extra="", lang="en", alternates=None, image=None, og_type="website"):
@@ -52,6 +54,8 @@ def head(title, desc, path, extra="", lang="en", alternates=None, image=None, og
   <link rel="icon" href="{FAVICON}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?{FONTS[lang]}&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tokens.css?v={ASSET_VERSION}">
+  <link rel="stylesheet" href="/assets/base.css?v={ASSET_VERSION}">
   <link rel="stylesheet" href="/assets/style.css?v={ASSET_VERSION}">
   <script src="/assets/site.js?v={ASSET_VERSION}" defer></script>{extra}
 </head>
@@ -71,10 +75,10 @@ def nav(active="", lang="en"):
         cur = ' aria-current="page"' if key == active else ""
         c = f' class="{cls}"' if cls else ""
         return f'<li{c}><a href="{href}"{cur}>{label}</a></li>'
-    return f'''    <nav class="top">
+    return f'''    <nav class="top" aria-label="Main">
       <a class="brand" href="/">
         {LOGO}
-        Kramavriddhi
+        <span>Kramavriddhi</span>
       </a>
       <ul>
         {li(schemes_href, L["schemes"], "schemes")}
@@ -99,7 +103,7 @@ SHARE_LABELS = {
     "te": dict(label="షేర్ చేయండి:", copy="లింక్ కాపీ", done="కాపీ అయింది ✓", more="ఇంకా",
                ask="ఈ సమాచారం ఎవరికైనా ఉపయోగపడుతుందా? కుటుంబం, స్నేహితులతో వాట్సాప్‌లో షేర్ చేయండి."),
 }
-WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path fill="#15803d" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg>'
+WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path class="wa-glyph" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg>'
 LINK_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>'
 SHARE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>'
 
@@ -153,8 +157,9 @@ def footer(lang="en"):
         note = "Kramavriddhi is an independent information website. It is not a government website and is not affiliated with the Government of India or any state government. Always confirm details on the official portal before applying."
     return f'''
     <footer class="site">
+      <p class="mast"><a href="/">Kramavriddhi</a></p>
       <div class="cols">
-        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <p class="motto"><span lang="sa">क्रमेण वर्धामहे</span><br>© 2026 Kramavriddhi</p>
         <ul>
 {links}
         </ul>

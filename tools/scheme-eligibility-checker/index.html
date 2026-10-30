@@ -27,18 +27,20 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:site_name" content="Kramavriddhi">
   <meta property="og:locale" content="en_IN">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23a46400'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css?v=11d9d231">
-  <script src="/assets/site.js?v=11d9d231" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tokens.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/base.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/style.css?v=02a98478">
+  <script src="/assets/site.js?v=02a98478" defer></script>
 </head>
 <body>
   <div class="wrap">
-    <nav class="top">
+    <nav class="top" aria-label="Main">
       <a class="brand" href="/">
         <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Kramavriddhi
+        <span>Kramavriddhi</span>
       </a>
       <ul>
         <li><a href="/schemes/">Schemes</a></li>
@@ -52,13 +54,14 @@
     <div class="narrow">
       <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Scheme Eligibility Checker</p>
       <article>
-        <div class="eyebrow">✅ Free tool</div>
+        <header class="article-head">
         <h1>Which schemes am I eligible for?</h1>
         <p class="lede">Answer a few simple questions to see which government schemes may suit you. It takes less than a minute, and nothing you enter leaves your phone or computer.</p>
-        <p class="lang-switch"><a href="/te/tools/scheme-eligibility-checker/" lang="te">తెలుగులో చూడండి →</a></p>
+        </header>
+        <p class="lang-switch"><a href="/te/tools/scheme-eligibility-checker/" lang="te">తెలుగులో చూడండి</a></p>
         <div class="share" data-url="https://kramavriddhi.com/tools/scheme-eligibility-checker/" data-text="Which government schemes can your family get? Check in 1 minute with this free eligibility checker (Central, AP and Telangana schemes).">
           <span class="share-label">Share:</span>
-          <a class="share-btn wa" href="https://wa.me/?text=Which%20government%20schemes%20can%20your%20family%20get%3F%20Check%20in%201%20minute%20with%20this%20free%20eligibility%20checker%20%28Central%2C%20AP%20and%20Telangana%20schemes%29.%0Ahttps%3A//kramavriddhi.com/tools/scheme-eligibility-checker/" target="_blank" rel="noopener" data-share="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path fill="#15803d" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg><span>WhatsApp</span></a>
+          <a class="share-btn wa" href="https://wa.me/?text=Which%20government%20schemes%20can%20your%20family%20get%3F%20Check%20in%201%20minute%20with%20this%20free%20eligibility%20checker%20%28Central%2C%20AP%20and%20Telangana%20schemes%29.%0Ahttps%3A//kramavriddhi.com/tools/scheme-eligibility-checker/" target="_blank" rel="noopener" data-share="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path class="wa-glyph" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg><span>WhatsApp</span></a>
           <button class="share-btn" type="button" data-share="copy" data-done="Link copied ✓" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span>Copy link</span></button>
           <button class="share-btn" type="button" data-share="native" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><span>More</span></button>
         </div>
@@ -114,7 +117,7 @@
           <p>Know someone who needs this? Share it with family and friends on WhatsApp.</p>
           <div class="share" data-url="https://kramavriddhi.com/tools/scheme-eligibility-checker/" data-text="Which government schemes can your family get? Check in 1 minute with this free eligibility checker (Central, AP and Telangana schemes).">
           <span class="share-label">Share:</span>
-          <a class="share-btn wa" href="https://wa.me/?text=Which%20government%20schemes%20can%20your%20family%20get%3F%20Check%20in%201%20minute%20with%20this%20free%20eligibility%20checker%20%28Central%2C%20AP%20and%20Telangana%20schemes%29.%0Ahttps%3A//kramavriddhi.com/tools/scheme-eligibility-checker/" target="_blank" rel="noopener" data-share="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path fill="#15803d" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg><span>WhatsApp</span></a>
+          <a class="share-btn wa" href="https://wa.me/?text=Which%20government%20schemes%20can%20your%20family%20get%3F%20Check%20in%201%20minute%20with%20this%20free%20eligibility%20checker%20%28Central%2C%20AP%20and%20Telangana%20schemes%29.%0Ahttps%3A//kramavriddhi.com/tools/scheme-eligibility-checker/" target="_blank" rel="noopener" data-share="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path class="wa-glyph" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg><span>WhatsApp</span></a>
           <button class="share-btn" type="button" data-share="copy" data-done="Link copied ✓" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span>Copy link</span></button>
           <button class="share-btn" type="button" data-share="native" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><span>More</span></button>
         </div>
@@ -202,7 +205,7 @@
             var html = '<div class="result"><div class="big">' + hits.length + ' <small>' + (hits.length > 1 ? C.many : C.one) + '</small></div><p>' + C.open_each + '</p></div><div class="grid">';
             hits.forEach(function (h) {
               var s = S[h.slug];
-              html += '<a class="card" href="' + s.href + '"><div class="icon" aria-hidden="true">' + s.icon + '</div><h3>' + s.name + '</h3><p><strong>' + C.why + '</strong> ' + h.why + '</p><div class="tags"><span class="tag">' + C.tags[s.state] + '</span></div></a>';
+              html += '<a class="card" href="' + s.href + '"><h3>' + s.name + '</h3><p><strong>' + C.why + '</strong> ' + h.why + '</p><div class="tags"><span class="tag">' + C.tags[s.state] + '</span></div></a>';
             });
             out.innerHTML = html + '</div>';
           }
@@ -213,8 +216,9 @@
     </script>
 
     <footer class="site">
+      <p class="mast"><a href="/">Kramavriddhi</a></p>
       <div class="cols">
-        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <p class="motto"><span lang="sa">क्रमेण वर्धामहे</span><br>© 2026 Kramavriddhi</p>
         <ul>
           <li><a href="/schemes/">Schemes</a></li>
           <li><a href="/updates/">Updates</a></li>

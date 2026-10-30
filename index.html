@@ -24,19 +24,21 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:site_name" content="Kramavriddhi">
   <meta property="og:locale" content="en_IN">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23a46400'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css?v=11d9d231">
-  <script src="/assets/site.js?v=11d9d231" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tokens.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/base.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/style.css?v=02a98478">
+  <script src="/assets/site.js?v=02a98478" defer></script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Kramavriddhi", "url": "https://kramavriddhi.com", "email": "support@kramavriddhi.com", "sameAs": ["https://www.youtube.com/@kramavriddhi"]}</script>
 </head>
 <body>
   <div class="wrap">
-    <nav class="top">
+    <nav class="top" aria-label="Main">
       <a class="brand" href="/">
         <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Kramavriddhi
+        <span>Kramavriddhi</span>
       </a>
       <ul>
         <li><a href="/schemes/">Schemes</a></li>
@@ -48,39 +50,42 @@
     </nav>
 
     <header class="hero">
-      <div class="eyebrow" lang="sa">क्रमवृद्धिः · क्रमेण वर्धामहे</div>
       <h1>Small steps.<br>Steady growth.</h1>
-      <p>Kramavriddhi helps people grow a little every day: with simple guides to government schemes, and apps for health, work and creativity.</p>
-      <div class="btns">
-        <a class="btn primary" href="/schemes/">Explore government schemes</a>
-        <a class="btn ghost" href="/apps/">Our apps &amp; games</a>
+      <div class="hero-foot">
+        <p class="lead">Kramavriddhi helps people grow a little every day: with simple guides to government schemes, and apps for health, work and creativity.</p>
+        <div class="btns">
+          <a class="btn primary" href="/schemes/">Explore government schemes</a>
+          <a class="btn ghost" href="/apps/">Our apps &amp; games</a>
+        </div>
       </div>
     </header>
 
-    <section id="updates">
-      <div class="section-head">
+    <section id="updates" class="band-ink">
+      <div class="section-head split">
         <h2>Latest updates &amp; deadlines</h2>
-        <p>Don't miss important dates for scholarships, instalments and bookings.</p>
-        <a class="more" href="/updates/">See all updates →</a>
+        <div>
+          <p>Don't miss important dates for scholarships, instalments and bookings.</p>
+          <a class="more" href="/updates/">See all updates</a>
+        </div>
       </div>
       <div class="updates">
         <a class="update expected" href="/schemes/pm-kisan/">
-          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">24 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Expected</span><span class="update-date">24 Oct 2026</span></div>
           <h3>PM-KISAN 24th instalment: 30 October reported</h3>
           <p>News reports on 23 October say the Agriculture Ministry announced 30 October 2026 on social media. No PIB press release yet. Make sure your eKYC, land seeding and Aadhaar bank link are done.</p>
         </a>
         <a class="update expected" href="/schemes/ap-annadata-sukhibhava/">
-          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">24 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Expected</span><span class="update-date">24 Oct 2026</span></div>
           <h3>Annadata Sukhibhava 2nd instalment: 30 October reported</h3>
           <p>It was not paid at Dasara. News reports say AP will pay it on 30 October together with PM-KISAN's 24th instalment. The date and amount are not officially confirmed yet. Complete your eKYC at the Rythu Seva Kendram.</p>
         </a>
         <a class="update expected" href="/schemes/ap-thalliki-vandanam/">
-          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">24 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Expected</span><span class="update-date">24 Oct 2026</span></div>
           <h3>Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed</h3>
           <p>The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not confirmed as paid by 24 October.</p>
         </a>
         <a class="update deadline" href="/schemes/pm-fasal-bima-yojana/" data-until="2026-12-31">
-          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">15 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Deadline</span><span class="update-date">15 Oct 2026</span></div>
           <h3>AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)</h3>
           <p>Under PM Fasal Bima Yojana, farmers pay at most 1.5% premium for Rabi food and oilseed crops. Enrol through your bank, CSC or Rythu Seva Kendram; an Agristack farmer ID is needed.</p>
         </a>
@@ -90,60 +95,60 @@
       (function () {
         var today = new Date().toISOString().slice(0, 10);
         document.querySelectorAll('.update[data-until]').forEach(function (el) {
-          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = '✔ Closed'; }
+          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = 'Closed'; }
         });
       })();
     </script>
 
     </section>
 
-    <section id="schemes">
+    <section id="schemes" class="index">
       <div class="section-head">
         <h2>Latest scheme guides</h2>
         <p>Central, Andhra Pradesh and Telangana government schemes explained in plain language, with links to the official portals.</p>
-        <a class="more" href="/schemes/">See all schemes →</a>
-        <div class="filters" style="margin:14px 0 0">
-          <a class="chip" href="/schemes/?state=central" style="text-decoration:none">🇮🇳 Central</a>
-          <a class="chip" href="/schemes/andhra-pradesh/" style="text-decoration:none">Andhra Pradesh</a>
-          <a class="chip" href="/schemes/telangana/" style="text-decoration:none">Telangana</a>
-          <a class="chip" href="/schemes/for-women/" style="text-decoration:none">👩 For girls &amp; women</a>
-          <a class="chip" href="/schemes/for-youth/" style="text-decoration:none">🧑‍💼 For youth</a>
-          <a class="chip" href="/schemes/for-men/" style="text-decoration:none">👨 For boys &amp; men</a>
-        </div>
+        <a class="more" href="/schemes/">See all schemes</a>
+        <ul class="browse" aria-label="Browse schemes">
+          <li><a href="/schemes/?state=central">Central</a></li>
+          <li><a href="/schemes/andhra-pradesh/">Andhra Pradesh</a></li>
+          <li><a href="/schemes/telangana/">Telangana</a></li>
+          <li><a href="/schemes/for-women/">For girls &amp; women</a></li>
+          <li><a href="/schemes/for-youth/">For youth</a></li>
+          <li><a href="/schemes/for-men/">For boys &amp; men</a></li>
+        </ul>
       </div>
-      <div class="grid">
+      <div class="grid rows">
         <a class="card" href="/schemes/ts-indiramma-atmiya-bharosa/" data-cat="farmers" data-state="ts" data-name="indiramma atmiya bharosa (telangana) indiramma atmiya bharosa telangana">
-          <div class="icon" aria-hidden="true">🤝</div>
+
           <h3>Indiramma Atmiya Bharosa (Telangana)</h3>
           <p>₹12,000 a year promised for landless farm labour families. Only part of the first instalment was paid in 2025; stalled since.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/pm-kusum/" data-cat="farmers" data-state="central" data-name="pm-kusum (solar pumps for farmers) pm-kusum central government">
-          <div class="icon" aria-hidden="true">🌞</div>
+
           <h3>PM-KUSUM (Solar Pumps for Farmers)</h3>
           <p>Up to 30% central subsidy for solar pumps, plus the state's share. Apply only through your state agency; beware fake websites.</p>
           <div class="tags"><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/pm-vidyalaxmi/" data-cat="education" data-state="central" data-name="pm vidyalaxmi education loan scheme pm vidyalaxmi central government">
-          <div class="icon" aria-hidden="true">🎓</div>
+
           <h3>PM Vidyalaxmi Education Loan Scheme</h3>
           <p>Education loans with no collateral or guarantor for students in top colleges. 3% interest help if family income is up to ₹8 lakh.</p>
           <div class="tags"><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/kisan-credit-card/" data-cat="farmers" data-state="central" data-name="kisan credit card (kcc) kisan credit card central government">
-          <div class="icon" aria-hidden="true">💳</div>
+
           <h3>Kisan Credit Card (KCC)</h3>
           <p>Crop loans for farmers, fish farmers and livestock farmers at 7% interest, 4% if repaid on time. Up to ₹2 lakh without collateral.</p>
           <div class="tags"><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/pm-surya-ghar/" data-cat="housing" data-state="central" data-name="pm surya ghar muft bijli yojana (rooftop solar) pm surya ghar central government">
-          <div class="icon" aria-hidden="true">☀️</div>
+
           <h3>PM Surya Ghar Muft Bijli Yojana (Rooftop Solar)</h3>
           <p>Up to ₹78,000 subsidy to put solar panels on your roof and get up to 300 units of power a month. Open till March 2027.</p>
           <div class="tags"><span class="tag">Housing</span></div>
         </a>
         <a class="card" href="/schemes/pm-ujjwala-yojana/" data-cat="women" data-state="central" data-name="pm ujjwala yojana (free lpg connection) pm ujjwala yojana central government">
-          <div class="icon" aria-hidden="true">🔥</div>
+
           <h3>PM Ujjwala Yojana (Free LPG Connection)</h3>
           <p>Free LPG connection, first refill and stove for women from poor families. ₹300 subsidy now on 4 refills a year (from June 2026).</p>
           <div class="tags"><span class="tag">Women & Girls</span></div>
@@ -155,23 +160,20 @@
       <div class="section-head">
         <h2>Free tools</h2>
         <p>Find schemes for you, and plan your pension and savings in seconds.</p>
-        <a class="more" href="/tools/">See all tools →</a>
+        <a class="more" href="/tools/">See all tools</a>
       </div>
-      <div class="grid">
-        <a class="card" href="/tools/scheme-eligibility-checker/">
-          <div class="icon" aria-hidden="true">✅</div>
+      <div class="bento">
+        <a class="card lead-tile" href="/tools/scheme-eligibility-checker/">
           <h3>Which schemes am I eligible for?</h3>
           <p>Answer a few simple questions and see the schemes that may suit you.</p>
           <span class="tag">Free tool</span>
         </a>
         <a class="card" href="/tools/atal-pension-calculator/">
-          <div class="icon" aria-hidden="true">👴</div>
           <h3>Atal Pension Calculator</h3>
           <p>Your monthly contribution for a ₹1,000 to ₹5,000 pension, by age.</p>
           <span class="tag">Calculator</span>
         </a>
         <a class="card" href="/tools/sukanya-samriddhi-calculator/">
-          <div class="icon" aria-hidden="true">👧</div>
           <h3>Sukanya Samriddhi Calculator</h3>
           <p>How much your daughter's SSY account could grow to by maturity.</p>
           <span class="tag">Calculator</span>
@@ -180,43 +182,45 @@
     </section>
 
     <section id="apps">
-      <div class="section-head">
+      <div class="section-head split">
         <h2>Apps &amp; games</h2>
-        <p>Free learning apps and games you can open right in your browser.</p>
-        <a class="more" href="/apps/">See all apps →</a>
+        <div>
+          <p>Free learning apps and games you can open right in your browser.</p>
+          <a class="more" href="/apps/">See all apps</a>
+        </div>
       </div>
-      <div class="grid">
+      <div class="grid rail" tabindex="0" aria-label="Apps and games, scroll sideways">
         <a class="card game" href="https://nagendrababuedru.github.io/DevOps/" target="_blank" rel="noopener">
-          <div class="game-art" aria-hidden="true">☁️</div>
+
           <h3>DevOps Academy</h3>
           <p>Learn Cloud (Azure, AWS, GCP), AI & LLMs, DevOps and Data Engineering with hands-on terminal labs, real-world scenarios, 320+ interview questions with audio, and timed challenges.</p>
           
           <div class="tags"><span class="tag">Learning</span><span class="tag">Free</span><span class="tag">Works offline</span></div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open app →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open app</span>
         </a>
         <a class="card game" href="/apps/gpat/">
-          <div class="game-art" aria-hidden="true">💊</div>
+
           <h3>GPAT Prep</h3>
           <p>Revision and self-testing for the Graduate Pharmacy Aptitude Test: notes, topic-wise practice, mock tests, spaced revision and progress analytics. Progress stays on your device.</p>
-          <p class="app-note">⚠️ Study material in this app is AI-generated and not reviewed by subject experts. Use it alongside your textbooks, never as clinical guidance.</p>
+          <p class="app-note">Study material in this app is AI-generated and not reviewed by subject experts. Use it alongside your textbooks, never as clinical guidance.</p>
           <div class="tags"><span class="tag">Exam prep</span><span class="tag">Free</span><span class="tag">No sign-up</span></div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open app →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open app</span>
         </a>
         <a class="card game" href="/games/rex-adventure/">
-          <div class="game-art" aria-hidden="true">🦖</div>
+
           <h3>Rex's Big Adventure</h3>
           <p>Help Rex the T-Rex rescue his friends and grow bigger. Pick your dino buddy and play right in your browser.</p>
           
           <div class="tags"><span class="tag">Game</span><span class="tag">For kids</span><span class="tag">Free</span></div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open game →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Open game</span>
         </a>
         <a class="card game" href="/courses/azure-data-engineering/">
-          <div class="game-art" aria-hidden="true">📊</div>
+
           <h3>Azure Data Engineering Course</h3>
           <p>A free YouTube course from basics to advanced: Azure Data Factory, Databricks, Microsoft Fabric, Delta Lake, streaming, governance and CI/CD, with a hands-on project at every level.</p>
           
           <div class="tags"><span class="tag">Course</span><span class="tag">Free</span><span class="tag">YouTube</span></div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">See course plan →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">See course plan</span>
         </a>
       </div>
     </section>
@@ -225,11 +229,11 @@
       <div class="section-head">
         <h2>Our approach</h2>
       </div>
-      <div class="steps">
-        <div class="step"><div class="num">01</div><h3>Start small</h3><p>Build the simplest useful version first, and put it in people's hands.</p></div>
-        <div class="step"><div class="num">02</div><h3>Learn daily</h3><p>Listen to real users and improve a little with every release.</p></div>
-        <div class="step"><div class="num">03</div><h3>Grow steadily</h3><p>Compound small improvements into products people rely on.</p></div>
-      </div>
+      <ol class="steps">
+        <li class="step"><h3>Start small</h3><p>Build the simplest useful version first, and put it in people's hands.</p></li>
+        <li class="step"><h3>Learn daily</h3><p>Listen to real users and improve a little with every release.</p></li>
+        <li class="step"><h3>Grow steadily</h3><p>Compound small improvements into products people rely on.</p></li>
+      </ol>
     </section>
 
     <section id="about">
@@ -238,17 +242,17 @@
           <h2>About Kramavriddhi</h2>
         </div>
         <div>
-          <p><strong>Kramavriddhi</strong> (<span lang="sa">क्रमवृद्धिः</span>) is Sanskrit for "growth in steps." Our motto, <em lang="sa">क्रमेण वर्धामहे</em>, means "we grow step by step." It's the idea behind everything we make: real progress comes from small, consistent steps.</p>
+          <p class="standfirst"><strong>Kramavriddhi</strong> (<span lang="sa">क्रमवृद्धिः</span>) is Sanskrit for "growth in steps." Our motto, <em lang="sa">क्रमेण वर्धामहे</em>, means "we grow step by step." It's the idea behind everything we make: real progress comes from small, consistent steps.</p>
           <p>Founded by Nagendra Babu Edru, Kramavriddhi explains government schemes simply and builds apps for fitness, productivity, media and data. <a href="/about/">Read more</a></p>
           <a class="founder" href="https://nagendrababuedru.github.io" target="_blank" rel="noopener">
-            <img src="https://avatars.githubusercontent.com/u/95692402?v=4" alt="Nagendra Babu Edru">
-            <div><strong>Nagendra Babu Edru</strong><small>Founder</small></div>
+            <img src="https://avatars.githubusercontent.com/u/95692402?v=4" alt="Nagendra Babu Edru" width="64" height="64">
+            <span><strong>Nagendra Babu Edru</strong><small>Founder</small></span>
           </a>
         </div>
       </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="band-paper">
       <div class="contact-box">
         <h2>Let's talk</h2>
         <p>Questions, corrections, or a scheme you'd like us to explain? We'd love to hear from you.</p>
@@ -259,8 +263,9 @@
     </section>
 
     <footer class="site">
+      <p class="mast"><a href="/">Kramavriddhi</a></p>
       <div class="cols">
-        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <p class="motto"><span lang="sa">क्रमेण वर्धामहे</span><br>© 2026 Kramavriddhi</p>
         <ul>
           <li><a href="/schemes/">Schemes</a></li>
           <li><a href="/updates/">Updates</a></li>

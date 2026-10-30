@@ -24,18 +24,20 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:site_name" content="Kramavriddhi">
   <meta property="og:locale" content="en_IN">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23a46400'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css?v=11d9d231">
-  <script src="/assets/site.js?v=11d9d231" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tokens.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/base.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/style.css?v=02a98478">
+  <script src="/assets/site.js?v=02a98478" defer></script>
 </head>
 <body>
   <div class="wrap">
-    <nav class="top">
+    <nav class="top" aria-label="Main">
       <a class="brand" href="/">
         <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Kramavriddhi
+        <span>Kramavriddhi</span>
       </a>
       <ul>
         <li><a href="/schemes/" aria-current="page">Schemes</a></li>
@@ -46,14 +48,14 @@
       </ul>
     </nav>
 
+    <p class="crumbs"><a href="/">Home</a> › Schemes</p>
     <header class="page-head">
-      <div class="eyebrow">Government schemes</div>
       <h1>Government schemes, explained simply</h1>
       <p>Clear guides to central schemes and Andhra Pradesh and Telangana state schemes: who can apply, what you get, which documents you need, and how to apply on the official portal.</p>
-      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a> &nbsp;·&nbsp; <a href="/updates/">⏰ Latest updates &amp; deadlines →</a></p>
+      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి</a> &nbsp;·&nbsp; <a href="/updates/">Latest updates &amp; deadlines</a></p>
         <div class="share" data-url="https://kramavriddhi.com/schemes/" data-text="Government schemes explained simply: who can apply, benefits, documents and how to apply. Central, Andhra Pradesh and Telangana.">
           <span class="share-label">Share:</span>
-          <a class="share-btn wa" href="https://wa.me/?text=Government%20schemes%20explained%20simply%3A%20who%20can%20apply%2C%20benefits%2C%20documents%20and%20how%20to%20apply.%20Central%2C%20Andhra%20Pradesh%20and%20Telangana.%0Ahttps%3A//kramavriddhi.com/schemes/" target="_blank" rel="noopener" data-share="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path fill="#15803d" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg><span>WhatsApp</span></a>
+          <a class="share-btn wa" href="https://wa.me/?text=Government%20schemes%20explained%20simply%3A%20who%20can%20apply%2C%20benefits%2C%20documents%20and%20how%20to%20apply.%20Central%2C%20Andhra%20Pradesh%20and%20Telangana.%0Ahttps%3A//kramavriddhi.com/schemes/" target="_blank" rel="noopener" data-share="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path class="wa-glyph" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg><span>WhatsApp</span></a>
           <button class="share-btn" type="button" data-share="copy" data-done="Link copied ✓" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span>Copy link</span></button>
           <button class="share-btn" type="button" data-share="native" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><span>More</span></button>
         </div>
@@ -61,332 +63,332 @@
 
     <div class="filters" role="group" aria-label="Filter by government">
         <button class="chip" type="button" data-state-filter="all" aria-pressed="true">All</button>
-        <button class="chip" type="button" data-state-filter="central" aria-pressed="false">🇮🇳 Central</button>
+        <button class="chip" type="button" data-state-filter="central" aria-pressed="false">Central</button>
         <button class="chip" type="button" data-state-filter="ap" aria-pressed="false">Andhra Pradesh</button>
         <button class="chip" type="button" data-state-filter="ts" aria-pressed="false">Telangana</button>
     </div>
     <div class="filters" role="group" aria-label="Filter by category">
         <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
-        <button class="chip" type="button" data-filter="farmers" aria-pressed="false">🌾 Farmers & Agriculture</button>
-        <button class="chip" type="button" data-filter="health" aria-pressed="false">🏥 Health</button>
-        <button class="chip" type="button" data-filter="housing" aria-pressed="false">🏠 Housing</button>
-        <button class="chip" type="button" data-filter="business" aria-pressed="false">💼 Business & Self-employment</button>
-        <button class="chip" type="button" data-filter="pension" aria-pressed="false">👴 Pension & Insurance</button>
-        <button class="chip" type="button" data-filter="women" aria-pressed="false">👧 Women & Girls</button>
-        <button class="chip" type="button" data-filter="banking" aria-pressed="false">🏦 Banking</button>
-        <button class="chip" type="button" data-filter="education" aria-pressed="false">🎓 Education & Skills</button>
-        <button class="chip" type="button" data-filter="jobs" aria-pressed="false">🧑‍💼 Jobs & Internships</button>
+        <button class="chip" type="button" data-filter="farmers" aria-pressed="false">Farmers & Agriculture</button>
+        <button class="chip" type="button" data-filter="health" aria-pressed="false">Health</button>
+        <button class="chip" type="button" data-filter="housing" aria-pressed="false">Housing</button>
+        <button class="chip" type="button" data-filter="business" aria-pressed="false">Business & Self-employment</button>
+        <button class="chip" type="button" data-filter="pension" aria-pressed="false">Pension & Insurance</button>
+        <button class="chip" type="button" data-filter="women" aria-pressed="false">Women & Girls</button>
+        <button class="chip" type="button" data-filter="banking" aria-pressed="false">Banking</button>
+        <button class="chip" type="button" data-filter="education" aria-pressed="false">Education & Skills</button>
+        <button class="chip" type="button" data-filter="jobs" aria-pressed="false">Jobs & Internships</button>
     </div>
     <input class="search" type="search" placeholder="Search schemes…" aria-label="Search schemes">
-    <a class="cta" href="/schemes/for-men/" style="margin-top:-8px;margin-bottom:12px"><span>👨</span><div><strong>Schemes for boys &amp; men</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, first-job reward, workers&#39; pension, vendor loans and more.</span></div></a>
-    <a class="cta" href="/schemes/for-youth/" style="margin-bottom:12px"><span>🧑‍💼</span><div><strong>Opportunities for youth</strong><br><span class="muted" style="font-size:0.9rem">Paid internships, Agniveer, free skill training and business loans.</span></div></a>
-    <a class="cta" href="/schemes/for-women/" style="margin-bottom:12px"><span>👩</span><div><strong>Schemes for girls &amp; women</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, business loans, SHG support and more, in one place.</span></div></a>
-    <a class="cta" href="/tools/scheme-eligibility-checker/" style="margin-bottom:12px"><span>✅</span><div><strong>Not sure which schemes are for you?</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions and see the schemes that may suit you.</span></div></a>
-    <a class="cta" href="/tools/" style="margin-bottom:28px"><span>🧮</span><div><strong>Free calculators</strong><br><span class="muted" style="font-size:0.9rem">Atal Pension contribution by age · Sukanya Samriddhi maturity amount</span></div></a>
+    <a class="cta" href="/schemes/for-men/"><div><strong>Schemes for boys &amp; men</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, first-job reward, workers&#39; pension, vendor loans and more.</span></div></a>
+    <a class="cta" href="/schemes/for-youth/"><div><strong>Opportunities for youth</strong><br><span class="muted" style="font-size:0.9rem">Paid internships, Agniveer, free skill training and business loans.</span></div></a>
+    <a class="cta" href="/schemes/for-women/"><div><strong>Schemes for girls &amp; women</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, business loans, SHG support and more, in one place.</span></div></a>
+    <a class="cta" href="/tools/scheme-eligibility-checker/"><div><strong>Not sure which schemes are for you?</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions and see the schemes that may suit you.</span></div></a>
+    <a class="cta" href="/tools/"><div><strong>Free calculators</strong><br><span class="muted" style="font-size:0.9rem">Atal Pension contribution by age · Sukanya Samriddhi maturity amount</span></div></a>
 
     <div class="grid" id="scheme-list">
         <a class="card" href="/schemes/ts-indiramma-atmiya-bharosa/" data-cat="farmers" data-state="ts" data-name="indiramma atmiya bharosa (telangana) indiramma atmiya bharosa telangana">
-          <div class="icon" aria-hidden="true">🤝</div>
+
           <h3>Indiramma Atmiya Bharosa (Telangana)</h3>
           <p>₹12,000 a year promised for landless farm labour families. Only part of the first instalment was paid in 2025; stalled since.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/pm-kusum/" data-cat="farmers" data-state="central" data-name="pm-kusum (solar pumps for farmers) pm-kusum central government">
-          <div class="icon" aria-hidden="true">🌞</div>
+
           <h3>PM-KUSUM (Solar Pumps for Farmers)</h3>
           <p>Up to 30% central subsidy for solar pumps, plus the state's share. Apply only through your state agency; beware fake websites.</p>
           <div class="tags"><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/pm-vidyalaxmi/" data-cat="education" data-state="central" data-name="pm vidyalaxmi education loan scheme pm vidyalaxmi central government">
-          <div class="icon" aria-hidden="true">🎓</div>
+
           <h3>PM Vidyalaxmi Education Loan Scheme</h3>
           <p>Education loans with no collateral or guarantor for students in top colleges. 3% interest help if family income is up to ₹8 lakh.</p>
           <div class="tags"><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/kisan-credit-card/" data-cat="farmers" data-state="central" data-name="kisan credit card (kcc) kisan credit card central government">
-          <div class="icon" aria-hidden="true">💳</div>
+
           <h3>Kisan Credit Card (KCC)</h3>
           <p>Crop loans for farmers, fish farmers and livestock farmers at 7% interest, 4% if repaid on time. Up to ₹2 lakh without collateral.</p>
           <div class="tags"><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/pm-surya-ghar/" data-cat="housing" data-state="central" data-name="pm surya ghar muft bijli yojana (rooftop solar) pm surya ghar central government">
-          <div class="icon" aria-hidden="true">☀️</div>
+
           <h3>PM Surya Ghar Muft Bijli Yojana (Rooftop Solar)</h3>
           <p>Up to ₹78,000 subsidy to put solar panels on your roof and get up to 300 units of power a month. Open till March 2027.</p>
           <div class="tags"><span class="tag">Housing</span></div>
         </a>
         <a class="card" href="/schemes/pm-ujjwala-yojana/" data-cat="women" data-state="central" data-name="pm ujjwala yojana (free lpg connection) pm ujjwala yojana central government">
-          <div class="icon" aria-hidden="true">🔥</div>
+
           <h3>PM Ujjwala Yojana (Free LPG Connection)</h3>
           <p>Free LPG connection, first refill and stove for women from poor families. ₹300 subsidy now on 4 refills a year (from June 2026).</p>
           <div class="tags"><span class="tag">Women & Girls</span></div>
         </a>
         <a class="card" href="/schemes/ap-nirudyoga-bhruthi/" data-cat="jobs" data-state="ap" data-name="nirudyoga bhruthi unemployment allowance (andhra pradesh) nirudyoga bhruthi andhra pradesh">
-          <div class="icon" aria-hidden="true">🧑‍🎓</div>
+
           <h3>Nirudyoga Bhruthi Unemployment Allowance (Andhra Pradesh)</h3>
           <p>₹3,000 a month promised for unemployed youth in the 2024 Super Six. Not started as of October 2026: no order, no application.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Jobs & Internships</span></div>
         </a>
         <a class="card" href="/schemes/ap-aadabidda-nidhi/" data-cat="women" data-state="ap" data-name="aadabidda nidhi ₹1,500 for women (andhra pradesh) aadabidda nidhi andhra pradesh">
-          <div class="icon" aria-hidden="true">👩</div>
+
           <h3>Aadabidda Nidhi ₹1,500 for Women (Andhra Pradesh)</h3>
           <p>₹1,500 a month promised for women aged 18+ in the 2024 Super Six. Not started as of October 2026: no order, no application.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Women & Girls</span></div>
         </a>
         <a class="card" href="/schemes/ap-ntr-vaidya-seva/" data-cat="health" data-state="ap" data-name="dr ntr vaidya seva health scheme (andhra pradesh) ntr vaidya seva andhra pradesh">
-          <div class="icon" aria-hidden="true">🏥</div>
+
           <h3>Dr NTR Vaidya Seva Health Scheme (Andhra Pradesh)</h3>
           <p>Cashless treatment up to ₹25 lakh per family a year for 3,257 procedures. New universal health policy approved; start not yet confirmed.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Health</span></div>
         </a>
         <a class="card" href="/schemes/ts-fee-reimbursement/" data-cat="education" data-state="ts" data-name="fee reimbursement & post-matric scholarships (telangana) ts fee reimbursement telangana">
-          <div class="icon" aria-hidden="true">🏫</div>
+
           <h3>Fee Reimbursement & Post-Matric Scholarships (Telangana)</h3>
           <p>Tuition fee and maintenance for SC, ST, BC, EBC, minority and disabled students through ePASS. From 2026-27, paid to students' accounts.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/ap-fee-reimbursement/" data-cat="education" data-state="ap" data-name="fee reimbursement & post-matric scholarships (andhra pradesh) ap fee reimbursement andhra pradesh">
-          <div class="icon" aria-hidden="true">🏫</div>
+
           <h3>Fee Reimbursement & Post-Matric Scholarships (Andhra Pradesh)</h3>
           <p>Full tuition fee for college students from families earning up to ₹2.5 lakh, plus ₹10,000–₹20,000 a year for food and hostel to the mother.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/pm-fasal-bima-yojana/" data-cat="farmers" data-state="central" data-name="pm fasal bima yojana (crop insurance) pm fasal bima yojana central government">
-          <div class="icon" aria-hidden="true">🌦️</div>
+
           <h3>PM Fasal Bima Yojana (Crop Insurance)</h3>
           <p>Low-cost crop insurance against drought, floods, pests and unseasonal rain. AP Rabi 2026-27: enrol by 15 Dec (paddy 31 Dec).</p>
           <div class="tags"><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/ts-kalyana-lakshmi-shaadi-mubarak/" data-cat="women" data-state="ts" data-name="kalyana lakshmi & shaadi mubarak (telangana) kalyana lakshmi / shaadi mubarak telangana">
-          <div class="icon" aria-hidden="true">💍</div>
+
           <h3>Kalyana Lakshmi & Shaadi Mubarak (Telangana)</h3>
           <p>₹1,00,116 once for the marriage of a girl from a poor SC, ST, BC, EBC or minority family, paid to her mother.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Women & Girls</span></div>
         </a>
         <a class="card" href="/schemes/ap-matsyakarula-sevalo/" data-cat="farmers" data-state="ap" data-name="matsyakarula sevalo for fishermen (andhra pradesh) matsyakarula sevalo andhra pradesh">
-          <div class="icon" aria-hidden="true">🐟</div>
+
           <h3>Matsyakarula Sevalo for Fishermen (Andhra Pradesh)</h3>
           <p>₹20,000 a year for sea fishermen families during the 15 April–14 June fishing ban. 2026 paid in May.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/ap-nethanna-sevalo/" data-cat="business" data-state="ap" data-name="nethanna sevalo for handloom weavers (andhra pradesh) nethanna sevalo andhra pradesh">
-          <div class="icon" aria-hidden="true">🧵</div>
+
           <h3>Nethanna Sevalo for Handloom Weavers (Andhra Pradesh)</h3>
           <p>₹25,000 a year for BPL handloom weaver families who own a loom. 2nd phase payment date not yet announced.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Business & Self-employment</span></div>
         </a>
         <a class="card" href="/schemes/ap-auto-drivers-sevalo/" data-cat="business" data-state="ap" data-name="auto drivers sevalo (andhra pradesh) auto drivers sevalo andhra pradesh">
-          <div class="icon" aria-hidden="true">🛺</div>
+
           <h3>Auto Drivers Sevalo (Andhra Pradesh)</h3>
           <p>₹15,000 a year for auto, taxi and maxi-cab owner-drivers in AP. 2026 payment date not yet announced.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Business & Self-employment</span></div>
         </a>
         <a class="card" href="/schemes/pm-svanidhi/" data-cat="business" data-state="central" data-name="pm svanidhi (loans for street vendors) pm svanidhi central government">
-          <div class="icon" aria-hidden="true">🛒</div>
+
           <h3>PM SVANidhi (Loans for Street Vendors)</h3>
           <p>Collateral-free loans of ₹15,000, ₹25,000 and ₹50,000 for street vendors, with a 7% interest subsidy. Open until 2030.</p>
           <div class="tags"><span class="tag">Business & Self-employment</span></div>
         </a>
         <a class="card" href="/schemes/pm-shram-yogi-maandhan/" data-cat="pension" data-state="central" data-name="pm shram yogi maandhan (pension for workers) pm shram yogi maandhan central government">
-          <div class="icon" aria-hidden="true">🧓</div>
+
           <h3>PM Shram Yogi Maandhan (Pension for Workers)</h3>
           <p>₹3,000 monthly pension at 60 for workers earning up to ₹15,000 a month. Join at 18–40; the government matches your payment.</p>
           <div class="tags"><span class="tag">Pension & Insurance</span></div>
         </a>
         <a class="card" href="/schemes/e-shram-card/" data-cat="jobs" data-state="central" data-name="e-shram card for unorganised workers e-shram card central government">
-          <div class="icon" aria-hidden="true">👷</div>
+
           <h3>e-Shram Card for Unorganised Workers</h3>
           <p>Free national ID for daily-wage, gig and other unorganised workers aged 16–59, linking them to welfare schemes.</p>
           <div class="tags"><span class="tag">Jobs & Internships</span></div>
         </a>
         <a class="card" href="/schemes/pm-viksit-bharat-rozgar-yojana/" data-cat="jobs" data-state="central" data-name="pm viksit bharat rozgar yojana (first job) pm viksit bharat rozgar yojana central government">
-          <div class="icon" aria-hidden="true">🧾</div>
+
           <h3>PM Viksit Bharat Rozgar Yojana (First Job)</h3>
           <p>Up to ₹15,000 for first-time employees who join a job with PF (EPFO) between Aug 2025 and Jul 2027.</p>
           <div class="tags"><span class="tag">Jobs & Internships</span></div>
         </a>
         <a class="card" href="/schemes/central-sector-scholarship/" data-cat="education" data-state="central" data-name="central sector scholarship for college students (csss) central sector scholarship central government">
-          <div class="icon" aria-hidden="true">🎓</div>
+
           <h3>Central Sector Scholarship for College Students (CSSS)</h3>
           <p>₹12,000–₹20,000 a year for college students in the top 20% of their Class 12 board. 2026-27 last date: 31 October.</p>
           <div class="tags"><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/ts-rajiv-yuva-vikasam/" data-cat="business" data-state="ts" data-name="rajiv yuva vikasam (telangana) rajiv yuva vikasam telangana">
-          <div class="icon" aria-hidden="true">🚀</div>
+
           <h3>Rajiv Yuva Vikasam (Telangana)</h3>
           <p>Announced ₹50,000–₹4 lakh self-employment support for SC/ST/BC/minority youth. First phase planned from 19 Nov 2026.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Business & Self-employment</span></div>
         </a>
         <a class="card" href="/schemes/pm-vishwakarma/" data-cat="business" data-state="central" data-name="pm vishwakarma pm vishwakarma central government">
-          <div class="icon" aria-hidden="true">🔨</div>
+
           <h3>PM Vishwakarma</h3>
           <p>For carpenters, tailors, barbers and other artisans: paid training, ₹15,000 toolkit and loans up to ₹3 lakh at 5%.</p>
           <div class="tags"><span class="tag">Business & Self-employment</span></div>
         </a>
         <a class="card" href="/schemes/agnipath-agniveer/" data-cat="jobs" data-state="central" data-name="agnipath scheme (agniveer) agnipath / agniveer central government">
-          <div class="icon" aria-hidden="true">🎖️</div>
+
           <h3>Agnipath Scheme (Agniveer)</h3>
           <p>Four years in the Army, Navy or Air Force: ₹30,000–₹40,000 a month and about ₹11.71 lakh tax-free at exit.</p>
           <div class="tags"><span class="tag">Jobs & Internships</span></div>
         </a>
         <a class="card" href="/schemes/pm-kaushal-vikas-yojana/" data-cat="education" data-state="central" data-name="pm kaushal vikas yojana (pmkvy) pm kaushal vikas yojana central government">
-          <div class="icon" aria-hidden="true">🛠️</div>
+
           <h3>PM Kaushal Vikas Yojana (PMKVY)</h3>
           <p>Free short skill-training courses with a government certificate, for anyone aged 15 to 59.</p>
           <div class="tags"><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/pm-internship-scheme/" data-cat="jobs" data-state="central" data-name="pm internship scheme pm internship scheme central government">
-          <div class="icon" aria-hidden="true">🧑‍💼</div>
+
           <h3>PM Internship Scheme</h3>
           <p>Paid internships in top companies for ages 18–25: at least ₹9,000 a month plus ₹6,000 one-time.</p>
           <div class="tags"><span class="tag">Jobs & Internships</span></div>
         </a>
         <a class="card" href="/schemes/ts-indira-mahila-shakti/" data-cat="business" data-state="ts" data-name="indira mahila shakti (telangana) indira mahila shakti telangana">
-          <div class="icon" aria-hidden="true">🏪</div>
+
           <h3>Indira Mahila Shakti (Telangana)</h3>
           <p>Interest-free loans up to ₹10 lakh for SHGs, and women-run canteens, buses, petrol bunks and solar plants.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Business & Self-employment</span></div>
         </a>
         <a class="card" href="/schemes/lakhpati-didi/" data-cat="women" data-state="central" data-name="lakhpati didi (shg women) lakhpati didi central government">
-          <div class="icon" aria-hidden="true">💪</div>
+
           <h3>Lakhpati Didi (SHG women)</h3>
           <p>Loans, training and business help so rural self-help group women earn ₹1 lakh+ a year.</p>
           <div class="tags"><span class="tag">Women & Girls</span></div>
         </a>
         <a class="card" href="/schemes/cbse-single-girl-child-scholarship/" data-cat="education" data-state="central" data-name="cbse single girl child scholarship cbse single girl child central government">
-          <div class="icon" aria-hidden="true">👩‍🎓</div>
+
           <h3>CBSE Single Girl Child Scholarship</h3>
           <p>₹1,000 a month in Class 11–12 for an only daughter who scored 70%+ in CBSE Class 10.</p>
           <div class="tags"><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/aicte-pragati-scholarship/" data-cat="education" data-state="central" data-name="aicte pragati scholarship for girls pragati scholarship central government">
-          <div class="icon" aria-hidden="true">🎓</div>
+
           <h3>AICTE Pragati Scholarship for Girls</h3>
           <p>₹50,000 a year for girls in AICTE-approved degree and diploma courses. 2026-27 last date: 31 October.</p>
           <div class="tags"><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/ts-cheyutha-pension/" data-cat="pension" data-state="ts" data-name="cheyutha pension (telangana) cheyutha pension telangana">
-          <div class="icon" aria-hidden="true">👵</div>
+
           <h3>Cheyutha Pension (Telangana)</h3>
           <p>Monthly pensions for poor elderly people, widows, single women, persons with disabilities and other groups.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Pension & Insurance</span></div>
         </a>
         <a class="card" href="/schemes/ts-rajiv-aarogyasri/" data-cat="health" data-state="ts" data-name="rajiv aarogyasri (telangana) rajiv aarogyasri telangana">
-          <div class="icon" aria-hidden="true">🩺</div>
+
           <h3>Rajiv Aarogyasri (Telangana)</h3>
           <p>Cashless treatment up to ₹10 lakh per family per year for 1,835 procedures, for white ration card families.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Health</span></div>
         </a>
         <a class="card" href="/schemes/ts-gruha-jyothi/" data-cat="housing" data-state="ts" data-name="gruha jyothi free electricity (telangana) gruha jyothi telangana">
-          <div class="icon" aria-hidden="true">💡</div>
+
           <h3>Gruha Jyothi Free Electricity (Telangana)</h3>
           <p>Zero electricity bill for eligible households that use up to 200 units a month.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Housing</span></div>
         </a>
         <a class="card" href="/schemes/ap-stree-shakti/" data-cat="women" data-state="ap" data-name="stree shakti free bus travel (andhra pradesh) stree shakti andhra pradesh">
-          <div class="icon" aria-hidden="true">🚍</div>
+
           <h3>Stree Shakti Free Bus Travel (Andhra Pradesh)</h3>
           <p>Free travel for women, girls and transgender persons in APSRTC ordinary and express buses across AP.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Women & Girls</span></div>
         </a>
         <a class="card" href="/schemes/ap-deepam-2/" data-cat="women" data-state="ap" data-name="deepam-2 free gas cylinders (andhra pradesh) deepam-2 andhra pradesh">
-          <div class="icon" aria-hidden="true">🔥</div>
+
           <h3>Deepam-2 Free Gas Cylinders (Andhra Pradesh)</h3>
           <p>Three free LPG cylinders a year for rice card families, one every four months, refunded within 48 hours.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Women & Girls</span></div>
         </a>
         <a class="card" href="/schemes/ts-indiramma-indlu/" data-cat="housing" data-state="ts" data-name="indiramma indlu (telangana) indiramma indlu telangana">
-          <div class="icon" aria-hidden="true">🏘️</div>
+
           <h3>Indiramma Indlu (Telangana)</h3>
           <p>Up to ₹5 lakh to build a pucca house for poor families who don't own one, paid in stages.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Housing</span></div>
         </a>
         <a class="card" href="/schemes/ts-mahalakshmi/" data-cat="women" data-state="ts" data-name="mahalakshmi scheme (telangana) mahalakshmi telangana">
-          <div class="icon" aria-hidden="true">🚌</div>
+
           <h3>Mahalakshmi Scheme (Telangana)</h3>
           <p>Free TGSRTC bus travel for women and girls, and ₹500 LPG cylinders for eligible families.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Women & Girls</span></div>
         </a>
         <a class="card" href="/schemes/ts-rythu-bharosa/" data-cat="farmers" data-state="ts" data-name="rythu bharosa (telangana) rythu bharosa telangana">
-          <div class="icon" aria-hidden="true">🚜</div>
+
           <h3>Rythu Bharosa (Telangana)</h3>
           <p>₹12,000 per acre every year for Telangana farmers, paid as ₹6,000 per acre each crop season.</p>
           <div class="tags"><span class="tag state">Telangana</span><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/ap-thalliki-vandanam/" data-cat="education" data-state="ap" data-name="thalliki vandanam (andhra pradesh) thalliki vandanam andhra pradesh">
-          <div class="icon" aria-hidden="true">📚</div>
+
           <h3>Thalliki Vandanam (Andhra Pradesh)</h3>
           <p>₹15,000 a year for every school-going child in Classes 1–12, with ₹13,000 paid to the mother.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Education & Skills</span></div>
         </a>
         <a class="card" href="/schemes/ap-ntr-bharosa-pension/" data-cat="pension" data-state="ap" data-name="ntr bharosa pension (andhra pradesh) ntr bharosa pension andhra pradesh">
-          <div class="icon" aria-hidden="true">👵</div>
+
           <h3>NTR Bharosa Pension (Andhra Pradesh)</h3>
           <p>Monthly pensions of ₹4,000 to ₹15,000 for the elderly, widows, persons with disabilities and other groups.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Pension & Insurance</span></div>
         </a>
         <a class="card" href="/schemes/ap-annadata-sukhibhava/" data-cat="farmers" data-state="ap" data-name="annadata sukhibhava (andhra pradesh) annadata sukhibhava andhra pradesh">
-          <div class="icon" aria-hidden="true">🌾</div>
+
           <h3>Annadata Sukhibhava (Andhra Pradesh)</h3>
           <p>₹20,000 a year for AP farmer families: ₹14,000 from the state plus ₹6,000 from PM-KISAN, in three instalments.</p>
           <div class="tags"><span class="tag state">Andhra Pradesh</span><span class="tag">Farmers & Agriculture</span></div>
         </a>
         <a class="card" href="/schemes/pm-suraksha-bima-yojana/" data-cat="pension" data-state="central" data-name="pm suraksha bima yojana (pmsby) pm suraksha bima yojana central government">
-          <div class="icon" aria-hidden="true">🩹</div>
+
           <h3>PM Suraksha Bima Yojana (PMSBY)</h3>
           <p>Accident insurance up to ₹2 lakh for just ₹20 a year, for anyone aged 18–70 with a bank account.</p>
           <div class="tags"><span class="tag">Pension & Insurance</span></div>
         </a>
         <a class="card" href="/schemes/pm-jeevan-jyoti-bima-yojana/" data-cat="pension" data-state="central" data-name="pm jeevan jyoti bima yojana (pmjjby) pm jeevan jyoti bima yojana central government">
-          <div class="icon" aria-hidden="true">🛡️</div>
+
           <h3>PM Jeevan Jyoti Bima Yojana (PMJJBY)</h3>
           <p>₹2 lakh life insurance for ₹436 a year, for anyone aged 18–50 with a bank or post office account.</p>
           <div class="tags"><span class="tag">Pension & Insurance</span></div>
         </a>
         <a class="card" href="/schemes/pm-jan-dhan-yojana/" data-cat="banking" data-state="central" data-name="pm jan dhan yojana (pmjdy) pm jan dhan yojana central government">
-          <div class="icon" aria-hidden="true">🏦</div>
+
           <h3>PM Jan Dhan Yojana (PMJDY)</h3>
           <p>A zero-balance bank account with a free RuPay card, ₹2 lakh accident cover and an overdraft of up to ₹10,000.</p>
           <div class="tags"><span class="tag">Banking</span></div>
         </a>
         <a class="card" href="/schemes/atal-pension-yojana/" data-cat="pension" data-state="central" data-name="atal pension yojana (apy) atal pension yojana central government">
-          <div class="icon" aria-hidden="true">👴</div>
+
           <h3>Atal Pension Yojana (APY)</h3>
           <p>A guaranteed pension of ₹1,000 to ₹5,000 a month after 60, for anyone aged 18–40 who is not an income-tax payer.</p>
           <div class="tags"><span class="tag">Pension & Insurance</span></div>
         </a>
         <a class="card" href="/schemes/pm-mudra-yojana/" data-cat="business" data-state="central" data-name="pm mudra yojana (pmmy) pm mudra yojana central government">
-          <div class="icon" aria-hidden="true">💼</div>
+
           <h3>PM Mudra Yojana (PMMY)</h3>
           <p>Collateral-free business loans up to ₹20 lakh for small shops, services, manufacturing and allied farm activities.</p>
           <div class="tags"><span class="tag">Business & Self-employment</span></div>
         </a>
         <a class="card" href="/schemes/pm-awas-yojana-gramin/" data-cat="housing" data-state="central" data-name="pm awas yojana – gramin (pmay-g) pm awas yojana – gramin central government">
-          <div class="icon" aria-hidden="true">🏡</div>
+
           <h3>PM Awas Yojana – Gramin (PMAY-G)</h3>
           <p>₹1.2 lakh (₹1.3 lakh in hilly and North-East areas) to build a pucca house in villages, plus toilet and wage support.</p>
           <div class="tags"><span class="tag">Housing</span></div>
         </a>
         <a class="card" href="/schemes/pm-awas-yojana-urban/" data-cat="housing" data-state="central" data-name="pm awas yojana – urban 2.0 (pmay-u 2.0) pm awas yojana – urban 2.0 central government">
-          <div class="icon" aria-hidden="true">🏠</div>
+
           <h3>PM Awas Yojana – Urban 2.0 (PMAY-U 2.0)</h3>
           <p>Help to build, buy or rent a house in towns and cities: ₹2.5 lakh assistance or up to ₹1.8 lakh home-loan subsidy.</p>
           <div class="tags"><span class="tag">Housing</span></div>
         </a>
         <a class="card" href="/schemes/sukanya-samriddhi-yojana/" data-cat="women" data-state="central" data-name="sukanya samriddhi yojana (ssy) sukanya samriddhi yojana central government">
-          <div class="icon" aria-hidden="true">👧</div>
+
           <h3>Sukanya Samriddhi Yojana (SSY)</h3>
           <p>A high-interest, tax-free savings account for a girl child under 10, for her education and marriage.</p>
           <div class="tags"><span class="tag">Women & Girls</span></div>
         </a>
         <a class="card" href="/schemes/ayushman-bharat-pm-jay/" data-cat="health" data-state="central" data-name="ayushman bharat pm-jay ayushman bharat pm-jay central government">
-          <div class="icon" aria-hidden="true">🏥</div>
+
           <h3>Ayushman Bharat PM-JAY</h3>
           <p>Free hospital treatment up to ₹5 lakh per family per year, plus cover for every citizen aged 70 and above.</p>
           <div class="tags"><span class="tag">Health</span></div>
         </a>
         <a class="card" href="/schemes/pm-kisan/" data-cat="farmers" data-state="central" data-name="pm-kisan (pradhan mantri kisan samman nidhi) pm-kisan central government">
-          <div class="icon" aria-hidden="true">🌾</div>
+
           <h3>PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)</h3>
           <p>₹6,000 a year for land-holding farmer families, paid in three ₹2,000 instalments straight to the bank account.</p>
           <div class="tags"><span class="tag">Farmers & Agriculture</span></div>
@@ -434,8 +436,9 @@
     </script>
 
     <footer class="site">
+      <p class="mast"><a href="/">Kramavriddhi</a></p>
       <div class="cols">
-        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <p class="motto"><span lang="sa">क्रमेण वर्धामहे</span><br>© 2026 Kramavriddhi</p>
         <ul>
           <li><a href="/schemes/">Schemes</a></li>
           <li><a href="/updates/">Updates</a></li>

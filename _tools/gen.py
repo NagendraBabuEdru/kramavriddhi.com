@@ -213,15 +213,15 @@ SCHEMES = [
 DISPLAY = list(reversed(SCHEMES))  # newest first
 CATEGORIES = [
     ("all", "All"),
-    ("farmers", "🌾 Farmers & Agriculture"),
-    ("health", "🏥 Health"),
-    ("housing", "🏠 Housing"),
-    ("business", "💼 Business & Self-employment"),
-    ("pension", "👴 Pension & Insurance"),
-    ("women", "👧 Women & Girls"),
-    ("banking", "🏦 Banking"),
-    ("education", "🎓 Education & Skills"),
-    ("jobs", "🧑‍💼 Jobs & Internships"),
+    ("farmers", "Farmers & Agriculture"),
+    ("health", "Health"),
+    ("housing", "Housing"),
+    ("business", "Business & Self-employment"),
+    ("pension", "Pension & Insurance"),
+    ("women", "Women & Girls"),
+    ("banking", "Banking"),
+    ("education", "Education & Skills"),
+    ("jobs", "Jobs & Internships"),
 ]
 
 STATES = {
@@ -235,7 +235,7 @@ def st(s):
 def scheme_card(s):
     state_tag = "" if st(s) == "central" else f'<span class="tag state">{STATES[st(s)]["short"]}</span>'
     return f"""        <a class="card" href="/schemes/{s["slug"]}/" data-cat="{s["cat"]}" data-state="{st(s)}" data-name="{s["name"].lower()} {s["short"].lower()} {STATES[st(s)]["label"].lower()}">
-          <div class="icon" aria-hidden="true">{s["icon"]}</div>
+
           <h3>{s["name"]}</h3>
           <p>{s["summary"]}</p>
           <div class="tags">{state_tag}<span class="tag">{s["cat_label"]}</span></div>
@@ -243,7 +243,7 @@ def scheme_card(s):
 """
 
 # ---------------------------------------------------------------- schemes index
-STATE_FILTERS = [("all", "All"), ("central", "🇮🇳 Central"), ("ap", "Andhra Pradesh"), ("ts", "Telangana")]
+STATE_FILTERS = [("all", "All"), ("central", "Central"), ("ap", "Andhra Pradesh"), ("ts", "Telangana")]
 state_chips = "\n".join(
     f'        <button class="chip" type="button" data-state-filter="{k}" aria-pressed="{"true" if k=="all" else "false"}">{v}</button>'
     for k, v in STATE_FILTERS)
@@ -255,11 +255,11 @@ write("schemes/index.html",
          "Simple, step-by-step guides to central government schemes and Andhra Pradesh and Telangana state schemes: who can apply, benefits, documents and how to apply.",
          "/schemes/")
     + nav("schemes") + f"""
+    <p class="crumbs"><a href="/">Home</a> › Schemes</p>
     <header class="page-head">
-      <div class="eyebrow">Government schemes</div>
       <h1>Government schemes, explained simply</h1>
       <p>Clear guides to central schemes and Andhra Pradesh and Telangana state schemes: who can apply, what you get, which documents you need, and how to apply on the official portal.</p>
-      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a> &nbsp;·&nbsp; <a href="/updates/">⏰ Latest updates &amp; deadlines →</a></p>{share_bar("/schemes/", "Government schemes explained simply: who can apply, benefits, documents and how to apply. Central, Andhra Pradesh and Telangana.")}
+      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి</a> &nbsp;·&nbsp; <a href="/updates/">Latest updates &amp; deadlines</a></p>{share_bar("/schemes/", "Government schemes explained simply: who can apply, benefits, documents and how to apply. Central, Andhra Pradesh and Telangana.")}
     </header>
 
     <div class="filters" role="group" aria-label="Filter by government">
@@ -269,11 +269,11 @@ write("schemes/index.html",
 {chips}
     </div>
     <input class="search" type="search" placeholder="Search schemes…" aria-label="Search schemes">
-    <a class="cta" href="/schemes/for-men/" style="margin-top:-8px;margin-bottom:12px"><span>👨</span><div><strong>Schemes for boys &amp; men</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, first-job reward, workers&#39; pension, vendor loans and more.</span></div></a>
-    <a class="cta" href="/schemes/for-youth/" style="margin-bottom:12px"><span>🧑‍💼</span><div><strong>Opportunities for youth</strong><br><span class="muted" style="font-size:0.9rem">Paid internships, Agniveer, free skill training and business loans.</span></div></a>
-    <a class="cta" href="/schemes/for-women/" style="margin-bottom:12px"><span>👩</span><div><strong>Schemes for girls &amp; women</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, business loans, SHG support and more, in one place.</span></div></a>
-    <a class="cta" href="/tools/scheme-eligibility-checker/" style="margin-bottom:12px"><span>✅</span><div><strong>Not sure which schemes are for you?</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions and see the schemes that may suit you.</span></div></a>
-    <a class="cta" href="/tools/" style="margin-bottom:28px"><span>🧮</span><div><strong>Free calculators</strong><br><span class="muted" style="font-size:0.9rem">Atal Pension contribution by age · Sukanya Samriddhi maturity amount</span></div></a>
+    <a class="cta" href="/schemes/for-men/"><div><strong>Schemes for boys &amp; men</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, first-job reward, workers&#39; pension, vendor loans and more.</span></div></a>
+    <a class="cta" href="/schemes/for-youth/"><div><strong>Opportunities for youth</strong><br><span class="muted" style="font-size:0.9rem">Paid internships, Agniveer, free skill training and business loans.</span></div></a>
+    <a class="cta" href="/schemes/for-women/"><div><strong>Schemes for girls &amp; women</strong><br><span class="muted" style="font-size:0.9rem">Scholarships, business loans, SHG support and more, in one place.</span></div></a>
+    <a class="cta" href="/tools/scheme-eligibility-checker/"><div><strong>Not sure which schemes are for you?</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions and see the schemes that may suit you.</span></div></a>
+    <a class="cta" href="/tools/"><div><strong>Free calculators</strong><br><span class="muted" style="font-size:0.9rem">Atal Pension contribution by age · Sukanya Samriddhi maturity amount</span></div></a>
 
     <div class="grid" id="scheme-list">
 {"".join(scheme_card(s) for s in DISPLAY)}    </div>
@@ -328,7 +328,7 @@ def article(s, lede, facts, body, faqs, sources, description):
     SOURCES[s["slug"]] = sources
     has_te = s["slug"] in TE
     alts = {"en": f'/schemes/{s["slug"]}/', "te": f'/te/schemes/{s["slug"]}/'} if has_te else None
-    lang_switch = f'\n        <p class="lang-switch"><a href="/te/schemes/{s["slug"]}/" lang="te">తెలుగులో చదవండి →</a></p>' if has_te else ""
+    lang_switch = f'\n        <p class="lang-switch"><a href="/te/schemes/{s["slug"]}/" lang="te">తెలుగులో చదవండి</a></p>' if has_te else ""
     hub = STATES[st(s)]["hub"]
     state_crumb = f'<a href="{hub}">{STATES[st(s)]["label"]}</a> › ' if hub else ""
     facts_html = "\n".join(f'        <div class="fact"><small>{k}</small><strong>{v}</strong></div>' for k, v in facts)
@@ -360,10 +360,11 @@ def article(s, lede, facts, body, faqs, sources, description):
     <div class="narrow">
       <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › {state_crumb}{s["short"]}</p>
       <article>
-        <div class="eyebrow">{s["icon"]} {s["cat_label"]}</div>
+        <header class="article-head">
         <h1>{s["name"]}</h1>
         <p class="lede">{lede}</p>
-        <div class="meta"><span>Last updated: {nice_date(guide_iso(s["slug"]))}</span><span>{STATES[st(s)]["label"]} scheme</span></div>{lang_switch}
+        </header>
+        <div class="meta"><span>Last updated: {nice_date(guide_iso(s["slug"]))}</span><span>{STATES[st(s)]["label"]} scheme</span><span>{s["cat_label"]}</span></div>{lang_switch}
 
         <div class="facts">
 {facts_html}
@@ -601,7 +602,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </div>
         <p class="muted" style="font-size:0.9rem">This is only an illustration. The real amount depends on future interest rates, which change every quarter, and on when you deposit.</p>
 
-        <a class="cta" href="/tools/sukanya-samriddhi-calculator/"><span>🧮</span><div><strong>Sukanya Samriddhi Calculator</strong><br><span class="muted" style="font-size:0.9rem">Try your own yearly amount and see the year-by-year growth.</span></div></a>
+        <a class="cta" href="/tools/sukanya-samriddhi-calculator/"><div><strong>Sukanya Samriddhi Calculator</strong><br><span class="muted" style="font-size:0.9rem">Try your own yearly amount and see the year-by-year growth.</span></div></a>
 
         <h2>Withdrawal and closure</h2>
         <ul>
@@ -933,7 +934,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </div>
         <p>You can also pay quarterly or half-yearly. The full chart for every age from 18 to 40 is in the official scheme document linked below.</p>
 
-        <a class="cta" href="/tools/atal-pension-calculator/"><span>🧮</span><div><strong>Atal Pension Calculator</strong><br><span class="muted" style="font-size:0.9rem">Enter your age and see your exact monthly, quarterly or half-yearly amount.</span></div></a>
+        <a class="cta" href="/tools/atal-pension-calculator/"><div><strong>Atal Pension Calculator</strong><br><span class="muted" style="font-size:0.9rem">Enter your age and see your exact monthly, quarterly or half-yearly amount.</span></div></a>
 
         <h2>How payment works</h2>
         <ul>
@@ -1006,7 +1007,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
           <li>Easy access to <a href="/schemes/atal-pension-yojana/">Atal Pension Yojana</a>, <a href="/schemes/pm-jeevan-jyoti-bima-yojana/">PM Jeevan Jyoti Bima</a>, <a href="/schemes/pm-suraksha-bima-yojana/">PM Suraksha Bima</a> and <a href="/schemes/pm-mudra-yojana/">Mudra loans</a>.</li>
         </ul>
 
-        <a class="cta" href="/tools/"><span>🧮</span><div><strong>Plan your savings</strong><br><span class="muted" style="font-size:0.9rem">Use our free Atal Pension and Sukanya Samriddhi calculators.</span></div></a>
+        <a class="cta" href="/tools/"><div><strong>Plan your savings</strong><br><span class="muted" style="font-size:0.9rem">Use our free Atal Pension and Sukanya Samriddhi calculators.</span></div></a>
 
         <h2>Who can open a Jan Dhan account?</h2>
         <ul>
@@ -1683,7 +1684,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <h2>Which buses are free?</h2>
         <div class="table-wrap">
         <table class="simple">
-          <tr><th>Free ✅</th><th>Not free ❌</th></tr>
+          <tr><th>Free</th><th>Not free</th></tr>
           <tr><td>Palle Velugu</td><td>Non-stop services</td></tr>
           <tr><td>Ultra Palle Velugu</td><td>Super Luxury</td></tr>
           <tr><td>City Ordinary</td><td>AC buses</td></tr>
@@ -2173,7 +2174,7 @@ COLL = {
 def coll_group(title, intro, slugs):
     cards = "".join(scheme_card(BY_SLUG[x]) for x in slugs if x in BY_SLUG)
     return f"""
-    <section style="padding:40px 0">
+    <section class="group">
       <div class="section-head">
         <h2>{title}</h2>
         <p>{intro}</p>
@@ -2192,19 +2193,18 @@ write("schemes/for-women/index.html",
     + nav("schemes") + f"""
     <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For girls &amp; women</p>
     <header class="page-head">
-      <div class="eyebrow">Collection</div>
       <h1>Schemes for girls &amp; women</h1>
       <p>Scholarships, savings, business loans and everyday support for girls and women, from the Central Government, Andhra Pradesh and Telangana, all in one place.</p>
-      <p class="lang-switch"><a href="/te/schemes/for-women/" lang="te">తెలుగులో చదవండి →</a></p>{share_bar("/schemes/for-women/", "Government schemes for girls and women in one place: scholarships, savings, business loans, SHG support and more.")}
+      <p class="lang-switch"><a href="/te/schemes/for-women/" lang="te">తెలుగులో చదవండి</a></p>{share_bar("/schemes/for-women/", "Government schemes for girls and women in one place: scholarships, savings, business loans, SHG support and more.")}
     </header>
-    <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
-""" + coll_group("🎓 Education", "Help for girls to study, from school to technical degrees.",
+    <a class="cta" href="/tools/scheme-eligibility-checker/"><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
+""" + coll_group("Education", "Help for girls to study, from school to technical degrees.",
         COLL["for-women"][0])
-    + coll_group("💼 Self-employment & business", "Loans, training and support for women who want to earn.",
+    + coll_group("Self-employment & business", "Loans, training and support for women who want to earn.",
         COLL["for-women"][1])
     + """
     <div class="note"><strong>Being relaunched:</strong> <strong>Stand-Up India</strong> (bank loans of ₹10 lakh–₹1 crore for women and SC/ST entrepreneurs) ended in March 2025 and the government announced in March 2026 that a revamped version is being prepared. <strong>PMEGP</strong> (subsidy for new businesses, with a higher subsidy for women) ran until 31 March 2026, and its extension is under consideration. We will add full guides when the new rules are announced.</div>
-""" + coll_group("🛡️ Everyday support", "Travel, cooking gas, marriage help, pensions and housing support for women and their families.",
+""" + coll_group("Everyday support", "Travel, cooking gas, marriage help, pensions and housing support for women and their families.",
         COLL["for-women"][2])
     + """    <div style="height:24px"></div>
 """ + FOOTER)
@@ -2514,21 +2514,20 @@ write("schemes/for-youth/index.html",
     + nav("schemes") + f"""
     <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For youth</p>
     <header class="page-head">
-      <div class="eyebrow">Collection</div>
       <h1>Opportunities for youth</h1>
       <p>Paid internships, defence jobs, free skill training and help to start your own work: government opportunities for young people, all in one place.</p>
-      <p class="lang-switch"><a href="/te/schemes/for-youth/" lang="te">తెలుగులో చదవండి →</a></p>{share_bar("/schemes/for-youth/", "Government opportunities for young people: paid internships, Agniveer, free skill training and business loans.")}
+      <p class="lang-switch"><a href="/te/schemes/for-youth/" lang="te">తెలుగులో చదవండి</a></p>{share_bar("/schemes/for-youth/", "Government opportunities for young people: paid internships, Agniveer, free skill training and business loans.")}
     </header>
-    <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
-""" + coll_group("🧑‍💼 Jobs & internships", "Earn while you learn, or serve the country.",
+    <a class="cta" href="/tools/scheme-eligibility-checker/"><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
+""" + coll_group("Jobs & internships", "Earn while you learn, or serve the country.",
         COLL["for-youth"][0])
-    + coll_group("🛠️ Skills & education", "Free training and scholarships to build your career.",
+    + coll_group("Skills & education", "Free training and scholarships to build your career.",
         COLL["for-youth"][1])
-    + coll_group("💼 Start your own work", "Loans and support for your own business or trade.",
+    + coll_group("Start your own work", "Loans and support for your own business or trade.",
         COLL["for-youth"][2])
     + """
-    <div class="note"><strong>Being relaunched:</strong> <strong>Stand-Up India</strong> and <strong>PMEGP</strong> (subsidised loans for new businesses) are being renewed by the government. We will add guides when the new rules are announced. <a href="/schemes/for-women/">See schemes for girls &amp; women →</a></div>
-""" + coll_group("🛡️ Secure your future", "Low-cost savings, pension and insurance to start early.",
+    <div class="note"><strong>Being relaunched:</strong> <strong>Stand-Up India</strong> and <strong>PMEGP</strong> (subsidised loans for new businesses) are being renewed by the government. We will add guides when the new rules are announced. <a href="/schemes/for-women/">See schemes for girls &amp; women</a></div>
+""" + coll_group("Secure your future", "Low-cost savings, pension and insurance to start early.",
         COLL["for-youth"][3])
     + """    <div style="height:24px"></div>
 """ + FOOTER)
@@ -3820,23 +3819,22 @@ write("schemes/for-men/index.html",
     + nav("schemes") + f"""
     <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › For boys &amp; men</p>
     <header class="page-head">
-      <div class="eyebrow">Collection</div>
       <h1>Schemes for boys &amp; men</h1>
       <p>Most government schemes are open to everyone. This page brings together the ones most useful for boys and men at each stage of life: studies, first job, work, business and family.</p>
-      <p class="lang-switch"><a href="/te/schemes/for-men/" lang="te">తెలుగులో చదవండి →</a></p>{share_bar("/schemes/for-men/", "Government schemes for boys and men: college scholarships, first-job reward, workers' pension, vendor loans and more.")}
+      <p class="lang-switch"><a href="/te/schemes/for-men/" lang="te">తెలుగులో చదవండి</a></p>{share_bar("/schemes/for-men/", "Government schemes for boys and men: college scholarships, first-job reward, workers' pension, vendor loans and more.")}
     </header>
-    <a class="cta" href="/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
-""" + coll_group("🎓 Studies & skills", "Scholarships and free training for students and young people.",
+    <a class="cta" href="/tools/scheme-eligibility-checker/"><div><strong>Find what fits you</strong><br><span class="muted" style="font-size:0.9rem">Answer a few questions in our eligibility checker.</span></div></a>
+""" + coll_group("Studies & skills", "Scholarships and free training for students and young people.",
         COLL["for-men"][0])
-    + coll_group("💼 First job & career", "Paid internships, first-job rewards and defence careers.",
+    + coll_group("First job & career", "Paid internships, first-job rewards and defence careers.",
         COLL["for-men"][1])
-    + coll_group("👷 Workers & labourers", "Registration, pension and insurance for daily-wage and unorganised workers.",
+    + coll_group("Workers & labourers", "Registration, pension and insurance for daily-wage and unorganised workers.",
         COLL["for-men"][2])
-    + coll_group("🛒 Own business, trades & drivers", "Loans and support for vendors, artisans, weavers, fishermen, drivers and small business owners.",
+    + coll_group("Own business, trades & drivers", "Loans and support for vendors, artisans, weavers, fishermen, drivers and small business owners.",
         COLL["for-men"][3])
-    + coll_group("🌾 Farmers", "Income support and crop insurance for farmer families.",
+    + coll_group("Farmers", "Income support and crop insurance for farmer families.",
         COLL["for-men"][4])
-    + coll_group("🏥 Health & family", "Free treatment and savings for your family.",
+    + coll_group("Health & family", "Free treatment and savings for your family.",
         COLL["for-men"][5])
     + """    <p style="margin:8px 0 40px">See also: <a href="/schemes/for-youth/">Opportunities for youth</a> · <a href="/schemes/for-women/">Schemes for girls &amp; women</a></p>
 """ + FOOTER)
@@ -3852,15 +3850,14 @@ def state_hub(key, intro, slug):
         + nav("schemes") + f"""
     <p class="crumbs"><a href="/">Home</a> › <a href="/schemes/">Schemes</a> › {label}</p>
     <header class="page-head">
-      <div class="eyebrow">State schemes</div>
       <h1>{label} government schemes</h1>
       <p>{intro}</p>
-      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి →</a></p>{share_bar(f"/schemes/{slug}/", f"{label} government schemes explained simply: who can apply, benefits and how to apply.")}
+      <p class="lang-switch"><a href="/te/schemes/" lang="te">తెలుగులో పథకాలు చదవండి</a></p>{share_bar(f"/schemes/{slug}/", f"{label} government schemes explained simply: who can apply, benefits and how to apply.")}
     </header>
     <div class="grid">
 {"".join(scheme_card(x) for x in items)}    </div>
     <div class="note" style="margin-top:32px">State schemes change often. Each guide shows when it was last updated. Always confirm details at your village/ward secretariat or on the official portal before applying.</div>
-    <p style="margin:24px 0 48px">Looking for central schemes too? <a href="/schemes/?state=central">See all central government schemes →</a></p>
+    <p style="margin:24px 0 48px">Looking for central schemes too? <a href="/schemes/?state=central">See all central government schemes</a></p>
 """ + FOOTER)
 
 state_hub("ap", "Guides to Andhra Pradesh state schemes for farmers, pensioners, mothers and students, explained in simple language.", "andhra-pradesh")
@@ -3904,7 +3901,7 @@ TOOLS = [
 
 def tool_card(t):
     return f'''        <a class="card" href="/tools/{t["slug"]}/">
-          <div class="icon" aria-hidden="true">{t["icon"]}</div>
+
           <h3>{t["name"]}</h3>
           <p>{t["summary"]}</p>
           <span class="tag">Calculator</span>
@@ -3921,9 +3918,9 @@ CHECKER_TEXT = {
         title=page_title("Scheme Eligibility Checker: Which Schemes Can I Get?"),
         desc="Free scheme eligibility checker: answer a few questions to find central, Andhra Pradesh and Telangana government schemes that may suit you, with simple guides.",
         crumbs='<a href="/">Home</a> › <a href="/tools/">Tools</a> › Scheme Eligibility Checker',
-        eyebrow="✅ Free tool", h1="Which schemes am I eligible for?",
+        eyebrow="Free tool", h1="Which schemes am I eligible for?",
         lede="Answer a few simple questions to see which government schemes may suit you. It takes less than a minute, and nothing you enter leaves your phone or computer.",
-        switch='<a href="/te/tools/scheme-eligibility-checker/" lang="te">తెలుగులో చూడండి →</a>',
+        switch='<a href="/te/tools/scheme-eligibility-checker/" lang="te">తెలుగులో చూడండి</a>',
         q_state="Where do you live?", states=[("ap", "Andhra Pradesh"), ("ts", "Telangana"), ("other", "Another state")],
         q_area="Village or town?", areas=[("rural", "Village (rural)"), ("urban", "Town or city (urban)")],
         q_age="Your age",
@@ -4025,9 +4022,9 @@ CHECKER_TEXT = {
         title=page_title("నాకు ఏ ప్రభుత్వ పథకాలు వర్తిస్తాయి? ఉచిత చెకర్"),
         desc="ఉచిత పథకాల అర్హత చెకర్: కొన్ని ప్రశ్నలకు సమాధానం ఇచ్చి మీకు వర్తించే కేంద్ర, ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాలు తెలుసుకోండి.",
         crumbs='<a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › అర్హత చెకర్',
-        eyebrow="✅ ఉచిత సాధనం", h1="నాకు ఏ పథకాలు వర్తిస్తాయి?",
+        eyebrow="ఉచిత సాధనం", h1="నాకు ఏ పథకాలు వర్తిస్తాయి?",
         lede="కొన్ని సులభమైన ప్రశ్నలకు సమాధానం ఇవ్వండి, మీకు ఏ ప్రభుత్వ పథకాలు సరిపోతాయో చూడండి. ఒక నిమిషం కూడా పట్టదు. మీరు ఇచ్చే సమాచారం మీ ఫోన్ లేదా కంప్యూటర్ దాటి ఎక్కడికీ వెళ్ళదు.",
-        switch='<a href="/tools/scheme-eligibility-checker/" lang="en">Use in English →</a>',
+        switch='<a href="/tools/scheme-eligibility-checker/" lang="en">Use in English</a>',
         q_state="మీరు ఎక్కడ నివసిస్తున్నారు?", states=[("ap", "ఆంధ్రప్రదేశ్"), ("ts", "తెలంగాణ"), ("other", "ఇతర రాష్ట్రం")],
         q_area="గ్రామమా, పట్టణమా?", areas=[("rural", "గ్రామం"), ("urban", "పట్టణం / నగరం")],
         q_age="మీ వయసు",
@@ -4162,9 +4159,10 @@ def checker_page(lang):
     <div class="narrow">
       <p class="crumbs">{T["crumbs"]}</p>
       <article>
-        <div class="eyebrow">{T["eyebrow"]}</div>
+        <header class="article-head">
         <h1>{T["h1"]}</h1>
         <p class="lede">{T["lede"]}</p>
+        </header>
         <p class="lang-switch">{T["switch"]}</p>{share_bar(T["path"], C["text"], lang)}
 
         <form id="checker" class="calc checker" onsubmit="return false">
@@ -4275,7 +4273,7 @@ def checker_page(lang):
             var html = '<div class="result"><div class="big">' + hits.length + ' <small>' + (hits.length > 1 ? C.many : C.one) + '</small></div><p>' + C.open_each + '</p></div><div class="grid">';
             hits.forEach(function (h) {{
               var s = S[h.slug];
-              html += '<a class="card" href="' + s.href + '"><div class="icon" aria-hidden="true">' + s.icon + '</div><h3>' + s.name + '</h3><p><strong>' + C.why + '</strong> ' + h.why + '</p><div class="tags"><span class="tag">' + C.tags[s.state] + '</span></div></a>';
+              html += '<a class="card" href="' + s.href + '"><h3>' + s.name + '</h3><p><strong>' + C.why + '</strong> ' + h.why + '</p><div class="tags"><span class="tag">' + C.tags[s.state] + '</span></div></a>';
             }});
             out.innerHTML = html + '</div>';
           }}
@@ -4294,8 +4292,8 @@ write("tools/index.html",
          "Free, simple calculators for Indian government schemes: Atal Pension Yojana contribution and Sukanya Samriddhi maturity.",
          "/tools/")
     + nav("tools") + f'''
+    <p class="crumbs"><a href="/">Home</a> › Tools</p>
     <header class="page-head">
-      <div class="eyebrow">Tools</div>
       <h1>Simple calculators</h1>
       <p>Free tools to plan your savings and pension under government schemes. Nothing you enter leaves your device.</p>
     </header>
@@ -4318,10 +4316,11 @@ write("tools/atal-pension-calculator/index.html",
     <div class="narrow">
       <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Atal Pension Calculator</p>
       <article>
-        <div class="eyebrow">👴 Calculator</div>
+        <header class="article-head">
         <h1>Atal Pension Yojana Calculator</h1>
         <p class="lede">Find out how much you need to pay to get a guaranteed pension of ₹1,000 to ₹5,000 a month after 60. Based on the official APY contribution chart.</p>
-        <p class="lang-switch"><a href="/te/tools/atal-pension-calculator/" lang="te">తెలుగులో చూడండి →</a></p>{share_bar("/tools/atal-pension-calculator/", "Atal Pension Yojana calculator: see how much you pay each month for a ₹1,000 to ₹5,000 pension after 60.")}
+        </header>
+        <p class="lang-switch"><a href="/te/tools/atal-pension-calculator/" lang="te">తెలుగులో చూడండి</a></p>{share_bar("/tools/atal-pension-calculator/", "Atal Pension Yojana calculator: see how much you pay each month for a ₹1,000 to ₹5,000 pension after 60.")}
 
         <div class="calc">
           <label>Your age today
@@ -4407,10 +4406,11 @@ write("tools/sukanya-samriddhi-calculator/index.html",
     <div class="narrow">
       <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Sukanya Samriddhi Calculator</p>
       <article>
-        <div class="eyebrow">👧 Calculator</div>
+        <header class="article-head">
         <h1>Sukanya Samriddhi Yojana Calculator</h1>
         <p class="lede">See how much a Sukanya Samriddhi account could grow to when it matures after 21 years.</p>
-        <p class="lang-switch"><a href="/te/tools/sukanya-samriddhi-calculator/" lang="te">తెలుగులో చూడండి →</a></p>''' + share_bar("/tools/sukanya-samriddhi-calculator/", "Sukanya Samriddhi calculator: see how much your daughter's SSY account can grow to in 21 years.") + '''
+        </header>
+        <p class="lang-switch"><a href="/te/tools/sukanya-samriddhi-calculator/" lang="te">తెలుగులో చూడండి</a></p>''' + share_bar("/tools/sukanya-samriddhi-calculator/", "Sukanya Samriddhi calculator: see how much your daughter's SSY account can grow to in 21 years.") + '''
 
         <div class="calc">
           <label>Yearly deposit (₹250 to ₹1,50,000)
@@ -4481,10 +4481,11 @@ write("te/tools/atal-pension-calculator/index.html",
     <div class="narrow">
       <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › అటల్ పెన్షన్ కాలిక్యులేటర్</p>
       <article>
-        <div class="eyebrow">👴 కాలిక్యులేటర్</div>
+        <header class="article-head">
         <h1>అటల్ పెన్షన్ యోజన కాలిక్యులేటర్</h1>
         <p class="lede">60 ఏళ్ళ తర్వాత నెలకు ₹1,000 నుంచి ₹5,000 హామీ పింఛన్ రావాలంటే మీరు ఎంత కట్టాలో తెలుసుకోండి. అధికారిక APY చందా చార్ట్ ఆధారంగా.</p>
-        <p class="lang-switch"><a href="/tools/atal-pension-calculator/" lang="en">Use in English →</a></p>{share_bar("/te/tools/atal-pension-calculator/", "అటల్ పెన్షన్ యోజన కాలిక్యులేటర్: 60 ఏళ్ళ తర్వాత ₹1,000 నుంచి ₹5,000 పింఛన్‌కు నెలకు ఎంత కట్టాలో చూడండి.", "te")}
+        </header>
+        <p class="lang-switch"><a href="/tools/atal-pension-calculator/" lang="en">Use in English</a></p>{share_bar("/te/tools/atal-pension-calculator/", "అటల్ పెన్షన్ యోజన కాలిక్యులేటర్: 60 ఏళ్ళ తర్వాత ₹1,000 నుంచి ₹5,000 పింఛన్‌కు నెలకు ఎంత కట్టాలో చూడండి.", "te")}
 
         <div class="calc">
           <label>మీ ప్రస్తుత వయసు
@@ -4571,10 +4572,11 @@ write("te/tools/sukanya-samriddhi-calculator/index.html",
     <div class="narrow">
       <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › సుకన్య సమృద్ధి కాలిక్యులేటర్</p>
       <article>
-        <div class="eyebrow">👧 కాలిక్యులేటర్</div>
+        <header class="article-head">
         <h1>సుకన్య సమృద్ధి యోజన కాలిక్యులేటర్</h1>
         <p class="lede">21 ఏళ్ళ తర్వాత మెచ్యూర్ అయ్యేటప్పుడు సుకన్య సమృద్ధి ఖాతా ఎంతకు పెరగవచ్చో చూడండి.</p>
-        <p class="lang-switch"><a href="/tools/sukanya-samriddhi-calculator/" lang="en">Use in English →</a></p>''' + share_bar("/te/tools/sukanya-samriddhi-calculator/", "సుకన్య సమృద్ధి కాలిక్యులేటర్: మీ కూతురి SSY ఖాతా 21 ఏళ్ళలో ఎంత అవుతుందో చూడండి.", "te") + '''
+        </header>
+        <p class="lang-switch"><a href="/tools/sukanya-samriddhi-calculator/" lang="en">Use in English</a></p>''' + share_bar("/te/tools/sukanya-samriddhi-calculator/", "సుకన్య సమృద్ధి కాలిక్యులేటర్: మీ కూతురి SSY ఖాతా 21 ఏళ్ళలో ఎంత అవుతుందో చూడండి.", "te") + '''
 
         <div class="calc">
           <label>ఏటా జమ (₹250 నుంచి ₹1,50,000)
@@ -4660,11 +4662,12 @@ def article_te(s, t):
     <div class="narrow">
       <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › {t["short"]}</p>
       <article>
-        <div class="eyebrow">{s["icon"]} {t["cat_label"]}</div>
+        <header class="article-head">
         <h1>{t["name"]}</h1>
         <p class="lede">{t["lede"]}</p>
-        <div class="meta"><span>చివరిగా అప్‌డేట్ చేసింది: {nice_date(guide_iso(slug), "te")}</span><span>{TE_STATE[st(s)]}</span></div>
-        <p class="lang-switch"><a href="/schemes/{slug}/" lang="en">Read in English →</a></p>
+        </header>
+        <div class="meta"><span>చివరిగా అప్‌డేట్ చేసింది: {nice_date(guide_iso(slug), "te")}</span><span>{TE_STATE[st(s)]}</span><span>{t["cat_label"]}</span></div>
+        <p class="lang-switch"><a href="/schemes/{slug}/" lang="en">Read in English</a></p>
 
         <div class="facts">
 {facts_html}
@@ -4688,7 +4691,7 @@ for slug, t in TE.items():
 
 def te_card(s, t):
     return f'''        <a class="card" href="/te/schemes/{s["slug"]}/" lang="te">
-          <div class="icon" aria-hidden="true">{s["icon"]}</div>
+
           <h3>{t["name"]}</h3>
           <p>{t["lede"].split(". ")[0].split("। ")[0]}.</p>
           <div class="tags"><span class="tag state">{TE_STATE_SHORT[st(s)]}</span><span class="tag">{t["cat_label"]}</span></div>
@@ -4704,9 +4707,9 @@ TE_COLL = {
         lede="కేంద్ర ప్రభుత్వం, ఆంధ్రప్రదేశ్, తెలంగాణ ఇచ్చే స్కాలర్‌షిప్‌లు, పొదుపు, వ్యాపార రుణాలు, రోజువారీ సాయం, అన్నీ ఒకే చోట.",
         share="బాలికలు, మహిళల కోసం ప్రభుత్వ పథకాలు ఒకే చోట: స్కాలర్‌షిప్‌లు, పొదుపు, వ్యాపార రుణాలు, SHG సాయం, ఇంకా.",
         og=("బాలికలు, మహిళలకు పథకాలు", [("ఇందులో", "స్కాలర్‌షిప్‌లు, పొదుపు, రుణాలు"), ("ఇంకా", "SHG సాయం, ఉచిత బస్సు"), ("ఎక్కడివి", "కేంద్రం, ఏపీ, తెలంగాణ")]),
-        groups=[("🎓 చదువు", "బడి నుంచి సాంకేతిక డిగ్రీల వరకు అమ్మాయిల చదువుకు సాయం."),
-                ("💼 స్వయం ఉపాధి & వ్యాపారం", "సంపాదించాలనుకునే మహిళలకు రుణాలు, శిక్షణ, సహాయం."),
-                ("🛡️ రోజువారీ సాయం", "మహిళలు, వారి కుటుంబాలకు ప్రయాణం, వంట గ్యాస్, పెళ్ళి సాయం, పింఛన్లు, ఇళ్ళ సాయం.")],
+        groups=[("చదువు", "బడి నుంచి సాంకేతిక డిగ్రీల వరకు అమ్మాయిల చదువుకు సాయం."),
+                ("స్వయం ఉపాధి & వ్యాపారం", "సంపాదించాలనుకునే మహిళలకు రుణాలు, శిక్షణ, సహాయం."),
+                ("రోజువారీ సాయం", "మహిళలు, వారి కుటుంబాలకు ప్రయాణం, వంట గ్యాస్, పెళ్ళి సాయం, పింఛన్లు, ఇళ్ళ సాయం.")],
         notes={1: '<div class="note"><strong>మళ్ళీ ప్రారంభిస్తున్నారు:</strong> <strong>స్టాండ్-అప్ ఇండియా</strong> (మహిళలు, ఎస్సీ/ఎస్టీ వ్యాపారవేత్తలకు ₹10 లక్షలు–₹1 కోటి బ్యాంకు రుణాలు) మార్చి 2025తో ముగిసింది, కొత్త రూపంలో సిద్ధం చేస్తున్నట్లు మార్చి 2026లో ప్రభుత్వం ప్రకటించింది. <strong>PMEGP</strong> (కొత్త వ్యాపారాలకు సబ్సిడీ, మహిళలకు ఎక్కువ సబ్సిడీ) 31 మార్చి 2026 వరకు నడిచింది, పొడిగింపు పరిశీలనలో ఉంది. కొత్త నిబంధనలు ప్రకటించగానే పూర్తి గైడ్‌లు ఇస్తాం.</div>'},
         end='<p style="margin:8px 0 40px">ఇవి కూడా చూడండి: <a href="/te/schemes/for-youth/">యువతకు అవకాశాలు</a> · <a href="/te/schemes/for-men/">అబ్బాయిలు & పురుషులకు పథకాలు</a></p>'),
     "for-youth": dict(
@@ -4716,11 +4719,11 @@ TE_COLL = {
         lede="జీతంతో ఇంటర్న్‌షిప్‌లు, రక్షణ దళాల ఉద్యోగాలు, ఉచిత నైపుణ్య శిక్షణ, సొంత పని మొదలుపెట్టడానికి సాయం: యువతకు ప్రభుత్వ అవకాశాలన్నీ ఒకే చోట.",
         share="యువతకు ప్రభుత్వ అవకాశాలు: జీతంతో ఇంటర్న్‌షిప్‌లు, అగ్నివీర్, ఉచిత నైపుణ్య శిక్షణ, వ్యాపార రుణాలు.",
         og=("యువతకు అవకాశాలు", [("ఇందులో", "ఇంటర్న్‌షిప్‌లు, అగ్నివీర్"), ("ఇంకా", "ఉచిత నైపుణ్య శిక్షణ"), ("ఎక్కడివి", "కేంద్రం, ఏపీ, తెలంగాణ")]),
-        groups=[("🧑‍💼 ఉద్యోగాలు & ఇంటర్న్‌షిప్‌లు", "చదువుతూ సంపాదించండి, లేదా దేశానికి సేవ చేయండి."),
-                ("🛠️ నైపుణ్యాలు & చదువు", "మీ కెరీర్ కోసం ఉచిత శిక్షణ, స్కాలర్‌షిప్‌లు."),
-                ("💼 సొంత పని మొదలుపెట్టండి", "మీ సొంత వ్యాపారం లేదా వృత్తికి రుణాలు, సహాయం."),
-                ("🛡️ మీ భవిష్యత్తుకు భద్రత", "ముందే మొదలుపెట్టడానికి తక్కువ ఖర్చుతో పొదుపు, పింఛన్, బీమా.")],
-        notes={2: '<div class="note"><strong>మళ్ళీ ప్రారంభిస్తున్నారు:</strong> <strong>స్టాండ్-అప్ ఇండియా</strong>, <strong>PMEGP</strong> (కొత్త వ్యాపారాలకు సబ్సిడీ రుణాలు)ను ప్రభుత్వం పునరుద్ధరిస్తోంది. కొత్త నిబంధనలు ప్రకటించగానే గైడ్‌లు ఇస్తాం. <a href="/te/schemes/for-women/">బాలికలు & మహిళలకు పథకాలు చూడండి →</a></div>'},
+        groups=[("ఉద్యోగాలు & ఇంటర్న్‌షిప్‌లు", "చదువుతూ సంపాదించండి, లేదా దేశానికి సేవ చేయండి."),
+                ("నైపుణ్యాలు & చదువు", "మీ కెరీర్ కోసం ఉచిత శిక్షణ, స్కాలర్‌షిప్‌లు."),
+                ("సొంత పని మొదలుపెట్టండి", "మీ సొంత వ్యాపారం లేదా వృత్తికి రుణాలు, సహాయం."),
+                ("మీ భవిష్యత్తుకు భద్రత", "ముందే మొదలుపెట్టడానికి తక్కువ ఖర్చుతో పొదుపు, పింఛన్, బీమా.")],
+        notes={2: '<div class="note"><strong>మళ్ళీ ప్రారంభిస్తున్నారు:</strong> <strong>స్టాండ్-అప్ ఇండియా</strong>, <strong>PMEGP</strong> (కొత్త వ్యాపారాలకు సబ్సిడీ రుణాలు)ను ప్రభుత్వం పునరుద్ధరిస్తోంది. కొత్త నిబంధనలు ప్రకటించగానే గైడ్‌లు ఇస్తాం. <a href="/te/schemes/for-women/">బాలికలు & మహిళలకు పథకాలు చూడండి</a></div>'},
         end='<p style="margin:8px 0 40px">ఇవి కూడా చూడండి: <a href="/te/schemes/for-women/">బాలికలు & మహిళలకు పథకాలు</a> · <a href="/te/schemes/for-men/">అబ్బాయిలు & పురుషులకు పథకాలు</a></p>'),
     "for-men": dict(
         title="అబ్బాయిలు, పురుషులకు పథకాలు: చదువు, ఉద్యోగం, రుణాలు",
@@ -4729,12 +4732,12 @@ TE_COLL = {
         lede="చాలా ప్రభుత్వ పథకాలు అందరికీ వర్తిస్తాయి. చదువు, మొదటి ఉద్యోగం, పని, వ్యాపారం, కుటుంబం: జీవితంలోని ప్రతి దశలో అబ్బాయిలు, పురుషులకు ఎక్కువగా ఉపయోగపడే పథకాలను ఈ పేజీ ఒకే చోట చూపిస్తుంది.",
         share="అబ్బాయిలు, పురుషులకు ప్రభుత్వ పథకాలు: కాలేజీ స్కాలర్‌షిప్‌లు, మొదటి ఉద్యోగ ప్రోత్సాహకం, కార్మికుల పింఛన్, వ్యాపారుల రుణాలు, ఇంకా.",
         og=("అబ్బాయిలు, పురుషులకు పథకాలు", [("చదువు", "స్కాలర్‌షిప్‌లు, నైపుణ్యాలు"), ("పని", "మొదటి ఉద్యోగం, ఈ-శ్రమ్, పింఛన్"), ("వ్యాపారం", "వ్యాపారులు, కళాకారులకు రుణాలు")]),
-        groups=[("🎓 చదువు & నైపుణ్యాలు", "విద్యార్థులు, యువతకు స్కాలర్‌షిప్‌లు, ఉచిత శిక్షణ."),
-                ("💼 మొదటి ఉద్యోగం & కెరీర్", "జీతంతో ఇంటర్న్‌షిప్‌లు, మొదటి ఉద్యోగ ప్రోత్సాహకం, రక్షణ దళాల కెరీర్."),
-                ("👷 కార్మికులు & కూలీలు", "రోజువారీ కూలీలు, అసంఘటిత కార్మికులకు నమోదు, పింఛన్, బీమా."),
-                ("🛒 సొంత వ్యాపారం, వృత్తులు & డ్రైవర్లు", "వీధి వ్యాపారులు, కళాకారులు, నేతన్నలు, మత్స్యకారులు, డ్రైవర్లు, చిన్న వ్యాపారులకు రుణాలు, సహాయం."),
-                ("🌾 రైతులు", "రైతు కుటుంబాలకు ఆదాయ సాయం, పంటల బీమా."),
-                ("🏥 ఆరోగ్యం & కుటుంబం", "మీ కుటుంబానికి ఉచిత వైద్యం, పొదుపు.")],
+        groups=[("చదువు & నైపుణ్యాలు", "విద్యార్థులు, యువతకు స్కాలర్‌షిప్‌లు, ఉచిత శిక్షణ."),
+                ("మొదటి ఉద్యోగం & కెరీర్", "జీతంతో ఇంటర్న్‌షిప్‌లు, మొదటి ఉద్యోగ ప్రోత్సాహకం, రక్షణ దళాల కెరీర్."),
+                ("కార్మికులు & కూలీలు", "రోజువారీ కూలీలు, అసంఘటిత కార్మికులకు నమోదు, పింఛన్, బీమా."),
+                ("సొంత వ్యాపారం, వృత్తులు & డ్రైవర్లు", "వీధి వ్యాపారులు, కళాకారులు, నేతన్నలు, మత్స్యకారులు, డ్రైవర్లు, చిన్న వ్యాపారులకు రుణాలు, సహాయం."),
+                ("రైతులు", "రైతు కుటుంబాలకు ఆదాయ సాయం, పంటల బీమా."),
+                ("ఆరోగ్యం & కుటుంబం", "మీ కుటుంబానికి ఉచిత వైద్యం, పొదుపు.")],
         notes={},
         end='<p style="margin:8px 0 40px">ఇవి కూడా చూడండి: <a href="/te/schemes/for-youth/">యువతకు అవకాశాలు</a> · <a href="/te/schemes/for-women/">బాలికలు & మహిళలకు పథకాలు</a></p>'),
 }
@@ -4742,7 +4745,7 @@ TE_COLL = {
 def coll_group_te(title, intro, slugs):
     cards = "".join(te_card(BY_SLUG[x], TE[x]) if x in TE else scheme_card(BY_SLUG[x]) for x in slugs if x in BY_SLUG)
     return f"""
-    <section style="padding:40px 0">
+    <section class="group">
       <div class="section-head">
         <h2>{title}</h2>
         <p>{intro}</p>
@@ -4765,12 +4768,11 @@ for page, c in TE_COLL.items():
         + nav("schemes", lang="te") + f'''
     <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › {c["crumb"]}</p>
     <header class="page-head">
-      <div class="eyebrow">సంకలనం</div>
       <h1>{c["h1"]}</h1>
       <p>{c["lede"]}</p>
-      <p class="lang-switch"><a href="/schemes/{page}/" lang="en">Read in English →</a></p>{share_bar(path, c["share"], "te")}
+      <p class="lang-switch"><a href="/schemes/{page}/" lang="en">Read in English</a></p>{share_bar(path, c["share"], "te")}
     </header>
-    <a class="cta" href="/te/tools/scheme-eligibility-checker/"><span>✅</span><div><strong>మీకు ఏవి వర్తిస్తాయో చూడండి</strong><br><span class="muted" style="font-size:0.9rem">మా అర్హత చెకర్‌లో కొన్ని ప్రశ్నలకు సమాధానం ఇవ్వండి.</span></div></a>
+    <a class="cta" href="/te/tools/scheme-eligibility-checker/"><div><strong>మీకు ఏవి వర్తిస్తాయో చూడండి</strong><br><span class="muted" style="font-size:0.9rem">మా అర్హత చెకర్‌లో కొన్ని ప్రశ్నలకు సమాధానం ఇవ్వండి.</span></div></a>
 {groups_html}    {c["end"]}
 ''' + footer("te"))
 
@@ -4780,16 +4782,16 @@ write("te/schemes/index.html",
          "కేంద్ర, ఆంధ్రప్రదేశ్, తెలంగాణ ప్రభుత్వ పథకాల సులభమైన తెలుగు గైడ్‌లు: అర్హత, లబ్ధి, పత్రాలు, దరఖాస్తు విధానం.",
          "/te/schemes/", lang="te", alternates={"en": "/schemes/", "te": "/te/schemes/"})
     + nav("schemes", lang="te") + f'''
+    <p class="crumbs"><a href="/">హోమ్</a> › తెలుగులో పథకాలు</p>
     <header class="page-head">
-      <div class="eyebrow">తెలుగులో పథకాలు</div>
       <h1>ప్రభుత్వ పథకాలు, సులభమైన తెలుగులో</h1>
       <p>కేంద్ర ప్రభుత్వ, ఆంధ్రప్రదేశ్, తెలంగాణ పథకాల గురించి స్పష్టమైన గైడ్‌లు: ఎవరు అర్హులు, ఏం లభిస్తుంది, ఏ పత్రాలు కావాలి, అధికారిక పోర్టల్‌లో ఎలా దరఖాస్తు చేయాలి.</p>
-      <p class="lang-switch"><a href="/schemes/" lang="en">All schemes in English →</a> &nbsp;·&nbsp; <a href="/te/updates/">⏰ తాజా సమాచారం &amp; చివరి తేదీలు →</a></p>
+      <p class="lang-switch"><a href="/schemes/" lang="en">All schemes in English</a> &nbsp;·&nbsp; <a href="/te/updates/">తాజా సమాచారం &amp; చివరి తేదీలు</a></p>
     </header>
-    <a class="cta" href="/te/schemes/for-women/" style="margin-bottom:12px"><span>👩</span><div><strong>బాలికలు & మహిళలకు పథకాలు</strong><br><span class="muted" style="font-size:0.9rem">స్కాలర్‌షిప్‌లు, వ్యాపార రుణాలు, SHG సాయం, ఉచిత బస్సు, ఇంకా.</span></div></a>
-    <a class="cta" href="/te/schemes/for-youth/" style="margin-bottom:12px"><span>🧑‍💼</span><div><strong>యువతకు అవకాశాలు</strong><br><span class="muted" style="font-size:0.9rem">జీతంతో ఇంటర్న్‌షిప్‌లు, అగ్నివీర్, ఉచిత నైపుణ్య శిక్షణ, రుణాలు.</span></div></a>
-    <a class="cta" href="/te/schemes/for-men/" style="margin-bottom:12px"><span>👨</span><div><strong>అబ్బాయిలు & పురుషులకు పథకాలు</strong><br><span class="muted" style="font-size:0.9rem">స్కాలర్‌షిప్‌లు, మొదటి ఉద్యోగం, కార్మికుల పింఛన్, వ్యాపారుల రుణాలు.</span></div></a>
-    <a class="cta" href="/te/tools/scheme-eligibility-checker/" style="margin-bottom:28px"><span>✅</span><div><strong>మీకు ఏ పథకాలు వర్తిస్తాయో తెలియదా?</strong><br><span class="muted" style="font-size:0.9rem">కొన్ని ప్రశ్నలకు సమాధానం ఇచ్చి మీకు సరిపోయే పథకాలు చూడండి.</span></div></a>
+    <a class="cta" href="/te/schemes/for-women/"><div><strong>బాలికలు & మహిళలకు పథకాలు</strong><br><span class="muted" style="font-size:0.9rem">స్కాలర్‌షిప్‌లు, వ్యాపార రుణాలు, SHG సాయం, ఉచిత బస్సు, ఇంకా.</span></div></a>
+    <a class="cta" href="/te/schemes/for-youth/"><div><strong>యువతకు అవకాశాలు</strong><br><span class="muted" style="font-size:0.9rem">జీతంతో ఇంటర్న్‌షిప్‌లు, అగ్నివీర్, ఉచిత నైపుణ్య శిక్షణ, రుణాలు.</span></div></a>
+    <a class="cta" href="/te/schemes/for-men/"><div><strong>అబ్బాయిలు & పురుషులకు పథకాలు</strong><br><span class="muted" style="font-size:0.9rem">స్కాలర్‌షిప్‌లు, మొదటి ఉద్యోగం, కార్మికుల పింఛన్, వ్యాపారుల రుణాలు.</span></div></a>
+    <a class="cta" href="/te/tools/scheme-eligibility-checker/"><div><strong>మీకు ఏ పథకాలు వర్తిస్తాయో తెలియదా?</strong><br><span class="muted" style="font-size:0.9rem">కొన్ని ప్రశ్నలకు సమాధానం ఇచ్చి మీకు సరిపోయే పథకాలు చూడండి.</span></div></a>
     <div class="grid">
 {"".join(te_card(x, TE[x["slug"]]) for x in te_items)}    </div>
     <p class="soon-list"><strong>త్వరలో:</strong> మరిన్ని ఆంధ్రప్రదేశ్, తెలంగాణ, కేంద్ర పథకాలు. మా గైడ్‌లన్నీ ఇప్పుడు తెలుగులోనూ ఉన్నాయి.</p>
@@ -4806,18 +4808,18 @@ GAMES = [
 def game_card(x):
     tags = "".join(f'<span class="tag">{t}</span>' for t in x["tags"])
     return f"""        <a class="card game" href="/games/{x["slug"]}/">
-          <div class="game-art" aria-hidden="true">{x["emoji"]}</div>
+
           <h3>{x["name"]}</h3>
           <p>{x["summary"]}</p>
           <div class="tags">{tags}</div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Play now →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">Play now</span>
         </a>
 """
 write("games/index.html",
     head("Free Online Games | Kramavriddhi", "Free games to play in your browser, made by Kramavriddhi. No download needed.", "/games/")
     + nav("games") + f"""
+    <p class="crumbs"><a href="/">Home</a> › <a href="/apps/">Apps</a> › Games</p>
     <header class="page-head">
-      <div class="eyebrow">Games</div>
       <h1>Play free games</h1>
       <p>Simple, fun games made by Kramavriddhi. They run right in your browser on phone or computer, with no download or sign-up.</p>
     </header>
@@ -4904,7 +4906,7 @@ UPDATES = [
          link="/schemes/pm-internship-scheme/"),
 ]
 UPDATES_CHECKED = "24 October 2026"  # change when you re-check the list
-KIND_LABEL = {"deadline": "⏰ Deadline", "expected": "📅 Expected", "news": "📰 News", "rate": "📈 Rate"}
+KIND_LABEL = {"deadline": "Deadline", "expected": "Expected", "news": "News", "rate": "Rate"}
 
 def update_item(u):
     until = f' data-until="{u["until"]}"' if u.get("until") else ""
@@ -4920,7 +4922,7 @@ UPDATES_JS = """
       (function () {
         var today = new Date().toISOString().slice(0, 10);
         document.querySelectorAll('.update[data-until]').forEach(function (el) {
-          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = '✔ Closed'; }
+          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = 'Closed'; }
         });
       })();
     </script>
@@ -4933,12 +4935,12 @@ write("updates/index.html",
          image=og_card("updates", "Latest updates & deadlines", "⏰", "Updates",
                        [("Deadlines", "Scholarships, gas & more"), ("Expected", "Instalment dates"), ("Last checked", UPDATES_CHECKED)], foot="Deadlines · Expected payments · New rules"))
     + nav("schemes") + f"""
+    <p class="crumbs"><a href="/">Home</a> › Updates</p>
     <header class="page-head">
-      <div class="eyebrow">Updates</div>
       <h1>Latest updates &amp; deadlines</h1>
       <p>Important dates, expected payments and new rules for the schemes on Kramavriddhi. We check official sources regularly and update this page.</p>
       <p class="muted" style="font-size:0.9rem">Last checked: {UPDATES_CHECKED}</p>
-      <p class="lang-switch"><a href="/te/updates/" lang="te">తెలుగులో చదవండి →</a></p>{share_bar("/updates/", "Latest government scheme deadlines and expected payment dates (Central, AP and Telangana) in one place:")}
+      <p class="lang-switch"><a href="/te/updates/" lang="te">తెలుగులో చదవండి</a></p>{share_bar("/updates/", "Latest government scheme deadlines and expected payment dates (Central, AP and Telangana) in one place:")}
     </header>
     <div class="updates">
 {"".join(update_item(u) for u in UPDATES)}    </div>
@@ -4989,7 +4991,7 @@ TE_UPDATES = {
     "PM Internship: final-year students can now apply": ("పీఎం ఇంటర్న్‌షిప్: ఫైనల్ ఇయర్ విద్యార్థులు ఇప్పుడు దరఖాస్తు చేయవచ్చు",
         "18–25 ఏళ్ళ ఫైనల్ ఇయర్ యూజీ, పీజీ విద్యార్థులు కాలేజీ NOCతో దరఖాస్తు చేయవచ్చు. ఇంటర్న్‌లకు నెలకు కనీసం ₹9,000."),
 }
-KIND_LABEL_TE = {"deadline": "⏰ చివరి తేదీ", "expected": "📅 అంచనా", "news": "📰 వార్త", "rate": "📈 రేటు"}
+KIND_LABEL_TE = {"deadline": "చివరి తేదీ", "expected": "అంచనా", "news": "వార్త", "rate": "రేటు"}
 _missing = [u["title"] for u in UPDATES if u["title"] not in TE_UPDATES]
 assert not _missing, f"Add Telugu text to TE_UPDATES for: {_missing}"
 
@@ -5019,18 +5021,18 @@ write("te/updates/index.html",
                        [("చివరి తేదీలు", "స్కాలర్‌షిప్‌లు, గ్యాస్, ఇంకా"), ("అంచనా", "విడతల తేదీలు"), ("చివరిగా చూసింది", te_month_date(UPDATES_CHECKED))],
                        lang="te", foot="చివరి తేదీలు · రావాల్సిన చెల్లింపులు · కొత్త నిబంధనలు"))
     + nav("schemes", lang="te") + f"""
+    <p class="crumbs"><a href="/">హోమ్</a> › <a href="/te/schemes/">తెలుగు పథకాలు</a> › తాజా సమాచారం</p>
     <header class="page-head">
-      <div class="eyebrow">తాజా సమాచారం</div>
       <h1>తాజా సమాచారం &amp; చివరి తేదీలు</h1>
       <p>క్రమవృద్ధిలోని పథకాల ముఖ్యమైన తేదీలు, రావాల్సిన చెల్లింపులు, కొత్త నిబంధనలు. అధికారిక మూలాలను తరచుగా చూసి ఈ పేజీని అప్‌డేట్ చేస్తాం.</p>
       <p class="muted" style="font-size:0.9rem">చివరిగా చూసింది: {te_month_date(UPDATES_CHECKED)}</p>
-      <p class="lang-switch"><a href="/updates/" lang="en">Read in English →</a></p>{share_bar("/te/updates/", "ప్రభుత్వ పథకాల చివరి తేదీలు, రావాల్సిన చెల్లింపుల తేదీలు (కేంద్రం, ఏపీ, తెలంగాణ) ఒకే చోట:", "te")}
+      <p class="lang-switch"><a href="/updates/" lang="en">Read in English</a></p>{share_bar("/te/updates/", "ప్రభుత్వ పథకాల చివరి తేదీలు, రావాల్సిన చెల్లింపుల తేదీలు (కేంద్రం, ఏపీ, తెలంగాణ) ఒకే చోట:", "te")}
     </header>
     <div class="updates">
 {"".join(update_item_te(u) for u in UPDATES)}    </div>
     <div class="note" style="margin-top:28px">"అంచనా" అని ఉన్న తేదీలు గత పద్ధతులు, వార్తల ఆధారంగా ఇచ్చినవి, అధికారిక ప్రకటనలు కావు. ప్రతి గైడ్‌లో ఇచ్చిన అధికారిక పోర్టల్‌లో తప్పకుండా నిర్ధారించుకోండి.</div>
     <div style="height:40px"></div>
-{UPDATES_JS.replace("✔ Closed", "✔ ముగిసింది")}""" + footer("te"))
+{UPDATES_JS.replace("Closed", "ముగిసింది")}""" + footer("te"))
 
 # ---------------------------------------------------------------- apps (added 13 Oct 2026)
 APPS_LIVE = [
@@ -5059,21 +5061,20 @@ APPS_SOON = [
 
 def app_card(a, live=True):
     tags = "".join(f'<span class="tag">{t}</span>' for t in a.get("tags", []))
-    note = f'<p class="app-note">⚠️ {a["note"]}</p>' if a.get("note") else ""
+    note = f'<p class="app-note">{a["note"]}</p>' if a.get("note") else ""
     ext = a["url"].startswith("http") if live else False
     target = ' target="_blank" rel="noopener"' if ext else ""
     if live:
         return f"""        <a class="card game" href="{a["url"]}"{target}>
-          <div class="game-art" aria-hidden="true">{a["emoji"]}</div>
+
           <h3>{a["name"]}</h3>
           <p>{a["summary"]}</p>
           {note}
           <div class="tags">{tags}</div>
-          <span class="btn primary" style="align-self:flex-start;margin-top:6px">{a.get("cta") or ("Open game" if "Game" in a.get("tags", []) else "Open app")} →</span>
+          <span class="btn primary" style="align-self:flex-start;margin-top:6px">{a.get("cta") or ("Open game" if "Game" in a.get("tags", []) else "Open app")}</span>
         </a>
 """
     return f"""        <div class="card game soon">
-          <div class="game-art" aria-hidden="true" style="opacity:.75">{a["emoji"]}</div>
           <h3>{a["name"]}</h3>
           <p>{a["summary"]}</p>
           <span class="status">In development</span>
@@ -5083,17 +5084,17 @@ def app_card(a, live=True):
 write("apps/index.html",
     head("Free Apps and Games by Kramavriddhi", "Free learning apps and games by Kramavriddhi: DevOps Academy, GPAT Prep, Rex's Big Adventure, and apps coming soon like VYAYAM and TaskFlow.", "/apps/")
     + nav("apps") + f"""
+    <p class="crumbs"><a href="/">Home</a> › Apps &amp; games</p>
     <header class="page-head">
-      <div class="eyebrow">Apps &amp; games</div>
       <h1>Apps that help you grow</h1>
       <p>Free apps and games made by Kramavriddhi. They open right in your browser on phone or computer, with no download or sign-up.</p>
     </header>
-    <section style="padding:8px 0 40px;border-top:0">
+    <section class="first">
       <div class="section-head"><h2>Try now</h2></div>
       <div class="grid">
 {"".join(app_card(a) for a in APPS_LIVE)}      </div>
     </section>
-    <section style="padding:40px 0">
+    <section class="group">
       <div class="section-head"><h2>Coming soon</h2><p>Apps we are building. Follow us on <a href="https://www.youtube.com/@kramavriddhi" target="_blank" rel="noopener">YouTube</a> for launch news.</p></div>
       <div class="grid">
 {"".join(app_card(a, live=False) for a in APPS_SOON)}      </div>
@@ -5177,9 +5178,11 @@ write("courses/azure-data-engineering/index.html",
     <div class="narrow">
       <article>
         <p class="crumbs"><a href="/">Home</a> › <a href="/apps/">Apps</a> › Azure Data Engineering Course</p>
-        <div class="eyebrow">Free course · YouTube</div>
+        <header class="article-head">
         <h1>Azure Data Engineering Course: Basic to Advanced</h1>
+        <div class="meta"><span>Free course</span><span>YouTube</span></div>
         <p class="lede">A free course that takes you from zero to job-ready Azure data engineer in three levels and about {ADE_VIDEOS} videos. Every module adds a piece to one retail project, so you finish with a real portfolio.</p>
+        </header>
         <div class="official">
           <strong>Watch on YouTube:</strong> <a href="https://www.youtube.com/@kramavriddhi" target="_blank" rel="noopener">youtube.com/@kramavriddhi</a><br>
           Videos are released level by level. Subscribe to get each new lesson.
@@ -5213,9 +5216,9 @@ write("courses/azure-data-engineering/index.html",
 def simple(path, title, desc, active, h1, eyebrow, body):
     write(path.strip("/") + "/index.html", head(f"{title} | Kramavriddhi", desc, path) + nav(active) + f'''
     <div class="narrow">
+      <p class="crumbs"><a href="/">Home</a> › {eyebrow}</p>
       <article>
-        <div class="eyebrow">{eyebrow}</div>
-        <h1>{h1}</h1>
+        <header class="article-head"><h1>{h1}</h1></header>
 {body}
       </article>
     </div>
@@ -5301,9 +5304,10 @@ simple("/disclaimer/", "Disclaimer", "Disclaimer: Kramavriddhi is an independent
 write("404.html", head("Page not found | Kramavriddhi", "Page not found.", "/404.html") + nav() + '''
     <div class="narrow">
       <article>
-        <div class="eyebrow">404</div>
+        <header class="article-head">
         <h1>Page not found</h1>
         <p class="lede">The page you're looking for doesn't exist or has moved.</p>
+        </header>
         <div class="btns"><a class="btn primary" href="/schemes/">Browse schemes</a><a class="btn ghost" href="/">Go home</a></div>
       </article>
     </div>

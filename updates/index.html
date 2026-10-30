@@ -27,18 +27,20 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:site_name" content="Kramavriddhi">
   <meta property="og:locale" content="en_IN">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23a46400'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css?v=11d9d231">
-  <script src="/assets/site.js?v=11d9d231" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tokens.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/base.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/style.css?v=02a98478">
+  <script src="/assets/site.js?v=02a98478" defer></script>
 </head>
 <body>
   <div class="wrap">
-    <nav class="top">
+    <nav class="top" aria-label="Main">
       <a class="brand" href="/">
         <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Kramavriddhi
+        <span>Kramavriddhi</span>
       </a>
       <ul>
         <li><a href="/schemes/" aria-current="page">Schemes</a></li>
@@ -49,107 +51,107 @@
       </ul>
     </nav>
 
+    <p class="crumbs"><a href="/">Home</a> › Updates</p>
     <header class="page-head">
-      <div class="eyebrow">Updates</div>
       <h1>Latest updates &amp; deadlines</h1>
       <p>Important dates, expected payments and new rules for the schemes on Kramavriddhi. We check official sources regularly and update this page.</p>
       <p class="muted" style="font-size:0.9rem">Last checked: 24 October 2026</p>
-      <p class="lang-switch"><a href="/te/updates/" lang="te">తెలుగులో చదవండి →</a></p>
+      <p class="lang-switch"><a href="/te/updates/" lang="te">తెలుగులో చదవండి</a></p>
         <div class="share" data-url="https://kramavriddhi.com/updates/" data-text="Latest government scheme deadlines and expected payment dates (Central, AP and Telangana) in one place:">
           <span class="share-label">Share:</span>
-          <a class="share-btn wa" href="https://wa.me/?text=Latest%20government%20scheme%20deadlines%20and%20expected%20payment%20dates%20%28Central%2C%20AP%20and%20Telangana%29%20in%20one%20place%3A%0Ahttps%3A//kramavriddhi.com/updates/" target="_blank" rel="noopener" data-share="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path fill="#15803d" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg><span>WhatsApp</span></a>
+          <a class="share-btn wa" href="https://wa.me/?text=Latest%20government%20scheme%20deadlines%20and%20expected%20payment%20dates%20%28Central%2C%20AP%20and%20Telangana%29%20in%20one%20place%3A%0Ahttps%3A//kramavriddhi.com/updates/" target="_blank" rel="noopener" data-share="whatsapp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path class="wa-glyph" d="M8.6 7.2c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.8 1.9c.1.2 0 .5-.1.7l-.6.7c-.1.2-.1.4 0 .6.8 1.4 1.9 2.4 3.3 3.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.6 0 .9-.6 1.8-1.5 2-.8.2-1.8.2-3.5-.6-2.1-1-3.7-2.7-4.6-4.4-.8-1.5-.6-2.6-.2-3.4l.3-.6Z"/></svg><span>WhatsApp</span></a>
           <button class="share-btn" type="button" data-share="copy" data-done="Link copied ✓" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span>Copy link</span></button>
           <button class="share-btn" type="button" data-share="native" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><span>More</span></button>
         </div>
     </header>
     <div class="updates">
         <a class="update expected" href="/schemes/pm-kisan/">
-          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">24 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Expected</span><span class="update-date">24 Oct 2026</span></div>
           <h3>PM-KISAN 24th instalment: 30 October reported</h3>
           <p>News reports on 23 October say the Agriculture Ministry announced 30 October 2026 on social media. No PIB press release yet. Make sure your eKYC, land seeding and Aadhaar bank link are done.</p>
         </a>
         <a class="update expected" href="/schemes/ap-annadata-sukhibhava/">
-          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">24 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Expected</span><span class="update-date">24 Oct 2026</span></div>
           <h3>Annadata Sukhibhava 2nd instalment: 30 October reported</h3>
           <p>It was not paid at Dasara. News reports say AP will pay it on 30 October together with PM-KISAN's 24th instalment. The date and amount are not officially confirmed yet. Complete your eKYC at the Rythu Seva Kendram.</p>
         </a>
         <a class="update expected" href="/schemes/ap-thalliki-vandanam/">
-          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">24 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Expected</span><span class="update-date">24 Oct 2026</span></div>
           <h3>Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed</h3>
           <p>The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not confirmed as paid by 24 October.</p>
         </a>
         <a class="update deadline" href="/schemes/pm-fasal-bima-yojana/" data-until="2026-12-31">
-          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">15 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Deadline</span><span class="update-date">15 Oct 2026</span></div>
           <h3>AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)</h3>
           <p>Under PM Fasal Bima Yojana, farmers pay at most 1.5% premium for Rabi food and oilseed crops. Enrol through your bank, CSC or Rythu Seva Kendram; an Agristack farmer ID is needed.</p>
         </a>
         <a class="update deadline" href="/schemes/central-sector-scholarship/" data-until="2026-10-31">
-          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">13 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Deadline</span><span class="update-date">13 Oct 2026</span></div>
           <h3>Central Sector Scholarship: apply by 31 October</h3>
           <p>College students in the top 20% of their Class 12 board with family income up to ₹4.5 lakh can get ₹12,000–₹20,000 a year. Apply on the National Scholarship Portal.</p>
         </a>
         <a class="update deadline" href="/schemes/aicte-pragati-scholarship/" data-until="2026-10-31">
-          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">8 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Deadline</span><span class="update-date">8 Oct 2026</span></div>
           <h3>Pragati Scholarship for girls: apply by 31 October</h3>
           <p>Girls in AICTE degree and diploma courses can get ₹50,000 a year. 2026-27 applications on the National Scholarship Portal close on 31 October 2026.</p>
         </a>
         <a class="update news" href="/schemes/ap-auto-drivers-sevalo/">
-          <div class="update-top"><span class="update-kind">📰 News</span><span class="update-date">24 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">News</span><span class="update-date">24 Oct 2026</span></div>
           <h3>AP Auto Drivers Sevalo: 2026 payment date not announced</h3>
           <p>Last year auto, taxi and maxi-cab owner-drivers got ₹15,000 on 4 October 2025. No official date has been given for this year's payment yet.</p>
         </a>
         <a class="update expected" href="/schemes/ap-nethanna-sevalo/">
-          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">15 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Expected</span><span class="update-date">15 Oct 2026</span></div>
           <h3>Nethanna Sevalo 2nd phase: ₹25,000 for weavers, date awaited</h3>
           <p>36,632 handloom weavers applied for the 2nd phase and the list was to be finalised by 3 October. No payment date has been announced yet.</p>
         </a>
         <a class="update deadline" href="/schemes/ap-deepam-2/" data-until="2026-11-30">
-          <div class="update-top"><span class="update-kind">⏰ Deadline</span><span class="update-date">8 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Deadline</span><span class="update-date">8 Oct 2026</span></div>
           <h3>Deepam-2: book your free gas cylinder by 30 November</h3>
           <p>AP families are in the August–November period. An unused free cylinder does not carry over to the next period.</p>
         </a>
         <a class="update news" href="/schemes/ts-cheyutha-pension/">
-          <div class="update-top"><span class="update-kind">📰 News</span><span class="update-date">1 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">News</span><span class="update-date">1 Oct 2026</span></div>
           <h3>Telangana: senior citizens' pension still ₹2,016</h3>
           <p>The promised increase to ₹4,000 has not been implemented for senior citizens, and they were not part of the 2026 Cheyutha enrolment round.</p>
         </a>
         <a class="update news" href="/schemes/pm-fasal-bima-yojana/">
-          <div class="update-top"><span class="update-kind">📰 News</span><span class="update-date">29 Sep 2026</span></div>
+          <div class="update-top"><span class="update-kind">News</span><span class="update-date">29 Sep 2026</span></div>
           <h3>Telangana plans crop insurance from Yasangi 2026-27</h3>
           <p>The state said it will bring back crop insurance from the Yasangi season. No official notification or last date has been issued yet.</p>
         </a>
         <a class="update rate" href="/schemes/sukanya-samriddhi-yojana/">
-          <div class="update-top"><span class="update-kind">📈 Rate</span><span class="update-date">1 Oct 2026</span></div>
+          <div class="update-top"><span class="update-kind">Rate</span><span class="update-date">1 Oct 2026</span></div>
           <h3>Sukanya Samriddhi interest stays at 8.2% for Oct–Dec 2026</h3>
           <p>The rate is reviewed every quarter. The next announcement is expected at the end of December.</p>
         </a>
         <a class="update expected" href="/schemes/ts-rajiv-yuva-vikasam/">
-          <div class="update-top"><span class="update-kind">📅 Expected</span><span class="update-date">15 Sep 2026</span></div>
+          <div class="update-top"><span class="update-kind">Expected</span><span class="update-date">15 Sep 2026</span></div>
           <h3>Rajiv Yuva Vikasam: first phase planned from 19 November</h3>
           <p>The Deputy CM said units up to ₹1 lakh will be supported first, from 19 November 2026. The final beneficiary list is not out yet, and applying does not guarantee selection.</p>
         </a>
         <a class="update news" href="/schemes/ts-kalyana-lakshmi-shaadi-mubarak/">
-          <div class="update-top"><span class="update-kind">📰 News</span><span class="update-date">1 Sep 2026</span></div>
+          <div class="update-top"><span class="update-kind">News</span><span class="update-date">1 Sep 2026</span></div>
           <h3>Kalyana Lakshmi and Shaadi Mubarak continue after High Court order</h3>
           <p>A Division Bench stayed a single judge's order that had put the marriage-aid schemes on hold. The 1 tola gold promise is still not implemented.</p>
         </a>
         <a class="update news" href="/schemes/pm-kisan/">
-          <div class="update-top"><span class="update-kind">📰 News</span><span class="update-date">31 Jul 2026</span></div>
+          <div class="update-top"><span class="update-kind">News</span><span class="update-date">31 Jul 2026</span></div>
           <h3>PM-KISAN continued until 2030-31</h3>
           <p>The Union Cabinet approved continuing PM-KISAN from 2026-27 to 2030-31 with ₹3.15 lakh crore.</p>
         </a>
         <a class="update news" href="/schemes/pm-ujjwala-yojana/">
-          <div class="update-top"><span class="update-kind">📰 News</span><span class="update-date">8 Jun 2026</span></div>
+          <div class="update-top"><span class="update-kind">News</span><span class="update-date">8 Jun 2026</span></div>
           <h3>Ujjwala: ₹300 gas subsidy now on only 4 refills a year</h3>
           <p>The Centre cut subsidised Ujjwala refills from 9 to 4 a year, so the subsidy is now up to ₹1,200 a year per household.</p>
         </a>
         <a class="update news" href="/schemes/ts-indira-mahila-shakti/">
-          <div class="update-top"><span class="update-kind">📰 News</span><span class="update-date">8 May 2026</span></div>
+          <div class="update-top"><span class="update-kind">News</span><span class="update-date">8 May 2026</span></div>
           <h3>Telangana: interest-free SHG loans raised to ₹10 lakh</h3>
           <p>Under Indira Mahila Shakti, the government now pays interest on SHG bank loans up to ₹10 lakh (earlier ₹5 lakh).</p>
         </a>
         <a class="update news" href="/schemes/pm-internship-scheme/">
-          <div class="update-top"><span class="update-kind">📰 News</span><span class="update-date">22 Apr 2026</span></div>
+          <div class="update-top"><span class="update-kind">News</span><span class="update-date">22 Apr 2026</span></div>
           <h3>PM Internship: final-year students can now apply</h3>
           <p>Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.</p>
         </a>
@@ -161,14 +163,15 @@
       (function () {
         var today = new Date().toISOString().slice(0, 10);
         document.querySelectorAll('.update[data-until]').forEach(function (el) {
-          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = '✔ Closed'; }
+          if (el.dataset.until < today) { el.classList.add('past'); var k = el.querySelector('.update-kind'); if (k) k.textContent = 'Closed'; }
         });
       })();
     </script>
 
     <footer class="site">
+      <p class="mast"><a href="/">Kramavriddhi</a></p>
       <div class="cols">
-        <span>© 2026 Kramavriddhi · <span lang="sa">क्रमेण वर्धामहे</span></span>
+        <p class="motto"><span lang="sa">क्रमेण वर्धामहे</span><br>© 2026 Kramavriddhi</p>
         <ul>
           <li><a href="/schemes/">Schemes</a></li>
           <li><a href="/updates/">Updates</a></li>
