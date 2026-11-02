@@ -235,6 +235,7 @@ Independent, not govt · Never share OTP 👇
 **Before posting a dated Reel** (2, 5, 6): check the guide first. If the money has already been paid or an official date is out, skip that Reel and ask for an updated video.
 
 **Reel 1 – Pragati Scholarship (Telugu)** (`short-1-pragati.mp4`)
+> ⚠️ Don't post: applications closed on 31 October.
 ```
 🎓 అమ్మాయిలకు ఏడాదికి ₹50,000 స్కాలర్‌షిప్! ⏰ చివరి తేదీ 31 అక్టోబర్
 
@@ -291,6 +292,7 @@ Free scheme eligibility checker, about 1 minute.
 Pinned comment: `Try it: kramavriddhi.com/te/tools/scheme-eligibility-checker/ · మీకు ఏ పథకం వచ్చిందో కామెంట్ చేయండి 👇`
 
 **Reel 4 – Central Sector Scholarship (Telugu)** (`short-4-csss.mp4`)
+> ⚠️ Don't post: applications closed on 31 October.
 ```
 🎓 కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000! ⏰ చివరి తేదీ 31 అక్టోబర్
 
@@ -349,6 +351,7 @@ Pinned comment: `Telugu guide: kramavriddhi.com/te/schemes/ap-thalliki-vandanam/
 Pinned comment: `Guides: kramavriddhi.com/schemes/pm-kisan/ · kramavriddhi.com/schemes/ap-annadata-sukhibhava/`
 
 **Reel 7 – Pragati Scholarship (English)** (`short-7-pragati-en.mp4`)
+> ⚠️ Don't post: applications closed on 31 October.
 ```
 🎓 Girls get ₹50,000 every year! ⏰ Last date: 31 October
 
@@ -368,6 +371,7 @@ Share with girls who can apply 💛
 Pinned comment: `Full guide: kramavriddhi.com/schemes/aicte-pragati-scholarship/ ⏰ 31 Oct`
 
 **Reel 8 – Central Sector Scholarship (English)** (`short-8-csss-en.mp4`)
+> ⚠️ Don't post: applications closed on 31 October.
 ```
 🎓 College students get ₹12,000–₹20,000 a year! ⏰ Last date: 31 October
 
@@ -482,6 +486,7 @@ Full details 👉 link in bio
 Pinned comment: `Full guide: kramavriddhi.com/schemes/pm-ujjwala-yojana/ · The connection is free; don't pay agents 🔥`
 
 **Reel 14 – PM-KISAN 24th + Annadata, 30 Oct reported, English** (`short-14-pm-kisan-30oct-en.mp4`)
+> ⚠️ Don't post: the money was paid on 30 October. Post Reel 21 instead.
 ```
 🌾 PM-KISAN 24th instalment: 30 October? Here's what we know
 
@@ -611,3 +616,23 @@ Full details 👉 link in bio
 #NTRVaidyaSeva #Aarogyasri #APHealth #AndhraPradesh #Kramavriddhi
 ```
 Pinned comment: `Full guide: kramavriddhi.com/schemes/ap-ntr-vaidya-seva/ · Helpline 104 🏥`
+
+**Reel 21 – PM-KISAN 24th + Annadata paid on 30 Oct, money not received?, English** (`short-21-farmer-paid-en.mp4`)
+```
+🌾 PM-KISAN 24th instalment paid on 30 October! Money not received?
+
+✅ 9.34 crore farmers got ₹2,000 each (PIB)
+🌱 AP: Annadata Sukhibhava ₹7,000 per family credited the same day (news reports)
+🔍 Check: pmkisan.gov.in → Know Your Status
+🔍 AP: annadathasukhibhava.ap.gov.in → Know Your Status
+🛠️ Pending eKYC or bank link? Rythu Seva Kendram or CSC
+📞 PM-KISAN helpline 155261
+
+పీఎం కిసాన్ 24వ విడత జమ అయింది. డబ్బు రాలేదా? స్టేటస్ చూడండి.
+Step-by-step 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#PMKisan #PMKisanStatus #AnnadataSukhibhava #Farmers #Kramavriddhi
+```
+Pinned comment: `Status check: kramavriddhi.com/schemes/pm-kisan/ · Did you get it? Comment 👇`

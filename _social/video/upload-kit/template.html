@@ -1,0 +1,249 @@
+<title>Kramavriddhi Upload Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@600;700&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: one narrow column of video cards, each with a YouTube / Instagram switch and copy-ready fields. */
+:root {
+  --bg: #f4f6f3; --surface: #ffffff; --sunk: #eef2ef; --ink: #14201e; --muted: #56645f; --line: #dde4e0;
+  --teal: #0f766e; --teal-ink: #ffffff; --gold: #f5b83d; --orange: #b45309; --orange-bg: #fdf0dc;
+  --check: #9a3412; --check-bg: #fde8df; --yt: #c4302b; --ig: #b4317f; --done: #15803d;
+  --display: 'Baloo Tammudu 2', 'Noto Sans Telugu', 'Nirmala UI', sans-serif;
+  --body: 'Noto Sans', 'Noto Sans Telugu', 'Nirmala UI', 'Segoe UI', system-ui, sans-serif;
+  --mono: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1715; --surface: #14211e; --sunk: #0f1b18; --ink: #e5eeeb; --muted: #9db0aa; --line: #26372f;
+  --teal: #2fa596; --teal-ink: #06231f; --gold: #f5b83d; --orange: #f2a65a; --orange-bg: #33240f;
+  --check: #f8a888; --check-bg: #3a1d14; --yt: #ff7b72; --ig: #f08ac6; --done: #4ade80; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0d1715; --surface: #14211e; --sunk: #0f1b18; --ink: #e5eeeb; --muted: #9db0aa; --line: #26372f;
+  --teal: #2fa596; --teal-ink: #06231f; --gold: #f5b83d; --orange: #f2a65a; --orange-bg: #33240f;
+  --check: #f8a888; --check-bg: #3a1d14; --yt: #ff7b72; --ig: #f08ac6; --done: #4ade80; color-scheme: dark }
+
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--body); }
+.wrap { max-width: 760px; margin: 0 auto; padding-block: 28px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 22px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.3rem; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--mono); font-size: .82rem; }
+
+header { display: flex; gap: 14px; align-items: center; }
+header svg { width: 52px; height: 52px; flex: none; }
+header .sub { color: var(--muted); font-size: .92rem; }
+
+.first { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+.first .plan { font-variant-numeric: tabular-nums; }
+.first ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 4px; }
+.first b { font-weight: 700; }
+
+details.setup { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+details.setup > summary { cursor: pointer; padding: 14px 18px; font-family: var(--display); font-size: 1.15rem; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+details.setup > summary::after { content: '+'; color: var(--muted); }
+details.setup[open] > summary::after { content: '−'; }
+.setup-body { padding: 0 18px 18px; display: grid; gap: 16px; }
+.setup-body h3 { font-size: 1.02rem; display: flex; gap: 8px; align-items: center; }
+.setup-body ul { margin: 6px 0 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 3px; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button { font: 600 .88rem var(--body); border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  padding: 7px 14px; border-radius: 999px; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: var(--teal-ink); }
+
+.list { display: flex; flex-direction: column; gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.card-head { padding: 16px 18px 12px; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: start; }
+.num { grid-row: span 3; font-family: var(--display); font-size: 1.6rem; width: 52px; height: 52px; border-radius: 12px;
+  background: var(--teal); color: var(--teal-ink); display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.card-head h2 { min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: .76rem; font-weight: 700; letter-spacing: .02em; padding: 3px 9px; border-radius: 999px; background: var(--sunk); color: var(--muted); }
+.chip.deadline { background: var(--orange-bg); color: var(--orange); }
+.chip.check { background: var(--check-bg); color: var(--check); }
+.chip.skip { background: var(--check); color: var(--surface); }
+.card.is-skip .card-head h2 { text-decoration: line-through; color: var(--muted); }
+.chip.done { background: transparent; color: var(--done); border: 1px solid currentColor; }
+
+.tabs { display: flex; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.tabs button { flex: 1; font: 700 .9rem var(--body); padding: 10px; border: 0; background: var(--sunk); color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; }
+.tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); }
+.tabs button.yt[aria-selected="true"] { border-bottom-color: var(--yt); }
+.tabs button.ig[aria-selected="true"] { border-bottom-color: var(--ig); }
+
+.panel { padding: 14px 18px 18px; display: flex; flex-direction: column; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.label { font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.text { background: var(--sunk); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere;
+  font-size: .9rem; line-height: 1.55; max-height: 220px; overflow: auto; }
+.text.short { max-height: none; }
+.copy { font: 700 .82rem var(--body); border: 1px solid var(--teal); color: var(--teal); background: transparent; border-radius: 8px; padding: 5px 12px; cursor: pointer; flex: none; }
+.copy.ok { background: var(--teal); color: var(--teal-ink); }
+.plain { font-size: .92rem; }
+.posted { display: flex; gap: 8px; align-items: center; font-weight: 600; font-size: .9rem; cursor: pointer; }
+.posted input { width: 18px; height: 18px; accent-color: var(--done); }
+
+button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+footer { color: var(--muted); font-size: .85rem; }
+@media (prefers-reduced-motion: no-preference) { .copy { transition: background .15s, color .15s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0f766e"/><path d="M7 24h6v-5h6v-5h6V8" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      <h1>Kramavriddhi Upload Kit</h1>
+      <p class="sub">21 Shorts · YouTube and Instagram text, ready to copy · checked 2 Nov 2026</p>
+    </div>
+  </header>
+
+  <section class="first">
+    <h2>Posting plan: one a day, same video on both</h2>
+    <ol class="plan">
+      <li><b>2 Nov:</b> #21 <span class="muted">(farmers are checking their money now)</span> &nbsp;·&nbsp; <b>3 Nov:</b> #16 &nbsp;·&nbsp; <b>4 Nov:</b> #19 <span class="muted">(before 19 Nov)</span></li>
+      <li><b>5 Nov:</b> #11 &nbsp;·&nbsp; <b>6 Nov:</b> #17 &nbsp;·&nbsp; <b>7 Nov:</b> #18 &nbsp;·&nbsp; <b>8 Nov:</b> #20</li>
+      <li>Not posted yet from #3, #9, #10, #12, #13, #15? Fit them in after 8 Nov. #15 (Deepam-2) must go out before 30 Nov, #10 (crop insurance) before 15 Dec.</li>
+    </ol>
+    <p><b>Don't post:</b> #1, #4, #7, #8 (scholarships closed 31 Oct), #14 (money paid on 30 Oct; #21 replaces it), #2 and #6 (outdated). <b>#5:</b> check the guide first. Best time: 7–9 PM.</p>
+  </section>
+
+  <details class="setup">
+    <summary>Settings to use every time</summary>
+    <div class="setup-body">
+      <div>
+        <h3>YouTube</h3>
+        <ul>
+          <li>Audience: <b>No, it's not made for kids</b></li>
+          <li>Show more → Altered content: <b>No</b> · Category: <b>Education</b></li>
+          <li>Video language: <b>Telugu</b> for #1–6, <b>English</b> for #7–21</li>
+          <li>Skip Video elements · Visibility: <b>Public</b></li>
+          <li>After publishing: post the pinned comment, then ⋮ → Pin</li>
+          <li>For #7–21: Studio → Subtitles → Add language → Telugu → paste the Telugu title</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Instagram</h3>
+        <ul>
+          <li>＋ → Reel → pick the same MP4 → Next</li>
+          <li>Edit cover: the frame with the big number (about 2 seconds in)</li>
+          <li>Paste the caption. Links in captions don't work, so it says "link in bio"</li>
+          <li>At most 5 hashtags; every caption already has 5</li>
+          <li>After sharing: add the pinned comment, long-press it → Pin</li>
+        </ul>
+      </div>
+      <div class="field">
+        <div class="field-top"><span class="label">Instagram bio (set once) · add kramavriddhi.com under Links</span><button class="copy" data-copy="bio">Copy</button></div>
+        <div class="text short" id="bio"></div>
+      </div>
+    </div>
+  </details>
+
+  <div class="filters" role="group" aria-label="Show">
+    <button data-f="all" aria-pressed="true">All 21</button>
+    <button data-f="te" aria-pressed="false">Telugu-first (1–6)</button>
+    <button data-f="en" aria-pressed="false">English-first (7–21)</button>
+    <button data-f="todo" aria-pressed="false">Still to post</button>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <footer>Kramavriddhi is an independent channel, not the government. Every caption keeps the "apply only on the official portal" and "we never ask for Aadhaar, OTP or money" note. The "Posted" ticks are saved only in this browser.</footer>
+</div>
+
+<script>
+const DATA = /*DATA*/null;
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem('kv-upload') || '{}')[k]; } catch (e) { return undefined; } },
+  set(k, v) { try { const o = JSON.parse(localStorage.getItem('kv-upload') || '{}'); o[k] = v; localStorage.setItem('kv-upload', JSON.stringify(o)); } catch (e) {} }
+};
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const texts = {};
+let uid = 0;
+function field(label, value, short) {
+  if (!value) return '';
+  const id = 't' + (uid++); texts[id] = value;
+  return `<div class="field"><div class="field-top"><span class="label">${label}</span><button class="copy" data-copy="${id}">Copy</button></div>
+    <div class="text${short ? ' short' : ''}" id="${id}">${esc(value)}</div></div>`;
+}
+function posted(n, p, label) {
+  const id = `p-${p}-${n}`;
+  return `<label class="posted" for="${id}"><input type="checkbox" id="${id}" data-n="${n}" data-p="${p}" ${store.get(p + n) ? 'checked' : ''}> ${label}</label>`;
+}
+function card(s) {
+  const yt = [
+    field('Title', s.yt.title, true),
+    field('Telugu title (Subtitles → Telugu)', s.yt.te_title, true),
+    field('Description', s.yt.desc),
+    s.yt.playlists ? `<div class="field"><span class="label">Add to playlists</span><p class="plain">${esc(s.yt.playlists)}</p></div>` : '',
+    field('Pinned comment', s.yt.pin, true),
+    posted(s.n, 'yt', 'Posted on YouTube')].join('');
+  const ig = [field('Caption', s.ig.caption), field('Pinned comment', s.ig.pin, true), posted(s.n, 'ig', 'Posted on Instagram')].join('');
+  const chips = [`<span class="chip">${s.lang === 'te' ? 'Telugu-first' : 'English-first'}</span>`,
+    s.deadline ? `<span class="chip deadline">Deadline ${s.deadline}</span>` : '',
+    s.check ? `<span class="chip check">Check before posting</span>` : '',
+    s.skip ? `<span class="chip skip">Don't post: ${s.skip}</span>` : '',
+    `<span class="chip done" data-done="${s.n}" hidden></span>`].join('');
+  return `<article class="card${s.skip ? ' is-skip' : ''}" data-n="${s.n}" data-lang="${s.lang}">
+    <div class="card-head"><div class="num">${s.n}</div><h2>${esc(s.topic)}</h2>
+      <div class="mono muted">${esc(s.file)}</div><div class="chips">${chips}</div></div>
+    <div class="tabs" role="tablist">
+      <button class="yt" role="tab" aria-selected="true" data-tab="yt">YouTube</button>
+      <button class="ig" role="tab" aria-selected="false" data-tab="ig">Instagram</button></div>
+    <div class="panel" data-panel="yt">${yt}</div>
+    <div class="panel" data-panel="ig" hidden>${ig}</div></article>`;
+}
+function refreshDone() {
+  document.querySelectorAll('[data-done]').forEach(el => {
+    const n = el.dataset.done, y = store.get('yt' + n), i = store.get('ig' + n);
+    el.hidden = !(y || i); el.textContent = y && i ? 'Posted on both' : y ? 'Posted on YouTube' : 'Posted on Instagram';
+  });
+}
+let filter = 'all';
+function applyFilter() {
+  document.querySelectorAll('.card').forEach(c => {
+    const n = c.dataset.n, done = store.get('yt' + n) && store.get('ig' + n);
+    c.hidden = !(filter === 'all' || filter === c.dataset.lang || (filter === 'todo' && !done && !c.classList.contains('is-skip')));
+  });
+}
+texts.bio = DATA.bio;
+document.getElementById('bio').textContent = DATA.bio;
+document.getElementById('list').innerHTML = DATA.shorts.map(card).join('');
+refreshDone();
+
+document.addEventListener('click', e => {
+  const c = e.target.closest('.copy');
+  if (c) {
+    const value = texts[c.dataset.copy], box = document.getElementById(c.dataset.copy);
+    const ok = () => { c.textContent = 'Copied'; c.classList.add('ok'); setTimeout(() => { c.textContent = 'Copy'; c.classList.remove('ok'); }, 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(box); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      c.textContent = 'Selected, now copy'; setTimeout(() => { c.textContent = 'Copy'; }, 2500); };
+    try { navigator.clipboard.writeText(value).then(ok, fallback); } catch (err) { fallback(); }
+    return;
+  }
+  const t = e.target.closest('[data-tab]');
+  if (t) {
+    const cardEl = t.closest('.card');
+    cardEl.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected', b === t ? 'true' : 'false'));
+    cardEl.querySelectorAll('[data-panel]').forEach(p => { p.hidden = p.dataset.panel !== t.dataset.tab; });
+    return;
+  }
+  const f = e.target.closest('[data-f]');
+  if (f) {
+    filter = f.dataset.f;
+    document.querySelectorAll('[data-f]').forEach(b => b.setAttribute('aria-pressed', b === f ? 'true' : 'false'));
+    applyFilter();
+  }
+});
+document.addEventListener('change', e => {
+  const i = e.target.closest('input[data-p]');
+  if (!i) return;
+  store.set(i.dataset.p + i.dataset.n, i.checked);
+  refreshDone(); applyFilter();
+});
+</script>
+

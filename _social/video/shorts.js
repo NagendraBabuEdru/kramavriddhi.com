@@ -837,6 +837,42 @@ const SHORTS = {
       { start: 28, cls: 'end', html: endCardEn('Share with AP families! 🏥', 'ఏపీ కుటుంబాలకు షేర్ చేయండి') },
     ],
   },
+
+  // ---------------------------------------------------------------- Short 21: PM-KISAN 24th + Annadata paid on 30 Oct; money not received? (made 2 Nov 2026)
+  21: {
+    file: 'short-21-farmer-paid-en', lang: 'en', duration: 35, tag: '✅ Paid on 30 Oct', tagColor: '#15803d', music: { root: 57, seed: 2 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">PM-KISAN 24th instalment</div>
+        <div class="row">
+          <div class="datecard" data-in="0.3" data-fx="pop"><div class="top">PAID ON</div><div class="day">30</div><div class="mon">October</div></div>
+        </div>
+        <div class="h1 mt" data-in="1.0">Money not received?</div>
+        <div class="sub te" data-in="1.3">పీఎం కిసాన్ 24వ విడత 30 అక్టోబర్‌న జమ అయింది. డబ్బు రాలేదా?</div>
+        <div class="pill" data-in="1.9" data-fx="pop" style="background:#f5b83d;color:#14201e">👇 Check this</div>` },
+      { start: 4.5, html: `
+        <div class="label" data-in="0.1">PIB · 30 October 2026</div>
+        <div class="mega teal" data-in="0.3" data-fx="pop" style="font-size:150px">9.34 crore</div>
+        <div class="para" data-in="0.9" style="margin-top:0">farmers got ₹2,000 each, about ₹18,690 crore</div>
+        <div class="sub te" data-in="1.3">9.34 కోట్ల మంది రైతులకు ₹2,000 చొప్పున</div>
+        <div class="warn" data-in="2.6" data-fx="pop">25th instalment: no date announced yet. Ignore WhatsApp dates.<div class="e te">25వ విడత తేదీ ఇంకా ప్రకటించలేదు</div></div>` },
+      { start: 11, dark: true, html: `
+        <div class="label" data-in="0.1">Andhra Pradesh farmers</div>
+        <div class="h2" data-in="0.2">Annadata Sukhibhava 2nd instalment</div>
+        <div class="mega gold" data-in="0.6" data-fx="count" data-count="7000" data-prefix="₹">₹7,000</div>
+        <div class="para" data-in="1.2" style="margin-top:0">per family: ₹5,000 state + ₹2,000 PM-KISAN</div>
+        <div class="sub" data-in="1.6">About 46.86 lakh families (news reports; no official AP press note yet)<br><span class="te">అన్నదాత సుఖీభవ 2వ విడత ₹7,000 జమ (వార్తలు)</span></div>
+        <div class="warn" data-in="2.8" data-fx="pop">About 17,828 farmers didn't get it due to technical problems<div class="e te">సాంకేతిక సమస్యలతో కొందరికి రాలేదు</div></div>` },
+      { start: 19, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Money not received?</div>
+        <div class="h2" data-in="0.2">Check your status</div>
+        ${point(1, 'pmkisan.gov.in → Know Your Status', 'eKYC, land seeding, Aadhaar bank: all should say Yes', 1.0)}
+        ${point(2, 'AP: Annadata Sukhibhava status', 'annadathasukhibhava.ap.gov.in → Know Your Status → Aadhaar', 2.6)}
+        ${point(3, 'Something pending? Fix eKYC / bank link', 'Rythu Seva Kendram or CSC · రైతు సేవా కేంద్రంలో అడగండి', 4.2)}
+        <div class="warn" data-in="5.8" data-fx="pop">PM-KISAN helpline 155261 · Never share your OTP<div class="e te">OTP ఎవరికీ చెప్పకండి</div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with farmer friends! 🌾', 'రైతు మిత్రులకు షేర్ చేయండి') },
+    ],
+  },
 };
 
 // Step 2 of the checker demo: fields fill in after each tap, then the button is pressed.
