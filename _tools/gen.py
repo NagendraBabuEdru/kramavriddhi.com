@@ -28,6 +28,9 @@ GUIDE_UPDATED = {
                      "ap-nethanna-sevalo", "pm-fasal-bima-yojana", "ap-auto-drivers-sevalo", "ap-ntr-vaidya-seva",
                      "ap-aadabidda-nidhi", "ap-nirudyoga-bhruthi",
                      "pm-vidyalaxmi", "pm-kusum", "ts-indiramma-atmiya-bharosa"], "2026-10-24"),
+    # 2 Nov 2026 fact check
+    **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava", "ap-thalliki-vandanam",
+                     "aicte-pragati-scholarship", "central-sector-scholarship"], "2026-11-02"),
 }
 MONTHS = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
           "te": ["జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్", "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్"]}
@@ -121,7 +124,7 @@ SCHEMES = [
          summary="Monthly pensions for poor elderly people, widows, single women, persons with disabilities and other groups."),
     dict(slug="aicte-pragati-scholarship", name="AICTE Pragati Scholarship for Girls", short="Pragati Scholarship",
          cat="education", cat_label="Education & Skills", icon="🎓",
-         summary="₹50,000 a year for girls in AICTE-approved degree and diploma courses. 2026-27 last date: 31 October."),
+         summary="₹50,000 a year for girls in AICTE-approved degree and diploma courses. 2026-27 applications closed on 31 October."),
     dict(slug="cbse-single-girl-child-scholarship", name="CBSE Single Girl Child Scholarship", short="CBSE Single Girl Child",
          cat="education", cat_label="Education & Skills", icon="👩‍🎓",
          summary="₹1,000 a month in Class 11–12 for an only daughter who scored 70%+ in CBSE Class 10."),
@@ -148,7 +151,7 @@ SCHEMES = [
          summary="Announced ₹50,000–₹4 lakh self-employment support for SC/ST/BC/minority youth. First phase planned from 19 Nov 2026."),
     dict(slug="central-sector-scholarship", name="Central Sector Scholarship for College Students (CSSS)", short="Central Sector Scholarship",
          cat="education", cat_label="Education & Skills", icon="🎓",
-         summary="₹12,000–₹20,000 a year for college students in the top 20% of their Class 12 board. 2026-27 last date: 31 October."),
+         summary="₹12,000–₹20,000 a year for college students in the top 20% of their Class 12 board. 2026-27 applications closed on 31 October."),
     dict(slug="pm-viksit-bharat-rozgar-yojana", name="PM Viksit Bharat Rozgar Yojana (First Job)", short="PM Viksit Bharat Rozgar Yojana",
          cat="jobs", cat_label="Jobs & Internships", icon="🧾",
          summary="Up to ₹15,000 for first-time employees who join a job with PF (EPFO) between Aug 2025 and Jul 2027."),
@@ -388,15 +391,15 @@ s = SCHEMES[0]
 write(f"schemes/{s['slug']}/index.html", article(s,
     lede="PM-KISAN gives ₹6,000 every year to land-holding farmer families across India. The money comes in three instalments of ₹2,000, sent directly to the farmer's Aadhaar-linked bank account.",
     description="PM-KISAN explained: ₹6,000 a year for farmers. Eligibility, who is excluded, eKYC, documents, how to register and check status, latest instalment.",
-    facts=[("Benefit", "₹6,000 / year"), ("Paid as", "3 × ₹2,000"), ("Who", "Land-holding farmer families"), ("Latest instalment", "23rd, 20 June 2026")],
+    facts=[("Benefit", "₹6,000 / year"), ("Paid as", "3 × ₹2,000"), ("Who", "Land-holding farmer families"), ("Latest instalment", "24th, 30 Oct 2026")],
     body='''
         <h2>What is PM-KISAN?</h2>
         <p>Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) is a Central Government scheme that gives income support to farmers. It started in February 2019 and is fully funded by the Government of India. The money is paid through Direct Benefit Transfer (DBT), so it reaches the farmer's bank account without any middleman.</p>
         <p>For the scheme, a <strong>farmer family</strong> means husband, wife and minor children who own cultivable land as per state land records.</p>
 
         <h2>Latest update</h2>
-        <p>The <strong>23rd instalment</strong> was released on <strong>20 June 2026</strong>. Instalments usually come about every four months, so the <strong>24th instalment</strong> (for August–November 2026) is expected in October–November 2026.</p>
-        <div class="note"><strong>Reported date: 30 October 2026 (not yet confirmed by PIB).</strong> News reports on 23 October 2026 say the Ministry of Agriculture announced on social media that the 24th instalment of ₹2,000 will be released on <strong>30 October 2026</strong>. As of 24 October we have not found a PIB press release. The final word comes from PIB and pmkisan.gov.in. Earlier dates shared online (17, 18 or 20 October) were not correct. Until then, make sure your eKYC, land seeding and Aadhaar–bank link are done.</div>
+        <p>The <strong>24th instalment</strong> was released on <strong>30 October 2026</strong> at Banaskantha, Gujarat. According to PIB, about <strong>₹18,690 crore</strong> reached <strong>9.34 crore farmers</strong> (₹2,000 each). The 23rd instalment came on 20 June 2026.</p>
+        <div class="note"><strong>Did not get the 24th instalment?</strong> Check "Know Your Status" on pmkisan.gov.in. The usual reasons are pending eKYC, land seeding not done, or a bank account not linked to Aadhaar. <strong>25th instalment:</strong> instalments come about every four months, so it is likely in early 2027, but no date has been announced (2 November 2026). Ignore dates shared on WhatsApp until PIB or pmkisan.gov.in confirms them.</div>
         <p>On <strong>31 July 2026</strong>, the Union Cabinet approved <strong>continuing PM-KISAN from 2026-27 to 2030-31</strong> with an outlay of ₹3.15 lakh crore, so the ₹6,000 a year support will continue.</p>
 
         <h2>Benefits</h2>
@@ -467,13 +470,15 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Is eKYC compulsory for PM-KISAN?", "Yes. eKYC is mandatory for all registered farmers. It can be done by OTP on pmkisan.gov.in, by biometrics at a CSC, or by face authentication in the PM-KISAN app."),
         ("Can a tenant farmer get PM-KISAN?", "The scheme is for land-holding farmer families whose names are in the state land records. Tenant farmers who do not own land are generally not covered."),
         ("Can both husband and wife get PM-KISAN separately?", "No. The benefit is per farmer family (husband, wife and minor children), so only one member of the family receives it."),
-        ("When will the PM-KISAN 24th instalment come?", "News reports on 23 October 2026 say it will be released on 30 October 2026, citing the Agriculture Ministry's social media. As of 24 October no PIB press release has been issued, so treat the date as reported, not final."),
+        ("Has the PM-KISAN 24th instalment been released?", "Yes. It was released on 30 October 2026: about ₹18,690 crore to 9.34 crore farmers, ₹2,000 each (PIB)."),
+        ("When will the PM-KISAN 25th instalment come?", "No date has been announced yet (2 November 2026). Instalments come about every four months, so it is likely in early 2027. Wait for PIB or pmkisan.gov.in."),
         ("Why did my PM-KISAN instalment stop?", "Common reasons are pending eKYC, bank account not seeded with Aadhaar, land seeding not done, or the family falling into an exclusion category. Check 'Know Your Status' on pmkisan.gov.in."),
     ],
     sources=[
         ("PM-KISAN official portal", "https://pmkisan.gov.in"),
         ("PIB: Eligibility criteria of PM-KISAN", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2146932"),
         ("PIB: Cabinet approves continuation of PM-KISAN from 2026-27 to 2030-31", "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2292437"),
+        ("PIB Backgrounder: 24th instalment of PM-KISAN (30 Oct 2026)", "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2330414&reg=48&lang=2"),
     ]))
 
 # ---------------------------------------------------------------- PM-JAY
@@ -1215,14 +1220,14 @@ s = BY_SLUG["ap-annadata-sukhibhava"]
 write(f"schemes/{s['slug']}/index.html", article(s,
     lede="Annadata Sukhibhava is the Andhra Pradesh government's support scheme for farmers. Together with the Centre's PM-KISAN, each eligible farmer family gets ₹20,000 a year: ₹14,000 from the state and ₹6,000 from the Centre, paid in three instalments straight to the bank account.",
     description="Annadata Sukhibhava (Andhra Pradesh) explained: ₹20,000 a year for farmers with PM-KISAN, instalments, who is eligible, how to check status, latest release.",
-    facts=[("Per year", "₹20,000 / family"), ("From the state", "₹14,000"), ("From PM-KISAN", "₹6,000"), ("2nd instalment", "Oct 2026 (not confirmed)")],
+    facts=[("Per year", "₹20,000 / family"), ("From the state", "₹14,000"), ("From PM-KISAN", "₹6,000"), ("2nd instalment", "Paid 30 Oct 2026")],
     body='''
         <h2>What is Annadata Sukhibhava?</h2>
         <p>Annadata Sukhibhava – PM KISAN is a farmer income-support scheme of the Government of Andhra Pradesh. It is run along with the Central Government's <a href="/schemes/pm-kisan/">PM-KISAN</a>, so farmers get both benefits together. The state adds ₹14,000 a year to PM-KISAN's ₹6,000, for a total of <strong>₹20,000 per farmer family per year</strong>.</p>
 
         <h2>Latest update</h2>
         <p>The <strong>first instalment for 2026-27</strong> was released in June 2026: ₹7,000 per family (₹5,000 from the state and ₹2,000 from PM-KISAN), a total of ₹3,125.47 crore to about <strong>46.86 lakh farmer families</strong>, including cultivators under the Forest Rights Act.</p>
-        <div class="note"><strong>2nd instalment (2026-27): not officially announced yet.</strong> It was expected around Dasara but was not paid then. News reports from 23 October 2026 say the state plans to pay it on <strong>30 October 2026</strong>, the same day PM-KISAN's 24th instalment is reported to be released. Some reports say this round will be <strong>₹6,000</strong> (₹4,000 from the state + ₹2,000 from PM-KISAN); last year the 2nd instalment was ₹7,000. The date and amount are confirmed only when the government releases the money. Complete your eKYC at the Rythu Seva Kendram so your payment is not held back.</div>
+        <div class="note"><strong>2nd instalment (2026-27): paid on 30 October 2026 (reported).</strong> News reports say the State Cabinet approved <strong>₹7,000 per family</strong> (₹5,000 from the state + ₹2,000 from PM-KISAN's 24th instalment) for 46,85,838 farmer families, about ₹3,125 crore in all. The state said its share reached 99.44% of farmers within 24 hours, but about <strong>17,828 farmers</strong> did not get it because of technical problems, and officials were told to fix these. We have not found an official state press note yet. If the money has not come, check your status and ask at your Rythu Seva Kendram (eKYC, Aadhaar–bank link).</div>
 
         <h2>How the ₹20,000 is paid</h2>
         <div class="table-wrap">
@@ -1269,7 +1274,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much do farmers get under Annadata Sukhibhava?", "₹20,000 per farmer family per year: ₹14,000 from the Andhra Pradesh government and ₹6,000 from PM-KISAN."),
         ("When was the latest Annadata Sukhibhava instalment released?", "The first instalment for 2026-27 (₹7,000 per family) was released in June 2026 to about 46.86 lakh farmer families."),
-        ("When will the 2nd Annadata Sukhibhava instalment come?", "It was not paid at Dasara. News reports on 23 October 2026 say it will be paid on 30 October 2026 together with PM-KISAN's 24th instalment. As of 24 October 2026 the government has not officially announced the date or amount."),
+        ("Has the 2nd Annadata Sukhibhava instalment been paid?", "Yes, news reports say it was paid on 30 October 2026 together with PM-KISAN's 24th instalment: ₹7,000 per family (₹5,000 state + ₹2,000 PM-KISAN). About 17,828 farmers did not get it because of technical problems; if you are one of them, ask at your Rythu Seva Kendram."),
         ("Do I need PM-KISAN to get Annadata Sukhibhava?", "The two are paid together. Keeping your PM-KISAN registration and eKYC complete helps make sure you receive the full ₹20,000."),
         ("How do I check Annadata Sukhibhava status?", "On annadathasukhibhava.ap.gov.in, choose Know Your Status and enter your Aadhaar number, or ask at your Rythu Seva Kendram."),
         ("Are tenant farmers eligible?", "The government announced support for landless cultivators from the state budget, but payment status for tenant farmers has varied. Check with your Rythu Seva Kendram."),
@@ -1280,6 +1285,9 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("Deccan Chronicle: CM releases ₹3,125 crore aid (June 2026)", "https://www.deccanchronicle.com/southern-states/andhra-pradesh/farmers-natural-farming-take-centre-stage-as-cm-releases-3125-crore-aid-1965111"),
         ("TV9 Telugu: Annadata Sukhibhava 2nd instalment expected around Dasara (9 Oct 2026)", "https://tv9telugu.com/andhra-pradesh/annadata-sukhibhava-2nd-installment-2026-ap-farmers-to-receive-6000-under-pm-kisan-and-state-scheme-check-eligibility-1930043.html"),
         ("Vaartha: Annadata Sukhibhava and PM-KISAN likely on 17 October (Sept 2026)", "https://vaartha.com/andhra-pradesh/annadata-sukhibhava-pm-kisan-release-date-october-andhra-pradesh/781676/"),
+        ("The Hans India: Cabinet nod for ₹3,125-crore payout on 30 October (30 Oct 2026)", "https://www.thehansindia.com/news/cities/amaravati/cabinet-nod-for-rs-3125-cr-payout-to-farmers-today-1137250"),
+        ("The Hans India: ₹2,234 crore credited to farmers' accounts (31 Oct 2026)", "https://www.thehansindia.com/news/cities/amaravati/rs-2234-cr-funds-credited-to-farmers-accounts-1137604"),
+        ("PIB Backgrounder: 24th instalment of PM-KISAN (30 Oct 2026)", "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2330414&reg=48&lang=2"),
     ]))
 
 # ---- AP: NTR Bharosa Pensions
@@ -1355,14 +1363,14 @@ s = BY_SLUG["ap-thalliki-vandanam"]
 write(f"schemes/{s['slug']}/index.html", article(s,
     lede="Thalliki Vandanam is the Andhra Pradesh government's education support scheme. For every school-going child in Classes 1 to 12, the mother gets ₹13,000 a year in her bank account, and ₹2,000 more goes to the school's maintenance.",
     description="Thalliki Vandanam (Andhra Pradesh) explained: ₹15,000 per child per year, ₹13,000 to mothers, eligibility, 75% attendance rule, 2026-27 release and how to check.",
-    facts=[("Per child", "₹15,000 / year"), ("To mother", "₹13,000"), ("1st phase 2026-27", "Paid 22 July 2026"), ("2nd phase", "Delayed (not paid by 24 Oct)")],
+    facts=[("Per child", "₹15,000 / year"), ("To mother", "₹13,000"), ("1st phase 2026-27", "Paid 22 July 2026"), ("2nd phase", "Delayed (not confirmed by 2 Nov)")],
     body='''
         <h2>What is Thalliki Vandanam?</h2>
         <p>Thalliki Vandanam (also written Talliki Vandanam) supports families so their children can keep going to school. The benefit is given <strong>for every eligible child</strong> in the family, with no limit on the number of children.</p>
 
         <h2>Latest update</h2>
         <p>For the <strong>2026-27</strong> academic year, the first phase was paid on <strong>22 July 2026</strong>: about <strong>64.77 lakh students</strong>, with the money credited to the accounts of about 42.70 lakh mothers. Beneficiary lists were displayed at village (Swarna Gramam) and ward offices.</p>
-        <p><strong>2nd phase (new admissions):</strong> students who newly joined <strong>Class 1</strong> or <strong>Intermediate first year</strong>, and students left out of the first phase because of incomplete records, are paid in a second phase. It was due on 30 August 2026 but was delayed. In early October the State Cabinet approved a revised sanction for <strong>3,29,201 second-phase students</strong>, raising the year's total to about 68.06 lakh students (₹10,208.69 crore), and on <strong>10 October 2026</strong> the School Education Department issued the order (G.O.Ms.No.26). News reports said the ₹13,000 would be credited before Dasara (20 October), but as of <strong>24 October 2026</strong> we found no confirmation that it has been paid, and no new date has been announced.</p>
+        <p><strong>2nd phase (new admissions):</strong> students who newly joined <strong>Class 1</strong> or <strong>Intermediate first year</strong>, and students left out of the first phase because of incomplete records, are paid in a second phase. It was due on 30 August 2026 but was delayed. In early October the State Cabinet approved a revised sanction for <strong>3,29,201 second-phase students</strong>, raising the year's total to about 68.06 lakh students (₹10,208.69 crore), and on <strong>10 October 2026</strong> the School Education Department issued the order (G.O.Ms.No.26). News reports said the ₹13,000 would be credited before Dasara (20 October), but as of <strong>2 November 2026</strong> we found no official confirmation that it has been paid, and no new date has been announced.</p>
 
         <h2>Benefits</h2>
         <ul>
@@ -1401,7 +1409,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much money is given under Thalliki Vandanam?", "₹15,000 per child per year: ₹13,000 is credited to the mother's account and ₹2,000 goes to school maintenance."),
         ("When was Thalliki Vandanam 2026-27 released?", "The first phase was paid on 22 July 2026 to about 64.77 lakh students."),
-        ("When will new Class 1 and Inter first-year students get Thalliki Vandanam?", "In the second phase, for 3,29,201 students. The sanction order was issued on 10 October 2026. News reports said the money would be credited before Dasara, but as of 24 October 2026 it is not confirmed as paid and no new date has been announced."),
+        ("When will new Class 1 and Inter first-year students get Thalliki Vandanam?", "In the second phase, for 3,29,201 students. The sanction order was issued on 10 October 2026. News reports said the money would be credited before Dasara, but as of 2 November 2026 it is not confirmed as paid and no new date has been announced."),
         ("Is Thalliki Vandanam given for all children in a family?", "Yes. The benefit is given for every eligible school-going child, not just one."),
         ("Do private school students get Thalliki Vandanam?", "Students in recognised private schools are covered along with government and aided schools, subject to the family meeting the eligibility conditions."),
         ("What if my child's name is not in the list?", "Contact your village or ward secretariat or the school with the child's and mother's Aadhaar to check and correct the details."),
@@ -1915,14 +1923,14 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 # ---- AICTE Pragati Scholarship
 s = BY_SLUG["aicte-pragati-scholarship"]
 write(f"schemes/{s['slug']}/index.html", article(s,
-    lede="The AICTE Pragati Scholarship gives ₹50,000 a year to girl students in technical courses such as engineering, pharmacy and polytechnic diplomas, to help with fees, books and a computer. For 2026-27, applications on the National Scholarship Portal close on 31 October 2026.",
+    lede="The AICTE Pragati Scholarship gives ₹50,000 a year to girl students in technical courses such as engineering, pharmacy and polytechnic diplomas, to help with fees, books and a computer. For 2026-27, applications on the National Scholarship Portal closed on 31 October 2026.",
     description="AICTE Pragati Scholarship for girls explained: ₹50,000 a year for degree and diploma students, eligibility, income limit, documents, how to apply on NSP, 2026-27 last date.",
-    facts=[("Scholarship", "₹50,000 / year"), ("For", "Girls in AICTE courses"), ("Family income", "Below ₹8 lakh"), ("2026-27 last date", "31 Oct 2026")],
+    facts=[("Scholarship", "₹50,000 / year"), ("For", "Girls in AICTE courses"), ("Family income", "Below ₹8 lakh"), ("2026-27 window", "Closed 31 Oct 2026")],
     body='''
         <h2>What is the Pragati Scholarship?</h2>
         <p>The All India Council for Technical Education (AICTE) has run the Pragati Scholarship since 2014-15 to encourage girls to study technical subjects. Every year about <strong>10,000 scholarships</strong> are given (5,000 for degree and 5,000 for diploma students) in most states, and in some states and union territories, including the North-East and Jammu &amp; Kashmir, <strong>all eligible girls</strong> get it.</p>
 
-        <div class="note"><strong>2026-27 applications are open now.</strong> The window on the National Scholarship Portal opened on 1 June 2026 and closes on <strong>31 October 2026</strong>. Apply early, because your college must also verify your application.</div>
+        <div class="note"><strong>2026-27 applications have closed.</strong> The window on the National Scholarship Portal opened on 1 June 2026 and closed on <strong>31 October 2026</strong>. We found no official extension (2 November 2026). If the National Scholarship Portal shows a new date, apply before it; otherwise the next round usually opens around June 2027. If you already applied, make sure your college verifies your application.</div>
 
         <h2>Benefits</h2>
         <ul>
@@ -1966,7 +1974,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
 ''',
     faqs=[
         ("How much is the Pragati Scholarship?", "₹50,000 per year for each year of the course, paid by DBT."),
-        ("What is the last date for Pragati Scholarship 2026-27?", "31 October 2026 on the National Scholarship Portal (the window opened on 1 June 2026)."),
+        ("What is the last date for Pragati Scholarship 2026-27?", "It was 31 October 2026 on the National Scholarship Portal (the window opened on 1 June 2026). We found no official extension as of 2 November 2026."),
         ("Can two sisters get the Pragati Scholarship?", "Yes. A maximum of two girls per family can get it."),
         ("What is the income limit for Pragati?", "Total family income must be less than ₹8 lakh per year."),
         ("Is Pragati only for engineering?", "It is for girls in AICTE-approved technical degree and diploma courses, such as engineering, pharmacy, architecture and polytechnic diplomas."),
@@ -2539,12 +2547,12 @@ s = BY_SLUG["central-sector-scholarship"]
 write(f"schemes/{s['slug']}/index.html", article(s,
     lede="The Central Sector Scholarship gives college students ₹12,000 a year (₹20,000 in PG and later years of technical courses) if they scored in the top 20% of their Class 12 board and their family earns up to ₹4.5 lakh a year. Half of the scholarships go to boys and half to girls.",
     description="Central Sector Scholarship (CSSS / PM-USP) explained: ₹12,000–₹20,000 a year for college students, 80th percentile in Class 12, income up to ₹4.5 lakh, how to apply on NSP, 2026-27 last date.",
-    facts=[("Degree (yrs 1–3)", "₹12,000 / year"), ("PG / later tech years", "₹20,000 / year"), ("Family income", "Up to ₹4.5 lakh"), ("2026-27 last date", "31 Oct 2026")],
+    facts=[("Degree (yrs 1–3)", "₹12,000 / year"), ("PG / later tech years", "₹20,000 / year"), ("Family income", "Up to ₹4.5 lakh"), ("2026-27 window", "Closed 31 Oct 2026")],
     body='''
         <h2>What is this scholarship?</h2>
         <p>The <strong>Central Sector Scheme of Scholarship for College and University Students</strong> (now under PM-USP, the Pradhan Mantri Uchchatar Shiksha Protsahan Yojana) is a merit-cum-means scholarship run by the Ministry of Education since 2008. It helps bright students from lower-income families continue to college.</p>
 
-        <div class="note"><strong>2026-27 applications are open</strong> on the National Scholarship Portal (from 1 June 2026). The closing date for students is <strong>31 October 2026</strong>; your college must then verify the application.</div>
+        <div class="note"><strong>2026-27 applications have closed.</strong> The window on the National Scholarship Portal opened on 1 June 2026 and closed on <strong>31 October 2026</strong>. We found no official extension (2 November 2026). If the National Scholarship Portal shows a new date, apply before it; otherwise the next round usually opens around June 2027. If you already applied, make sure your college verifies your application.</div>
 
         <h2>How much?</h2>
         <div class="table-wrap">
@@ -2586,7 +2594,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <ol>
           <li>Register on the <a href="https://scholarships.gov.in" target="_blank" rel="noopener">National Scholarship Portal</a> with One Time Registration (Aadhaar).</li>
           <li>Choose the <strong>PM-USP Central Sector Scheme of Scholarship (CSSS)</strong>.</li>
-          <li>Fill in the form and upload documents before 31 October 2026.</li>
+          <li>Fill in the form and upload documents before the last date (it was 31 October in 2026-27).</li>
           <li>Your college verifies it, then the state board/department checks it.</li>
         </ol>
 
@@ -2599,7 +2607,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         ("How much is the Central Sector Scholarship?", "₹12,000 a year for the first three years of a degree, and ₹20,000 a year at PG level and in the 4th and 5th years of technical courses."),
         ("What marks are needed?", "You must be above the 80th percentile of successful students in your stream in your Class 12 board exam."),
         ("What is the income limit?", "Family income up to ₹4.5 lakh a year."),
-        ("What is the last date for 2026-27?", "31 October 2026 for students on the National Scholarship Portal."),
+        ("What is the last date for 2026-27?", "It was 31 October 2026 for students on the National Scholarship Portal. We found no official extension as of 2 November 2026."),
         ("Is it only for boys?", "No. Scholarships are split equally, 50% for boys and 50% for girls."),
     ],
     sources=[
@@ -4832,30 +4840,22 @@ write("games/index.html",
 # ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
 # Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
 UPDATES = [
-    dict(kind="expected", date="24 Oct 2026",
-         title="PM-KISAN 24th instalment: 30 October reported",
-         text="News reports on 23 October say the Agriculture Ministry announced 30 October 2026 on social media. No PIB press release yet. Make sure your eKYC, land seeding and Aadhaar bank link are done.",
+    dict(kind="news", date="30 Oct 2026",
+         title="PM-KISAN 24th instalment paid on 30 October",
+         text="PIB says about ₹18,690 crore reached 9.34 crore farmers, ₹2,000 each. Not received? Check Know Your Status on pmkisan.gov.in (eKYC, land seeding, Aadhaar bank link). The 25th instalment date is not announced.",
          link="/schemes/pm-kisan/"),
-    dict(kind="expected", date="24 Oct 2026",
-         title="Annadata Sukhibhava 2nd instalment: 30 October reported",
-         text="It was not paid at Dasara. News reports say AP will pay it on 30 October together with PM-KISAN's 24th instalment. The date and amount are not officially confirmed yet. Complete your eKYC at the Rythu Seva Kendram.",
+    dict(kind="news", date="31 Oct 2026",
+         title="Annadata Sukhibhava 2nd instalment paid on 30 October",
+         text="News reports say ₹7,000 per family (₹5,000 state + ₹2,000 PM-KISAN) was credited to about 46.86 lakh farmer families. About 17,828 farmers did not get it because of technical problems; ask at your Rythu Seva Kendram.",
          link="/schemes/ap-annadata-sukhibhava/"),
-    dict(kind="expected", date="24 Oct 2026",
+    dict(kind="expected", date="2 Nov 2026",
          title="Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed",
-         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not confirmed as paid by 24 October.",
+         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not officially confirmed as paid by 2 November.",
          link="/schemes/ap-thalliki-vandanam/"),
     dict(kind="deadline", date="15 Oct 2026", until="2026-12-31",
          title="AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)",
          text="Under PM Fasal Bima Yojana, farmers pay at most 1.5% premium for Rabi food and oilseed crops. Enrol through your bank, CSC or Rythu Seva Kendram; an Agristack farmer ID is needed.",
          link="/schemes/pm-fasal-bima-yojana/"),
-    dict(kind="deadline", date="13 Oct 2026", until="2026-10-31",
-         title="Central Sector Scholarship: apply by 31 October",
-         text="College students in the top 20% of their Class 12 board with family income up to ₹4.5 lakh can get ₹12,000–₹20,000 a year. Apply on the National Scholarship Portal.",
-         link="/schemes/central-sector-scholarship/"),
-    dict(kind="deadline", date="8 Oct 2026", until="2026-10-31",
-         title="Pragati Scholarship for girls: apply by 31 October",
-         text="Girls in AICTE degree and diploma courses can get ₹50,000 a year. 2026-27 applications on the National Scholarship Portal close on 31 October 2026.",
-         link="/schemes/aicte-pragati-scholarship/"),
     dict(kind="news", date="24 Oct 2026",
          title="AP Auto Drivers Sevalo: 2026 payment date not announced",
          text="Last year auto, taxi and maxi-cab owner-drivers got ₹15,000 on 4 October 2025. No official date has been given for this year's payment yet.",
@@ -4905,7 +4905,7 @@ UPDATES = [
          text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
          link="/schemes/pm-internship-scheme/"),
 ]
-UPDATES_CHECKED = "24 October 2026"  # change when you re-check the list
+UPDATES_CHECKED = "2 November 2026"  # change when you re-check the list
 KIND_LABEL = {"deadline": "Deadline", "expected": "Expected", "news": "News", "rate": "Rate"}
 
 def update_item(u):
@@ -4956,16 +4956,12 @@ with open(os.path.join(os.path.dirname(__file__), "home_updates.html"), "w", enc
 TE_UPDATES = {
     "AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)": ("ఏపీ రబీ పంటల బీమా: 15 డిసెంబర్ లోపు చేరండి (వరికి 31 డిసెంబర్)",
         "పీఎం ఫసల్ బీమా యోజన కింద రబీ ఆహార, నూనెగింజల పంటలకు రైతు గరిష్ఠంగా 1.5% ప్రీమియం కడతారు. బ్యాంకు, CSC లేదా రైతు సేవా కేంద్రంలో చేరండి; అగ్రిస్టాక్ రైతు ఐడీ అవసరం."),
-    "Annadata Sukhibhava 2nd instalment: 30 October reported": ("అన్నదాత సుఖీభవ రెండో విడత: 30 అక్టోబర్ అని వార్తలు",
-        "దసరాకు రాలేదు. పీఎం కిసాన్ 24వ విడతతో కలిపి 30 అక్టోబర్‌న ఇస్తారని వార్తలు చెబుతున్నాయి. తేదీ, మొత్తం ఇంకా అధికారికంగా ఖరారు కాలేదు. రైతు సేవా కేంద్రంలో ఈకేవైసీ పూర్తి చేయండి."),
+    "Annadata Sukhibhava 2nd instalment paid on 30 October": ("అన్నదాత సుఖీభవ రెండో విడత 30 అక్టోబర్‌న జమ",
+        "ఒక్కో కుటుంబానికి ₹7,000 (రాష్ట్రం ₹5,000 + పీఎం కిసాన్ ₹2,000) సుమారు 46.86 లక్షల రైతు కుటుంబాల ఖాతాల్లో జమ అయిందని వార్తలు చెబుతున్నాయి. సాంకేతిక సమస్యల వల్ల సుమారు 17,828 మందికి రాలేదు; రైతు సేవా కేంద్రంలో అడగండి."),
     "Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed": ("తల్లికి వందనం రెండో విడత: కొత్త విద్యార్థులకు ₹13,000 ఆలస్యం",
-        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న ఉత్తర్వు వచ్చింది. దసరా లోపు వస్తుందనుకున్నా, 24 అక్టోబర్ నాటికి జమ అయినట్లు నిర్ధారణ లేదు."),
-    "Central Sector Scholarship: apply by 31 October": ("సెంట్రల్ సెక్టార్ స్కాలర్‌షిప్: 31 అక్టోబర్ లోపు దరఖాస్తు చేయండి",
-        "12వ తరగతి బోర్డులో టాప్ 20%లో ఉండి, కుటుంబ ఆదాయం ₹4.5 లక్షల వరకు ఉన్న కాలేజీ విద్యార్థులకు ఏడాదికి ₹12,000–₹20,000. నేషనల్ స్కాలర్‌షిప్ పోర్టల్‌లో దరఖాస్తు చేయండి."),
-    "Pragati Scholarship for girls: apply by 31 October": ("అమ్మాయిలకు ప్రగతి స్కాలర్‌షిప్: 31 అక్టోబర్ లోపు దరఖాస్తు చేయండి",
-        "AICTE డిగ్రీ, డిప్లొమా కోర్సుల అమ్మాయిలకు ఏడాదికి ₹50,000. 2026-27 దరఖాస్తులు నేషనల్ స్కాలర్‌షిప్ పోర్టల్‌లో 31 అక్టోబర్ 2026తో ముగుస్తాయి."),
-    "PM-KISAN 24th instalment: 30 October reported": ("పీఎం కిసాన్ 24వ విడత: 30 అక్టోబర్ అని వార్తలు",
-        "వ్యవసాయ మంత్రిత్వ శాఖ సోషల్ మీడియాలో 30 అక్టోబర్ 2026 అని ప్రకటించిందని 23 అక్టోబర్ వార్తలు చెబుతున్నాయి. PIB ప్రకటన ఇంకా రాలేదు. ఈకేవైసీ, ల్యాండ్ సీడింగ్, ఆధార్ బ్యాంకు లింక్ పూర్తి చేసుకోండి."),
+        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న ఉత్తర్వు వచ్చింది. దసరా లోపు వస్తుందనుకున్నా, 2 నవంబర్ నాటికి జమ అయినట్లు అధికారిక నిర్ధారణ లేదు."),
+    "PM-KISAN 24th instalment paid on 30 October": ("పీఎం కిసాన్ 24వ విడత 30 అక్టోబర్‌న జమ",
+        "PIB ప్రకారం 9.34 కోట్ల రైతులకు ఒక్కొక్కరికి ₹2,000 చొప్పున సుమారు ₹18,690 కోట్లు జమ అయ్యాయి. రాలేదా? pmkisan.gov.in లో Know Your Status చూడండి (ఈకేవైసీ, ల్యాండ్ సీడింగ్, ఆధార్ బ్యాంకు లింక్). 25వ విడత తేదీ ఇంకా ప్రకటించలేదు."),
     "AP Auto Drivers Sevalo: 2026 payment date not announced": ("ఏపీ ఆటో డ్రైవర్ల సేవలో: 2026 చెల్లింపు తేదీ ప్రకటించలేదు",
         "గత ఏడాది సొంత ఆటో, ట్యాక్సీ, మ్యాక్సీ క్యాబ్ డ్రైవర్లకు 4 అక్టోబర్ 2025న ₹15,000 ఇచ్చారు. ఈ ఏడాది చెల్లింపుకు అధికారిక తేదీ ఇంకా ఇవ్వలేదు."),
     "Nethanna Sevalo 2nd phase: ₹25,000 for weavers, date awaited": ("నేతన్నల సేవలో రెండో విడత: నేతన్నలకు ₹25,000, తేదీ కోసం ఎదురుచూపు",
