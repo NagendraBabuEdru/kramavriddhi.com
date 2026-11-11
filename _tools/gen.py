@@ -4840,6 +4840,14 @@ write("games/index.html",
 # ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
 # Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
 UPDATES = [
+    dict(kind="news", date="10 Nov 2026",
+         title="Telangana: ₹5 lakh family life insurance to start on 19 November",
+         text="The state Cabinet approved Indiramma Kutumba Jeevitha Bima, a ₹5 lakh life cover for the head or main earner of each family, with the premium paid by the government. It is to be launched on 19 November; Indiramma Committees are to collect applications house to house from 20 to 30 November. Full rules are not published yet. Applying is free: never pay anyone.",
+         link="/schemes/telangana/"),
+    dict(kind="news", date="9 Nov 2026",
+         title="Rythu Bharosa Yasangi 2026-27: no release date yet",
+         text="The Telangana government has not announced when the ₹6,000 per acre Yasangi (Rabi) instalment will be paid. No announcement was made at the Chief Minister's farmers' meeting on 9 November.",
+         link="/schemes/ts-rythu-bharosa/"),
     dict(kind="news", date="30 Oct 2026",
          title="PM-KISAN 24th instalment paid on 30 October",
          text="PIB says about ₹18,690 crore reached 9.34 crore farmers, ₹2,000 each. Not received? Check Know Your Status on pmkisan.gov.in (eKYC, land seeding, Aadhaar bank link). The 25th instalment date is not announced.",
@@ -4848,9 +4856,9 @@ UPDATES = [
          title="Annadata Sukhibhava 2nd instalment paid on 30 October",
          text="News reports say ₹7,000 per family (₹5,000 state + ₹2,000 PM-KISAN) was credited to about 46.86 lakh farmer families. About 17,828 farmers did not get it because of technical problems; ask at your Rythu Seva Kendram.",
          link="/schemes/ap-annadata-sukhibhava/"),
-    dict(kind="expected", date="2 Nov 2026",
+    dict(kind="expected", date="11 Nov 2026",
          title="Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed",
-         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not officially confirmed as paid by 2 November.",
+         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not officially confirmed as paid by 11 November.",
          link="/schemes/ap-thalliki-vandanam/"),
     dict(kind="deadline", date="15 Oct 2026", until="2026-12-31",
          title="AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)",
@@ -4905,7 +4913,7 @@ UPDATES = [
          text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
          link="/schemes/pm-internship-scheme/"),
 ]
-UPDATES_CHECKED = "2 November 2026"  # change when you re-check the list
+UPDATES_CHECKED = "11 November 2026"  # change when you re-check the list
 KIND_LABEL = {"deadline": "Deadline", "expected": "Expected", "news": "News", "rate": "Rate"}
 
 def update_item(u):
@@ -4954,12 +4962,16 @@ with open(os.path.join(os.path.dirname(__file__), "home_updates.html"), "w", enc
 
 # ---- Telugu updates page (added 18 Oct 2026). Every item in UPDATES needs a Telugu entry here (keyed by the English title).
 TE_UPDATES = {
+    "Telangana: ₹5 lakh family life insurance to start on 19 November": ("తెలంగాణ: కుటుంబానికి ₹5 లక్షల జీవిత బీమా 19 నవంబర్ నుంచి",
+        "ఇందిరమ్మ కుటుంబ జీవిత బీమాకు మంత్రివర్గం ఆమోదం తెలిపింది: ప్రతి కుటుంబ పెద్ద లేదా సంపాదించే వ్యక్తికి ₹5 లక్షల జీవిత బీమా, ప్రీమియం ప్రభుత్వమే కడుతుంది. 19 నవంబర్‌న ప్రారంభం; 20 నుంచి 30 నవంబర్ వరకు ఇందిరమ్మ కమిటీలు ఇంటింటికీ వచ్చి దరఖాస్తులు తీసుకుంటాయి. పూర్తి నిబంధనలు ఇంకా రాలేదు. దరఖాస్తు ఉచితం: ఎవరికీ డబ్బు ఇవ్వకండి."),
+    "Rythu Bharosa Yasangi 2026-27: no release date yet": ("రైతు భరోసా యాసంగి 2026-27: విడుదల తేదీ ఇంకా లేదు",
+        "ఎకరానికి ₹6,000 యాసంగి విడత ఎప్పుడు ఇస్తారో తెలంగాణ ప్రభుత్వం ఇంకా ప్రకటించలేదు. 9 నవంబర్‌న ముఖ్యమంత్రి రైతు సభలో కూడా ప్రకటన రాలేదు."),
     "AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)": ("ఏపీ రబీ పంటల బీమా: 15 డిసెంబర్ లోపు చేరండి (వరికి 31 డిసెంబర్)",
         "పీఎం ఫసల్ బీమా యోజన కింద రబీ ఆహార, నూనెగింజల పంటలకు రైతు గరిష్ఠంగా 1.5% ప్రీమియం కడతారు. బ్యాంకు, CSC లేదా రైతు సేవా కేంద్రంలో చేరండి; అగ్రిస్టాక్ రైతు ఐడీ అవసరం."),
     "Annadata Sukhibhava 2nd instalment paid on 30 October": ("అన్నదాత సుఖీభవ రెండో విడత 30 అక్టోబర్‌న జమ",
         "ఒక్కో కుటుంబానికి ₹7,000 (రాష్ట్రం ₹5,000 + పీఎం కిసాన్ ₹2,000) సుమారు 46.86 లక్షల రైతు కుటుంబాల ఖాతాల్లో జమ అయిందని వార్తలు చెబుతున్నాయి. సాంకేతిక సమస్యల వల్ల సుమారు 17,828 మందికి రాలేదు; రైతు సేవా కేంద్రంలో అడగండి."),
     "Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed": ("తల్లికి వందనం రెండో విడత: కొత్త విద్యార్థులకు ₹13,000 ఆలస్యం",
-        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న ఉత్తర్వు వచ్చింది. దసరా లోపు వస్తుందనుకున్నా, 2 నవంబర్ నాటికి జమ అయినట్లు అధికారిక నిర్ధారణ లేదు."),
+        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న ఉత్తర్వు వచ్చింది. దసరా లోపు వస్తుందనుకున్నా, 11 నవంబర్ నాటికి జమ అయినట్లు అధికారిక నిర్ధారణ లేదు."),
     "PM-KISAN 24th instalment paid on 30 October": ("పీఎం కిసాన్ 24వ విడత 30 అక్టోబర్‌న జమ",
         "PIB ప్రకారం 9.34 కోట్ల రైతులకు ఒక్కొక్కరికి ₹2,000 చొప్పున సుమారు ₹18,690 కోట్లు జమ అయ్యాయి. రాలేదా? pmkisan.gov.in లో Know Your Status చూడండి (ఈకేవైసీ, ల్యాండ్ సీడింగ్, ఆధార్ బ్యాంకు లింక్). 25వ విడత తేదీ ఇంకా ప్రకటించలేదు."),
     "AP Auto Drivers Sevalo: 2026 payment date not announced": ("ఏపీ ఆటో డ్రైవర్ల సేవలో: 2026 చెల్లింపు తేదీ ప్రకటించలేదు",
