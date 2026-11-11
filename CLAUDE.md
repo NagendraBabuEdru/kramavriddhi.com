@@ -35,6 +35,7 @@ The owner runs several Claude sessions. Each has one job and only edits its own 
 | **Kramavriddhi – Website & Schemes** | Scheme guides, Telugu pages, updates page, eligibility checker, tools, apps/games listing pages, SEO, weekly fact checks | `_tools/`, `assets/`, all generated HTML pages, `sitemap.xml`, `robots.txt` |
 | **Rex – Game Updates** | Develops Rex's Big Adventure in `S:\Rex_adventure` and publishes new builds | `games/rex-adventure/` in this repo, plus the private Rex_adventure repo |
 | **Make promo videos for Rex's Big Adventure game** (Rex videos) | Rex promo videos and story episodes | `_social/video/rex/`, `_social/videos/rex/` |
+| **Learn by Playing** | Browser puzzle games that teach tech concepts (Azure, Ansible, more later) at `/learn/` | `learn/` (hand-written HTML/CSS/JS; no build step) |
 | **Create animated YouTube Shorts for Kramavriddhi** (scheme videos) | Scheme Shorts and Instagram posts | `_social/video/` (except `rex/`), `_social/videos/` (except `rex/`), `_social/images/`, `make_kit.py`, `SOCIAL_KIT.md`, `YOUTUBE_PLAYLISTS.md` |
 
 Rules for working together:
