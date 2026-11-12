@@ -382,16 +382,16 @@ html.snap-feed { scroll-snap-type: y proximity; }
 
 /* ---------- Daily, Instagram-style (v6) */
 /* topic brand colours: --tc main, --tc2 ring partner, --tc-ink text on --tc */
-.t-python { --tc: #3776AB; --tc2: #FFD43B; --tc-ink: #fff; }
+.t-python { --tc: #2B5B84; --tc2: #FFD43B; --tc-ink: #fff; }
 .t-azure { --tc: #0078D4; --tc2: #50E6FF; --tc-ink: #fff; }
 .t-git { --tc: #F05032; --tc2: #FFB199; --tc-ink: #fff; }
-.t-linux { --tc: #FCC624; --tc2: #222; --tc-ink: #111; }
+.t-linux { --tc: #E95420; --tc2: #772953; --tc-ink: #fff; }
 .t-docker { --tc: #2496ED; --tc2: #9BD3FA; --tc-ink: #fff; }
 .t-kubernetes { --tc: #326CE5; --tc2: #A9C1F5; --tc-ink: #fff; }
 .t-ansible { --tc: #EE0000; --tc2: #1A1A1A; --tc-ink: #fff; }
 .t-sql { --tc: #00758F; --tc2: #F29111; --tc-ink: #fff; }
-.t-data { --tc: #7B3FE4; --tc2: #FF8AC2; --tc-ink: #fff; }
-.t-devops { --tc: #1F883D; --tc2: #8DE3AE; --tc-ink: #fff; }
+.t-data { --tc: #5C2D91; --tc2: #C59CFF; --tc-ink: #fff; }
+.t-devops { --tc: #107C10; --tc2: #8DE3AE; --tc-ink: #fff; }
 
 html.snap-feed { scroll-padding-top: 64px; }
 .daily { max-width: 560px; }
@@ -480,3 +480,85 @@ html.snap-feed { scroll-padding-top: 64px; }
 .daily .more a, .daily .daychip { border-radius: 999px; }
 @media (prefers-reduced-motion: reduce) { .pact.like[aria-pressed="true"] svg { animation: none; } }
 .daily .dcard { border-top: 0; }
+
+/* ---------- Daily v7: each card looks like its technology's own website
+   --cbg card background, --cink text, --cmuted small text, --cline borders, --cbox answer boxes
+   --chead/--chead-ink top band, --cstripe line under the band, --cbtn/--cbtn-ink main button,
+   --clink links, --crad corner radius, --cfont / --chfont body and heading fonts */
+.dcard[data-j] {
+  --cbg: #FFFFFF; --cink: #171717; --cmuted: #5C5C5C; --cline: #D6D6D6; --cbox: #FFFFFF;
+  --chead: var(--tc); --chead-ink: var(--tc-ink); --cstripe: var(--tc2); --cbtn: var(--tc); --cbtn-ink: var(--tc-ink);
+  --clink: var(--tc); --crad: 8px; --cfont: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --chfont: var(--cfont);
+}
+/* Microsoft Learn / Azure: white, Segoe UI, Azure blue, square corners */
+.dcard.t-azure, .dcard.t-data, .dcard.t-sql, .dcard.t-devops { --cfont: "Segoe UI", SegoeUI, "Helvetica Neue", system-ui, sans-serif; --crad: 2px; --cbox: #FFFFFF; --cline: #C8C8C8; --cstripe: transparent; }
+.dcard.t-azure { --chead: #0078D4; --chead-ink: #fff; --cbtn: #0078D4; --cbtn-ink: #fff; --clink: #0065B3; }
+.dcard.t-data { --chead: #5C2D91; --chead-ink: #fff; --cbtn: #5C2D91; --cbtn-ink: #fff; --clink: #5C2D91; }
+.dcard.t-sql { --chead: #00758F; --chead-ink: #fff; --cbtn: #00758F; --cbtn-ink: #fff; --clink: #005F74; }
+.dcard.t-devops { --chead: #107C10; --chead-ink: #fff; --cbtn: #107C10; --cbtn-ink: #fff; --clink: #0B6A0B; }
+/* python.org: deep Python blue band, yellow accents, light grey page */
+.dcard.t-python { --cbg: #F6F8FA; --cink: #1F2933; --cbox: #FFFFFF; --chead: #2B5B84; --chead-ink: #fff; --cstripe: #FFD43B; --cbtn: #FFD43B; --cbtn-ink: #1F2933; --clink: #2B5B84; --crad: 5px; }
+/* git-scm.com: warm beige page, orange-red, serif headings */
+.dcard.t-git { --cbg: #FCFCFA; --cink: #4E443C; --cmuted: #6E6157; --cbox: #F7F6F0; --cline: #D8D2C4; --chead: #F14E32; --chead-ink: #fff; --cstripe: #E8E5DA; --cbtn: #C93A1E; --cbtn-ink: #fff; --clink: #C93A1E; --crad: 4px; --chfont: Georgia, "Times New Roman", serif; }
+/* ubuntu.com (Linux): Ubuntu orange band, aubergine buttons, Ubuntu font */
+.dcard.t-linux { --cfont: Ubuntu, "Segoe UI", system-ui, sans-serif; --chead: #E95420; --chead-ink: #fff; --cstripe: #772953; --cbtn: #772953; --cbtn-ink: #fff; --clink: #772953; --crad: 2px; --cline: #CDCDCD; }
+/* docs.docker.com: Docker blue, deep navy text, softer corners */
+.dcard.t-docker { --cbg: #F9FAFB; --cink: #0C1D3B; --cbox: #FFFFFF; --chead: #1D63ED; --chead-ink: #fff; --cstripe: #0C1D3B; --cbtn: #1D63ED; --cbtn-ink: #fff; --clink: #1D63ED; --crad: 10px; }
+/* kubernetes.io: Kubernetes blue band, white page */
+.dcard.t-kubernetes { --cink: #303030; --chead: #326CE5; --chead-ink: #fff; --cstripe: #A9C1F5; --cbtn: #326CE5; --cbtn-ink: #fff; --clink: #326CE5; --crad: 4px; }
+/* Ansible docs: black band with Ansible red */
+.dcard.t-ansible { --chead: #1A1A1A; --chead-ink: #fff; --cstripe: #EE0000; --cbtn: #CC0000; --cbtn-ink: #fff; --clink: #CC0000; --crad: 4px; }
+
+@media (prefers-color-scheme: dark) {
+  .dcard[data-j] { --cbg: color-mix(in oklab, var(--chead) 10%, #15171B); --cink: #ECECEC; --cmuted: #A8A8A8; --cline: #3A3D44; --cbox: color-mix(in oklab, var(--chead) 6%, #1C1F24); --clink: color-mix(in oklab, var(--chead) 45%, #fff); }
+  .dcard.t-python { --cstripe: #FFD43B; }
+  .dcard.t-ansible { --chead: #000; }
+}
+
+/* the card itself */
+.dcard[data-j] .post { background: var(--cbg); color: var(--cink); font-family: var(--cfont); border: 1px solid var(--cline); border-top: 0; border-radius: calc(var(--crad) + 8px); padding: 0 0 8px; overflow: hidden; }
+.gamecard .post { background: var(--cbg); }
+.dcard[data-j] .post > :not(.phead):not(.bigheart) { margin-inline: 16px; }
+.dcard[data-j] .phead { margin: 0 0 14px; padding: 12px 16px; background: var(--chead); color: var(--chead-ink); border-bottom: 4px solid var(--cstripe); }
+.dcard[data-j] .phead .pwho strong { color: inherit; font: 700 1.1875rem/1.15 var(--chfont); }
+.dcard[data-j] .phead .pwho span, .dcard[data-j] .phead .dcount { color: inherit; opacity: 0.88; font-family: var(--cfont); }
+.dcard[data-j] .phead .pav { background: var(--chead-ink); color: var(--chead); box-shadow: 0 0 0 2px var(--chead), 0 0 0 4px var(--cstripe); }
+.dcard.t-ansible .phead .pav { color: #EE0000; }
+.dcard[data-j] .dq { font-family: var(--chfont); color: var(--cink); font-weight: 700; letter-spacing: 0; }
+.dcard[data-j] .post .dtype.game-type { background: var(--cbtn); color: var(--cbtn-ink); border-radius: var(--crad); }
+.dcard[data-j] .post .editor { border-radius: var(--crad); }
+.dcard[data-j] .post .choice, .dcard[data-j] .post .ord, .dcard[data-j] .post .mblock, .dcard[data-j] .post .mslot, .dcard[data-j] .post .mtray { background: var(--cbox); color: var(--cink); border: 1px solid var(--cline); border-radius: var(--crad); font-family: var(--cfont); }
+.dcard[data-j] .post .mslot { border-style: dashed; color: var(--cmuted); }
+.dcard[data-j] .post .mslot.filled { border-style: solid; color: var(--cink); }
+.dcard[data-j] .post .choice pre { font-family: var(--mono); }
+.dcard[data-j] .post .choice:hover:not(:disabled), .dcard[data-j] .post .ord:hover:not(:disabled), .dcard[data-j] .post .mblock:hover { border-color: var(--cbtn); }
+.dcard[data-j] .post .choice .key, .dcard[data-j] .post .ord.picked .ordn { background: var(--chead); color: var(--chead-ink); border-radius: var(--crad); }
+.dcard[data-j] .post .ord .ordn { border-radius: var(--crad); border-color: var(--cline); }
+.dcard[data-j] .post .choice.right, .dcard[data-j] .post .ord.right, .dcard[data-j] .post .mslot.ok { border-color: var(--color-success); background: color-mix(in oklab, var(--color-success) 14%, var(--cbox)); }
+.dcard[data-j] .post .choice.wrong, .dcard[data-j] .post .ord.wrong, .dcard[data-j] .post .mslot.bad { border-color: var(--color-error); background: color-mix(in oklab, var(--color-error) 10%, var(--cbox)); }
+.dcard[data-j] .post .choice.right .key, .dcard[data-j] .post .ord.right .ordn { background: var(--color-success); color: #fff; }
+.dcard[data-j] .post .choice.wrong .key, .dcard[data-j] .post .ord.wrong .ordn { background: var(--color-error); color: #fff; }
+.dcard[data-j] .post .mhint, .dcard[data-j] .post .dres .small { color: var(--cmuted); }
+.dcard[data-j] .post .glyph { border-radius: calc(var(--crad) / 2); }
+.dcard[data-j] .post .bname { color: var(--cink); font-family: var(--cfont); }
+/* main buttons in the brand's button style */
+.dcard[data-j] .post .btn.go, .dcard[data-j] .post .dres .btn.primary { background: var(--cbtn); color: var(--cbtn-ink); border: 0; border-radius: var(--crad); box-shadow: none; font-family: var(--cfont); font-weight: 700; }
+.dcard[data-j] .post .btn.go:hover:not(:disabled), .dcard[data-j] .post .dres .btn.primary:hover { filter: brightness(1.08); background: var(--cbtn); }
+.dcard[data-j] .post .btn.ghost { border-radius: var(--crad); font-family: var(--cfont); color: var(--cink); border-color: var(--cline); background: var(--cbox); }
+/* result box */
+.dcard[data-j] .post .dres { border-radius: var(--crad); color: var(--cink); font-family: var(--cfont); }
+.dcard[data-j].is-right .dres { background: color-mix(in oklab, var(--color-success) 12%, var(--cbox)); border-left: 4px solid var(--color-success); }
+.dcard[data-j].is-wrong .dres { background: color-mix(in oklab, var(--color-warn-rule) 16%, var(--cbox)); border-left: 4px solid var(--color-warn-rule); }
+.dcard[data-j] .post .dres code, .dcard[data-j] .post .mhint code { background: color-mix(in oklab, var(--chead) 10%, var(--cbox)); color: var(--cink); border-radius: 3px; }
+/* action row and learn links */
+.dcard[data-j] .pactions { border-top-color: var(--cline); }
+.dcard[data-j] .pact { color: var(--cink); font-family: var(--cfont); }
+.dcard[data-j] .pact:hover { background: color-mix(in oklab, var(--chead) 8%, var(--cbg)); }
+.dcard[data-j] .pact.plearn { background: color-mix(in oklab, var(--chead) 12%, var(--cbg)); border-radius: var(--crad); }
+.dcard[data-j] .pact.plearn svg { color: var(--clink); }
+.dcard[data-j] .pact.plearn[aria-expanded="true"] { background: var(--cbtn); color: var(--cbtn-ink); }
+.dcard[data-j] .pact.plearn[aria-expanded="true"] svg { color: inherit; }
+.dcard[data-j] .pact.like[aria-pressed="true"] { color: #ED4956; }
+.dcard[data-j] .plearnbox { background: color-mix(in oklab, var(--chead) 7%, var(--cbox)); border-radius: var(--crad); border: 1px solid var(--cline); }
+.dcard[data-j] .plearnbox p { color: var(--cmuted); font-family: var(--cfont); }
+.dcard[data-j] .plearnbox a { color: var(--clink); font-family: var(--cfont); text-decoration-color: currentColor; }
