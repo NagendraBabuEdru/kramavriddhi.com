@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6RF0STQM2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S6RF0STQM2');
+  </script>
+  <title>Build the Data Pipeline: Azure Puzzle Game | Kramavriddhi</title>
+  <meta name="description" content="Put Azure services in the right order: Data Factory, Data Lake, Databricks, Synapse, Event Hubs, Stream Analytics and Power BI. 5 levels, free, works on phones.">
+  <link rel="canonical" href="https://kramavriddhi.com/learn/devops/azure-data-pipeline/">
+  <meta property="og:title" content="Build the Data Pipeline: Azure Puzzle Game | Kramavriddhi">
+  <meta property="og:description" content="Put Azure services in the right order: Data Factory, Data Lake, Databricks, Synapse, Event Hubs, Stream Analytics and Power BI. 5 levels, free, works on phones.">
+  <meta property="og:url" content="https://kramavriddhi.com/learn/devops/azure-data-pipeline/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://kramavriddhi.com/assets/og/default.png?v=bc62885c">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Build the Data Pipeline: Azure Puzzle Game | Kramavriddhi">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:site_name" content="Kramavriddhi">
+  <meta property="og:locale" content="en_IN">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23a46400'/><path d='M7 24h6v-5h6v-5h6V8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tokens.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/base.css?v=02a98478">
+  <link rel="stylesheet" href="/assets/style.css?v=02a98478">
+  <script src="/assets/site.js?v=02a98478" defer></script>
+  <link rel="stylesheet" href="/learn/common/learn.css?v=2">
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top" aria-label="Main">
+      <a class="brand" href="/">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M7 24h6v-5h6v-5h6V8" stroke="var(--bg)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Kramavriddhi</span>
+      </a>
+      <ul>
+        <li><a href="/schemes/">Schemes</a></li>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/apps/">Apps</a></li>
+        <li class="hide-sm"><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main class="game" id="game">
+      <p class="crumbs"><a href="/">Home</a> › <a href="/learn/">Learn by Playing</a> › <a href="/learn/devops/">Cloud &amp; DevOps</a> › Build the Data Pipeline</p>
+      <header class="game-head">
+        <p class="kicker">Azure · Puzzle game · 5 levels</p>
+        <h1>Build the Data Pipeline</h1>
+        <p class="lede">Data has a journey: it is collected, stored, cleaned and shown. Put the Azure services in the order the data travels, then press Run and watch it flow.</p>
+      </header>
+
+      <ol class="levels" id="levels" aria-label="Levels"></ol>
+
+      <div class="brief" id="brief"></div>
+
+      <div class="board" id="board">
+        <div class="board-label"><span>Your pipeline</span><span class="muted">Data flows from step 1 to the last step</span></div>
+        <ol class="rail" id="rail" aria-label="Pipeline steps"></ol>
+        <div class="board-label"><span>Blocks</span><span class="muted" id="trayhint">Tap a block, then tap a step. Or drag it.</span></div>
+        <div class="tray" id="tray" role="group" aria-label="Blocks to place"></div>
+        <div class="actions">
+          <button class="btn go" id="run" type="button" disabled>Run the pipeline</button>
+          <button class="btn ghost" id="clear" type="button">Start level again</button>
+        </div>
+        <p class="gmsg" id="msg" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="done" id="done" tabindex="-1" hidden></div>
+
+      <div class="howto">
+        <h2>How to play</h2>
+        <ul>
+          <li><strong>Tap</strong> a block, then tap an empty step to put it there. Tap a filled step to send its block back.</li>
+          <li><strong>Drag</strong> works too, on a phone or with a mouse. With a keyboard, use Tab and Enter.</li>
+          <li>When all steps are full, press <strong>Run the pipeline</strong>. Correct steps get a tick; wrong blocks go back.</li>
+          <li>Stars: right first time is 3 stars, one wrong run is 2 stars, more is 1 star. Some levels have a block that does not belong at all.</li>
+        </ul>
+        <p class="muted">Real projects can use other services too (for example Microsoft Fabric). These levels show common, correct patterns, not the only ones.</p>
+      </div>
+    </main>
+    <script src="/learn/common/learn.js?v=1"></script>
+    <script src="/learn/devops/azure-data-pipeline/game.js?v=2"></script>
+
+    <footer class="site">
+      <p class="mast"><a href="/">Kramavriddhi</a></p>
+      <div class="cols">
+        <p class="motto"><span lang="sa">क्रमेण वर्धामहे</span><br>© 2026 Kramavriddhi</p>
+        <ul>
+          <li><a href="/schemes/">Schemes</a></li>
+          <li><a href="/updates/">Updates</a></li>
+          <li><a href="/te/schemes/">తెలుగు</a></li>
+          <li><a href="/tools/">Tools</a></li>
+          <li><a href="/apps/">Apps</a></li>
+          <li><a href="/games/">Games</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/disclaimer/">Disclaimer</a></li>
+        </ul>
+      </div>
+      <div class="social"><span>Follow us:</span><a href="https://www.youtube.com/@kramavriddhi" target="_blank" rel="noopener me"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.8 15.1V8.9l5.4 3.1-5.4 3.1Z"/></svg><span>YouTube</span></a></div>
+      <p class="disclaimer">Kramavriddhi is an independent information website. It is not a government website and is not affiliated with the Government of India or any state government. Always confirm details on the official portal before applying.</p>
+    </footer>
+  </div>
+</body>
+</html>
