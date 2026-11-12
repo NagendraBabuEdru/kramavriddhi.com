@@ -349,3 +349,33 @@ html.snap-feed { scroll-snap-type: y proximity; }
 .daily-cta span { max-width: 56ch; }
 .daily-cta .btn.go { margin-top: var(--space-sm); }
 .daily-cta:hover .btn.go { background: var(--color-band); }
+
+/* Daily mini games */
+.dtype.game-type { color: var(--color-ink); background: var(--color-band); display: inline-block; padding: 4px 8px; letter-spacing: 0.04em; }
+.gamecard { background: linear-gradient(var(--color-paper-2), var(--color-paper-2)) padding-box; }
+.mpipe { list-style: none; margin: 0 0 var(--space-sm); padding: 0; display: grid; gap: 14px; }
+.mpipe > li { position: relative; }
+.mpipe > li + li::before { content: ""; position: absolute; left: 26px; top: -14px; width: 5px; height: 14px; background: var(--color-rule-2); }
+.mpipe.flowing > li + li::before { background: repeating-linear-gradient(to bottom, var(--color-accent) 0 5px, var(--color-ink) 5px 10px); animation: flow-y 480ms linear infinite; }
+.mslot { width: 100%; min-height: 58px; display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 6px; border: 2px dashed var(--color-rule-2); background: var(--color-paper); color: var(--color-muted); text-align: left; cursor: pointer; font: inherit; }
+.mslot .mno { flex: none; width: 24px; text-align: center; font: 800 1rem var(--font-display); }
+.mslot .glyph, .mblock .glyph { width: 42px; height: 42px; font-size: 13px; }
+.mslot.filled { border-style: solid; border-color: var(--color-ink); color: var(--color-ink); }
+.mslot.ok { border-color: var(--color-success); box-shadow: inset 0 -4px 0 var(--color-success); cursor: default; }
+.mslot.bad { border-color: var(--color-error); animation: shake 420ms var(--ease-out); }
+.mslot:focus-visible, .mblock:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.mpipe.flowing .mslot { animation: lit 700ms var(--ease-out) both; }
+.mpipe.flowing li:nth-child(2) .mslot { animation-delay: 120ms; } .mpipe.flowing li:nth-child(3) .mslot { animation-delay: 240ms; }
+.mpipe.flowing li:nth-child(4) .mslot { animation-delay: 360ms; } .mpipe.flowing li:nth-child(5) .mslot { animation-delay: 480ms; }
+.mhint { font-size: var(--text-sm); color: var(--color-ink-2); margin: var(--space-sm) 0; }
+.mtray { display: flex; flex-wrap: wrap; gap: 10px; padding: 10px; background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule-2); min-height: 66px; }
+.mtray:empty { display: none; }
+.mblock { display: inline-flex; align-items: center; gap: 8px; min-height: 54px; padding: 5px 12px 5px 5px; border: var(--rule-hair) solid var(--color-ink); background: var(--color-paper); color: var(--color-ink); text-align: left; cursor: pointer; box-shadow: 3px 3px 0 var(--color-ink); font: inherit; }
+.mblock .bname, .mslot .bname { font-size: 0.9375rem; }
+.mbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); margin-top: var(--space-md); }
+.mmsg { font: 600 1rem var(--font-display); color: var(--color-error); }
+.iline .ws { color: color-mix(in oklab, var(--code-dim) 70%, transparent); }
+.iline .d { color: var(--code-dim); }
+.iline.wrong { animation: shake 420ms var(--ease-out); }
+.solved-late .verdict { color: var(--color-ink) !important; }
+.pill span { white-space: nowrap; }

@@ -1,9 +1,11 @@
-/* Daily tasks for /learn/daily/. One entry per day, 5 cards each.
+/* Daily tasks for /learn/daily/. One entry per day: 5 quick tasks + 1 mini game.
    Card types:
      output  - code, a (right answer), w (wrong answers)
      choice  - q, a, w
      order   - q, items (in the correct order; shown shuffled)
      bug     - q, code (lines), bad (index of the line with the bug)
+     pipe    - q, steps ([glyph, name, style] in order), extra (blocks that do not belong)  -- mini game
+     indent  - q, step (4 Python / 2 YAML), lines ([spaces, text])                      -- mini game
    Every card has: topic, why (shown after answering). Use `code` and **bold** in why.
    To add a day: append a new { cards: [...] } at the end. Day 1 = 12 Nov 2026. */
 window.KV_DAILY = {
@@ -23,7 +25,10 @@ window.KV_DAILY = {
         why: '`git add` picks the changes, `git commit` saves them with a message on your computer, and `git push` sends them to GitHub.' },
       { t: 'choice', topic: 'Linux', q: 'Which command lists the files in the current folder?',
         a: 'ls', w: ['cd', 'pwd', 'mkdir'],
-        why: '`ls` lists files. `cd` changes folder, `pwd` prints where you are, `mkdir` makes a new folder.' }
+        why: '`ls` lists files. `cd` changes folder, `pwd` prints where you are, `mkdir` makes a new folder.' },
+      { t: 'indent', topic: 'Python', step: 4, q: 'Make this loop print 10, 20, 30 and then done.',
+        lines: [[0, 'nums = [1, 2, 3]'], [0, 'for n in nums:'], [4, 'print(n * 10)'], [0, 'print("done")']],
+        why: 'Only `print(n * 10)` is inside the loop (4 spaces), so it runs 3 times. `print("done")` is back at 0 spaces, so it runs once at the end.' }
     ] },
     { cards: [
       { t: 'output', topic: 'Python', code: 'x = 10\nx += 5\nprint(x // 4)', a: '3', w: ['3.75', '4', '15'],
@@ -39,7 +44,10 @@ window.KV_DAILY = {
         why: '`age` is text (it has quotes). Text + number is not allowed: `TypeError: can only concatenate str (not "int") to str`. Fix: `int(age) + 1`.' },
       { t: 'choice', topic: 'Ansible', q: 'Which Ansible module installs a package on an Ubuntu server?',
         a: 'ansible.builtin.apt', w: ['ansible.builtin.copy', 'ansible.builtin.service', 'ansible.builtin.template'],
-        why: '**apt** is Ubuntu’s package manager, so `ansible.builtin.apt` installs packages. `copy` sends files, `service` starts and stops services.' }
+        why: '**apt** is Ubuntu’s package manager, so `ansible.builtin.apt` installs packages. `copy` sends files, `service` starts and stops services.' },
+      { t: 'pipe', topic: 'Azure', q: 'Daily sales CSV files must reach a Power BI report every night. Build the pipeline.',
+        steps: [['CSV', 'Sales CSV files', 'src'], ['ADF', 'Data Factory'], ['ADLS', 'Data Lake Storage'], ['BI', 'Power BI']], extra: [['EH', 'Event Hubs']],
+        why: '**Data Factory** copies the files each night, the **Data Lake** stores them, and **Power BI** shows the report. Event Hubs is for live streams, not nightly files.' }
     ] },
     { cards: [
       { t: 'output', topic: 'Python', code: 'print("Azure"[1:4])', a: 'zur', w: ['Azu', 'zure', 'zu'],
@@ -55,7 +63,10 @@ window.KV_DAILY = {
         why: 'The list has 3 items at positions 0, 1 and 2. There is no position 3: `IndexError: list index out of range`. The last item is `marks[2]` or `marks[-1]`.' },
       { t: 'choice', topic: 'DevOps', q: 'In CI/CD, what does CI stand for?',
         a: 'Continuous Integration', w: ['Code Inspection', 'Cloud Infrastructure', 'Continuous Installation'],
-        why: '**Continuous Integration**: every code change is merged often and tested automatically. CD is Continuous Delivery or Deployment.' }
+        why: '**Continuous Integration**: every code change is merged often and tested automatically. CD is Continuous Delivery or Deployment.' },
+      { t: 'indent', topic: 'Ansible', step: 2, q: 'Fix this Ansible playbook so it installs git on every server.',
+        lines: [[0, '- name: Set up developer tools'], [2, 'hosts: all'], [2, 'become: true'], [2, 'tasks:'], [4, '- name: Install git'], [6, 'ansible.builtin.apt:'], [8, 'name: git'], [8, 'state: present']],
+        why: 'Play settings (`hosts`, `become`, `tasks`) sit 2 spaces under the play. Each task is a list item under `tasks:`, and the module’s options go one level deeper.' }
     ] },
     { cards: [
       { t: 'output', topic: 'Python', code: 'items = ["a", "b", "c"]\nprint(items[-2])', a: 'b', w: ['c', 'a', 'IndexError'],
@@ -71,7 +82,10 @@ window.KV_DAILY = {
         why: 'The line after `if ...:` must be indented (4 spaces): `    print("Pass")`. Python uses spaces to know what is inside the `if`.' },
       { t: 'choice', topic: 'SQL', q: 'Which SQL keyword keeps only the rows that match a condition?',
         a: 'WHERE', w: ['ORDER BY', 'SELECT', 'GROUP BY'],
-        why: '`WHERE` filters rows, e.g. `SELECT * FROM orders WHERE amount > 500`. `ORDER BY` sorts, `GROUP BY` makes groups.' }
+        why: '`WHERE` filters rows, e.g. `SELECT * FROM orders WHERE amount > 500`. `ORDER BY` sorts, `GROUP BY` makes groups.' },
+      { t: 'pipe', topic: 'Azure', q: 'Temperature sensors send readings every second. Show them live on a dashboard.',
+        steps: [['IoT', 'Sensors', 'src'], ['EH', 'Event Hubs'], ['ASA', 'Stream Analytics'], ['BI', 'Power BI']], extra: [['ADF', 'Data Factory']],
+        why: 'Live data needs streaming services: **Event Hubs** receives the readings, **Stream Analytics** calculates averages as they arrive, and **Power BI** shows them live.' }
     ] },
     { cards: [
       { t: 'output', topic: 'Python', code: 'print(10 == 10.0)', a: 'True', w: ['False', 'Error', '10'],
@@ -87,7 +101,10 @@ window.KV_DAILY = {
         why: '`greet` needs one value for `name`, but the call gives none: `TypeError: greet() missing 1 required positional argument: \'name\'`. Fix: `greet("Asha")`.' },
       { t: 'choice', topic: 'Git', q: 'Which command downloads a full copy of a GitHub repository to your computer?',
         a: 'git clone', w: ['git push', 'git commit', 'git init'],
-        why: '`git clone <url>` copies the repository and its history. `git init` starts a new empty one; `push` uploads.' }
+        why: '`git clone <url>` copies the repository and its history. `git init` starts a new empty one; `push` uploads.' },
+      { t: 'indent', topic: 'Python', step: 4, q: 'Fix the indentation so a temperature above 37 prints Fever.',
+        lines: [[0, 'temp = 38'], [0, 'if temp > 37:'], [4, 'print("Fever")'], [0, 'else:'], [4, 'print("Normal")']],
+        why: '`else:` lines up with its `if` (0 spaces). The line under each one is indented 4 spaces. 38 is above 37, so it prints `Fever`.' }
     ] },
     { cards: [
       { t: 'output', topic: 'Python', code: 'for i in range(2, 8, 2):\n    print(i)', a: '2\n4\n6', w: ['2\n4\n6\n8', '2\n3\n4\n5\n6\n7', '4\n6\n8'],
@@ -103,7 +120,10 @@ window.KV_DAILY = {
         why: 'Adding a key with `ages["Ravi"] = 25` is fine. Reading a missing key crashes: `KeyError: \'Kiran\'`. Safe way: `ages.get("Kiran", 0)`.' },
       { t: 'choice', topic: 'Azure', q: 'In Azure, what groups the resources of one project (VM, disk, network) so you can manage or delete them together?',
         a: 'Resource group', w: ['Management group', 'Tenant', 'Region'],
-        why: 'A **resource group** is a folder for related resources. Delete the group and everything in it goes. Management groups sit higher and hold subscriptions.' }
+        why: 'A **resource group** is a folder for related resources. Delete the group and everything in it goes. Management groups sit higher and hold subscriptions.' },
+      { t: 'pipe', topic: 'Data', q: 'Build a medallion pipeline: from the company database to report-ready gold data.',
+        steps: [['ERP', 'Company database', 'src'], ['ADF', 'Data Factory'], ['B', 'Bronze: raw', 'bronze'], ['S', 'Silver: clean', 'silver'], ['G', 'Gold: ready', 'gold']], extra: [['EH', 'Event Hubs']],
+        why: '**Data Factory** copies the database into **bronze**. Then the data is cleaned into **silver** and shaped for reports in **gold**.' }
     ] },
     { cards: [
       { t: 'output', topic: 'Python', code: 'words = ["hi", "there"]\nprint(" ".join(words).upper())', a: 'HI THERE', w: ['hi there', 'HITHERE', "['HI', 'THERE']"],
@@ -119,7 +139,143 @@ window.KV_DAILY = {
         why: 'A typo: the loop variable is `n`, but the line uses `m`, which was never created: `NameError: name \'m\' is not defined`.' },
       { t: 'choice', topic: 'Docker', q: 'What is a Docker image?',
         a: 'A packaged template with the app and everything it needs to run', w: ['A running server', 'A screenshot of the app', 'A backup of a database'],
-        why: 'An **image** is the package (code, libraries, settings). A **container** is a running copy of that image.' }
+        why: 'An **image** is the package (code, libraries, settings). A **container** is a running copy of that image.' },
+      { t: 'indent', topic: 'Python', step: 4, q: 'Fix this function so the program prints 12.',
+        lines: [[0, 'def area(w, h):'], [4, 'result = w * h'], [4, 'return result'], [0, 'print(area(3, 4))']],
+        why: 'The function body (`result = ...` and `return`) is indented 4 spaces under `def`. The call `print(area(3, 4))` is outside, at 0 spaces: 3 × 4 = 12.' }
+    ] },
+    { cards: [
+      { t: 'output', topic: 'Python', code: 'print(3 * "ab")', a: 'ababab', w: ['3ab', 'ab ab ab', 'TypeError'],
+        why: 'A number times text **repeats** the text: `3 * "ab"` is `ababab`, with no spaces.' },
+      { t: 'choice', topic: 'Azure', q: 'Which Azure service is a managed Apache Spark platform for cleaning and transforming big data?',
+        a: 'Azure Databricks', w: ['Azure Event Hubs', 'Azure Blob Storage', 'Azure Monitor'],
+        why: '**Databricks** runs Spark: notebooks and jobs that clean, join and transform large data. Event Hubs receives streams, Blob Storage stores files, Monitor collects logs.' },
+      { t: 'bug', topic: 'Python', q: 'This program crashes with a NameError. Which line crashes?',
+        code: ['name = "Ravi"', 'greeting = "Hello "', 'print(greeting + Name)'], bad: 2,
+        why: 'Python is **case-sensitive**: `name` and `Name` are different. `Name` was never created: `NameError: name \'Name\' is not defined`.' },
+      { t: 'order', topic: 'Linux', q: 'Order the steps to log in to a server and restart nginx.',
+        items: ['ssh user@server', 'sudo systemctl restart nginx', 'systemctl status nginx', 'exit'],
+        why: '`ssh` logs in, `systemctl restart` restarts the service (it needs `sudo`), `status` checks it is running again, and `exit` logs out.' },
+      { t: 'choice', topic: 'SQL', q: 'Which line sorts orders from the highest amount to the lowest?',
+        a: 'ORDER BY amount DESC', w: ['ORDER BY amount ASC', 'SORT amount DOWN', 'GROUP BY amount'],
+        why: '`ORDER BY` sorts. `DESC` means descending (big to small); `ASC`, the default, is small to big.' },
+      { t: 'indent', topic: 'Python', step: 4, q: 'Fix the indentation so it prints only the even numbers from 1 to 5.',
+        lines: [[0, 'for n in range(1, 6):'], [4, 'if n % 2 == 0:'], [8, 'print(n, "is even")']],
+        why: 'The `if` is inside the loop (4 spaces), and the `print` is inside the `if` (8 spaces). It prints `2 is even` and `4 is even`.' }
+    ] },
+    { cards: [
+      { t: 'output', topic: 'Python', code: 'x = [1, 2, 3]\nprint(sum(x) / len(x))', a: '2.0', w: ['2', '6', '3'],
+        why: '`sum(x)` is 6 and `len(x)` is 3. `/` always gives a float, so 6 / 3 is `2.0`, not `2`.' },
+      { t: 'choice', topic: 'Git', q: 'You want to build a new feature without touching the main code yet. What should you create?',
+        a: 'A new branch', w: ['A new repository', 'A tag', 'A merge conflict'],
+        why: 'A **branch** is your own line of work. When the feature is ready and reviewed, you merge it into `main`.' },
+      { t: 'bug', topic: 'Python', q: 'This program prints 3 numbers and then crashes with IndexError. Which line crashes?',
+        code: ['nums = [5, 10, 15]', 'for i in range(4):', '    print(nums[i])'], bad: 2,
+        why: 'The crash happens at `print(nums[i])` when `i` is 3. The real cause is `range(4)`: the list has only 3 items. Better: `for n in nums:`.' },
+      { t: 'order', topic: 'Data', q: 'ETL is a classic data job. Order its three steps.',
+        items: ['Extract: read data from the source', 'Transform: clean and change it', 'Load: write it to the target'],
+        why: '**E**xtract, **T**ransform, **L**oad. In modern lakes you also see ELT: load the raw data first, then transform it inside the lake.' },
+      { t: 'choice', topic: 'Ansible', q: 'Where do you list the servers that Ansible manages?',
+        a: 'The inventory file', w: ['The handlers section', 'The Dockerfile', 'A Jinja2 template'],
+        why: 'The **inventory** lists hosts and groups, like `[web]` with `web1` and `web2`. A playbook then targets a group with `hosts: web`.' },
+      { t: 'pipe', topic: 'Azure', q: 'Card payments must be checked live, and a fraud alert sent within seconds. Build the pipeline.',
+        steps: [['PAY', 'Card payments', 'src'], ['EH', 'Event Hubs'], ['ASA', 'Stream Analytics'], ['FN', 'Functions: send alert']], extra: [['ADF', 'Data Factory']],
+        why: '**Event Hubs** receives each payment, **Stream Analytics** spots suspicious patterns in real time, and an **Azure Function** sends the alert. Data Factory runs batches, too slow here.' }
+    ] },
+    { cards: [
+      { t: 'output', topic: 'Python', code: 'print(round(7.567, 1))', a: '7.6', w: ['7.5', '8', '7.57'],
+        why: '`round(number, 1)` keeps 1 digit after the point. 7.567 rounds up to `7.6`.' },
+      { t: 'choice', topic: 'Azure', q: 'Which Azure service keeps passwords, keys and certificates safe, so they are not written in your code?',
+        a: 'Azure Key Vault', w: ['Azure Blob Storage', 'Azure Monitor', 'Azure DevOps Boards'],
+        why: '**Key Vault** stores secrets securely. Your app or pipeline reads them at run time, so no password sits in the code or on GitHub.' },
+      { t: 'bug', topic: 'Python', q: 'Python will not run this. Which line has the mistake?',
+        code: ['count = 0', 'while count < 3', '    count = count + 1'], bad: 1,
+        why: 'Like `if` and `for`, a `while` line must end with a colon: `while count < 3:`. Python says `SyntaxError: expected \':\'`.' },
+      { t: 'order', topic: 'Git', q: 'Order the steps to suggest a fix to a project on GitHub.',
+        items: ['git clone the repository', 'git checkout -b fix-typo', 'Edit, then git commit', 'git push and open a pull request'],
+        why: 'Clone it, make a **branch** for your change, commit, push, then open a **pull request** so others can review before it is merged.' },
+      { t: 'choice', topic: 'Linux', q: 'Which command shows running processes and CPU use, updating live?',
+        a: 'top', w: ['ls', 'cat', 'chmod'],
+        why: '`top` (or the friendlier `htop`) shows what is using CPU and memory right now. Press `q` to quit.' },
+      { t: 'indent', topic: 'Ansible', step: 2, q: 'Fix this playbook so nginx starts on the web servers.',
+        lines: [[0, '- name: Start web server'], [2, 'hosts: web'], [2, 'become: true'], [2, 'tasks:'], [4, '- name: Start nginx'], [6, 'ansible.builtin.service:'], [8, 'name: nginx'], [8, 'state: started']],
+        why: '`name` and `state` are options of the service module, so they sit 2 spaces deeper than `ansible.builtin.service:`.' }
+    ] },
+    { cards: [
+      { t: 'output', topic: 'Python', code: 'a = 5\nb = 2\nprint(a > b and b > 3)', a: 'False', w: ['True', '2', 'Error'],
+        why: '`and` is True only if **both** sides are True. `5 > 2` is True, but `2 > 3` is False, so the result is `False`.' },
+      { t: 'choice', topic: 'Data', q: 'In a star schema, which table holds the numbers, like sale amount and quantity?',
+        a: 'The fact table', w: ['A dimension table', 'The staging folder', 'A lookup CSV'],
+        why: 'The **fact** table holds measurements (amount, quantity). **Dimension** tables describe them (customer, product, date) and sit around it like a star.' },
+      { t: 'bug', topic: 'Python', q: 'This program crashes with an AttributeError. Which line crashes?',
+        code: ['marks = {"maths": 90}', 'marks.append("science")', 'print(marks)'], bad: 1,
+        why: '`marks` is a dictionary, and dictionaries have no `.append()`. Add a key instead: `marks["science"] = 85`.' },
+      { t: 'order', topic: 'SQL', q: 'Order the parts of this SQL query.',
+        items: ['SELECT name, amount', 'FROM orders', 'WHERE amount > 500', 'ORDER BY amount DESC'],
+        why: 'The written order is always `SELECT` → `FROM` → `WHERE` → `ORDER BY`. (`GROUP BY` would go between `WHERE` and `ORDER BY`.)' },
+      { t: 'choice', topic: 'DevOps', q: 'Someone messages you on WhatsApp asking for the server password “to fix an urgent bug”. What do you do?',
+        a: 'Refuse, and give access only through proper accounts', w: ['Send it, because it is urgent', 'Send half of it', 'Post it in the team group'],
+        why: 'Never share passwords in chats. Real teams give each person their own account with only the access they need, and keep secrets in a vault.' },
+      { t: 'pipe', topic: 'DevOps', q: 'Build a CI/CD pipeline: from a code push to production.',
+        steps: [['GIT', 'Code pushed', 'src'], ['BLD', 'Build'], ['TEST', 'Run tests'], ['STG', 'Deploy to staging'], ['PROD', 'Deploy to production']], extra: [['DEL', 'Delete the logs']],
+        why: 'Build first, then **test**, so broken code never ships. Staging is a safe copy of production to check it there before real users see it.' }
+    ] },
+    { cards: [
+      { t: 'output', topic: 'Python', code: 'print("10" + "5")', a: '105', w: ['15', '10 5', 'TypeError'],
+        why: 'Both are text (in quotes), so `+` **joins** them: `105`. For maths, convert first: `int("10") + int("5")` is 15.' },
+      { t: 'choice', topic: 'Azure', q: 'Which Azure language lets you write your infrastructure as code, so the same setup can be created again and again?',
+        a: 'Bicep', w: ['Power BI', 'Excel', 'Azure Key Vault'],
+        why: '**Bicep** files describe resources (storage, networks, VMs). Deploy the file and Azure creates them, the same way every time. Terraform does the same across clouds.' },
+      { t: 'bug', topic: 'Python', q: 'This program crashes with a ValueError. Which line crashes?',
+        code: ['text = "12a"', 'num = int(text)', 'print(num + 1)'], bad: 1,
+        why: '`int()` can only turn digits into a number. `"12a"` has a letter: `ValueError: invalid literal for int() with base 10: \'12a\'`.' },
+      { t: 'order', topic: 'Ansible', q: 'What happens when you run ansible-playbook? Order the steps.',
+        items: ['Read the inventory', 'Connect to each server over SSH', 'Run the tasks in order', 'Show the PLAY RECAP'],
+        why: 'Ansible needs **no agent** on the servers: it reads the inventory, connects with SSH, runs each task top to bottom, then prints a summary.' },
+      { t: 'choice', topic: 'Python', q: 'Which line opens a file so that Python closes it automatically?',
+        a: 'with open("data.txt") as f:', w: ['open("data.txt").close(f)', 'f = close("data.txt")', 'import file("data.txt")'],
+        why: 'A `with` block closes the file for you when the block ends, even if an error happens inside.' },
+      { t: 'indent', topic: 'Python', step: 4, q: 'Fix the indentation so it prints only the items that cost more than 15.',
+        lines: [[0, 'prices = {"tea": 10, "coffee": 20}'], [0, 'for item, cost in prices.items():'], [4, 'if cost > 15:'], [8, 'print(item)']],
+        why: '`.items()` gives each key and value. The `if` is inside the loop and the `print` inside the `if`, so only `coffee` is printed.' }
+    ] },
+    { cards: [
+      { t: 'output', topic: 'Python', code: 'nums = [3, 1, 2]\nprint(sorted(nums), nums)', a: '[1, 2, 3] [3, 1, 2]', w: ['[1, 2, 3] [1, 2, 3]', 'None [1, 2, 3]', '[3, 2, 1] [3, 1, 2]'],
+        why: '`sorted()` returns a **new** sorted list and leaves the original alone. `nums.sort()` would change `nums` itself.' },
+      { t: 'choice', topic: 'Kubernetes', q: 'In Kubernetes, what is the smallest unit that runs your container?',
+        a: 'A Pod', w: ['A Node', 'A Cluster', 'A Namespace'],
+        why: 'A **Pod** wraps one (sometimes more) containers. Pods run on **nodes** (machines), and all nodes together make the **cluster**.' },
+      { t: 'bug', topic: 'Python', q: 'Python says IndentationError. Which line is wrong?',
+        code: ['def greet(name):', 'print("Hi", name)', 'greet("Asha")'], bad: 1,
+        why: 'The body of a function must be indented: `    print("Hi", name)`. Without the spaces Python does not know it belongs to `greet`.' },
+      { t: 'order', topic: 'Data', q: 'A new file arrives in bronze. Order the data quality steps.',
+        items: ['Load the new file', 'Check row counts and empty values', 'Fix or reject the bad rows', 'Write clean data to silver'],
+        why: 'Check data **before** it moves on. Bad rows that reach gold end up in wrong reports and bad decisions.' },
+      { t: 'choice', topic: 'Azure', q: 'Which storage tier is the cheapest for files you almost never read, like 7-year-old backups?',
+        a: 'Archive', w: ['Hot', 'Cool', 'Premium'],
+        why: '**Archive** is the cheapest to store but slow and costly to read back (hours). Hot is for daily use, Cool and Cold for occasional use.' },
+      { t: 'pipe', topic: 'Docker', q: 'Ship an app with Docker and Azure: from recipe to running app.',
+        steps: [['DF', 'Dockerfile', 'src'], ['IMG', 'docker build: image'], ['ACR', 'Push to Container Registry'], ['RUN', 'Run as a container']], extra: [['VM', 'Install Python by hand']],
+        why: 'The **image** is built from the Dockerfile, stored in a registry (Azure Container Registry), and run anywhere as a container. No hand installs.' }
+    ] },
+    { cards: [
+      { t: 'output', topic: 'Python', code: 'print(len([1, [2, 3], 4]))', a: '3', w: ['4', '2', 'Error'],
+        why: 'The list has 3 items: `1`, the inner list `[2, 3]`, and `4`. `len()` does not look inside the inner list.' },
+      { t: 'choice', topic: 'Docker', q: 'What does the FROM line at the top of a Dockerfile do?',
+        a: 'Picks the base image to start from', w: ['Copies your files', 'Opens a network port', 'Deletes old containers'],
+        why: '`FROM python:3.12-slim` starts from an image that already has Python. Then `COPY`, `RUN` and `CMD` add your app on top.' },
+      { t: 'bug', topic: 'Python', q: 'This program crashes with a NameError. Which line crashes?',
+        code: ['scores = [80, 90]', 'total = 0', 'for s in scores:', '    total += s', 'print("Average:", total / len(score))'], bad: 4,
+        why: 'A typo: the list is `scores`, but the last line says `score`. `NameError: name \'score\' is not defined`.' },
+      { t: 'order', topic: 'Python', q: 'Your program crashed. Order the steps to read the error and fix it.',
+        items: ['Read the last line: error type and message', 'Find the line number in the traceback', 'Look at that line and the lines before it', 'Fix it, then run again'],
+        why: 'The **last line** of a traceback says what went wrong; the line numbers above it say where. Most bugs are on that line or just before it.' },
+      { t: 'choice', topic: 'Git', q: 'What does git pull do?',
+        a: 'Downloads new commits from GitHub and merges them into your branch', w: ['Uploads your commits to GitHub', 'Deletes your branch', 'Creates a new repository'],
+        why: '`git pull` brings your copy up to date with others’ work. `git push` is the opposite: it uploads your commits.' },
+      { t: 'indent', topic: 'Ansible', step: 2, q: 'Fix this playbook that uses a variable for the package name.',
+        lines: [[0, '- name: Set up web'], [2, 'hosts: web'], [2, 'become: true'], [2, 'vars:'], [4, 'pkg: nginx'], [2, 'tasks:'], [4, '- name: Install the package'], [6, 'ansible.builtin.apt:'], [8, 'name: "{{ pkg }}"']],
+        why: 'The variable `pkg` lives under `vars:` (4 spaces). `{{ pkg }}` is replaced by `nginx` when the task runs.' }
     ] }
   ]
 };
