@@ -269,3 +269,83 @@ a.card:hover .thumb { border-color: var(--color-ink); }
 .reveal .actions { margin-top: var(--space-md); }
 .term.small { min-height: 0; max-height: none; margin-top: 0; font-size: 14px; }
 @media (max-width: 40rem) { .snippet { font-size: 13px; } .choice pre { font-size: 14px; } }
+
+/* =====================================================================
+   Kramavriddhi Daily (scrolling feed)
+   ===================================================================== */
+html.snap-feed { scroll-snap-type: y proximity; }
+.daily { padding-bottom: 0; max-width: 680px; }
+.dcard { min-height: 100svh; scroll-snap-align: start; display: flex; align-items: center; padding-block: var(--space-xl) 88px; border-bottom: var(--rule-hair) solid var(--color-rule-2); }
+.dinner { width: 100%; }
+.dcard.intro h1 { font-size: var(--text-display-s); margin-top: var(--space-xs); }
+.dcard.intro h1 span { display: block; font-size: 0.4em; color: var(--color-muted); letter-spacing: 0; margin-top: 0.2em; }
+.dcard .lede { margin-top: var(--space-md); }
+.dstats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); margin: var(--space-lg) 0; }
+.dstats div { border-top: var(--rule-heavy) solid var(--color-ink); padding-top: var(--space-xs); }
+.dstats strong { display: block; font: 800 2.25rem/1 var(--font-display); color: var(--color-ink); }
+.dstats span { font: 500 var(--text-sm) var(--font-display); color: var(--color-muted); }
+.dcard .note { font-size: 1rem; background: var(--color-warn-paper); padding: var(--space-sm) var(--space-md); margin-bottom: var(--space-md); }
+.dhead { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); }
+.chip { font: 700 var(--text-sm)/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 10px; background: var(--color-ink); color: var(--color-paper); }
+.chip.t-python { background: oklch(45% 0.12 250); color: #fff; }
+.chip.t-azure { background: oklch(50% 0.14 240); color: #fff; }
+.chip.t-data, .chip.t-sql { background: oklch(48% 0.10 160); color: #fff; }
+.chip.t-ansible, .chip.t-devops, .chip.t-docker { background: oklch(46% 0.15 27); color: #fff; }
+.chip.t-git, .chip.t-linux { background: var(--color-accent); color: var(--color-accent-ink); }
+.dcount { font: 700 1rem var(--font-display); color: var(--color-muted); }
+.dtype { font: 600 var(--text-sm) var(--font-display); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted); margin-bottom: var(--space-sm); }
+.dq { font-size: var(--text-xl); max-width: none; margin-bottom: var(--space-md); line-height: 1.25; }
+.dcode { margin-bottom: var(--space-md); }
+.dcard .choices { grid-template-columns: minmax(0, 1fr); }
+.bug-lines { list-style: none; margin: 0; padding: 8px 0; }
+.bugline { display: flex; width: 100%; align-items: center; min-height: 48px; padding: 6px 12px 6px 0; border: 0; border-left: 4px solid transparent; background: transparent; color: var(--code-ink); font: 15px/1.5 var(--mono); text-align: left; white-space: pre; cursor: pointer; overflow-x: auto; }
+.bugline:hover:not(:disabled) { background: color-mix(in oklab, var(--code-ink) 8%, transparent); }
+.bugline:focus-visible { outline: 2px solid var(--code-key); outline-offset: -2px; }
+.bugline .num, .dcode .snippet .num { display: inline-block; width: 2.6ch; margin-right: 1.4ch; text-align: right; color: var(--code-dim); flex: none; }
+.bugline .k { color: var(--code-key); } .bugline .v { color: var(--code-str); } .bugline .b { color: var(--code-bool); } .bugline .fn { color: oklch(80% 0.11 220); }
+.bugline:disabled { cursor: default; }
+.bugline.right { background: color-mix(in oklab, var(--code-ok) 22%, var(--code-bg)); border-left-color: var(--code-ok); }
+.bugline.wrong { background: color-mix(in oklab, var(--code-err) 22%, var(--code-bg)); border-left-color: var(--code-err); }
+.order-list { display: grid; gap: var(--space-sm); }
+.ord { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 14px 8px 8px; border: var(--rule-hair) solid var(--color-ink); background: var(--color-paper); color: var(--color-ink); font: 600 1rem/1.3 var(--font-display); text-align: left; cursor: pointer; box-shadow: 3px 3px 0 var(--color-ink); }
+.ord .ordn { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border: 2px dashed var(--color-rule-2); font: 800 1rem var(--font-display); }
+.ord.picked .ordn { border: 0; background: var(--color-ink); color: var(--color-paper); }
+.ord.picked { background: var(--color-accent-paper); }
+.ord:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.ord:disabled { cursor: default; box-shadow: none; }
+.ord.right { border-color: var(--color-success); background: color-mix(in oklab, var(--color-success) 14%, var(--color-paper)); }
+.ord.right .ordn { background: var(--color-success); color: #fff; border: 0; }
+.ord.wrong { border-color: var(--color-error); background: color-mix(in oklab, var(--color-error) 10%, var(--color-paper)); }
+.ord.wrong .ordn { background: var(--color-error); color: #fff; border: 0; }
+.ord-reset { margin-top: var(--space-sm); }
+.dres { margin-top: var(--space-lg); padding: var(--space-md); border-top: var(--rule-hair) solid var(--color-ink); color: var(--color-ink); font-size: 1rem; }
+.is-right .dres { background: color-mix(in oklab, var(--color-success) 10%, var(--color-paper)); }
+.is-wrong .dres { background: var(--color-warn-paper); border-top-color: var(--color-warn-rule); }
+.dres .verdict { font: 800 1.25rem var(--font-display); }
+.is-right .verdict { color: var(--color-success); } .is-wrong .verdict { color: var(--color-error); }
+.dres p { margin-top: var(--space-xs); max-width: 64ch; }
+.dres .small { font-size: var(--text-sm); color: var(--color-ink-2); }
+.right-order { margin: var(--space-xs) 0 0; padding-left: var(--space-lg); font-family: var(--font-display); font-weight: 600; }
+.dres .btn { margin-top: var(--space-md); }
+.dcard.end h2 { font-size: var(--text-2xl); max-width: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm) var(--space-md); margin: var(--space-xs) 0 var(--space-sm); }
+.streak-big { font: 800 1.5rem var(--font-display); color: var(--color-ink); }
+.dcard.end h3 { font-size: 1.125rem; margin: var(--space-lg) 0 var(--space-sm); }
+.dcard.end .share { margin-top: var(--space-md); }
+.more, .days { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.more a, .daychip { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 14px; border: var(--rule-hair) solid var(--color-ink); color: var(--color-ink); text-decoration: none; font: 600 1rem var(--font-display); }
+.more a:hover, .daychip:hover { background: var(--color-paper-2); }
+.daychip[aria-current="page"] { background: var(--color-ink); color: var(--color-paper); }
+.pill { position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); z-index: var(--z-raised); display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: var(--color-ink); color: var(--color-paper); font: 700 0.9375rem/1 var(--font-display); box-shadow: var(--shadow-float); transform: translate(-50%, 160%); transition: transform var(--dur-short) var(--ease-out); }
+.pill.show { transform: translate(-50%, 0); }
+.pdots { display: inline-flex; gap: 4px; }
+.pdots i { width: 10px; height: 10px; border: 1.5px solid currentColor; }
+.pdots i.ok { background: var(--code-ok); border-color: var(--code-ok); }
+.pdots i.no { background: var(--code-err); border-color: var(--code-err); }
+@media (prefers-reduced-motion: reduce) { .pill { transition: none; } }
+@media (max-width: 40rem) { .bugline { font-size: 13px; } .dq { font-size: 1.25rem; } }
+.daily-cta { display: grid; gap: var(--space-xs); justify-items: start; margin-bottom: var(--space-xl); padding: var(--space-lg); background: var(--color-ink); color: var(--color-paper); text-decoration: none; border-top: 6px solid var(--color-accent); }
+.daily-cta .kicker { color: var(--color-band); }
+.daily-cta strong { font: 800 var(--text-2xl)/1.05 var(--font-display); }
+.daily-cta span { max-width: 56ch; }
+.daily-cta .btn.go { margin-top: var(--space-sm); }
+.daily-cta:hover .btn.go { background: var(--color-band); }
