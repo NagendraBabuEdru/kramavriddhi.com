@@ -33,6 +33,41 @@
   var TYPE = { output: 'What does it print?', choice: 'Pick the right answer', order: 'Tap in the right order', bug: 'Find the line with the bug',
     pipe: '🎮 Mini game · Build the pipeline', indent: '🎮 Mini game · Fix the indentation' };
   var KW = /^(def|return|if|elif|else|for|in|and|or|not|while|break|True|False|None)$/;
+
+  /* Topic look (colours are set in learn.css as .t-<topic>) and where to learn more */
+  var ACADEMY = { href: 'https://nagendrababuedru.github.io/DevOps/', label: 'DevOps Academy: free labs and interview questions', ext: 1 };
+  var COURSE = { href: '/courses/azure-data-engineering/', label: 'Free Azure Data Engineering course (Kramavriddhi)' };
+  var TOPIC = {
+    python: { ab: 'Py', own: { href: '/learn/python/', label: 'Python games on Kramavriddhi' }, docs: { href: 'https://docs.python.org/3/tutorial/', label: 'Official Python tutorial (python.org)', ext: 1 } },
+    azure: { ab: 'Az', own: COURSE, docs: { href: 'https://learn.microsoft.com/en-us/training/azure/', label: 'Microsoft Learn: free Azure training', ext: 1 } },
+    data: { ab: 'Da', own: COURSE, docs: { href: 'https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion', label: 'Microsoft Learn: medallion architecture', ext: 1 } },
+    sql: { ab: 'SQL', own: COURSE, docs: { href: 'https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql', label: 'Microsoft Learn: the SELECT statement', ext: 1 } },
+    git: { ab: 'Git', own: ACADEMY, docs: { href: 'https://git-scm.com/book/en/v2', label: 'Pro Git book, free (git-scm.com)', ext: 1 } },
+    linux: { ab: '$_', own: ACADEMY, docs: { href: 'https://ubuntu.com/tutorials/command-line-for-beginners', label: 'Ubuntu: command line for beginners', ext: 1 } },
+    ansible: { ab: 'A', own: ACADEMY, docs: { href: 'https://docs.ansible.com/ansible/latest/getting_started/index.html', label: 'Ansible docs: getting started', ext: 1 } },
+    docker: { ab: 'Dk', own: ACADEMY, docs: { href: 'https://docs.docker.com/get-started/', label: 'Docker docs: get started', ext: 1 } },
+    kubernetes: { ab: 'K8s', own: ACADEMY, docs: { href: 'https://kubernetes.io/docs/tutorials/kubernetes-basics/', label: 'Kubernetes basics (kubernetes.io)', ext: 1 } },
+    devops: { ab: 'Ops', own: ACADEMY, docs: { href: 'https://learn.microsoft.com/en-us/devops/what-is-devops', label: 'Microsoft Learn: what is DevOps?', ext: 1 } }
+  };
+  function topicOf(c) { return TOPIC[c.topic.toLowerCase()] || TOPIC.devops; }
+  function learnLinks(c) {
+    var t = topicOf(c), out = [];
+    if (c.t === 'pipe' && c.topic !== 'DevOps' && c.topic !== 'Docker') out.push({ href: '/learn/devops/azure-data-pipeline/', label: 'Play the full game: Build the Data Pipeline' });
+    if (c.t === 'indent') out.push(c.step === 2 ? { href: '/learn/devops/ansible-fix-the-playbook/', label: 'Play the full game: Fix the Playbook' } : { href: '/learn/python/fix-the-code/', label: 'Play the full game: Fix the Code' });
+    out.push(t.own);
+    if (c.topic === 'Ansible' && c.t !== 'indent') out.push({ href: '/learn/devops/ansible-fix-the-playbook/', label: 'Play Fix the Playbook (Ansible game)' });
+    out.push(t.docs);
+    return out;
+  }
+  var ICON = {
+    heart: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>',
+    share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3 10 14.5M21.5 3l-7 18-4.5-6.5L3 10z"/></svg>',
+    save: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h12v17l-6-4.5-6 4.5z"/></svg>',
+    book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3-1.3 6-1.3 9 .8 3-2.1 6-2.1 9-.8v14c-3-1.3-6-1.3-9 .8-3-2.1-6-2.1-9-.8zM12 6.3v14"/></svg>'
+  };
+  st.likes = st.likes || {}; st.saved = st.saved || {};
+  function key(j) { return dayNum + '-' + j; }
+
   var games = cards.filter(function (c) { return c.t === 'pipe' || c.t === 'indent'; }).length;
 
   function hl(text, yaml) {
@@ -66,20 +101,26 @@
   /* ---------- build the feed */
   function intro() {
     var s = streakNow(), done = answeredCount(), qn = N - games;
+    var topics = [];
+    cards.forEach(function (c) { if (topics.indexOf(c.topic) < 0) topics.push(c.topic); });
     return '<section class="dcard intro" id="c-intro" aria-label="Day ' + dayNum + '">' +
-      '<div class="dinner">' +
-        '<p class="kicker">Kramavriddhi Daily · ' + (practice ? 'Practice' : 'Today') + '</p>' +
-        '<h1>Day ' + dayNum + ' <span>' + dateOf(dayNum) + '</span></h1>' +
-        '<p class="lede">' + qn + ' quick tasks' + (games ? ' and ' + (games > 1 ? games + ' mini games' : '1 mini game') : '') + ' from Python, cloud, data and DevOps. About 4 minutes. Scroll down like a feed, answer each one, and read why.</p>' +
-        '<div class="dstats"><div><strong>' + (s ? '🔥 ' + s : '0') + '</strong><span>day streak</span></div><div><strong>' + done + '/' + N + '</strong><span>done ' + (practice ? 'on this day' : 'today') + '</span></div></div>' +
+      '<div class="dinner post profile">' +
+        '<div class="prow"><span class="pav big" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 24h6v-5h6v-5h6V8" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' +
+        '<div class="dstats"><div><strong>' + (s ? '🔥' + s : '0') + '</strong><span>streak</span></div><div><strong>' + done + '/' + N + '</strong><span>' + (practice ? 'done' : 'today') + '</span></div><div><strong>' + dayNum + '</strong><span>day</span></div></div></div>' +
+        '<h1>kramavriddhi.daily</h1>' +
+        '<p class="pbio">' + (practice ? 'Practice · ' : '') + 'Day ' + dayNum + ' · ' + dateOf(dayNum) + '<br>' + qn + ' quick tasks' + (games ? ' + ' + (games > 1 ? games + ' mini games' : '1 mini game') : '') + ', about 4 minutes. Scroll, answer, learn why. 📚</p>' +
+        '<ul class="highlights" aria-label="Topics today">' + topics.map(function (t) { return '<li class="t-' + t.toLowerCase() + '"><span class="pav" aria-hidden="true">' + K.esc((TOPIC[t.toLowerCase()] || TOPIC.devops).ab) + '</span>' + K.esc(t) + '</li>'; }).join('') + '</ul>' +
         (practice ? '<p class="note">This is an earlier day, for practice. It does not change your streak. <a href="/learn/daily/">Go to today</a></p>' : '') +
         '<button type="button" class="btn go" data-next>' + (done && done < N ? 'Continue ↓' : done >= N ? 'See my answers ↓' : 'Start ↓') + '</button>' +
       '</div></section>';
   }
 
   function card(c, j) {
-    var head = '<div class="dhead"><span class="chip t-' + c.topic.toLowerCase() + '">' + K.esc(c.topic) + '</span><span class="dcount">' + (j + 1) + ' / ' + N + '</span></div>' +
-      '<p class="dtype' + (TYPE[c.t].indexOf('🎮') === 0 ? ' game-type' : '') + '">' + TYPE[c.t] + '</p>';
+    var isGame = c.t === 'pipe' || c.t === 'indent';
+    var head = '<header class="phead"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span>' +
+      '<span class="pwho"><strong>' + K.esc(c.topic) + '</strong><span>' + TYPE[c.t].replace('🎮 ', '') + '</span></span>' +
+      '<span class="dcount">' + (j + 1) + '/' + N + '</span></header>' +
+      (isGame ? '<p class="dtype game-type">🎮 Mini game</p>' : '');
     var body = '';
     if (c.t === 'output') body = codeBlock(c.code.split('\n')) + choiceList(c);
     else if (c.t === 'choice') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + choiceList(c);
@@ -89,8 +130,24 @@
       }).join('') + '</div><button type="button" class="btn ghost ord-reset" hidden>Start again</button>';
     else if (c.t === 'pipe') body = pipeBody(c);
     else if (c.t === 'indent') body = indentBody(c);
-    return '<section class="dcard' + (c.t === 'pipe' || c.t === 'indent' ? ' gamecard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="Task ' + (j + 1) + ' of ' + N + '"><div class="dinner">' + head + body +
-      '<div class="dres" hidden></div></div></section>';
+    var k = key(j), liked = !!st.likes[k], saved = !!st.saved[k];
+    var actions = '<div class="pactions">' +
+      '<button type="button" class="pact like" data-like aria-pressed="' + liked + '" aria-label="Like">' + ICON.heart + '</button>' +
+      '<a class="pact" href="' + K.wa(shareText(c, j)) + '" target="_blank" rel="noopener" aria-label="Share on WhatsApp">' + ICON.share + '</a>' +
+      '<button type="button" class="pact plearn" data-learn aria-expanded="false" aria-controls="lb-' + j + '">' + ICON.book + '<span>Learn more</span></button>' +
+      '<button type="button" class="pact save" data-save aria-pressed="' + saved + '" aria-label="Save for later">' + ICON.save + '</button>' +
+      '</div>' +
+      '<div class="plearnbox" id="lb-' + j + '" hidden><p>Read and practise more:</p><ul>' + learnLinks(c).map(function (l) {
+        return '<li><a href="' + K.esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + K.esc(l.label) + (l.ext ? ' ↗' : '') + '</a></li>';
+      }).join('') + '</ul></div>';
+    return '<section class="dcard t-' + c.topic.toLowerCase() + (isGame ? ' gamecard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="Card ' + (j + 1) + ' of ' + N + ', ' + K.esc(c.topic) + '">' +
+      '<div class="dinner post">' + head + '<div class="pbody">' + body + '</div>' +
+      '<div class="dres" hidden></div>' + actions + '<span class="bigheart" aria-hidden="true">' + ICON.heart + '</span></div></section>';
+  }
+
+  function shareText(c, j) {
+    var what = c.t === 'output' ? 'What does this Python code print?\n\n' + c.code : c.t === 'pipe' ? c.q : c.t === 'indent' ? c.q : c.q;
+    return 'Can you solve this? (' + c.topic + ')\n' + what.replace(/`|\*\*/g, '') + '\n\nTry it on Kramavriddhi Daily: ' + URL + '?day=' + dayNum + '#c-' + j;
   }
 
   function choiceList(c) {
@@ -273,6 +330,22 @@
     if (nx) { var next = nx.closest('.dcard').nextElementSibling; if (next) scrollToCard(next); return; }
     var sec = e.target.closest('.dcard[data-j]'); if (!sec) return;
     var j = +sec.getAttribute('data-j'), c = cards[j];
+    var lk = e.target.closest('[data-like]'); if (lk) { setLike(sec, j, !st.likes[key(j)]); return; }
+    var sv = e.target.closest('[data-save]');
+    if (sv) {
+      var on = !st.saved[key(j)];
+      if (on) st.saved[key(j)] = 1; else delete st.saved[key(j)];
+      sv.setAttribute('aria-pressed', on); K.save(STORE, st); renderEnd();
+      return;
+    }
+    var ln = e.target.closest('[data-learn]');
+    if (ln) {
+      var box = document.getElementById('lb-' + j), open = box.hidden;
+      box.hidden = !open; ln.setAttribute('aria-expanded', open);
+      if (open) { K.track('daily_learn_more', { topic: c.topic }); box.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); }
+      return;
+    }
+    if (e.target.closest('.plearnbox, .pactions')) return;
     if (mine[j]) return;
     if (c.t === 'pipe') return pipeClick(sec, j, e);
     if (c.t === 'indent') return indentClick(sec, j, e);
@@ -292,6 +365,19 @@
         markOrder(sec, c); record(j, ok3); result(j, ok3);
       }
     }
+  });
+
+  function setLike(sec, j, on, pop) {
+    if (on) st.likes[key(j)] = 1; else delete st.likes[key(j)];
+    sec.querySelector('[data-like]').setAttribute('aria-pressed', on);
+    K.save(STORE, st);
+    if (on && pop && !reduce) { var h = sec.querySelector('.bigheart'); h.classList.remove('pop'); void h.offsetWidth; h.classList.add('pop'); }
+  }
+  /* double-tap the question or the code to like it, like Instagram */
+  feed.addEventListener('dblclick', function (e) {
+    var area = e.target.closest('.phead, .dq, .snippet'); if (!area) return;
+    var sec = area.closest('.dcard[data-j]'); if (!sec) return;
+    setLike(sec, +sec.getAttribute('data-j'), true, true);
   });
 
   function scrollToCard(el) {
@@ -340,7 +426,8 @@
                     : '<p class="streak-big">🔥 ' + s + ' day streak' + (st.best > s ? ' <span class="muted">(best: ' + st.best + ')</span>' : '') + '</p><p>New tasks unlock tomorrow<span id="cd"></span>. Come back to keep your streak.</p>')
         : '<h2>Almost there</h2><p>Finish all ' + N + ' cards to complete the day' + (practice ? '.' : ' and grow your streak.') + '</p><button type="button" class="btn go" data-first>Go to the next unfinished card ↑</button>') +
       (finished ? '<div class="share"><span class="share-label">Share:</span><a class="share-btn wa" href="' + K.wa(share) + '" target="_blank" rel="noopener">WhatsApp</a></div>' : '') +
-      '<h3>Want more games?</h3><div class="more"><a href="/learn/python/">Python games</a><a href="/learn/devops/">Cloud &amp; DevOps games</a></div>' +
+      savedList() +
+      '<h3>Keep learning</h3><div class="more"><a href="/learn/python/">Python games</a><a href="/learn/devops/">Cloud &amp; DevOps games</a><a href="/courses/azure-data-engineering/">Azure Data Engineering course</a><a href="https://nagendrababuedru.github.io/DevOps/" target="_blank" rel="noopener">DevOps Academy ↗</a></div>' +
       (past ? '<h3>Earlier days</h3><div class="days">' + past + '</div>' : '');
     var first = el.querySelector('[data-first]');
     if (first) first.addEventListener('click', function () { for (var j = 0; j < N; j++) if (!mine[j]) { scrollToCard(document.getElementById('c-' + j)); return; } });
@@ -354,16 +441,37 @@
   }
   setInterval(tick, 30000);
 
-  /* ---------- floating progress pill */
+  function savedList() {
+    var ks = Object.keys(st.saved).filter(function (k) { return +k.split('-')[0] <= todayNum; });
+    if (!ks.length) return '';
+    ks.sort(function (a, b) { var x = a.split('-'), y = b.split('-'); return (y[0] - x[0]) || (x[1] - y[1]); });
+    return '<h3>🔖 Saved for later (' + ks.length + ')</h3><ul class="savedlist">' + ks.slice(0, 20).map(function (k) {
+      var p = k.split('-'), d = +p[0], j = +p[1], c = cardsOf(d)[j];
+      if (!c) return '';
+      var title = c.t === 'output' ? 'What does this print? ' + c.code.split('\n')[0] : c.q.replace(/`|\*\*/g, '');
+      return '<li class="t-' + c.topic.toLowerCase() + '"><a href="/learn/daily/' + (d === todayNum ? '' : '?day=' + d) + '#c-' + j + '"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span><span>Day ' + d + ' · ' + K.esc(title.length > 70 ? title.slice(0, 68) + '…' : title) + '</span></a></li>';
+    }).join('') + '</ul>';
+  }
+
+  /* ---------- top bar: story-style progress */
+  var current = -1;
   function updatePill() {
-    pill.innerHTML = '<span class="pdots" aria-hidden="true">' + cards.map(function (_, j) { return '<i class="' + (mine[j] ? (mine[j].ok ? 'ok' : 'no') : '') + '"></i>'; }).join('') + '</span>' +
-      '<span>' + answeredCount() + '/' + N + '</span>' + (practice ? '' : '<span>🔥 ' + streakNow() + '</span>');
+    pill.innerHTML = '<span class="ibrand">kramavriddhi.daily</span>' + (practice ? '<span class="ipr">Practice</span>' : '<span class="istreak">🔥 ' + streakNow() + '</span>') +
+      '<span class="isegs" aria-hidden="true">' + cards.map(function (_, j) {
+        return '<i class="' + (mine[j] ? (mine[j].ok ? 'ok' : 'no') : '') + (j === current ? ' now' : '') + '"></i>';
+      }).join('') + '</span>';
     pill.setAttribute('aria-label', answeredCount() + ' of ' + N + ' done' + (practice ? '' : ', streak ' + streakNow() + ' days'));
   }
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { es.forEach(function (en) { pill.classList.toggle('show', !en.isIntersecting); }); }, { threshold: 0.2 }).observe(document.getElementById('c-intro'));
-  } else pill.classList.add('show');
+    var seen = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { var j = en.target.getAttribute('data-j'); current = j === null ? -1 : +j; updatePill(); } });
+    }, { threshold: 0.55 });
+    document.querySelectorAll('.dcard').forEach(function (s) { seen.observe(s); });
+  }
 
   updatePill();
   renderEnd();
+  /* open a shared or saved card directly (#c-3) */
+  var h = /^#c-(\d+)$/.exec(location.hash);
+  if (h && document.getElementById('c-' + h[1])) setTimeout(function () { document.getElementById('c-' + h[1]).scrollIntoView({ block: 'start' }); }, 50);
 })();
