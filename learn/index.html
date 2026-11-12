@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="/assets/base.css?v=02a98478">
   <link rel="stylesheet" href="/assets/style.css?v=02a98478">
   <script src="/assets/site.js?v=02a98478" defer></script>
-  <link rel="stylesheet" href="/learn/common/learn.css?v=2">
+  <link rel="stylesheet" href="/learn/common/learn.css?v=3">
 </head>
 <body>
   <div class="wrap">
@@ -54,7 +54,7 @@
       <header class="page-head">
         <p class="kicker">Free · No sign-up · Works on phones</p>
         <h1>Learn by Playing</h1>
-        <p>Short puzzle games that teach real tech skills. Drag, tap, run, and see what happens. Each game takes a few minutes and explains every answer.</p>
+        <p>Short puzzle games that teach real tech skills: cloud, DevOps and Python coding. Drag, tap, run, and see what happens. Each game takes a few minutes and explains every answer.</p>
       </header>
 
       <div class="grid">
@@ -63,19 +63,25 @@
           <div class="tags"><span class="tag">2 games live</span><span class="tag state">Azure</span><span class="tag state">Ansible</span></div>
           <h3>Cloud &amp; DevOps</h3>
           <p>Build Azure data pipelines and fix broken Ansible playbooks. Six more games are on the way.</p>
-          <p class="best" data-best hidden></p>
+        </a>
+        <a class="card" href="/learn/python/">
+          <div class="thumb"><div class="thumb-big py">Python<span>if · for · def</span></div></div>
+          <div class="tags"><span class="tag">2 games live</span><span class="tag state">Beginner</span></div>
+          <h3>Python</h3>
+          <p>Fix scrambled Python code and guess what programs print. Variables, if/else, loops, lists and functions.</p>
         </a>
       </div>
+      <p class="best" data-best hidden></p>
 
       <p class="soon-list">More subjects are coming. Tell us what you want to learn next on the <a href="/contact/">Contact</a> page.</p>
     </main>
     <script src="/learn/common/learn.js?v=1"></script>
     <script>
       (function () {
-        var a = KVLearn.load('kv-learn-pipeline', null), b = KVLearn.load('kv-learn-playbook', null);
+        var keys = ['kv-learn-pipeline', 'kv-learn-playbook', 'kv-learn-py-fix', 'kv-learn-py-output'];
         function sum(p) { return p && p.stars ? p.stars.reduce(function (s, n) { return s + (n || 0); }, 0) : 0; }
-        var total = sum(a) + sum(b);
-        if (total > 0) { var el = document.querySelector('[data-best]'); el.hidden = false; el.innerHTML = KVLearn.stars(1, 1) + ' You have ' + total + ' of 30 stars'; }
+        var total = keys.reduce(function (s, k) { return s + sum(KVLearn.load(k, null)); }, 0);
+        if (total > 0) { var el = document.querySelector('[data-best]'); el.hidden = false; el.innerHTML = KVLearn.stars(1, 1) + ' You have ' + total + ' of 60 stars across all games'; }
       })();
     </script>
 

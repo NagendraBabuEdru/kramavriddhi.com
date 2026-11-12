@@ -219,3 +219,53 @@ a.card:hover .thumb { border-color: var(--color-ink); }
   .srv { grid-template-columns: 32px minmax(0, 1fr); padding: 8px; gap: 8px; }
   .rack { width: 32px; height: 38px; }
 }
+
+/* =====================================================================
+   Python games (Fix the Code, Guess the Output)
+   ===================================================================== */
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.code .fn, .snippet .fn { color: oklch(80% 0.11 220); }
+.thumb-code .fn { color: oklch(80% 0.11 220); } .thumb-code .v { color: var(--code-str); } .thumb-code .q { color: var(--code-key); font-weight: 700; }
+.thumb-big.py span { display: block; font-size: 0.42em; letter-spacing: 0; color: var(--color-ink-2); margin-top: 0.3em; }
+
+.expect { border: var(--rule-hair) solid var(--color-ink); background: var(--color-paper); color: var(--color-ink); }
+.ex-head { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: var(--space-sm); padding: 8px 12px; background: var(--color-paper-2); border-bottom: var(--rule-hair) solid var(--color-rule-2); font: 600 var(--text-sm) var(--font-display); }
+.ex-lines { list-style: none; margin: 0; padding: 8px 12px; font: 14px/1.6 var(--mono); }
+.ex-lines li { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-sm); }
+.ex-lines.two li { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ex-lines li + li { border-top: 1px dashed var(--color-rule); }
+.ex-w, .ex-g { overflow-wrap: anywhere; white-space: pre-wrap; }
+.ex-g.ok { color: var(--color-success); } .ex-g.ok::before { content: "✓ "; }
+.ex-g.er { color: var(--color-error); } .ex-g.er::before { content: "✗ "; }
+.expect .dm { color: var(--color-muted); font-style: italic; }
+.expect + .term { margin-top: var(--space-sm); }
+
+/* Guess the Output */
+.quiz { max-width: 760px; }
+.qhead { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); font: 600 var(--text-sm) var(--font-display); color: var(--color-ink-2); }
+.qdots { display: inline-flex; gap: 6px; }
+.qdots i { width: 28px; height: 6px; background: var(--color-rule); }
+.qdots i.past { background: var(--color-ink); } .qdots i.now { background: var(--color-accent); }
+.snippet { margin: 0; padding: 12px 12px 14px 0; font: 15px/1.7 var(--mono); color: var(--code-ink); overflow-x: auto; white-space: pre; }
+.snippet .num { display: inline-block; width: 2.6ch; margin-right: 1.4ch; text-align: right; color: var(--code-dim); user-select: none; }
+.snippet .k { color: var(--code-key); } .snippet .v { color: var(--code-str); } .snippet .b { color: var(--code-bool); }
+.qask { font-size: var(--text-xl); margin: var(--space-lg) 0 var(--space-sm); max-width: none; }
+.choices { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-sm); }
+@media (min-width: 40rem) { .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.choice { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 8px 14px 8px 8px; border: var(--rule-hair) solid var(--color-ink); background: var(--color-paper); color: var(--color-ink); text-align: left; cursor: pointer; box-shadow: 3px 3px 0 var(--color-ink); transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out); }
+.choice:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--color-ink); }
+.choice:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.choice .key { flex: none; width: 34px; height: 34px; display: grid; place-items: center; background: var(--color-ink); color: var(--color-paper); font: 800 0.9375rem/1 var(--font-display); }
+.choice pre { margin: 0; font: 15px/1.45 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.choice:disabled { cursor: default; box-shadow: none; opacity: 0.6; }
+.choice.right { opacity: 1; border-color: var(--color-success); background: color-mix(in oklab, var(--color-success) 16%, var(--color-paper)); box-shadow: inset 0 -4px 0 var(--color-success); }
+.choice.right .key { background: var(--color-success); }
+.choice.wrong { opacity: 1; border-color: var(--color-error); background: color-mix(in oklab, var(--color-error) 12%, var(--color-paper)); animation: shake 420ms var(--ease-out); }
+.choice.wrong .key { background: var(--color-error); }
+.reveal { margin-top: var(--space-lg); padding: var(--space-md); border-top: var(--rule-hair) solid var(--color-ink); color: var(--color-ink); }
+.reveal.good { background: color-mix(in oklab, var(--color-success) 10%, var(--color-paper)); }
+.reveal.bad { background: var(--color-warn-paper); border-top-color: var(--color-warn-rule); }
+.reveal p { margin-top: var(--space-sm); font-size: 1rem; max-width: 64ch; }
+.reveal .actions { margin-top: var(--space-md); }
+.term.small { min-height: 0; max-height: none; margin-top: 0; font-size: 14px; }
+@media (max-width: 40rem) { .snippet { font-size: 13px; } .choice pre { font-size: 14px; } }
