@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 15 Nov 2026 (Phase 1 done)
+Last updated: 15 Nov 2026 (Phase 2 done)
 
 ---
 
@@ -47,8 +47,8 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 |---|---|---|---|
 | 0 | Daily feed v1 | Day-based feed, 5 tasks + 1 mini game a day, streak, Instagram look, brand themes per topic, Learn more links | ✅ live (12 Nov 2026) |
 | 1 | Tracks engine | Skill picker on first open; feed built from chosen tracks in unit order; progress per track; card IDs; the new `learn` explainer card; existing 84 cards moved into units | ✅ live (15 Nov 2026): 9 tracks, 124 units planned, 43 units live, 127 cards (84 old + 43 explainers) |
-| 2 | First two tracks complete to Basic | Python Basic (10 units) and Azure Data Engineering Basic (6 units) fully written, 6 to 8 cards each, plus 2 checkpoint cards per unit (`check` type, also enables D3 test-out) | ⬜ **NEXT** |
-| 3 | Spaced review | Wrong answers return after 1, 3 and 7 days; "Review" cards in the feed | ⬜ |
+| 2 | First two tracks complete to Basic | Python Basic (10 units) and Azure Data Engineering Basic (6 units) fully written, 6 to 8 cards each, plus 2 checkpoint cards per unit (`check` type, also enables D3 test-out) | ✅ live (15 Nov 2026): 75 new cards, 16 units at 6 to 8 cards + 2 checkpoints, test-out built |
+| 3 | Spaced review | Wrong answers return after 1, 3 and 7 days; "Review" cards in the feed | ⬜ **NEXT** |
 | 4 | More tracks to Basic | Git, Linux, SQL Basic | ⬜ |
 | 5 | Intermediate levels | Python, Azure, Git, Linux, SQL Intermediate | ⬜ |
 | 6 | Docker, Kubernetes, Ansible, CI/CD Basic | | ⬜ |
@@ -64,7 +64,7 @@ Unit count per level is a plan; it can grow. Each unit = about 6 to 8 cards.
 ### 4.1 Python (`py`) · brand look: python.org
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 print and variables · 2 numbers and maths · 3 strings · 4 input and type conversion · 5 if / elif / else · 6 lists · 7 for loops and range · 8 while loops · 9 functions · 10 dictionaries | 🟡 all 10 live but thin (2 to 9 cards each); fill to 6 to 8 + checkpoints in Phase 2 |
+| Basic | 1 print and variables · 2 numbers and maths · 3 strings · 4 input and type conversion · 5 if / elif / else · 6 lists · 7 for loops and range · 8 while loops · 9 functions · 10 dictionaries | ✅ complete: every unit 6 to 8 cards + 2 checkpoints |
 | Intermediate | 11 tuples and sets · 12 string methods and f-strings · 13 errors and try/except · 14 files (`with open`) · 15 modules and pip · 16 list comprehensions · 17 default args, *args, **kwargs · 18 classes and objects · 19 virtual environments · 20 JSON and CSV | 🟡 13 and 14 live (2 cards each); rest ⬜ |
 | Advanced | 21 iterators and generators · 22 decorators · 23 context managers · 24 type hints · 25 testing with pytest · 26 async basics · 27 pandas for data · 28 project structure and packaging | ⬜ |
 
@@ -72,7 +72,7 @@ Unit count per level is a plan; it can grow. Each unit = about 6 to 8 cards.
 Matches the levels of `/courses/azure-data-engineering/`.
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 cloud basics and the Azure hierarchy · 2 storage accounts and tiers · 3 Data Lake Gen2 · 4 Data Factory pipelines · 5 Azure SQL basics · 6 Power BI basics | 🟡 1 to 4 live (2 to 5 cards); 5 and 6 ⬜ |
+| Basic | 1 cloud basics and the Azure hierarchy · 2 storage accounts and tiers · 3 Data Lake Gen2 · 4 Data Factory pipelines · 5 Azure SQL basics · 6 Power BI basics | ✅ complete: every unit 6 cards + 2 checkpoints |
 | Intermediate | 7 Databricks and Spark · 8 medallion and Delta Lake · 9 Synapse · 10 Event Hubs and Stream Analytics · 11 Key Vault and security · 12 Parquet and partitioning | 🟡 7, 8, 10, 11, 12 live (thin); 9 ⬜ |
 | Advanced | 13 Microsoft Fabric · 14 governance and Unity Catalog · 15 CI/CD for data · 16 Bicep (infrastructure as code) · 17 cost optimisation · 18 monitoring | 🟡 16 live (2 cards); rest ⬜ |
 
@@ -130,7 +130,7 @@ Matches the levels of `/courses/azure-data-engineering/`.
 | Page | URL | Notes |
 |---|---|---|
 | Hub | /learn/ | Daily banner, Cloud & DevOps card, Python card, total stars of 60 |
-| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, likes, saves, share links `#card=<id>`, Learn more links. Old day-based feed retired 15 Nov 2026 |
+| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 202 cards in 45 live units. Old day-based feed retired 15 Nov 2026 |
 | Cloud & DevOps | /learn/devops/ | 2 games + 6 coming-soon cards |
 | Build the Data Pipeline | /learn/devops/azure-data-pipeline/ | 5 levels |
 | Fix the Playbook | /learn/devops/ansible-fix-the-playbook/ | 5 levels |
@@ -151,7 +151,8 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 5. Bump the `?v=` number on any changed CSS or JS file.
 6. Rebuild pages with `python learn/_src/compose.py`, then `git add learn/` only, commit with the Co-Authored-By trailer, push, and check the live URL.
 7. Add a line to the change log (section 9) and update the status marks.
-8. To add content: edit `learn/daily/tracks.js`. Add cards only at the **end** of a unit's `cards` list and give them the next ID (`py.b.03.6`, ...). A unit's first card is its `learn` explainer. Bump `tracks.js?v=` in `learn/_src/body_daily.html` and rebuild.
+8. To add content: write the new cards in a file shaped `{ 'py.b.03': [cards] }` and run `node learn/_src/merge_cards.js learn/daily/tracks.js <file>`. It appends with the next IDs and refuses to change old cards. Every unit needs one `learn` card and, once it is complete, 2 `check` cards. Bump `tracks.js?v=` in `learn/_src/body_daily.html` and rebuild.
+9. Only say what an official source confirms. If a number (copies, limits, counts) is not stated on the official page, leave it out.
 
 ## 7. Open decisions (need the owner's answer)
 
@@ -159,7 +160,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 |---|---|---|---|
 | D1 | Which tracks first in Phase 2? | any two from section 4 | ✅ **Decided 15 Nov 2026: Python + Azure Data Engineering** |
 | D2 | Keep the day-based streak after tracks arrive? | keep "Daily mix" / remove | ✅ **Decided: keep.** Built as a daily goal of 6 cards from the chosen tracks; streak grows when the goal is met |
-| D3 | Can users skip a unit they already know? | yes with a short test / no | ✅ **Decided: yes, by passing the checkpoint.** Needs `check` cards, so it is built in Phase 2 |
+| D3 | Can users skip a unit they already know? | yes with a short test / no | ✅ **Decided and built (Phase 2):** "I know this" on a unit header; all checkpoints right skips the rest of the unit (skipped cards do not count toward the daily goal) |
 | D4 | How will users send their own tasks (Phase 9)? | Google Form / GitHub issue / own backend with login | Start with a Google Form; move to accounts only if many people contribute |
 | D5 | Accounts and login? | none (progress on the phone) / login | None for now; needed later for cross-device progress, likes and contributions |
 
@@ -175,6 +176,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 15 Nov 2026 | **Phase 2 done:** Python Basic and Azure Basic complete (75 new cards incl. 32 checkpoints, Azure SQL and Power BI units added), checkpoint card type, "I know this" test-out; Python cards run in real Python, Azure facts checked on Microsoft Learn |
 | 15 Nov 2026 | **Phase 1 done:** skill picker, unit-by-unit feed, Path view, daily goal + streak, 43 explainer cards, all 84 old cards moved into units with permanent IDs, old day feed retired |
 | 15 Nov 2026 | Created this tracker; moved page sources and `compose.py` into `learn/_src/` |
 | 12 Nov 2026 | Daily: each card themed like its technology's website (Microsoft Learn, python.org, git-scm, Ubuntu, Docker, Kubernetes, Ansible) |

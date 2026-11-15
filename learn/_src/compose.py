@@ -33,7 +33,7 @@ for out, body, title, desc in [p for p in PAGES if (S / p[1]).exists()]:
     url = "https://kramavriddhi.com/" + out.replace("index.html", "")
     t = top.replace(OLD_T, html.escape(title, quote=True)).replace(OLD_D, html.escape(desc, quote=True)).replace(OLD_U, url)
     t = t.replace(' aria-current="page"', "")
-    extra = '  <link rel="stylesheet" href="/learn/common/learn.css?v=8">\n</head>'
+    extra = '  <link rel="stylesheet" href="/learn/common/learn.css?v=9">\n</head>'
     t = t.replace("</head>", extra, 1)
     page = t + (S / body).read_text(encoding="utf-8") + bottom
     p = REPO / out

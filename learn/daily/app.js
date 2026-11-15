@@ -17,7 +17,15 @@
   var TR = {}, UNIT = {}, CARD = {};
   T.tracks.forEach(function (t) {
     TR[t.id] = t;
-    t.units.forEach(function (u) { u.track = t; UNIT[u.id] = u; u.cards.forEach(function (c, i) { c.unit = u; c.pos = i; CARD[c.id] = c; }); });
+    t.units.forEach(function (u) {
+      u.track = t; UNIT[u.id] = u;
+      /* show order inside a unit: explainer, practice, mini games, checkpoints (IDs stay as written) */
+      var RANK = { learn: 0, pipe: 2, indent: 2, check: 3 };
+      u.cards = u.cards.map(function (c, i) { return { c: c, i: i }; })
+        .sort(function (a, b) { return ((RANK[a.c.t] === undefined ? 1 : RANK[a.c.t]) - (RANK[b.c.t] === undefined ? 1 : RANK[b.c.t])) || a.i - b.i; })
+        .map(function (x) { return x.c; });
+      u.cards.forEach(function (c, i) { c.unit = u; c.pos = i; CARD[c.id] = c; });
+    });
   });
 
   /* ---------- saved progress (on this phone only) */
@@ -43,7 +51,8 @@
 
   var feed = document.getElementById('feed'), pill = document.getElementById('pill');
   var TYPE = { learn: 'Learn', output: 'What does it print?', choice: 'Pick the right answer', order: 'Tap in the right order', bug: 'Find the line with the bug',
-    pipe: 'Mini game · Build the pipeline', indent: 'Mini game · Fix the indentation' };
+    pipe: 'Mini game · Build the pipeline', indent: 'Mini game · Fix the indentation', check: 'Checkpoint' };
+  var testing = {};   /* unit id -> true while someone is trying to test out of it */
   var KW = /^(def|return|if|elif|else|for|in|and|or|not|while|break|try|except|with|as|True|False|None)$/;
 
   /* where to learn more, per topic */
@@ -236,11 +245,33 @@
       '<span class="pwho"><strong>' + K.esc(t.name) + '</strong><span>' + LEVEL[u.level] + ' · Unit ' + u.n + ' of ' + t.units.length + '</span></span></header>' +
       '<p class="kicker">New unit</p><h2 class="uh-title">' + K.esc(u.title) + '</h2>' +
       '<p class="uh-sub">' + u.cards.length + ' cards' + (dn ? ' · ' + dn + ' done already' : '') + ': ' + countTypes(u) + '</p>' +
+      (checksOf(u).length && !dn ? '<div class="uh-test"><button type="button" class="btn ghost" data-testout="' + u.id + '">I know this: take the checkpoint ↓</button>' +
+        '<span>Get all ' + checksOf(u).length + ' checkpoint questions right to skip this unit.</span></div>' : '') +
       '</div></section>';
   }
+  function checksOf(u) { return u.cards.filter(function (c) { return c.t === 'check'; }); }
   function countTypes(u) {
-    var l = u.cards.filter(function (c) { return c.t === 'learn'; }).length, g = u.cards.filter(function (c) { return c.t === 'pipe' || c.t === 'indent'; }).length, q = u.cards.length - l - g;
-    return [l ? l + ' explainer' : '', q ? q + ' practice' : '', g ? g + ' mini game' + (g > 1 ? 's' : '') : ''].filter(Boolean).join(', ');
+    var l = u.cards.filter(function (c) { return c.t === 'learn'; }).length, g = u.cards.filter(function (c) { return c.t === 'pipe' || c.t === 'indent'; }).length,
+        k = checksOf(u).length, q = u.cards.length - l - g - k;
+    return [l ? l + ' explainer' : '', q ? q + ' practice' : '', g ? g + ' mini game' + (g > 1 ? 's' : '') : '', k ? k + ' checkpoint' + (k > 1 ? 's' : '') : ''].filter(Boolean).join(', ');
+  }
+
+  /* test out: when all checkpoints of a unit someone is testing are answered */
+  function testOutResult(c) {
+    var u = c.unit, ks = checksOf(u);
+    if (c.t !== 'check' || !testing[u.id] || !ks.every(isDone)) return '';
+    delete testing[u.id];
+    if (ks.every(function (k) { return st.done[k.id].ok; })) {
+      u.cards.forEach(function (x) {
+        if (isDone(x)) return;
+        st.done[x.id] = { ok: true, d: today, skip: 1 };
+        feedCards.forEach(function (fc, j) { if (fc === x) { var s = document.getElementById('c-' + j); if (s) s.classList.add('skipped'); } });
+      });
+      save(); refreshStats();
+      K.track('unit_test_out', { unit_id: u.id });
+      return '<p class="unitdone">🎉 You tested out of “' + K.esc(u.title) + '”. Moving on!</p>';
+    }
+    return '<p class="unitdone">Not yet. Go through the unit from its first card above, then try the rest.</p>';
   }
 
   /* ---------- one card */
@@ -249,12 +280,13 @@
     var head = '<header class="phead"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span>' +
       '<span class="pwho"><strong>' + K.esc(u.track.name) + '</strong><span>Unit ' + u.n + ' · ' + K.esc(u.title) + '</span></span>' +
       '<span class="dcount">' + (c.pos + 1) + '/' + u.cards.length + '</span></header>' +
-      '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : '') + TYPE[c.t] + '</p>';
+      '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : c.t === 'check' ? ' check-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : c.t === 'check' ? '✅ ' : '') + TYPE[c.t] + '</p>';
     var body = '';
     if (c.t === 'learn') body = '<h2 class="dq">' + K.esc(c.title) + '</h2><p class="lbody">' + K.rich(c.body) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') +
       '<div class="mbar"><button type="button" class="btn go" data-got>Got it ✓</button></div>';
     else if (c.t === 'output') body = codeBlock(c.code.split('\n')) + choiceList(c);
     else if (c.t === 'choice') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + choiceList(c);
+    else if (c.t === 'check') body = '<h2 class="dq">' + K.rich(c.q || 'What does this print?') + '</h2>' + (c.code ? codeBlock(c.code.split('\n')) : '') + choiceList(c);
     else if (c.t === 'bug') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + codeBlock(c.code, true);
     else if (c.t === 'order') body = '<h2 class="dq">' + K.rich(c.q) + '</h2><div class="order-list">' + shuffleDiff(c.items).map(function (it) {
         return '<button type="button" class="ord" data-item="' + K.esc(it) + '"><span class="ordn" aria-hidden="true"></span><span>' + K.esc(it) + '</span></button>';
@@ -277,7 +309,7 @@
   }
 
   function shareText(c) {
-    var what = c.t === 'learn' ? c.title + ': ' + c.body : c.t === 'output' ? 'What does this Python code print?\n\n' + c.code : c.q;
+    var what = c.t === 'learn' ? c.title + ': ' + c.body : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? 'What does this Python code print?\n\n' + c.code : c.q;
     return (c.t === 'learn' ? 'Learn this in 1 minute' : 'Can you solve this?') + ' (' + c.unit.track.name + ')\n' + what.replace(/`|\*\*/g, '') +
       '\n\nTry it on Kramavriddhi Learn: ' + URL + '#card=' + c.id;
   }
@@ -320,7 +352,7 @@
   }
 
   /* ---------- results */
-  function result(j, ok, restoring, verdict) {
+  function result(j, ok, restoring, verdict, extra) {
     var c = feedCards[j], sec = document.getElementById('c-' + j), res = sec.querySelector('.dres'), u = c.unit;
     sec.classList.remove('is-right', 'is-wrong');
     sec.classList.add('answered', ok ? 'is-right' : 'is-wrong');
@@ -329,7 +361,7 @@
     var finished = unitDone(u), last = c.pos === u.cards.length - 1;
     res.innerHTML = '<p class="verdict">' + (verdict || (ok ? '✓ Correct!' : '✗ Not quite.')) + (restoring ? ' <span class="muted">(done before)</span>' : '') + '</p>' + right +
       (c.why ? '<p>' + K.rich(c.why) + '</p>' : '') +
-      (finished && !restoring ? '<p class="unitdone">🎉 Unit complete: ' + K.esc(u.title) + '</p>' : '') +
+      (extra || (finished && !restoring ? '<p class="unitdone">🎉 Unit complete: ' + K.esc(u.title) + '</p>' : '')) +
       '<button type="button" class="btn primary" data-next>' + (last || finished ? 'Next unit ↓' : 'Next ↓') + '</button>';
     res.hidden = false;
   }
@@ -471,6 +503,15 @@
     if (e.target.closest('[data-pick]')) { e.preventDefault(); history.replaceState(null, '', location.pathname + '?pick=1'); renderPicker(); window.scrollTo(0, feed.getBoundingClientRect().top + window.scrollY - 70); return; }
     if (e.target.closest('[data-start]')) { var first = feed.querySelector('.dcard.unithead, .dcard[data-j]'); if (first) scrollToCard(first); return; }
     if (e.target.closest('[data-more]')) { var endSec = document.getElementById('c-end'), before = feedCards.length; endSec.insertAdjacentHTML('beforebegin', nextBlocks()); renderEnd(); var n = document.getElementById('c-' + before); if (n) scrollToCard(n.previousElementSibling || n); return; }
+    var to = e.target.closest('[data-testout]');
+    if (to) {
+      var tu = UNIT[to.getAttribute('data-testout')], firstCheck = -1;
+      testing[tu.id] = true;
+      feedCards.forEach(function (fc, k) { if (firstCheck < 0 && fc.unit === tu && fc.t === 'check' && !isDone(fc)) firstCheck = k; });
+      to.parentNode.innerHTML = '<span>Answer the checkpoint questions below. Get them all right to skip the unit.</span>';
+      if (firstCheck >= 0) scrollToCard(document.getElementById('c-' + firstCheck));
+      return;
+    }
     var nx = e.target.closest('[data-next]');
     if (nx) { var next = nx.closest('.dcard').nextElementSibling; if (next) scrollToCard(next); return; }
     var sec = e.target.closest('.dcard[data-j]'); if (!sec) return;
@@ -496,7 +537,7 @@
     if (c.t === 'pipe') return pipeClick(sec, j, e);
     if (c.t === 'indent') return indentClick(sec, j, e);
     var ch = e.target.closest('.choice');
-    if (ch && !ch.disabled) { var ok = ch.getAttribute('data-opt') === c.a; markChoices(sec, c, ch.getAttribute('data-opt')); record(j, ok); result(j, ok); return; }
+    if (ch && !ch.disabled) { var ok = ch.getAttribute('data-opt') === c.a; markChoices(sec, c, ch.getAttribute('data-opt')); record(j, ok); result(j, ok, false, null, testOutResult(c)); return; }
     var bl = e.target.closest('.bugline');
     if (bl && !bl.disabled) { var p = +bl.getAttribute('data-line'), ok2 = p === c.bad; markBug(sec, c, p); record(j, ok2); result(j, ok2); return; }
     if (e.target.closest('.ord-reset')) { sec.querySelectorAll('.ord').forEach(function (b) { b.removeAttribute('data-n'); b.classList.remove('picked'); b.querySelector('.ordn').textContent = ''; }); e.target.closest('.ord-reset').hidden = true; return; }
@@ -541,7 +582,7 @@
       if (!isDone(c)) return;
       var sec = document.getElementById('c-' + j), d = st.done[c.id];
       if (!sec || sec.classList.contains('answered')) return;
-      if (c.t === 'output' || c.t === 'choice') markChoices(sec, c, null);
+      if (c.t === 'output' || c.t === 'choice' || c.t === 'check') markChoices(sec, c, null);
       else if (c.t === 'bug') markBug(sec, c, null);
       else if (c.t === 'order') { sec.querySelectorAll('.ord').forEach(function (b) { b.setAttribute('data-n', c.items.indexOf(b.getAttribute('data-item')) + 1); b.querySelector('.ordn').textContent = b.getAttribute('data-n'); }); markOrder(sec, c); }
       else if (c.t === 'learn') sec.querySelector('.mbar').hidden = true;
@@ -582,7 +623,7 @@
     var ids = Object.keys(st.saved).filter(function (id) { return CARD[id]; });
     if (!ids.length) return '';
     return '<h3>🔖 Saved for later (' + ids.length + ')</h3><ul class="savedlist">' + ids.slice(0, 20).map(function (id) {
-      var c = CARD[id], title = c.t === 'learn' ? c.title : c.t === 'output' ? 'What does this print? ' + c.code.split('\n')[0] : c.q.replace(/`|\*\*/g, '');
+      var c = CARD[id], title = c.t === 'learn' ? c.title : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? 'What does this print? ' + c.code.split('\n')[0] : c.q.replace(/`|\*\*/g, '');
       return '<li class="t-' + tkey(c.topic) + '"><a href="#card=' + id + '"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span><span>' + K.esc(c.unit.track.name) + ' · ' + K.esc(title.length > 70 ? title.slice(0, 68) + '…' : title) + '</span></a></li>';
     }).join('') + '</ul>';
   }

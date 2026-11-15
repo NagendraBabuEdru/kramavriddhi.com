@@ -634,3 +634,10 @@ details[open] .tr-open { color: var(--color-ink); }
 .unitdone { font: 700 1.0625rem var(--font-display); color: var(--color-ink); margin-top: var(--space-sm); }
 .sharedhead { min-height: 0 !important; padding-block: var(--space-lg) 0 !important; }
 .alldone { font-size: 1rem; margin: var(--space-md) 0; }
+
+/* Learn feed v9: checkpoints and test-out */
+.post .dtype.check-type { display: inline-block; border-radius: var(--crad, 999px); padding: 4px 12px; background: color-mix(in oklab, var(--color-success) 16%, var(--cbox, var(--color-paper))); color: var(--cink, var(--color-ink)); letter-spacing: 0.04em; margin-bottom: var(--space-sm); }
+.uh-test { display: grid; gap: 6px; margin: var(--space-md) 16px 0; }
+.uh-test .btn { justify-self: start; border-radius: 999px; box-shadow: none; }
+.uh-test span { font-size: var(--text-sm); color: var(--color-muted); }
+.dcard.skipped { display: none; }
