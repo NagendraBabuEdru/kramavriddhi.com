@@ -26,13 +26,13 @@ PAGES = [
     ("learn/python/guess-the-output/index.html", "body_pyout.html", "Guess the Output: Python Quiz Game | Kramavriddhi",
      "Read short Python programs and pick what they print. Strings, maths, lists, loops, functions and dictionaries in 5 levels, with simple explanations."),
     ("learn/daily/index.html", "body_daily.html", "Kramavriddhi Learn: Pick Your Skills, Learn Step by Step | Kramavriddhi",
-     "Pick Python, Azure, Git, Linux, SQL, Docker, Kubernetes, Ansible or DevOps and learn it step by step, from basics to advanced, in a free Instagram-style feed. Works on phones."),
+     "Pick Python, Azure, Power BI, Git, Linux, SQL, Docker, Kubernetes, Ansible or DevOps and learn it step by step, from basics to advanced, in a free Instagram-style feed. Works on phones."),
 ]
 
 for out, body, title, desc in [p for p in PAGES if (S / p[1]).exists()]:
     url = "https://kramavriddhi.com/" + out.replace("index.html", "")
     t = top.replace(OLD_T, html.escape(title, quote=True)).replace(OLD_D, html.escape(desc, quote=True)).replace(OLD_U, url)
-    extra = '  <link rel="stylesheet" href="/learn/common/learn.css?v=11">\n</head>'
+    extra = '  <link rel="stylesheet" href="/learn/common/learn.css?v=12">\n</head>'
     t = t.replace("</head>", extra, 1)
     page = t + (S / body).read_text(encoding="utf-8") + bottom
     p = REPO / out

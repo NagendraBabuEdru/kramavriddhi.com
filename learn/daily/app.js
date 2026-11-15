@@ -92,13 +92,14 @@
     ansible: { ab: 'A', own: ACADEMY, docs: { href: 'https://docs.ansible.com/ansible/latest/getting_started/index.html', label: 'Ansible docs: getting started', ext: 1 } },
     docker: { ab: 'Dk', own: ACADEMY, docs: { href: 'https://docs.docker.com/get-started/', label: 'Docker docs: get started', ext: 1 } },
     kubernetes: { ab: 'K8s', own: ACADEMY, docs: { href: 'https://kubernetes.io/docs/tutorials/kubernetes-basics/', label: 'Kubernetes basics (kubernetes.io)', ext: 1 } },
+    powerbi: { ab: 'BI', own: { href: 'https://learn.microsoft.com/en-us/training/powerplatform/power-bi', label: 'Microsoft Learn: free Power BI training', ext: 1 }, docs: { href: 'https://learn.microsoft.com/en-us/power-bi/fundamentals/power-bi-overview', label: 'Microsoft Learn: what is Power BI?', ext: 1 } },
     devops: { ab: 'Ops', own: ACADEMY, docs: { href: 'https://learn.microsoft.com/en-us/devops/what-is-devops', label: 'Microsoft Learn: what is DevOps?', ext: 1 } }
   };
   function tkey(topic) { return String(topic).toLowerCase(); }
   function topicOf(c) { return TOPIC[tkey(c.topic)] || TOPIC.devops; }
   function learnLinks(c) {
     var t = topicOf(c), out = [];
-    if (c.t === 'pipe' && c.topic !== 'DevOps' && c.topic !== 'Docker') out.push({ href: '/learn/devops/azure-data-pipeline/', label: 'Play the full game: Build the Data Pipeline' });
+    if (c.t === 'pipe' && (c.topic === 'Azure' || c.topic === 'Data')) out.push({ href: '/learn/devops/azure-data-pipeline/', label: 'Play the full game: Build the Data Pipeline' });
     if (c.t === 'indent') out.push(c.step === 2 ? { href: '/learn/devops/ansible-fix-the-playbook/', label: 'Play the full game: Fix the Playbook' } : { href: '/learn/python/fix-the-code/', label: 'Play the full game: Fix the Code' });
     out.push(t.own);
     if (c.topic === 'Ansible' && c.t !== 'indent') out.push({ href: '/learn/devops/ansible-fix-the-playbook/', label: 'Play Fix the Playbook (Ansible game)' });
@@ -343,7 +344,7 @@
     var codeQ = c.t === 'output' || (c.t === 'check' && c.code && !c.q);
     play.innerHTML = '<div class="gbbar" aria-hidden="true"><i style="width:' + Math.max(0, (g.limit - (Date.now() - g.t0)) / g.limit * 100) + '%"></i></div>' +
       '<p class="gbmeta"><span>Question ' + (g.i + 1) + ' of ' + g.qs.length + '</span><span class="gbtime"></span><span>' + (g.combo > 1 ? '🔥 combo ×' + g.combo : '') + '</span></p>' +
-      (codeQ ? '<p class="gbq">What does it print?</p>' + codeBlock(c.code.split('\n')) : '<p class="gbq">' + K.rich(c.q) + '</p>' + (c.code ? codeBlock(c.code.split('\n')) : '')) +
+      (codeQ ? '<p class="gbq">' + (c.lang === 'sql' ? 'What does it return?' : 'What does it print?') + '</p>' + codeBlock(c.code.split('\n'), false, c.lang) : '<p class="gbq">' + K.rich(c.q) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '')) +
       choiceList(c) + '<p class="gbflash" role="status" aria-live="polite"></p>';
   }
 
@@ -471,13 +472,13 @@
       '<span class="pwho"><strong>' + K.esc(u.track.name) + '</strong><span>Unit ' + u.n + ' · ' + K.esc(u.title) + '</span></span>' +
       '<span class="dcount">' + (rev ? '🔁' : (c.pos + 1) + '/' + u.cards.length) + '</span></header>' +
       (rev ? '<p class="dtype review-type">🔁 Review' + (st.review[c.id] && st.review[c.id].step ? ' ' + (st.review[c.id].step + 1) + ' of 3' : '') + '</p>' : '') +
-      '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : c.t === 'check' ? ' check-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : c.t === 'check' ? '✅ ' : '') + TYPE[c.t] + '</p>';
+      '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : c.t === 'check' ? ' check-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : c.t === 'check' ? '✅ ' : '') + (c.t === 'output' && c.lang === 'sql' ? 'What does it return?' : TYPE[c.t]) + '</p>';
     var body = '';
     if (c.t === 'learn') body = '<h2 class="dq">' + K.esc(c.title) + '</h2><p class="lbody">' + K.rich(c.body) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') +
       '<div class="mbar"><button type="button" class="btn go" data-got>Got it ✓</button></div>';
-    else if (c.t === 'output') body = codeBlock(c.code.split('\n')) + choiceList(c);
+    else if (c.t === 'output') body = codeBlock(c.code.split('\n'), false, c.lang) + choiceList(c);
     else if (c.t === 'choice') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + choiceList(c);
-    else if (c.t === 'check') body = '<h2 class="dq">' + K.rich(c.q || 'What does this print?') + '</h2>' + (c.code ? codeBlock(c.code.split('\n')) : '') + choiceList(c);
+    else if (c.t === 'check') body = '<h2 class="dq">' + K.rich(c.q || (c.lang === 'sql' ? 'What does this query return?' : 'What does this print?')) + '</h2>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') + choiceList(c);
     else if (c.t === 'bug') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + codeBlock(c.code, true);
     else if (c.t === 'order') body = '<h2 class="dq">' + K.rich(c.q) + '</h2><div class="order-list">' + shuffleDiff(c.items).map(function (it) {
         return '<button type="button" class="ord" data-item="' + K.esc(it) + '"><span class="ordn" aria-hidden="true"></span><span>' + K.esc(it) + '</span></button>';
@@ -500,7 +501,7 @@
   }
 
   function shareText(c) {
-    var what = c.t === 'learn' ? c.title + ': ' + c.body : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? 'What does this Python code print?\n\n' + c.code : c.q;
+    var what = c.t === 'learn' ? c.title + ': ' + c.body : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? (c.lang === 'sql' ? 'What does this SQL query return?' : c.lang === 'shell' ? 'What does this command print?' : 'What does this Python code print?') + '\n\n' + c.code : c.q;
     return (c.t === 'learn' ? 'Learn this in 1 minute' : 'Can you solve this?') + ' (' + c.unit.track.name + ')\n' + what.replace(/`|\*\*/g, '') +
       '\n\nTry it on Kramavriddhi Learn: ' + URL + '#card=' + c.id;
   }

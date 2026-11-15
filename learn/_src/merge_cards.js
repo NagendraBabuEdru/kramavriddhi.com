@@ -26,6 +26,6 @@ let s = header + 'window.KV_TRACKS = {\n  goal: ' + T.goal + ',\n  levels: ' + J
 s += T.tracks.map(tr => '    { id: ' + JSON.stringify(tr.id) + ', name: ' + JSON.stringify(tr.name) + ', topic: ' + JSON.stringify(tr.topic) + ', blurb: ' + JSON.stringify(tr.blurb) + ', units: [\n' +
   tr.units.map(u => '      { id: ' + JSON.stringify(u.id) + ', level: ' + JSON.stringify(u.level) + ', n: ' + u.n + ', title: ' + JSON.stringify(u.title) + ', cards: [' +
     (u.cards.length ? '\n' + u.cards.map(c => '        ' + JSON.stringify(c)).join(',\n') + '\n      ' : '') + '] }').join(',\n') + '\n    ] }').join(',\n') + '\n  ]\n};\n';
-fs.writeFileSync(path, s);
+fs.writeFileSync(path, s.replace(/\r?\n/g, '\r\n'));  // keep the repo CRLF line endings
 let total = 0, liveU = 0; T.tracks.forEach(t => t.units.forEach(u => { total += u.cards.length; if (u.cards.length) liveU++; }));
 console.log('added', added, '| total cards', total, '| live units', liveU, '| old cards unchanged:', before.size);

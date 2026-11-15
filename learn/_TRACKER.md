@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 15 Nov 2026 (Phase 3 done)
+Last updated: 15 Nov 2026 (Phase 4 done)
 
 ---
 
@@ -50,8 +50,8 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 2 | First two tracks complete to Basic | Python Basic (10 units) and Azure Data Engineering Basic (6 units) fully written, 6 to 8 cards each, plus 2 checkpoint cards per unit (`check` type, also enables D3 test-out) | ✅ live (15 Nov 2026): 75 new cards, 16 units at 6 to 8 cards + 2 checkpoints, test-out built |
 | 3 | Spaced review | Wrong answers return after 1, 3 and 7 days; "Review" cards in the feed | ✅ live (15 Nov 2026): missed cards return after 1, 3, 7 days; right 3 times in a row = mastered; wrong resets to 1 day; max 10 reviews a day, shown before new units; reviews count toward the daily goal; earlier mistakes picked up automatically |
 | 3b | Game breaks | 🎮 Game break every 6 cards (every 4 after the daily goal): ⚡ speed round (3 questions, 30 s, combo), 🧩 puzzle (pipe/indent, practice only), 🕹️ full game (opens with "Back to my feed"). Only from chosen skills; kinds played/liked come more, skipped less; never the same kind twice in a row; finishing one counts toward the daily goal, never changes lesson progress | ✅ live (15 Nov 2026), owner asked for it before Phase 4 |
-| 4 | More tracks to Basic | Git, Linux, SQL Basic | ⬜ **NEXT** |
-| 5 | Intermediate levels | Python, Azure, Git, Linux, SQL Intermediate | ⬜ |
+| 4 | More tracks to Basic | Git, Linux, SQL Basic, plus **Power BI** (new track added at the owner's request) | ✅ live (15 Nov 2026): 129 new cards; Git, Linux, SQL and Power BI Basic complete (6 to 8 cards + 2 checkpoints per unit) |
+| 5 | Intermediate levels | Python, Azure, Git, Linux, SQL, Power BI Intermediate | ⬜ **NEXT** |
 | 6 | Docker, Kubernetes, Ansible, CI/CD Basic | | ⬜ |
 | 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ⬜ |
 | 8 | Telugu version | Telugu explainer cards and questions | ⬜ |
@@ -82,23 +82,31 @@ Matches the levels of `/courses/azure-data-engineering/`.
 ### 4.3 Git (`git`) · brand look: git-scm.com
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 what Git is · 2 init, clone, add, commit · 3 status, log, diff · 4 push and pull | ⬜ (5 loose cards) |
+| Basic | 1 what Git is · 2 init, clone, add, commit · 3 status, log, diff · 4 push and pull | ✅ complete (Phase 4) |
 | Intermediate | 5 branches · 6 merge · 7 merge conflicts · 8 pull requests | ⬜ |
 | Advanced | 9 rebase · 10 stash · 11 revert vs reset · 12 tags and releases · 13 team workflows | ⬜ |
 
 ### 4.4 Linux (`lx`) · brand look: ubuntu.com
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 files and folders · 2 reading files · 3 permissions · 4 users and sudo | ⬜ (4 loose cards) |
+| Basic | 1 files and folders · 2 reading files · 3 permissions · 4 users and sudo | ✅ complete (Phase 4) |
 | Intermediate | 5 processes · 6 services (systemctl) · 7 packages (apt) · 8 networking commands · 9 shell scripts | ⬜ |
 | Advanced | 10 cron · 11 logs and journalctl · 12 SSH keys · 13 troubleshooting a slow server | ⬜ |
 
 ### 4.5 SQL (`sql`) · brand look: Microsoft Learn (teal)
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 SELECT and FROM · 2 WHERE · 3 ORDER BY · 4 COUNT, SUM, AVG | ⬜ (4 loose cards) |
+| Basic | 1 SELECT and FROM · 2 WHERE · 3 ORDER BY · 4 COUNT, SUM, AVG | ✅ complete (Phase 4) |
 | Intermediate | 5 GROUP BY and HAVING · 6 JOINs · 7 subqueries · 8 INSERT, UPDATE, DELETE | ⬜ |
 | Advanced | 9 window functions · 10 CTEs · 11 indexes and performance · 12 star schema modelling | ⬜ |
+
+### 4.5b Power BI (`pbi`) · brand look: Microsoft Learn with the Power BI yellow band (#F2C811, dark text)
+Added 15 Nov 2026 at the owner's request.
+| Level | Units in order | Status |
+|---|---|---|
+| Basic | 1 what Power BI is · 2 getting data · 3 Power Query basics · 4 visuals and charts · 5 filters and slicers · 6 publish and share | ✅ complete: every unit 6 cards + 2 checkpoints |
+| Intermediate | 7 data modelling and relationships · 8 DAX basics: measures and columns · 9 CALCULATE and filter context · 10 time intelligence · 11 row-level security · 12 refresh and gateways | ⬜ |
+| Advanced | 13 performance tuning · 14 composite models and aggregations · 15 deployment pipelines and Git · 16 Power BI in Microsoft Fabric · 17 paginated reports · 18 governance and sensitivity labels | ⬜ |
 
 ### 4.6 Docker (`dk`) · brand look: docs.docker.com
 | Level | Units in order | Status |
@@ -133,7 +141,7 @@ Matches the levels of `/courses/azure-data-engineering/`.
 | Page | URL | Notes |
 |---|---|---|
 | Hub | /learn/ | Daily banner, Cloud & DevOps card, Python card, total stars of 60 |
-| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 202 cards in 45 live units. Old day-based feed retired 15 Nov 2026 |
+| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 331 cards in 57 live units, 10 skills. Old day-based feed retired 15 Nov 2026 |
 | Cloud & DevOps | /learn/devops/ | 2 games + 6 coming-soon cards |
 | Build the Data Pipeline | /learn/devops/azure-data-pipeline/ | 5 levels |
 | Fix the Playbook | /learn/devops/ansible-fix-the-playbook/ | 5 levels |
@@ -155,7 +163,8 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 6. Rebuild pages with `python learn/_src/compose.py`, then `git add learn/` only, commit with the Co-Authored-By trailer, push, and check the live URL.
 7. Add a line to the change log (section 9) and update the status marks.
 8. To add content: write the new cards in a file shaped `{ 'py.b.03': [cards] }` and run `node learn/_src/merge_cards.js learn/daily/tracks.js <file>`. It appends with the next IDs and refuses to change old cards. Every unit needs one `learn` card and, once it is complete, 2 `check` cards. Bump `tracks.js?v=` in `learn/_src/body_daily.html` and rebuild.
-9. Only say what an official source confirms. If a number (copies, limits, counts) is not stated on the official page, leave it out.
+9. How Phase 4 content was made (reuse this): a Sonnet helper drafts cards with `verify` fields (SQL: SQLite setup/query/rows; shell/git: bash script + expected output); the main session runs them for real, reads every concept card, checks cloud facts on Microsoft Learn, strips `verify`, then merges.
+10. Only say what an official source confirms. If a number (copies, limits, counts) is not stated on the official page, leave it out.
 
 ## 7. Open decisions (need the owner's answer)
 
@@ -179,6 +188,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 15 Nov 2026 | **Phase 4 done:** Git, Linux, SQL Basic complete; new **Power BI** track (18 units planned, Basic complete); SQL cards show `query.sql` and "What does it return?"; 129 new cards (16 SQL answers run in SQLite, Git/Linux answers run in bash) |
 | 15 Nov 2026 | **Game breaks (3b):** speed rounds, puzzles and full-game breaks inside the feed, picked by interest; "Back to my feed" on full games |
 | 15 Nov 2026 | Site now links to Learn (menu, home, apps, sitemap, course page); Learn pages show "Learn" in their own menu |
 | 15 Nov 2026 | Planned Phases 11 (challenges + achievement posts) and 12 (shared achievements feed) from the owner's idea |

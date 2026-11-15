@@ -392,6 +392,7 @@ html.snap-feed { scroll-snap-type: y proximity; }
 .t-sql { --tc: #00758F; --tc2: #F29111; --tc-ink: #fff; }
 .t-data { --tc: #5C2D91; --tc2: #C59CFF; --tc-ink: #fff; }
 .t-devops { --tc: #107C10; --tc2: #8DE3AE; --tc-ink: #fff; }
+.t-powerbi { --tc: #F2C811; --tc2: #252423; --tc-ink: #252423; }
 
 html.snap-feed { scroll-padding-top: 64px; }
 .daily { max-width: 560px; }
@@ -491,7 +492,7 @@ html.snap-feed { scroll-padding-top: 64px; }
   --clink: var(--tc); --crad: 8px; --cfont: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --chfont: var(--cfont);
 }
 /* Microsoft Learn / Azure: white, Segoe UI, Azure blue, square corners */
-.dcard.t-azure, .dcard.t-data, .dcard.t-sql, .dcard.t-devops { --cfont: "Segoe UI", SegoeUI, "Helvetica Neue", system-ui, sans-serif; --crad: 2px; --cbox: #FFFFFF; --cline: #C8C8C8; --cstripe: transparent; }
+.dcard.t-azure, .dcard.t-data, .dcard.t-sql, .dcard.t-devops, .dcard.t-powerbi { --cfont: "Segoe UI", SegoeUI, "Helvetica Neue", system-ui, sans-serif; --crad: 2px; --cbox: #FFFFFF; --cline: #C8C8C8; --cstripe: transparent; }
 .dcard.t-azure { --chead: #0078D4; --chead-ink: #fff; --cbtn: #0078D4; --cbtn-ink: #fff; --clink: #0065B3; }
 .dcard.t-data { --chead: #5C2D91; --chead-ink: #fff; --cbtn: #5C2D91; --cbtn-ink: #fff; --clink: #5C2D91; }
 .dcard.t-sql { --chead: #00758F; --chead-ink: #fff; --cbtn: #00758F; --cbtn-ink: #fff; --clink: #005F74; }
@@ -680,3 +681,7 @@ details[open] .tr-open { color: var(--color-ink); }
 .playcard .post { box-shadow: 0 0 0 3px var(--gb-yellow), 0 8px 24px -12px rgb(0 0 0 / 0.18) !important; }
 .backfeed { display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-sm); padding: 0 16px; border-radius: 999px; background: var(--color-ink); color: var(--color-paper); font: 700 1rem var(--font-display); text-decoration: none; }
 .backfeed:hover { background: var(--color-ink-2); }
+
+/* Power BI cards: Microsoft Learn style with the Power BI yellow band and dark text */
+.dcard.t-powerbi { --chead: #F2C811; --chead-ink: #252423; --cstripe: #252423; --cbtn: #252423; --cbtn-ink: #FFFFFF; --clink: #6B5300; }
+@media (prefers-color-scheme: dark) { .dcard.t-powerbi { --cbtn: #F2C811; --cbtn-ink: #252423; --clink: #F2C811; } }
