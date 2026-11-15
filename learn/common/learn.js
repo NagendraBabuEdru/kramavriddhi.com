@@ -49,4 +49,10 @@
   }
 
   window.KVLearn = { load: load, save: save, track: track, stars: stars, wa: wa, shuffle: shuffle, esc: esc, rich: rich };
+
+  /* opened from a game break in the Learn feed: offer a way back */
+  if (/[?&]from=feed/.test(location.search)) {
+    var main = document.querySelector('main.game:not(.daily)');
+    if (main) main.insertAdjacentHTML('afterbegin', '<a class="backfeed" href="/learn/daily/">← Back to my feed</a>');
+  }
 })();

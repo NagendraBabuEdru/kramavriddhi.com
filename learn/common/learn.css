@@ -651,3 +651,32 @@ details[open] .tr-open { color: var(--color-ink); }
 .revline { margin-top: 6px; font: 600 1rem var(--font-display); color: var(--color-ink); }
 .revline:empty { display: none; }
 .revnote { font: 700 1rem var(--font-display); color: var(--cink, var(--color-ink)); margin-top: var(--space-sm); }
+
+/* Learn feed v11: game breaks (fixed bright yellow in light and dark mode, with dark text) */
+:root { --gb-yellow: oklch(86% 0.15 88); }
+.gamebreak { min-height: 0 !important; padding-block: var(--space-xl) var(--space-md) !important; }
+.gamebreak .post { border: 2px solid var(--color-ink); background: var(--gb-yellow); color: oklch(18% 0.02 80); padding: 14px 16px 16px; }
+.gamebreak .dq, .gamebreak .gbsub, .gamebreak .gbq, .gamebreak .gbmeta, .gamebreak p { color: oklch(18% 0.02 80); }
+.gbhead { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: var(--space-sm); }
+.gbbadge { font: 800 0.8125rem var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; background: oklch(18% 0.02 80); color: var(--gb-yellow); padding: 4px 10px; border-radius: 999px; }
+.gbkind { font: 700 1rem var(--font-display); }
+.gbskip { margin-left: auto; min-height: 40px; padding: 0 12px; border: 1.5px solid oklch(18% 0.02 80); border-radius: 999px; background: transparent; color: oklch(18% 0.02 80); font: 600 0.875rem var(--font-display); cursor: pointer; }
+.gbskip:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.gbsub { font-size: 1rem; margin-bottom: var(--space-sm); }
+.gamebreak .btn.go { border-radius: 999px; box-shadow: none; background: oklch(18% 0.02 80); color: var(--gb-yellow); border-color: oklch(18% 0.02 80); }
+.gamebreak .btn.ghost { border-radius: 999px; color: oklch(18% 0.02 80); border-color: oklch(18% 0.02 80); background: transparent; }
+.gamebreak .btn.primary { border-radius: 999px; }
+.gbbar { height: 8px; border-radius: 4px; background: color-mix(in oklab, oklch(18% 0.02 80) 18%, transparent); overflow: hidden; margin-bottom: 8px; }
+.gbbar i { display: block; height: 100%; background: oklch(18% 0.02 80); border-radius: 4px; transition: width 200ms linear; }
+.gbmeta { display: flex; justify-content: space-between; gap: 8px; font: 600 var(--text-sm) var(--font-display); margin-bottom: 6px; }
+.gbq { font: 700 1.125rem/1.3 var(--font-display); margin: 6px 0 10px; }
+.gamebreak .choices { grid-template-columns: minmax(0, 1fr); margin-top: 8px; }
+.gamebreak .choice { border-radius: 12px; box-shadow: none; background: var(--color-paper); }
+.gamebreak .editor { border-radius: 10px; overflow: hidden; }
+.gbflash { min-height: 1.5em; font: 700 1rem var(--font-display); margin-top: 8px; }
+.gamebreak .verdict { font: 800 1.375rem var(--font-display); }
+.gbwrong { margin: 4px 0 0; padding-left: 1.2em; font-size: 0.9375rem; }
+.gamebreak .stars .on svg { fill: oklch(18% 0.02 80); stroke: oklch(18% 0.02 80); }
+.playcard .post { box-shadow: 0 0 0 3px var(--gb-yellow), 0 8px 24px -12px rgb(0 0 0 / 0.18) !important; }
+.backfeed { display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-sm); padding: 0 16px; border-radius: 999px; background: var(--color-ink); color: var(--color-paper); font: 700 1rem var(--font-display); text-decoration: none; }
+.backfeed:hover { background: var(--color-ink-2); }

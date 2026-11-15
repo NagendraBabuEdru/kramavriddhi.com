@@ -49,6 +49,7 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 1 | Tracks engine | Skill picker on first open; feed built from chosen tracks in unit order; progress per track; card IDs; the new `learn` explainer card; existing 84 cards moved into units | ✅ live (15 Nov 2026): 9 tracks, 124 units planned, 43 units live, 127 cards (84 old + 43 explainers) |
 | 2 | First two tracks complete to Basic | Python Basic (10 units) and Azure Data Engineering Basic (6 units) fully written, 6 to 8 cards each, plus 2 checkpoint cards per unit (`check` type, also enables D3 test-out) | ✅ live (15 Nov 2026): 75 new cards, 16 units at 6 to 8 cards + 2 checkpoints, test-out built |
 | 3 | Spaced review | Wrong answers return after 1, 3 and 7 days; "Review" cards in the feed | ✅ live (15 Nov 2026): missed cards return after 1, 3, 7 days; right 3 times in a row = mastered; wrong resets to 1 day; max 10 reviews a day, shown before new units; reviews count toward the daily goal; earlier mistakes picked up automatically |
+| 3b | Game breaks | 🎮 Game break every 6 cards (every 4 after the daily goal): ⚡ speed round (3 questions, 30 s, combo), 🧩 puzzle (pipe/indent, practice only), 🕹️ full game (opens with "Back to my feed"). Only from chosen skills; kinds played/liked come more, skipped less; never the same kind twice in a row; finishing one counts toward the daily goal, never changes lesson progress | ✅ live (15 Nov 2026), owner asked for it before Phase 4 |
 | 4 | More tracks to Basic | Git, Linux, SQL Basic | ⬜ **NEXT** |
 | 5 | Intermediate levels | Python, Azure, Git, Linux, SQL Intermediate | ⬜ |
 | 6 | Docker, Kubernetes, Ansible, CI/CD Basic | | ⬜ |
@@ -141,8 +142,8 @@ Matches the levels of `/courses/azure-data-engineering/`.
 | Guess the Output | /learn/python/guess-the-output/ | 5 levels, 16 programs |
 
 Files: `learn/common/learn.css` (all styles, versioned `?v=`), `learn/common/learn.js` (storage, analytics, stars, share), `learn/daily/tracks.js` (all feed content: tracks → units → cards with IDs), `learn/daily/app.js` (feed engine), `learn/_src/` (page bodies + `compose.py` that builds the HTML pages).
-Browser storage keys: `kv-learn-pipeline`, `kv-learn-playbook`, `kv-learn-py-fix`, `kv-learn-py-output`, `kv-learn-feed` (feed: chosen tracks, done cards by ID (first answer), likes, saves, streak, cards per day, `review` {id: {due day, step}}, `mastered` count). Old `kv-learn-daily` is read once to carry over the streak.
-Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`), `track_select`, `daily_goal`, `daily_learn_more`, `unit_test_out`, `review_answer`.
+Browser storage keys: `kv-learn-pipeline`, `kv-learn-playbook`, `kv-learn-py-fix`, `kv-learn-py-output`, `kv-learn-feed` (feed: chosen tracks, done cards by ID (first answer), likes, saves, streak, cards per day, `review` {id: {due day, step}}, `mastered` count, `gb` {speed|puzzle|full: {p played, l liked, s skipped}}, `gbLast`). Old `kv-learn-daily` is read once to carry over the streak.
+Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`), `track_select`, `daily_goal`, `daily_learn_more`, `unit_test_out`, `review_answer`, `game_break` (kind, action: play/done/skip/open).
 
 ## 6. Rules for every update
 
@@ -178,6 +179,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 15 Nov 2026 | **Game breaks (3b):** speed rounds, puzzles and full-game breaks inside the feed, picked by interest; "Back to my feed" on full games |
 | 15 Nov 2026 | Site now links to Learn (menu, home, apps, sitemap, course page); Learn pages show "Learn" in their own menu |
 | 15 Nov 2026 | Planned Phases 11 (challenges + achievement posts) and 12 (shared achievements feed) from the owner's idea |
 | 15 Nov 2026 | **Phase 3 done:** spaced review: 🔁 Review cards at the top of the feed (1, 3, 7 days, then 🏅 mastered), review counts on the profile and end card |

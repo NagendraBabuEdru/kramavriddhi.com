@@ -186,6 +186,7 @@
      2. The feed: units from the chosen skills, in order, taking turns
      ===================================================================== */
   var feedCards = [], feedModes = [], reviewNote = {}, queue = [], qi = 0, tries = {}, started = false;
+  var gbs = [], sinceBreak = 0;
 
   function buildQueue() {
     var lists = st.tracks.map(function (id) { return TR[id].units.filter(function (u) { return live(u) && !unitDone(u); }); });
@@ -197,6 +198,7 @@
   function renderFeed(scroll) {
     pill.hidden = false;
     feedCards = []; feedModes = []; reviewNote = {}; tries = {};
+    gbs.forEach(function (g) { if (g.timer) clearInterval(g.timer); }); gbs = []; sinceBreak = 0;
     queue = buildQueue(); qi = 0;
     var html = intro();
     var hm = /card=([\w.]+)/.exec(location.hash), shared = hm && CARD[hm[1]];
@@ -222,10 +224,159 @@
     var html = '', count = 0;
     while (qi < queue.length && (count < GOAL * 2 || html === '')) {
       var u = queue[qi++], rest = u.cards.filter(function (c) { return !isDone(c); });
-      html += unitHead(u) + rest.map(function (c) { return cardHtml(c); }).join('');
+      html += unitHead(u) + rest.map(function (c) {
+        var h = cardHtml(c);
+        if (++sinceBreak >= (todayCount() >= GOAL ? 4 : 6)) { var b = gameBreakHtml(); if (b) { h += b; sinceBreak = 0; } }
+        return h;
+      }).join('');
       count += rest.length;
     }
     return html;
+  }
+
+  /* =====================================================================
+     3. Game breaks: a short game every few cards, picked by interest
+     ===================================================================== */
+  var FULL = {
+    py: [{ name: 'Fix the Code', href: '/learn/python/fix-the-code/', key: 'kv-learn-py-fix', blurb: 'Put scrambled Python in order, fix the indentation and run it.' },
+         { name: 'Guess the Output', href: '/learn/python/guess-the-output/', key: 'kv-learn-py-output', blurb: 'Read a short program and pick exactly what it prints.' }],
+    az: [{ name: 'Build the Data Pipeline', href: '/learn/devops/azure-data-pipeline/', key: 'kv-learn-pipeline', blurb: 'Put Azure services in the order data travels and watch it flow.' }],
+    ans: [{ name: 'Fix the Playbook', href: '/learn/devops/ansible-fix-the-playbook/', key: 'kv-learn-playbook', blurb: 'Fix a broken Ansible playbook and run it on two servers.' }]
+  };
+  var GB_KIND = { speed: '⚡ Speed round', puzzle: '🧩 Puzzle', full: '🕹️ Full game' };
+  st.gb = st.gb || {};
+  function gstat(type) { return st.gb[type] || (st.gb[type] = { p: 0, l: 0, s: 0 }); }
+  function chosenCards(test) {
+    var out = [];
+    st.tracks.forEach(function (id) { TR[id].units.forEach(function (u) { u.cards.forEach(function (c) { if (test(c)) out.push(c); }); }); });
+    return out;
+  }
+  function mcPool() {
+    var all = chosenCards(function (c) { return c.t === 'output' || c.t === 'choice' || c.t === 'check'; });
+    var seen = all.filter(isDone);
+    return seen.length >= 6 ? seen : all;
+  }
+  function puzzlePool() { return chosenCards(function (c) { return c.t === 'pipe' || c.t === 'indent'; }); }
+  function fullPool() { var out = []; st.tracks.forEach(function (id) { (FULL[id] || []).forEach(function (g) { out.push(g); }); }); return out; }
+
+  /* interest: kinds you play or like come more often, kinds you skip less; never the same kind twice in a row */
+  function pickKind() {
+    var avail = [];
+    if (mcPool().length >= 3) avail.push('speed');
+    if (puzzlePool().length) avail.push('puzzle');
+    if (fullPool().length) avail.push('full');
+    if (!avail.length) return null;
+    var choices = avail.length > 1 ? avail.filter(function (t) { return t !== st.gbLast; }) : avail;
+    var w = choices.map(function (t) { var g = gstat(t); return (1 + g.p + 2 * g.l) / (1 + 1.5 * g.s); });
+    var sum = w.reduce(function (a, b) { return a + b; }, 0), r = Math.random() * sum;
+    for (var i = 0; i < choices.length; i++) { r -= w[i]; if (r <= 0) return choices[i]; }
+    return choices[choices.length - 1];
+  }
+
+  function gameBreakHtml() {
+    var kind = pickKind(); if (!kind) return '';
+    st.gbLast = kind;
+    var k = gbs.push({ kind: kind, counted: false }) - 1, g = gbs[k], body = '', after = '';
+    var names = st.tracks.map(function (id) { return TR[id].name; }).join(', ');
+    if (kind === 'speed') {
+      body = '<h2 class="dq">3 quick questions, 30 seconds</h2><p class="gbsub">From your skills: ' + K.esc(names) + '. Keep a combo going for bonus fire.</p>' +
+        '<button type="button" class="btn go" data-gbstart>Start ⚡</button><div class="gbplay" hidden></div>';
+    } else if (kind === 'puzzle') {
+      var ps = puzzlePool(); g.card = ps[Math.floor(Math.random() * ps.length)];
+      body = '<p class="gbsub">A quick puzzle from ' + K.esc(g.card.unit.track.name) + '. Solve it below, or skip.</p>';
+      after = cardHtml(g.card, 'play');
+    } else {
+      var fs = fullPool(); g.game = fs[Math.floor(Math.random() * fs.length)];
+      var pr = K.load(g.game.key, null), stars = pr && pr.stars ? pr.stars.reduce(function (a, b) { return a + (b || 0); }, 0) : 0;
+      body = '<h2 class="dq">' + K.esc(g.game.name) + '</h2><p class="gbsub">' + K.esc(g.game.blurb) + '</p>' +
+        '<p class="gbsub">' + (stars ? K.stars(1, 1) + ' Your stars: ' + stars + ' of 15. Go for more!' : '5 levels, up to 15 stars.') + '</p>' +
+        '<a class="btn go" href="' + g.game.href + '?from=feed" data-gbopen>Play now</a>';
+    }
+    return '<section class="dcard gamebreak" id="gb-' + k + '" data-gb="' + k + '" aria-label="Game break: ' + GB_KIND[kind] + '"><div class="dinner post">' +
+      '<div class="gbhead"><span class="gbbadge">🎮 Game break</span><span class="gbkind">' + GB_KIND[kind] + '</span>' +
+      '<button type="button" class="gbskip" data-gbskip>Skip ↓</button></div>' + body + '</div></section>' + after;
+  }
+
+  function gbScrollPast(sec, k) {
+    var next = sec.nextElementSibling;
+    if (gbs[k].kind === 'puzzle' && next) next = next.nextElementSibling;
+    if (next) scrollToCard(next);
+  }
+
+  function gbClick(e, sec) {
+    var k = +sec.getAttribute('data-gb'), g = gbs[k];
+    if (e.target.closest('[data-gbskip]')) {
+      gstat(g.kind).s++; save(); K.track('game_break', { kind: g.kind, action: 'skip' });
+      if (g.timer) { clearInterval(g.timer); g.timer = null; }
+      if (g.kind === 'speed' && g.qs && !g.over) {          /* leave no half-played round behind */
+        g.over = true;
+        var pl = sec.querySelector('.gbplay'); pl.innerHTML = ''; pl.hidden = true;
+        var sb = sec.querySelector('[data-gbstart]'); if (sb) sb.hidden = false;
+      }
+      gbScrollPast(sec, k); return;
+    }
+    if (e.target.closest('[data-gbopen]')) { gstat(g.kind).p++; save(); K.track('game_break', { kind: 'full', action: 'open', game: g.game.name }); return; }
+    if (e.target.closest('[data-gbnext]')) { gbScrollPast(sec, k); return; }
+    if (e.target.closest('[data-gbstart]') || e.target.closest('[data-gbagain]')) { speedStart(sec, k); return; }
+    var ch = e.target.closest('.choice');
+    if (ch && !ch.disabled && g.kind === 'speed') speedAnswer(sec, k, ch.getAttribute('data-opt'));
+  }
+
+  function speedStart(sec, k) {
+    var g = gbs[k], play = sec.querySelector('.gbplay');
+    g.qs = K.shuffle(mcPool()).slice(0, 3); g.i = 0; g.right = 0; g.combo = 0; g.best = 0; g.wrong = []; g.t0 = Date.now(); g.limit = 30000; g.over = false;
+    var st0 = sec.querySelector('[data-gbstart]'); if (st0) st0.hidden = true;
+    play.hidden = false;
+    speedQuestion(sec, k);
+    if (g.timer) clearInterval(g.timer);
+    g.timer = setInterval(function () {
+      var left = Math.max(0, g.limit - (Date.now() - g.t0)), bar = sec.querySelector('.gbbar i');
+      if (bar) bar.style.width = (left / g.limit * 100) + '%';
+      var tl = sec.querySelector('.gbtime'); if (tl) tl.textContent = Math.ceil(left / 1000) + ' s';
+      if (!left) speedEnd(sec, k, true);
+    }, 200);
+    K.track('game_break', { kind: 'speed', action: 'play' });
+  }
+
+  function speedQuestion(sec, k) {
+    var g = gbs[k], c = g.qs[g.i], play = sec.querySelector('.gbplay');
+    var codeQ = c.t === 'output' || (c.t === 'check' && c.code && !c.q);
+    play.innerHTML = '<div class="gbbar" aria-hidden="true"><i style="width:' + Math.max(0, (g.limit - (Date.now() - g.t0)) / g.limit * 100) + '%"></i></div>' +
+      '<p class="gbmeta"><span>Question ' + (g.i + 1) + ' of ' + g.qs.length + '</span><span class="gbtime"></span><span>' + (g.combo > 1 ? '🔥 combo ×' + g.combo : '') + '</span></p>' +
+      (codeQ ? '<p class="gbq">What does it print?</p>' + codeBlock(c.code.split('\n')) : '<p class="gbq">' + K.rich(c.q) + '</p>' + (c.code ? codeBlock(c.code.split('\n')) : '')) +
+      choiceList(c) + '<p class="gbflash" role="status" aria-live="polite"></p>';
+  }
+
+  function speedAnswer(sec, k, opt) {
+    var g = gbs[k]; if (g.over) return;
+    var c = g.qs[g.i], ok = opt === c.a, play = sec.querySelector('.gbplay');
+    markChoices(play, c, opt);
+    if (ok) { g.right++; g.combo++; g.best = Math.max(g.best, g.combo); } else { g.combo = 0; g.wrong.push(c); }
+    play.querySelector('.gbflash').textContent = ok ? (g.combo > 1 ? '✓ Right! 🔥 combo ×' + g.combo : '✓ Right!') : '✗ It was: ' + c.a.replace(/\n/g, ' / ');
+    setTimeout(function () {
+      if (g.over) return;
+      g.i++;
+      if (g.i < g.qs.length) speedQuestion(sec, k); else speedEnd(sec, k, false);
+    }, reduce ? 300 : ok ? 650 : 1400);
+  }
+
+  function speedEnd(sec, k, timeout) {
+    var g = gbs[k]; if (g.over) return;
+    g.over = true; clearInterval(g.timer); g.timer = null;
+    for (var i = g.i; i < g.qs.length; i++) if (g.wrong.indexOf(g.qs[i]) < 0 && timeout) g.wrong.push(g.qs[i]);
+    var secs = Math.round(Math.min(g.limit, Date.now() - g.t0) / 1000), n = g.qs.length;
+    var stars = g.right === n && !timeout ? 3 : g.right >= n - 1 ? 2 : g.right ? 1 : 0;
+    if (!g.counted) { g.counted = true; gstat('speed').p++; bumpDay(); save(); updatePill(); refreshStats(); renderEnd(); }
+    K.track('game_break', { kind: 'speed', action: 'done', right: g.right, seconds: secs });
+    sec.querySelector('.gbplay').innerHTML =
+      '<p class="verdict">' + (timeout ? '⏰ Time up! ' : '⚡ ') + g.right + ' of ' + n + ' right' + (timeout ? '' : ' in ' + secs + ' s') + '</p>' +
+      (stars ? '<p>' + K.stars(stars).replace('class="stars"', 'class="stars big"') + '</p>' : '') +
+      (g.best > 1 ? '<p class="revnote">🔥 Best combo ×' + g.best + '</p>' : '') +
+      (g.wrong.length ? '<p class="small">Remember:</p><ul class="gbwrong">' + g.wrong.map(function (c) {
+        return '<li>' + K.esc(c.q ? c.q.replace(/`|\*\*/g, '') : c.code.split('\n')[0]) + ' → <strong>' + K.esc(c.a.replace(/\n/g, ' / ')) + '</strong></li>';
+      }).join('') + '</ul>' : '') +
+      '<p class="revnote">🎮 Game break done · it counts for today</p>' +
+      '<div class="mbar"><button type="button" class="btn ghost" data-gbagain>Play again</button><button type="button" class="btn primary" data-gbnext>Back to learning ↓</button></div>';
   }
 
   function levelProgress(t) {
@@ -343,7 +494,7 @@
       '<div class="plearnbox" id="lb-' + j + '" hidden><p>Read and practise more:</p><ul>' + learnLinks(c).map(function (l) {
         return '<li><a href="' + K.esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + K.esc(l.label) + (l.ext ? ' ↗' : '') + '</a></li>';
       }).join('') + '</ul></div>';
-    return '<section class="dcard t-' + tkey(c.topic) + (isGame ? ' gamecard' : '') + (rev ? ' reviewcard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="' + K.esc((rev ? 'Review: ' : '') + u.track.name + ', ' + u.title + ', card ' + (c.pos + 1) + ' of ' + u.cards.length) + '">' +
+    return '<section class="dcard t-' + tkey(c.topic) + (isGame ? ' gamecard' : '') + (rev ? ' reviewcard' : '') + (mode === 'play' ? ' playcard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="' + K.esc((rev ? 'Review: ' : mode === 'play' ? 'Game break: ' : '') + u.track.name + ', ' + u.title + ', card ' + (c.pos + 1) + ' of ' + u.cards.length) + '">' +
       '<div class="dinner post">' + head + '<div class="pbody">' + body + '</div>' +
       '<div class="dres" hidden></div>' + actions + '<span class="bigheart" aria-hidden="true">' + ICON.heart + '</span></div></section>';
   }
@@ -400,6 +551,7 @@
     var right = c.t === 'order' && !ok ? '<p class="small">The right order:</p><ol class="right-order">' + c.items.map(function (x) { return '<li>' + K.esc(x) + '</li>'; }).join('') + '</ol>' : '';
     var finished = unitDone(u), last = c.pos === u.cards.length - 1;
     if (feedModes[j] === 'review') { extra = reviewNote[j] || ''; finished = false; last = false; }
+    if (feedModes[j] === 'play') { extra = '<p class="revnote">🎮 Game break done · it counts for today</p>'; finished = false; last = false; }
     res.innerHTML = '<p class="verdict">' + (verdict || (ok ? '✓ Correct!' : '✗ Not quite.')) + (restoring ? ' <span class="muted">(done before)</span>' : '') + '</p>' + right +
       (c.why ? '<p>' + K.rich(c.why) + '</p>' : '') +
       (extra || (finished && !restoring ? '<p class="unitdone">🎉 Unit complete: ' + K.esc(u.title) + '</p>' : '')) +
@@ -435,11 +587,23 @@
     var c = feedCards[j], u = c.unit, wasDone = unitDone(u);
     if (!started) { started = true; K.track('game_start', { game_name: 'kramavriddhi_learn', level: u.n, unit_id: u.id }); }
     if (feedModes[j] === 'review') reviewNote[j] = reviewAnswer(c.id, ok);
+    else if (feedModes[j] === 'play') { gstat('puzzle').p++; K.track('game_break', { kind: 'puzzle', action: 'done', ok: ok ? 1 : 0 }); }
     else {
       st.done[c.id] = { ok: ok, d: today };
       if (nTries) st.done[c.id].tries = nTries;
       if (!ok && c.t !== 'learn') scheduleMiss(c.id);
     }
+    bumpDay();
+    if (!wasDone && unitDone(u)) {
+      var right = u.cards.filter(function (x) { return st.done[x.id].ok; }).length;
+      K.track('level_complete', { game_name: 'kramavriddhi_learn', level: u.n, unit_id: u.id, stars: right === u.cards.length ? 3 : right >= u.cards.length * 0.6 ? 2 : 1 });
+    }
+    save();
+    updatePill(); refreshStats(); renderEnd();
+  }
+
+  /* one more card (or game break) done today; the streak grows when the daily goal is reached */
+  function bumpDay() {
     st.days[today] = todayCount() + 1;
     if (todayCount() === GOAL) {
       if (st.streak.last === today - 1) st.streak.n++;
@@ -448,12 +612,6 @@
       st.best = Math.max(st.best || 0, st.streak.n);
       K.track('daily_goal', { streak: st.streak.n });
     }
-    if (!wasDone && unitDone(u)) {
-      var right = u.cards.filter(function (x) { return st.done[x.id].ok; }).length;
-      K.track('level_complete', { game_name: 'kramavriddhi_learn', level: u.n, unit_id: u.id, stars: right === u.cards.length ? 3 : right >= u.cards.length * 0.6 ? 2 : 1 });
-    }
-    save();
-    updatePill(); refreshStats(); renderEnd();
   }
 
   function refreshStats() {
@@ -548,6 +706,7 @@
   feed.addEventListener('click', function (e) {
     if (e.target.closest('[data-pick]')) { e.preventDefault(); history.replaceState(null, '', location.pathname + '?pick=1'); renderPicker(); window.scrollTo(0, feed.getBoundingClientRect().top + window.scrollY - 70); return; }
     if (e.target.closest('[data-start]')) { var first = feed.querySelector('.dcard.unithead, .dcard[data-j]'); if (first) scrollToCard(first); return; }
+    var gbSec = e.target.closest('.dcard.gamebreak'); if (gbSec) { gbClick(e, gbSec); return; }
     if (e.target.closest('[data-more]')) { var endSec = document.getElementById('c-end'), before = feedCards.length; endSec.insertAdjacentHTML('beforebegin', nextBlocks()); renderEnd(); var n = document.getElementById('c-' + before); if (n) scrollToCard(n.previousElementSibling || n); return; }
     var to = e.target.closest('[data-testout]');
     if (to) {
@@ -606,6 +765,7 @@
   }, true);
 
   function setLike(sec, c, on, pop) {
+    if (on && !st.likes[c.id] && feedModes[+sec.getAttribute('data-j')] === 'play') gstat('puzzle').l++;
     if (on) st.likes[c.id] = 1; else delete st.likes[c.id];
     sec.querySelector('[data-like]').setAttribute('aria-pressed', on);
     save();
@@ -625,7 +785,7 @@
   /* show cards that were done before (only a shared card can be) as answered */
   function restoreAll() {
     feedCards.forEach(function (c, j) {
-      if (!isDone(c) || feedModes[j] === 'review') return;
+      if (!isDone(c) || feedModes[j] === 'review' || feedModes[j] === 'play') return;
       var sec = document.getElementById('c-' + j), d = st.done[c.id];
       if (!sec || sec.classList.contains('answered')) return;
       if (c.t === 'output' || c.t === 'choice' || c.t === 'check') markChoices(sec, c, null);
