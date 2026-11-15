@@ -1,0 +1,55 @@
+
+    <main class="learn">
+      <p class="crumbs"><a href="/">Home</a> › <a href="/learn/">Learn by Playing</a> › Cloud &amp; DevOps</p>
+      <header class="page-head">
+        <p class="kicker">Learn by Playing · Azure · Ansible</p>
+        <h1>Cloud &amp; DevOps</h1>
+        <p>Puzzle games that teach how Azure data platforms and Ansible automation really work. Every level ends with a short explanation, so you learn the why, not only the answer.</p>
+      </header>
+
+      <div class="grid">
+        <a class="card" href="/learn/devops/azure-data-pipeline/">
+          <div class="thumb"><div class="thumb-pipe" aria-hidden="true"><i class="src">CSV</i><b></b><i>DF</i><b></b><i>DL</i><b></b><i>DB</i><b></b><i>BI</i></div></div>
+          <div class="tags"><span class="tag">Azure</span><span class="tag state">5 levels</span></div>
+          <h3>Build the Data Pipeline</h3>
+          <p>Put Data Factory, Data Lake, Databricks, Synapse, Event Hubs and Power BI in the order data travels. Batch, streaming and bronze, silver, gold.</p>
+          <p class="best" data-best="kv-learn-pipeline" hidden></p>
+        </a>
+        <a class="card" href="/learn/devops/ansible-fix-the-playbook/">
+          <div class="thumb"><div class="thumb-code" aria-hidden="true"><span class="d">- </span><span class="k">name</span>: Install nginx
+<span class="d">··</span><span class="k">ansible.builtin.apt</span>:
+<span class="d">····</span><span class="k">name</span>: nginx
+<span class="ok">ok: [web1]  changed: [web2]</span></div></div>
+          <div class="tags"><span class="tag">Ansible</span><span class="tag state">5 levels</span></div>
+          <h3>Fix the Playbook</h3>
+          <p>Reorder scrambled YAML, fix the indentation and press Run. Watch the servers turn green, or read a friendly error and try again.</p>
+          <p class="best" data-best="kv-learn-playbook" hidden></p>
+        </a>
+      </div>
+
+      <h2 class="sub">Coming soon</h2>
+      <div class="grid">
+        <div class="card soon"><span class="status">Azure · soon</span><h3>Stack the Cloud</h3><p>Nest management groups, subscriptions, resource groups and resources in the right order.</p></div>
+        <div class="card soon"><span class="status">Azure · soon</span><h3>Which Service?</h3><p>A real scenario, a timer and four Azure services. Pick the right one before time runs out.</p></div>
+        <div class="card soon"><span class="status">Azure · soon</span><h3>Hot, Cool, Cold or Archive?</h3><p>Sort files into the cheapest storage tier that still meets the need.</p></div>
+        <div class="card soon"><span class="status">Ansible · soon</span><h3>Inventory Sorter</h3><p>Group servers into inventory groups like web and db, then target them with patterns.</p></div>
+        <div class="card soon"><span class="status">Ansible · soon</span><h3>Run it Twice</h3><p>Spot which tasks are idempotent: safe to run again with nothing changed.</p></div>
+        <div class="card soon"><span class="status">Ansible · soon</span><h3>Module Match</h3><p>Match each job to the right module: apt, copy, template, service, user and more.</p></div>
+      </div>
+
+      <h2 class="sub">Keep learning</h2>
+      <div class="grid">
+        <a class="card" href="/courses/azure-data-engineering/"><span class="tag">Free course</span><h3>Azure Data Engineering Course</h3><p>Basic to advanced on YouTube: Data Factory, Databricks, Fabric, streaming and CI/CD, with projects.</p></a>
+        <a class="card" href="https://nagendrababuedru.github.io/DevOps/" target="_blank" rel="noopener"><span class="tag">Free app</span><h3>DevOps Academy</h3><p>Terminal labs and interview questions for Linux, Git, Docker, Kubernetes, Ansible and more.</p></a>
+      </div>
+    </main>
+    <script src="/learn/common/learn.js?v=1"></script>
+    <script>
+      (function () {
+        document.querySelectorAll('[data-best]').forEach(function (el) {
+          var p = KVLearn.load(el.getAttribute('data-best'), null);
+          var n = p && p.stars ? p.stars.reduce(function (s, x) { return s + (x || 0); }, 0) : 0;
+          if (n > 0) { el.hidden = false; el.innerHTML = KVLearn.stars(1, 1) + ' Your stars: ' + n + ' of 15'; }
+        });
+      })();
+    </script>

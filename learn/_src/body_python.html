@@ -1,0 +1,54 @@
+
+    <main class="learn">
+      <p class="crumbs"><a href="/">Home</a> › <a href="/learn/">Learn by Playing</a> › Python</p>
+      <header class="page-head">
+        <p class="kicker">Learn by Playing · Python coding</p>
+        <h1>Python</h1>
+        <p>Puzzle games that teach Python from the very first line: variables, if/else, loops, lists and functions. No install needed. Every level ends with a short explanation.</p>
+      </header>
+
+      <div class="grid">
+        <a class="card" href="/learn/python/fix-the-code/">
+          <div class="thumb"><div class="thumb-code" aria-hidden="true"><span class="k">for</span> n <span class="k">in</span> nums:
+<span class="d">····</span>total = total + n
+<span class="fn">print</span>(<span class="v">"Total:"</span>, total)
+<span class="ok">Total: 27</span></div></div>
+          <div class="tags"><span class="tag">Python</span><span class="tag state">5 levels</span></div>
+          <h3>Fix the Code</h3>
+          <p>Reorder scrambled Python, fix the indentation and press Run. Meet real errors like IndentationError and NameError, explained simply.</p>
+          <p class="best" data-best="kv-learn-py-fix" hidden></p>
+        </a>
+        <a class="card" href="/learn/python/guess-the-output/">
+          <div class="thumb"><div class="thumb-code" aria-hidden="true"><span class="fn">print</span>(7 / 2, 7 // 2)
+
+A  3 3      B  3.5 3
+C  3.5 4    D  <span class="q">?</span></div></div>
+          <div class="tags"><span class="tag">Python</span><span class="tag state">5 levels</span></div>
+          <h3>Guess the Output</h3>
+          <p>Read a short program and pick what it prints. Strings, maths, lists, loops, and the tricky ones that catch everyone.</p>
+          <p class="best" data-best="kv-learn-py-output" hidden></p>
+        </a>
+      </div>
+
+      <h2 class="sub">Coming soon</h2>
+      <div class="grid">
+        <div class="card soon"><span class="status">Python · soon</span><h3>Bug Hunt</h3><p>Each program has one bug. Find the line, pick the fix, and watch the tests turn green.</p></div>
+        <div class="card soon"><span class="status">Python · soon</span><h3>Dictionary Detective</h3><p>Look up, add and update keys to answer questions about a small data set.</p></div>
+        <div class="card soon"><span class="status">Python · soon</span><h3>Loop Robot</h3><p>Guide a robot across a grid with for loops, if and functions. Fewest lines wins.</p></div>
+      </div>
+
+      <h2 class="sub">More games</h2>
+      <div class="grid">
+        <a class="card" href="/learn/devops/"><span class="tag">2 games</span><h3>Cloud &amp; DevOps</h3><p>Build Azure data pipelines and fix Ansible playbooks.</p></a>
+      </div>
+    </main>
+    <script src="/learn/common/learn.js?v=1"></script>
+    <script>
+      (function () {
+        document.querySelectorAll('[data-best]').forEach(function (el) {
+          var p = KVLearn.load(el.getAttribute('data-best'), null);
+          var n = p && p.stars ? p.stars.reduce(function (s, x) { return s + (x || 0); }, 0) : 0;
+          if (n > 0) { el.hidden = false; el.innerHTML = KVLearn.stars(1, 1) + ' Your stars: ' + n + ' of 15'; }
+        });
+      })();
+    </script>

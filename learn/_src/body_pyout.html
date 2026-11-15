@@ -1,0 +1,30 @@
+
+    <main class="game" id="game">
+      <p class="crumbs"><a href="/">Home</a> › <a href="/learn/">Learn by Playing</a> › <a href="/learn/python/">Python</a> › Guess the Output</p>
+      <header class="game-head">
+        <p class="kicker">Python · Quiz game · 5 levels</p>
+        <h1>Guess the Output</h1>
+        <p class="lede">Read a short Python program and pick exactly what it prints. Every answer comes with a simple explanation, so even a wrong guess teaches you something.</p>
+      </header>
+
+      <ol class="levels" id="levels" aria-label="Levels"></ol>
+
+      <div class="brief" id="brief"></div>
+
+      <div class="quiz" id="quiz"></div>
+      <p class="gmsg" id="msg" role="status" aria-live="polite"></p>
+
+      <div class="done" id="done" tabindex="-1" hidden></div>
+
+      <div class="howto">
+        <h2>How to play</h2>
+        <ul>
+          <li>Each level has 3 or 4 short programs. Read the code line by line, like Python does, from top to bottom.</li>
+          <li><strong>Tap</strong> the answer you think is right. Some answers are errors such as <code>TypeError</code>: pick one of those if you think the program crashes.</li>
+          <li>Stars: no mistakes is 3 stars, one mistake is 2 stars, more is 1 star.</li>
+        </ul>
+        <p class="muted">Want to check an answer yourself? Install Python 3 from python.org, save the code as a .py file and run it.</p>
+      </div>
+    </main>
+    <script src="/learn/common/learn.js?v=1"></script>
+    <script src="/learn/python/guess-the-output/game.js?v=1"></script>
