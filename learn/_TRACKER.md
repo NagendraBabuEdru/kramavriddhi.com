@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 15 Nov 2026 (Phase 4 done)
+Last updated: 15 Nov 2026 (Phase 5 done)
 
 ---
 
@@ -51,8 +51,8 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 3 | Spaced review | Wrong answers return after 1, 3 and 7 days; "Review" cards in the feed | ✅ live (15 Nov 2026): missed cards return after 1, 3, 7 days; right 3 times in a row = mastered; wrong resets to 1 day; max 10 reviews a day, shown before new units; reviews count toward the daily goal; earlier mistakes picked up automatically |
 | 3b | Game breaks | 🎮 Game break every 6 cards (every 4 after the daily goal): ⚡ speed round (3 questions, 30 s, combo), 🧩 puzzle (pipe/indent, practice only), 🕹️ full game (opens with "Back to my feed"). Only from chosen skills; kinds played/liked come more, skipped less; never the same kind twice in a row; finishing one counts toward the daily goal, never changes lesson progress | ✅ live (15 Nov 2026), owner asked for it before Phase 4 |
 | 4 | More tracks to Basic | Git, Linux, SQL Basic, plus **Power BI** (new track added at the owner's request) | ✅ live (15 Nov 2026): 129 new cards; Git, Linux, SQL and Power BI Basic complete (6 to 8 cards + 2 checkpoints per unit) |
-| 5 | Intermediate levels | Python, Azure, Git, Linux, SQL, Power BI Intermediate | ⬜ **NEXT** |
-| 6 | Docker, Kubernetes, Ansible, CI/CD Basic | | ⬜ |
+| 5 | Intermediate levels | Python, Azure, Git, Linux, SQL, Power BI Intermediate | ✅ live (15 Nov 2026): 279 new cards, 35 Intermediate units complete (6 to 8 cards + 2 checkpoints each) |
+| 6 | Docker, Kubernetes, Ansible, CI/CD Basic | | ⬜ **NEXT** |
 | 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ⬜ |
 | 8 | Telugu version | Telugu explainer cards and questions | ⬜ |
 | 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7) |
@@ -68,7 +68,7 @@ Unit count per level is a plan; it can grow. Each unit = about 6 to 8 cards.
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 print and variables · 2 numbers and maths · 3 strings · 4 input and type conversion · 5 if / elif / else · 6 lists · 7 for loops and range · 8 while loops · 9 functions · 10 dictionaries | ✅ complete: every unit 6 to 8 cards + 2 checkpoints |
-| Intermediate | 11 tuples and sets · 12 string methods and f-strings · 13 errors and try/except · 14 files (`with open`) · 15 modules and pip · 16 list comprehensions · 17 default args, *args, **kwargs · 18 classes and objects · 19 virtual environments · 20 JSON and CSV | 🟡 13 and 14 live (2 cards each); rest ⬜ |
+| Intermediate | 11 tuples and sets · 12 string methods and f-strings · 13 errors and try/except · 14 files (`with open`) · 15 modules and pip · 16 list comprehensions · 17 default args, *args, **kwargs · 18 classes and objects · 19 virtual environments · 20 JSON and CSV | ✅ complete (Phase 5) |
 | Advanced | 21 iterators and generators · 22 decorators · 23 context managers · 24 type hints · 25 testing with pytest · 26 async basics · 27 pandas for data · 28 project structure and packaging | ⬜ |
 
 ### 4.2 Azure Data Engineering (`az`) · brand look: Microsoft Learn
@@ -76,28 +76,28 @@ Matches the levels of `/courses/azure-data-engineering/`.
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 cloud basics and the Azure hierarchy · 2 storage accounts and tiers · 3 Data Lake Gen2 · 4 Data Factory pipelines · 5 Azure SQL basics · 6 Power BI basics | ✅ complete: every unit 6 cards + 2 checkpoints |
-| Intermediate | 7 Databricks and Spark · 8 medallion and Delta Lake · 9 Synapse · 10 Event Hubs and Stream Analytics · 11 Key Vault and security · 12 Parquet and partitioning | 🟡 7, 8, 10, 11, 12 live (thin); 9 ⬜ |
+| Intermediate | 7 Databricks and Spark · 8 medallion and Delta Lake · 9 Synapse · 10 Event Hubs and Stream Analytics · 11 Key Vault and security · 12 Parquet and partitioning | ✅ complete (Phase 5) |
 | Advanced | 13 Microsoft Fabric · 14 governance and Unity Catalog · 15 CI/CD for data · 16 Bicep (infrastructure as code) · 17 cost optimisation · 18 monitoring | 🟡 16 live (2 cards); rest ⬜ |
 
 ### 4.3 Git (`git`) · brand look: git-scm.com
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 what Git is · 2 init, clone, add, commit · 3 status, log, diff · 4 push and pull | ✅ complete (Phase 4) |
-| Intermediate | 5 branches · 6 merge · 7 merge conflicts · 8 pull requests | ⬜ |
+| Intermediate | 5 branches · 6 merge · 7 merge conflicts · 8 pull requests | ✅ complete (Phase 5) |
 | Advanced | 9 rebase · 10 stash · 11 revert vs reset · 12 tags and releases · 13 team workflows | ⬜ |
 
 ### 4.4 Linux (`lx`) · brand look: ubuntu.com
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 files and folders · 2 reading files · 3 permissions · 4 users and sudo | ✅ complete (Phase 4) |
-| Intermediate | 5 processes · 6 services (systemctl) · 7 packages (apt) · 8 networking commands · 9 shell scripts | ⬜ |
+| Intermediate | 5 processes · 6 services (systemctl) · 7 packages (apt) · 8 networking commands · 9 shell scripts | ✅ complete (Phase 5) |
 | Advanced | 10 cron · 11 logs and journalctl · 12 SSH keys · 13 troubleshooting a slow server | ⬜ |
 
 ### 4.5 SQL (`sql`) · brand look: Microsoft Learn (teal)
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 SELECT and FROM · 2 WHERE · 3 ORDER BY · 4 COUNT, SUM, AVG | ✅ complete (Phase 4) |
-| Intermediate | 5 GROUP BY and HAVING · 6 JOINs · 7 subqueries · 8 INSERT, UPDATE, DELETE | ⬜ |
+| Intermediate | 5 GROUP BY and HAVING · 6 JOINs · 7 subqueries · 8 INSERT, UPDATE, DELETE | ✅ complete (Phase 5) |
 | Advanced | 9 window functions · 10 CTEs · 11 indexes and performance · 12 star schema modelling | ⬜ |
 
 ### 4.5b Power BI (`pbi`) · brand look: Microsoft Learn with the Power BI yellow band (#F2C811, dark text)
@@ -105,7 +105,7 @@ Added 15 Nov 2026 at the owner's request.
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 what Power BI is · 2 getting data · 3 Power Query basics · 4 visuals and charts · 5 filters and slicers · 6 publish and share | ✅ complete: every unit 6 cards + 2 checkpoints |
-| Intermediate | 7 data modelling and relationships · 8 DAX basics: measures and columns · 9 CALCULATE and filter context · 10 time intelligence · 11 row-level security · 12 refresh and gateways | ⬜ |
+| Intermediate | 7 data modelling and relationships · 8 DAX basics: measures and columns · 9 CALCULATE and filter context · 10 time intelligence · 11 row-level security · 12 refresh and gateways | ✅ complete (Phase 5) |
 | Advanced | 13 performance tuning · 14 composite models and aggregations · 15 deployment pipelines and Git · 16 Power BI in Microsoft Fabric · 17 paginated reports · 18 governance and sensitivity labels | ⬜ |
 
 ### 4.6 Docker (`dk`) · brand look: docs.docker.com
@@ -141,7 +141,7 @@ Added 15 Nov 2026 at the owner's request.
 | Page | URL | Notes |
 |---|---|---|
 | Hub | /learn/ | Daily banner, Cloud & DevOps card, Python card, total stars of 60 |
-| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 331 cards in 57 live units, 10 skills. Old day-based feed retired 15 Nov 2026 |
+| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 610 cards in 81 live units, 10 skills. Old day-based feed retired 15 Nov 2026 |
 | Cloud & DevOps | /learn/devops/ | 2 games + 6 coming-soon cards |
 | Build the Data Pipeline | /learn/devops/azure-data-pipeline/ | 5 levels |
 | Fix the Playbook | /learn/devops/ansible-fix-the-playbook/ | 5 levels |
@@ -188,6 +188,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 15 Nov 2026 | **Phase 5 done:** Intermediate levels complete for Python, Azure, Git, Linux, SQL and Power BI (279 new cards by 4 Sonnet helpers; 57 Python programs, 20 SQL queries and 13 shell scripts run for real; Power BI RLS and CALCULATE cards corrected against Microsoft Learn) |
 | 15 Nov 2026 | **Phase 4 done:** Git, Linux, SQL Basic complete; new **Power BI** track (18 units planned, Basic complete); SQL cards show `query.sql` and "What does it return?"; 129 new cards (16 SQL answers run in SQLite, Git/Linux answers run in bash) |
 | 15 Nov 2026 | **Game breaks (3b):** speed rounds, puzzles and full-game breaks inside the feed, picked by interest; "Back to my feed" on full games |
 | 15 Nov 2026 | Site now links to Learn (menu, home, apps, sitemap, course page); Learn pages show "Learn" in their own menu |
