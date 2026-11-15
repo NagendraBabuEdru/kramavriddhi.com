@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 15 Nov 2026 (Phase 2 done)
+Last updated: 15 Nov 2026 (Phase 3 done)
 
 ---
 
@@ -48,8 +48,8 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 0 | Daily feed v1 | Day-based feed, 5 tasks + 1 mini game a day, streak, Instagram look, brand themes per topic, Learn more links | ✅ live (12 Nov 2026) |
 | 1 | Tracks engine | Skill picker on first open; feed built from chosen tracks in unit order; progress per track; card IDs; the new `learn` explainer card; existing 84 cards moved into units | ✅ live (15 Nov 2026): 9 tracks, 124 units planned, 43 units live, 127 cards (84 old + 43 explainers) |
 | 2 | First two tracks complete to Basic | Python Basic (10 units) and Azure Data Engineering Basic (6 units) fully written, 6 to 8 cards each, plus 2 checkpoint cards per unit (`check` type, also enables D3 test-out) | ✅ live (15 Nov 2026): 75 new cards, 16 units at 6 to 8 cards + 2 checkpoints, test-out built |
-| 3 | Spaced review | Wrong answers return after 1, 3 and 7 days; "Review" cards in the feed | ⬜ **NEXT** |
-| 4 | More tracks to Basic | Git, Linux, SQL Basic | ⬜ |
+| 3 | Spaced review | Wrong answers return after 1, 3 and 7 days; "Review" cards in the feed | ✅ live (15 Nov 2026): missed cards return after 1, 3, 7 days; right 3 times in a row = mastered; wrong resets to 1 day; max 10 reviews a day, shown before new units; reviews count toward the daily goal; earlier mistakes picked up automatically |
+| 4 | More tracks to Basic | Git, Linux, SQL Basic | ⬜ **NEXT** |
 | 5 | Intermediate levels | Python, Azure, Git, Linux, SQL Intermediate | ⬜ |
 | 6 | Docker, Kubernetes, Ansible, CI/CD Basic | | ⬜ |
 | 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ⬜ |
@@ -139,8 +139,8 @@ Matches the levels of `/courses/azure-data-engineering/`.
 | Guess the Output | /learn/python/guess-the-output/ | 5 levels, 16 programs |
 
 Files: `learn/common/learn.css` (all styles, versioned `?v=`), `learn/common/learn.js` (storage, analytics, stars, share), `learn/daily/tracks.js` (all feed content: tracks → units → cards with IDs), `learn/daily/app.js` (feed engine), `learn/_src/` (page bodies + `compose.py` that builds the HTML pages).
-Browser storage keys: `kv-learn-pipeline`, `kv-learn-playbook`, `kv-learn-py-fix`, `kv-learn-py-output`, `kv-learn-feed` (feed: chosen tracks, done cards by ID, likes, saves, streak, cards per day). Old `kv-learn-daily` is read once to carry over the streak.
-Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`), `track_select`, `daily_goal`, `daily_learn_more`.
+Browser storage keys: `kv-learn-pipeline`, `kv-learn-playbook`, `kv-learn-py-fix`, `kv-learn-py-output`, `kv-learn-feed` (feed: chosen tracks, done cards by ID (first answer), likes, saves, streak, cards per day, `review` {id: {due day, step}}, `mastered` count). Old `kv-learn-daily` is read once to carry over the streak.
+Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`), `track_select`, `daily_goal`, `daily_learn_more`, `unit_test_out`, `review_answer`.
 
 ## 6. Rules for every update
 
@@ -176,6 +176,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 15 Nov 2026 | **Phase 3 done:** spaced review: 🔁 Review cards at the top of the feed (1, 3, 7 days, then 🏅 mastered), review counts on the profile and end card |
 | 15 Nov 2026 | **Phase 2 done:** Python Basic and Azure Basic complete (75 new cards incl. 32 checkpoints, Azure SQL and Power BI units added), checkpoint card type, "I know this" test-out; Python cards run in real Python, Azure facts checked on Microsoft Learn |
 | 15 Nov 2026 | **Phase 1 done:** skill picker, unit-by-unit feed, Path view, daily goal + streak, 43 explainer cards, all 84 old cards moved into units with permanent IDs, old day feed retired |
 | 15 Nov 2026 | Created this tracker; moved page sources and `compose.py` into `learn/_src/` |

@@ -38,8 +38,32 @@
       st.best = old.best || 0;
     }
   }
-  ['done', 'likes', 'saved', 'days'].forEach(function (k) { st[k] = st[k] || {}; });
+  ['done', 'likes', 'saved', 'days', 'review'].forEach(function (k) { st[k] = st[k] || {}; });
   st.tracks = (st.tracks || []).filter(function (id) { return TR[id]; });
+  st.mastered = st.mastered || 0;
+
+  /* ---------- spaced review: a missed card comes back after 1 day, then 3, then 7; right 3 times = mastered */
+  var GAPS = [1, 3, 7], MAX_REVIEWS = 10;
+  if (!st.reviewSeeded) {          /* cards missed before reviews existed are due today */
+    Object.keys(st.done).forEach(function (id) { var d = st.done[id]; if (d && d.ok === false && !d.skip && CARD[id] && !st.review[id]) st.review[id] = { due: today, step: 0 }; });
+    st.reviewSeeded = 1;
+    K.save(STORE, st);
+  }
+  Object.keys(st.review).forEach(function (id) { if (!CARD[id]) delete st.review[id]; });
+  function dueReviews() {
+    return Object.keys(st.review).filter(function (id) { return st.review[id].due <= today && st.tracks.indexOf(CARD[id].unit.track.id) >= 0; })
+      .sort(function (a, b) { return st.review[a].due - st.review[b].due || (a < b ? -1 : 1); }).slice(0, MAX_REVIEWS).map(function (id) { return CARD[id]; });
+  }
+  function scheduleMiss(id) { st.review[id] = { due: today + GAPS[0], step: 0 }; }
+  function reviewAnswer(id, ok) {
+    var r = st.review[id] || { step: 0 };
+    K.track('review_answer', { ok: ok ? 1 : 0, step: r.step + 1 });
+    if (!ok) { st.review[id] = { due: today + GAPS[0], step: 0 }; return '<p class="revnote">🔁 It will come back tomorrow. Read the explanation once more.</p>'; }
+    if (r.step + 1 >= GAPS.length) { delete st.review[id]; st.mastered++; return '<p class="revnote">🏅 Mastered! You got it right 3 reviews in a row, so it will not come back.</p>'; }
+    st.review[id] = { due: today + GAPS[r.step + 1], step: r.step + 1 };
+    return '<p class="revnote">🔁 Well remembered. Next review in ' + GAPS[r.step + 1] + ' days.</p>';
+  }
+  function reviewsOn(day) { return Object.keys(st.review).filter(function (id) { return st.review[id].due === day && st.tracks.indexOf(CARD[id].unit.track.id) >= 0; }).length; }
   function save() { K.save(STORE, st); }
   function streakNow() { return st.streak.last >= today - 1 ? st.streak.n : 0; }
   function todayCount() { return st.days[today] || 0; }
@@ -161,7 +185,7 @@
   /* =====================================================================
      2. The feed: units from the chosen skills, in order, taking turns
      ===================================================================== */
-  var feedCards = [], queue = [], qi = 0, tries = {}, started = false;
+  var feedCards = [], feedModes = [], reviewNote = {}, queue = [], qi = 0, tries = {}, started = false;
 
   function buildQueue() {
     var lists = st.tracks.map(function (id) { return TR[id].units.filter(function (u) { return live(u) && !unitDone(u); }); });
@@ -172,11 +196,18 @@
 
   function renderFeed(scroll) {
     pill.hidden = false;
-    feedCards = []; tries = {};
+    feedCards = []; feedModes = []; reviewNote = {}; tries = {};
     queue = buildQueue(); qi = 0;
     var html = intro();
     var hm = /card=([\w.]+)/.exec(location.hash), shared = hm && CARD[hm[1]];
     if (shared) html += '<section class="dcard sharedhead" aria-label="Shared card"><p class="kicker">Shared with you · ' + K.esc(shared.unit.track.name) + ' · ' + K.esc(shared.unit.title) + '</p></section>' + cardHtml(shared);
+    var due = dueReviews();
+    if (due.length) {
+      html += '<section class="dcard reviewhead" aria-label="Review time"><div class="dinner post">' +
+        '<p class="kicker">🔁 Review time</p><h2 class="uh-title">' + due.length + ' card' + (due.length > 1 ? 's' : '') + ' to review</h2>' +
+        '<p class="uh-sub">You missed ' + (due.length > 1 ? 'these' : 'this') + ' before. Get a card right 3 reviews in a row (after 1, 3 and 7 days) and it is mastered for good.</p>' +
+        '</div></section>' + due.map(function (c) { return cardHtml(c, 'review'); }).join('');
+    }
     html += nextBlocks() + '<section class="dcard end" id="c-end" aria-label="Today"><div class="dinner" id="endin"></div></section>';
     feed.innerHTML = html;
     restoreAll();
@@ -191,7 +222,7 @@
     var html = '', count = 0;
     while (qi < queue.length && (count < GOAL * 2 || html === '')) {
       var u = queue[qi++], rest = u.cards.filter(function (c) { return !isDone(c); });
-      html += unitHead(u) + rest.map(cardHtml).join('');
+      html += unitHead(u) + rest.map(function (c) { return cardHtml(c); }).join('');
       count += rest.length;
     }
     return html;
@@ -210,10 +241,17 @@
       '<div class="dstats"><div><strong id="s-streak">' + (s ? '🔥' + s : '0') + '</strong><span>streak</span></div><div><strong id="s-today">' + Math.min(todayCount(), GOAL) + '/' + GOAL + '</strong><span>today</span></div><div><strong id="s-units">' + unitsDone + '</strong><span>units done</span></div></div></div>' +
       '<h1>kramavriddhi.learn</h1>' +
       '<p class="pbio">Your skills, step by step: Basic → Intermediate → Advanced. Daily goal: ' + GOAL + ' cards. 📚</p>' +
+      '<p class="revline" id="s-review">' + reviewLine() + '</p>' +
       '<h2 class="mysk">My skills</h2><ul class="mytracks">' + st.tracks.map(function (id) { return trackRow(TR[id]); }).join('') + '</ul>' +
       '<div class="introbtns"><button type="button" class="btn go" data-start>' + (todayCount() ? 'Continue ↓' : 'Start today ↓') + '</button><a class="btn ghost" href="?pick=1" data-pick>Change skills</a></div>' +
       '</div></section>';
   }
+
+  function reviewLine() {
+    var n = dueReviews().filter(function (c) { return !answeredToday(c.id); }).length;
+    return [n ? '🔁 <strong>' + n + '</strong> to review today' : '', st.mastered ? '🏅 <strong>' + st.mastered + '</strong> mastered' : ''].filter(Boolean).join(' · ');
+  }
+  function answeredToday(id) { return feedCards.some(function (c, j) { return c.id === id && feedModes[j] === 'review' && reviewNote[j]; }); }
 
   function trackRow(t) {
     var p = levelProgress(t), pct = p.live ? Math.round(p.done / p.live * 100) : 0;
@@ -275,11 +313,13 @@
   }
 
   /* ---------- one card */
-  function cardHtml(c) {
-    var j = feedCards.push(c) - 1, isGame = c.t === 'pipe' || c.t === 'indent', u = c.unit;
+  function cardHtml(c, mode) {
+    var j = feedCards.push(c) - 1, isGame = c.t === 'pipe' || c.t === 'indent', u = c.unit, rev = mode === 'review';
+    feedModes[j] = mode || '';
     var head = '<header class="phead"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span>' +
       '<span class="pwho"><strong>' + K.esc(u.track.name) + '</strong><span>Unit ' + u.n + ' · ' + K.esc(u.title) + '</span></span>' +
-      '<span class="dcount">' + (c.pos + 1) + '/' + u.cards.length + '</span></header>' +
+      '<span class="dcount">' + (rev ? '🔁' : (c.pos + 1) + '/' + u.cards.length) + '</span></header>' +
+      (rev ? '<p class="dtype review-type">🔁 Review' + (st.review[c.id] && st.review[c.id].step ? ' ' + (st.review[c.id].step + 1) + ' of 3' : '') + '</p>' : '') +
       '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : c.t === 'check' ? ' check-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : c.t === 'check' ? '✅ ' : '') + TYPE[c.t] + '</p>';
     var body = '';
     if (c.t === 'learn') body = '<h2 class="dq">' + K.esc(c.title) + '</h2><p class="lbody">' + K.rich(c.body) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') +
@@ -303,7 +343,7 @@
       '<div class="plearnbox" id="lb-' + j + '" hidden><p>Read and practise more:</p><ul>' + learnLinks(c).map(function (l) {
         return '<li><a href="' + K.esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + K.esc(l.label) + (l.ext ? ' ↗' : '') + '</a></li>';
       }).join('') + '</ul></div>';
-    return '<section class="dcard t-' + tkey(c.topic) + (isGame ? ' gamecard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="' + K.esc(u.track.name + ', ' + u.title + ', card ' + (c.pos + 1) + ' of ' + u.cards.length) + '">' +
+    return '<section class="dcard t-' + tkey(c.topic) + (isGame ? ' gamecard' : '') + (rev ? ' reviewcard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="' + K.esc((rev ? 'Review: ' : '') + u.track.name + ', ' + u.title + ', card ' + (c.pos + 1) + ' of ' + u.cards.length) + '">' +
       '<div class="dinner post">' + head + '<div class="pbody">' + body + '</div>' +
       '<div class="dres" hidden></div>' + actions + '<span class="bigheart" aria-hidden="true">' + ICON.heart + '</span></div></section>';
   }
@@ -359,6 +399,7 @@
     sec.classList.toggle('solved-late', !ok && !!verdict);
     var right = c.t === 'order' && !ok ? '<p class="small">The right order:</p><ol class="right-order">' + c.items.map(function (x) { return '<li>' + K.esc(x) + '</li>'; }).join('') + '</ol>' : '';
     var finished = unitDone(u), last = c.pos === u.cards.length - 1;
+    if (feedModes[j] === 'review') { extra = reviewNote[j] || ''; finished = false; last = false; }
     res.innerHTML = '<p class="verdict">' + (verdict || (ok ? '✓ Correct!' : '✗ Not quite.')) + (restoring ? ' <span class="muted">(done before)</span>' : '') + '</p>' + right +
       (c.why ? '<p>' + K.rich(c.why) + '</p>' : '') +
       (extra || (finished && !restoring ? '<p class="unitdone">🎉 Unit complete: ' + K.esc(u.title) + '</p>' : '')) +
@@ -393,8 +434,12 @@
   function record(j, ok, nTries) {
     var c = feedCards[j], u = c.unit, wasDone = unitDone(u);
     if (!started) { started = true; K.track('game_start', { game_name: 'kramavriddhi_learn', level: u.n, unit_id: u.id }); }
-    st.done[c.id] = { ok: ok, d: today };
-    if (nTries) st.done[c.id].tries = nTries;
+    if (feedModes[j] === 'review') reviewNote[j] = reviewAnswer(c.id, ok);
+    else {
+      st.done[c.id] = { ok: ok, d: today };
+      if (nTries) st.done[c.id].tries = nTries;
+      if (!ok && c.t !== 'learn') scheduleMiss(c.id);
+    }
     st.days[today] = todayCount() + 1;
     if (todayCount() === GOAL) {
       if (st.streak.last === today - 1) st.streak.n++;
@@ -417,6 +462,7 @@
     var unitsDone = 0;
     st.tracks.forEach(function (id) { unitsDone += liveUnits(TR[id]).filter(unitDone).length; });
     e1.textContent = s ? '🔥' + s : '0'; e2.textContent = Math.min(todayCount(), GOAL) + '/' + GOAL; e3.textContent = unitsDone;
+    var e4 = document.getElementById('s-review'); if (e4) e4.innerHTML = reviewLine();
     feed.querySelectorAll('[data-trow]').forEach(function (li) {
       var t = TR[li.getAttribute('data-trow')], p = levelProgress(t), pct = p.live ? Math.round(p.done / p.live * 100) : 0;
       li.querySelector('.tr-now').textContent = p.label;
@@ -579,7 +625,7 @@
   /* show cards that were done before (only a shared card can be) as answered */
   function restoreAll() {
     feedCards.forEach(function (c, j) {
-      if (!isDone(c)) return;
+      if (!isDone(c) || feedModes[j] === 'review') return;
       var sec = document.getElementById('c-' + j), d = st.done[c.id];
       if (!sec || sec.classList.contains('answered')) return;
       if (c.t === 'output' || c.t === 'choice' || c.t === 'check') markChoices(sec, c, null);
@@ -615,6 +661,7 @@
       (more ? '<button type="button" class="btn go" data-more>Load the next units ↓</button>'
             : '<p class="alldone">🎉 You have finished every ready unit in your skills. New units arrive in every update, or <a href="?pick=1" data-pick>add another skill</a>.</p>') +
       '<div class="share"><span class="share-label">Share:</span><a class="share-btn wa" href="' + K.wa(share) + '" target="_blank" rel="noopener">WhatsApp</a></div>' +
+      (reviewsOn(today + 1) ? '<p class="revline">🔁 ' + reviewsOn(today + 1) + ' card' + (reviewsOn(today + 1) > 1 ? 's' : '') + ' to review tomorrow.</p>' : '') +
       savedList() +
       '<h3>Keep learning</h3><div class="more"><a href="/learn/python/">Python games</a><a href="/learn/devops/">Cloud &amp; DevOps games</a><a href="/courses/azure-data-engineering/">Azure Data Engineering course</a><a href="https://nagendrababuedru.github.io/DevOps/" target="_blank" rel="noopener">DevOps Academy ↗</a></div>';
   }
