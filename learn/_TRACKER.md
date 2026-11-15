@@ -178,6 +178,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 15 Nov 2026 | Site now links to Learn (menu, home, apps, sitemap, course page); Learn pages show "Learn" in their own menu |
 | 15 Nov 2026 | Planned Phases 11 (challenges + achievement posts) and 12 (shared achievements feed) from the owner's idea |
 | 15 Nov 2026 | **Phase 3 done:** spaced review: 🔁 Review cards at the top of the feed (1, 3, 7 days, then 🏅 mastered), review counts on the profile and end card |
 | 15 Nov 2026 | **Phase 2 done:** Python Basic and Azure Basic complete (75 new cards incl. 32 checkpoints, Azure SQL and Power BI units added), checkpoint card type, "I know this" test-out; Python cards run in real Python, Azure facts checked on Microsoft Learn |
@@ -192,4 +193,4 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 ## 10. Waiting on other sessions
 
-- **Kramavriddhi – Main** (request sent 15 Nov 2026, delivered; waiting for its reply): add "Learn" to the main menu → /learn/; home page card → /learn/daily/; sitemap entries for all URLs in section 5; /apps/ listing; link from /courses/azure-data-engineering/ to /learn/.
+- ✅ **Done by Main 15 Nov 2026 (commit b96165d), checked live:** menu "Learn" on every page, home + /apps/ cards → /learn/daily/, 8 sitemap URLs, Azure course links. Learn pages' own menu updated to match (`learn/_src/top.html`). Original request: add "Learn" to the main menu → /learn/; home page card → /learn/daily/; sitemap entries for all URLs in section 5; /apps/ listing; link from /courses/azure-data-engineering/ to /learn/.
