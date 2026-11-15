@@ -64,8 +64,8 @@ def head(title, desc, path, extra="", lang="en", alternates=None, image=None, og
 '''
 
 NAV_LABELS = {
-    "en": dict(schemes="Schemes", tools="Tools", games="Games", apps="Apps", products="Products", about="About", contact="Contact"),
-    "te": dict(schemes="పథకాలు", tools="సాధనాలు", games="ఆటలు", apps="యాప్‌లు", products="ఉత్పత్తులు", about="మా గురించి", contact="సంప్రదించండి"),
+    "en": dict(schemes="Schemes", tools="Tools", learn="Learn", games="Games", apps="Apps", products="Products", about="About", contact="Contact"),
+    "te": dict(schemes="పథకాలు", tools="సాధనాలు", learn="నేర్చుకోండి", games="ఆటలు", apps="యాప్‌లు", products="ఉత్పత్తులు", about="మా గురించి", contact="సంప్రదించండి"),
 }
 
 def nav(active="", lang="en"):
@@ -83,6 +83,7 @@ def nav(active="", lang="en"):
       <ul>
         {li(schemes_href, L["schemes"], "schemes")}
         {li("/tools/", L["tools"], "tools")}
+        {li("/learn/", L["learn"], "learn")}
         {li("/apps/", L["apps"], "apps")}
         {li("/about/", L["about"], "about", "hide-sm")}
         {li("/contact/", L["contact"], "contact")}

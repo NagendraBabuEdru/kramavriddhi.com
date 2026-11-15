@@ -5044,6 +5044,10 @@ write("te/updates/index.html",
 
 # ---------------------------------------------------------------- apps (added 13 Oct 2026)
 APPS_LIVE = [
+    dict(name="Kramavriddhi Learn", emoji="🎓", url="/learn/daily/",
+         tags=["Learning", "Free", "No sign-up"],
+         summary="Pick your skills (Python, Azure, Git, Linux, SQL and more) and learn step by step from Basic to Advanced in a scrolling feed, with puzzle games to practise. Free, and your progress stays on your phone.",
+         cta="Start learning"),
     dict(name="DevOps Academy", emoji="☁️", url="https://nagendrababuedru.github.io/DevOps/",
          tags=["Learning", "Free", "Works offline"],
          summary="Learn Cloud (Azure, AWS, GCP), AI & LLMs, DevOps and Data Engineering with hands-on terminal labs, real-world scenarios, 320+ interview questions with audio, and timed challenges."),
@@ -5193,7 +5197,8 @@ write("courses/azure-data-engineering/index.html",
         </header>
         <div class="official">
           <strong>Watch on YouTube:</strong> <a href="https://www.youtube.com/@kramavriddhi" target="_blank" rel="noopener">youtube.com/@kramavriddhi</a><br>
-          Videos are released level by level. Subscribe to get each new lesson.
+          Videos are released level by level. Subscribe to get each new lesson.<br>
+          <strong>Practise as you learn:</strong> <a href="/learn/daily/">Kramavriddhi Learn</a> (Azure step by step) and the <a href="/learn/devops/">Azure and Ansible puzzle games</a>.
         </div>
         <h2>Before you start</h2>
         <ul>
@@ -5333,7 +5338,7 @@ def lastmod(u):
         return "2026-10-24"
     return UPDATED_ISO
 
-urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/", "/te/tools/scheme-eligibility-checker/", "/te/tools/atal-pension-calculator/", "/te/tools/sukanya-samriddhi-calculator/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/apps/gpat/", "/courses/azure-data-engineering/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
+urls = ["/", "/updates/", "/schemes/", "/schemes/for-women/", "/schemes/for-youth/", "/schemes/for-men/", "/schemes/andhra-pradesh/", "/schemes/telangana/", "/te/schemes/", "/te/schemes/for-women/", "/te/schemes/for-youth/", "/te/schemes/for-men/", "/te/updates/", "/te/tools/scheme-eligibility-checker/", "/te/tools/atal-pension-calculator/", "/te/tools/sukanya-samriddhi-calculator/"] + [f"/te/schemes/{k}/" for k in TE] + [f"/schemes/{s['slug']}/" for s in SCHEMES] + ["/tools/"] + [f"/tools/{t['slug']}/" for t in TOOLS] + ["/apps/", "/apps/gpat/", "/learn/", "/learn/daily/", "/learn/devops/", "/learn/devops/azure-data-pipeline/", "/learn/devops/ansible-fix-the-playbook/", "/learn/python/", "/learn/python/fix-the-code/", "/learn/python/guess-the-output/", "/courses/azure-data-engineering/", "/games/"] + [f"/games/{x['slug']}/" for x in GAMES] + ["/about/", "/contact/", "/privacy-policy/", "/disclaimer/"]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>https://kramavriddhi.com{u}</loc><lastmod>{lastmod(u)}</lastmod></url>\n" for u in urls)
       + "</urlset>\n")
