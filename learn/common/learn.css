@@ -685,3 +685,16 @@ details[open] .tr-open { color: var(--color-ink); }
 /* Power BI cards: Microsoft Learn style with the Power BI yellow band and dark text */
 .dcard.t-powerbi { --chead: #F2C811; --chead-ink: #252423; --cstripe: #252423; --cbtn: #252423; --cbtn-ink: #FFFFFF; --clink: #6B5300; }
 @media (prefers-color-scheme: dark) { .dcard.t-powerbi { --cbtn: #F2C811; --cbtn-ink: #252423; --clink: #F2C811; } }
+
+/* v13-14: app box on the profile card (install, daily reminder, offline) */
+.appbox { margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--color-rule, rgba(0,0,0,.12)); }
+.approw { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.approw.one { grid-template-columns: 1fr; }
+.approw .btn, .remlinks .btn { border-radius: 12px; box-shadow: none; justify-content: center; font-size: .95rem; min-height: 44px; min-width: 0; white-space: normal; text-align: center; padding-inline: 10px; }
+.apphelp { margin: 8px 0 0; font-size: .95rem; line-height: 1.45; }
+.appnote { margin: 8px 0 0; font-size: .9rem; opacity: .8; }
+.rembox { margin-top: 10px; padding: 12px; border-radius: 12px; background: var(--color-paper-2); }
+.remtime { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font: 600 1rem var(--font-display); }
+.remtime input { font: inherit; padding: 6px 8px; min-height: 44px; border-radius: 10px; border: 1px solid var(--color-rule, rgba(0,0,0,.25)); background: var(--color-paper); color: var(--color-ink); }
+.remlinks { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 10px; }
+@media (max-width: 340px) { .approw { grid-template-columns: 1fr; } }

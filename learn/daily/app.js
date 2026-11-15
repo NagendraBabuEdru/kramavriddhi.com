@@ -396,7 +396,46 @@
       '<p class="revline" id="s-review">' + reviewLine() + '</p>' +
       '<h2 class="mysk">My skills</h2><ul class="mytracks">' + st.tracks.map(function (id) { return trackRow(TR[id]); }).join('') + '</ul>' +
       '<div class="introbtns"><button type="button" class="btn go" data-start>' + (todayCount() ? 'Continue ↓' : 'Start today ↓') + '</button><a class="btn ghost" href="?pick=1" data-pick>Change skills</a></div>' +
-      '</div></section>';
+      appBox() + '</div></section>';
+  }
+
+  /* ---------- app box: install, daily reminder, offline (Phase 7) */
+  var INSTALL_HELP = {
+    ios: 'On iPhone: open this page in <strong>Safari</strong>, tap <strong>Share</strong> (the square with an arrow), then <strong>Add to Home Screen</strong>.',
+    manual: 'Open your browser menu (<strong>⋮</strong>) and tap <strong>Install app</strong> or <strong>Add to Home screen</strong>.'
+  };
+  function appBox() {
+    var s = K.installState(), t = st.remTime || '19:00';
+    return '<div class="appbox" id="appbox">' +
+      (s === 'installed' ? '' : '<div class="approw">' +
+        (s === 'prompt' ? '<button type="button" class="btn go" data-install>📲 Install the app</button>' : '<button type="button" class="btn ghost" data-installhelp aria-expanded="false">📲 Get the app</button>') +
+        '<button type="button" class="btn ghost" data-rem aria-expanded="false">⏰ Daily reminder</button></div>' +
+        (s === 'prompt' ? '' : '<p class="apphelp" id="installhelp" hidden>' + INSTALL_HELP[s] + '</p>')) +
+      (s === 'installed' ? '<div class="approw one"><button type="button" class="btn ghost" data-rem aria-expanded="false">⏰ Daily reminder</button></div>' : '') +
+      '<div class="rembox" id="rembox" hidden><label class="remtime">Remind me every day at <input type="time" value="' + K.esc(t) + '" data-remtime></label>' +
+        '<div class="remlinks"><a class="btn go" data-remg href="' + K.reminderGoogle(t) + '" target="_blank" rel="noopener">Google Calendar</a>' +
+        '<a class="btn ghost" data-remics href="#" download="kramavriddhi-learn-reminder.ics">Other calendar (.ics)</a></div>' +
+        '<p class="apphelp">This adds a repeating event to <strong>your own calendar</strong>, so your phone reminds you. You can delete it there any time.</p></div>' +
+      '<p class="appnote">' + (s === 'installed' ? '✓ You are using the app. ' : '') + '📶 Works offline after your first visit. Your progress stays on this phone.</p>' +
+      '</div>';
+  }
+  function refreshAppBox() { var b = document.getElementById('appbox'); if (b) b.outerHTML = appBox(); }
+  K.onInstallChange(refreshAppBox);
+  feed.addEventListener('change', function (e) {
+    var ti = e.target.closest('[data-remtime]'); if (!ti || !ti.value) return;
+    st.remTime = ti.value; save();
+    var g = feed.querySelector('[data-remg]'); if (g) g.href = K.reminderGoogle(ti.value);
+  });
+  function appClick(e) {
+    if (e.target.closest('[data-install]')) { K.install().then(refreshAppBox); return true; }
+    var h = e.target.closest('[data-installhelp]');
+    if (h) { var box = document.getElementById('installhelp'), open = box.hidden; box.hidden = !open; h.setAttribute('aria-expanded', open); if (open) K.track('app_install_help', { how: K.installState() }); return true; }
+    var r = e.target.closest('[data-rem]');
+    if (r) { var rb = document.getElementById('rembox'), o = rb.hidden; rb.hidden = !o; r.setAttribute('aria-expanded', o); return true; }
+    if (e.target.closest('[data-remg]')) { K.track('reminder_add', { cal: 'google' }); return false; }
+    var ic = e.target.closest('[data-remics]');
+    if (ic) { ic.href = K.reminderIcs(st.remTime || '19:00'); K.track('reminder_add', { cal: 'ics' }); return false; }
+    return false;
   }
 
   function reviewLine() {
@@ -705,6 +744,7 @@
 
   /* ---------- clicks */
   feed.addEventListener('click', function (e) {
+    if (e.target.closest('#appbox') && appClick(e)) return;
     if (e.target.closest('[data-pick]')) { e.preventDefault(); history.replaceState(null, '', location.pathname + '?pick=1'); renderPicker(); window.scrollTo(0, feed.getBoundingClientRect().top + window.scrollY - 70); return; }
     if (e.target.closest('[data-start]')) { var first = feed.querySelector('.dcard.unithead, .dcard[data-j]'); if (first) scrollToCard(first); return; }
     var gbSec = e.target.closest('.dcard.gamebreak'); if (gbSec) { gbClick(e, gbSec); return; }

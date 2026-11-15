@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 15 Nov 2026 (Phase 6 done)
+Last updated: 15 Nov 2026 (Phase 7 done)
 
 ---
 
@@ -53,8 +53,8 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 4 | More tracks to Basic | Git, Linux, SQL Basic, plus **Power BI** (new track added at the owner's request) | ✅ live (15 Nov 2026): 129 new cards; Git, Linux, SQL and Power BI Basic complete (6 to 8 cards + 2 checkpoints per unit) |
 | 5 | Intermediate levels | Python, Azure, Git, Linux, SQL, Power BI Intermediate | ✅ live (15 Nov 2026): 279 new cards, 35 Intermediate units complete (6 to 8 cards + 2 checkpoints each) |
 | 6 | Docker, Kubernetes, Ansible, CI/CD Basic | Docker, Kubernetes, Ansible and DevOps/CI-CD Basic levels complete | ✅ live (15 Nov 2026): 94 new cards, 13 Basic units complete (6 to 8 cards + 2 checkpoints each); bug cards now show the right file (Dockerfile, terminal, deployment.yaml, ci.yml) |
-| 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ⬜ **NEXT** |
-| 8 | Telugu version | Telugu explainer cards and questions | ⬜ |
+| 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ✅ live (15 Nov 2026): `learn/manifest.webmanifest` (name "Kramavriddhi Learn", opens `/learn/daily/`), icons in `learn/icons/`, service worker `learn/sw.js` (scope `/learn/`: saves all 8 Learn pages + their files on first visit; pages network-first, `?v=` files cache-first, keeps only the newest version of each file). Profile card has 📲 Install (one tap on Android Chrome; steps for iPhone and other browsers) and ⏰ Daily reminder = a repeating event in the learner's **own calendar** (Google Calendar link or .ics file), because real push notifications need a server (later, with D5) |
+| 8 | Telugu version | Telugu explainer cards and questions | ⬜ **NEXT** |
 | 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7) |
 | 10 | Advanced levels | All tracks | ⬜ |
 | 11 | Challenges and achievement posts | Timed challenge (10 questions, time limit, up to 3 tries, shuffled) after a completed level; achievement card (skill brand look, time, tries, score, Gold/Silver/Bronze badge, check code, caption); share to LinkedIn / WhatsApp / image. Can start with completed **Basic** levels before Phase 10. Mockup approved by owner 15 Nov 2026 | ⬜ |
@@ -159,7 +159,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 2. Facts must be correct: run every Python card in real Python, parse every YAML card, check every link returns 200, and use official docs for cloud facts.
 3. Never change the ID or meaning of a published card; add a new one instead and mark the old one 🔁.
 4. Test on a phone-sized screen (375 px) in light and dark mode before publishing.
-5. Bump the `?v=` number on any changed CSS or JS file.
+5. Bump the `?v=` number on any changed CSS or JS file (required: the offline app serves `?v=` files from its cache).
 6. Rebuild pages with `python learn/_src/compose.py`, then `git add learn/` only, commit with the Co-Authored-By trailer, push, and check the live URL.
 7. Add a line to the change log (section 9) and update the status marks.
 8. To add content: write the new cards in a file shaped `{ 'py.b.03': [cards] }` and run `node learn/_src/merge_cards.js learn/daily/tracks.js <file>`. It appends with the next IDs and refuses to change old cards. Every unit needs one `learn` card and, once it is complete, 2 `check` cards. Bump `tracks.js?v=` in `learn/_src/body_daily.html` and rebuild.
@@ -188,6 +188,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 15 Nov 2026 | **Phase 7 done:** Learn installs as an app (manifest, icons, service worker), works offline after the first visit (tested with the server stopped), daily reminder via the learner's own calendar. New analytics events `app_install`, `app_install_prompt`, `app_install_help`, `reminder_add`. **Rule: the offline cache keeps each `?v=` file, so always bump `?v=` when a CSS/JS/tracks file changes** |
 | 15 Nov 2026 | **Phase 6 done:** Basic levels complete for Docker, Kubernetes, Ansible and DevOps/CI-CD (94 new cards by 2 Sonnet helpers; every YAML card parsed; facts checked on docs.docker.com, kubernetes.io and docs.ansible.com; Ansible `command` card corrected: it does expand `$HOME`, only pipes/redirects need `shell`). Bug cards show the file name and colours of their language. Rule for these skills: Docker/kubectl/Ansible are not run here, so cards avoid printed output and cite the official page |
 | 15 Nov 2026 | **Phase 5 done:** Intermediate levels complete for Python, Azure, Git, Linux, SQL and Power BI (279 new cards by 4 Sonnet helpers; 57 Python programs, 20 SQL queries and 13 shell scripts run for real; Power BI RLS and CALCULATE cards corrected against Microsoft Learn) |
 | 15 Nov 2026 | **Phase 4 done:** Git, Linux, SQL Basic complete; new **Power BI** track (18 units planned, Basic complete); SQL cards show `query.sql` and "What does it return?"; 129 new cards (16 SQL answers run in SQLite, Git/Linux answers run in bash) |
