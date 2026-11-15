@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 15 Nov 2026 (Phase 7 done)
+Last updated: 16 Nov 2026 (Phase 8 done)
 
 ---
 
@@ -54,8 +54,9 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 5 | Intermediate levels | Python, Azure, Git, Linux, SQL, Power BI Intermediate | ✅ live (15 Nov 2026): 279 new cards, 35 Intermediate units complete (6 to 8 cards + 2 checkpoints each) |
 | 6 | Docker, Kubernetes, Ansible, CI/CD Basic | Docker, Kubernetes, Ansible and DevOps/CI-CD Basic levels complete | ✅ live (15 Nov 2026): 94 new cards, 13 Basic units complete (6 to 8 cards + 2 checkpoints each); bug cards now show the right file (Dockerfile, terminal, deployment.yaml, ci.yml) |
 | 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ✅ live (15 Nov 2026): `learn/manifest.webmanifest` (name "Kramavriddhi Learn", opens `/learn/daily/`), icons in `learn/icons/`, service worker `learn/sw.js` (scope `/learn/`: saves all 8 Learn pages + their files on first visit; pages network-first, `?v=` files cache-first, keeps only the newest version of each file). Profile card has 📲 Install (one tap on Android Chrome; steps for iPhone and other browsers) and ⏰ Daily reminder = a repeating event in the learner's **own calendar** (Google Calendar link or .ics file), because real push notifications need a server (later, with D5) |
-| 8 | Telugu version | Telugu explainer cards and questions | ⬜ **NEXT** |
-| 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7) |
+| 8 | Telugu version | Telugu explainer cards and questions | ✅ live (16 Nov 2026): English / తెలుగు switch on the picker and profile card (also `?lang=te` links); all **391 Basic cards** of all 10 skills, all 142 unit titles, skill blurbs and every button/label in Telugu (`learn/daily/te.js`, loaded only in Telugu mode). Code, commands, outputs and backtick text stay English; tech words stay in English letters. Intermediate units show "English for now" (→ **8b**) |
+| 8b | Telugu for Intermediate | The 309 Intermediate cards in Telugu, same method | ⬜ |
+| 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ **NEXT** (needs a decision on how: see section 7; 8b can run any time before or after) |
 | 10 | Advanced levels | All tracks | ⬜ |
 | 11 | Challenges and achievement posts | Timed challenge (10 questions, time limit, up to 3 tries, shuffled) after a completed level; achievement card (skill brand look, time, tries, score, Gold/Silver/Bronze badge, check code, caption); share to LinkedIn / WhatsApp / image. Can start with completed **Basic** levels before Phase 10. Mockup approved by owner 15 Nov 2026 | ⬜ |
 | 12 | Achievements feed | Shared Instagram-style feed of everyone's achievement posts, Applaud + Insightful reactions only, "Try this challenge" button. Needs accounts, a database and moderation (decision D5) | ⬜ (after D5) |
@@ -188,6 +189,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 16 Nov 2026 | **Phase 8 done:** Telugu version: 391 Basic cards translated by 4 Sonnet helpers, checked by script (all backtick text, bold marks, answer lists, item counts identical to English) and read by the main session; 171 UI strings in Telugu; Noto Sans Telugu font on Learn pages; language saved per phone (`st.lang`). New analytics event `lang_switch`. **Rule: when a card changes in English, update its Telugu in te.js too (and bump `te.js?v=` in app.js)** |
 | 15 Nov 2026 | **Phase 7 done:** Learn installs as an app (manifest, icons, service worker), works offline after the first visit (tested with the server stopped), daily reminder via the learner's own calendar. New analytics events `app_install`, `app_install_prompt`, `app_install_help`, `reminder_add`. **Rule: the offline cache keeps each `?v=` file, so always bump `?v=` when a CSS/JS/tracks file changes** |
 | 15 Nov 2026 | **Phase 6 done:** Basic levels complete for Docker, Kubernetes, Ansible and DevOps/CI-CD (94 new cards by 2 Sonnet helpers; every YAML card parsed; facts checked on docs.docker.com, kubernetes.io and docs.ansible.com; Ansible `command` card corrected: it does expand `$HOME`, only pipes/redirects need `shell`). Bug cards show the file name and colours of their language. Rule for these skills: Docker/kubectl/Ansible are not run here, so cards avoid printed output and cite the official page |
 | 15 Nov 2026 | **Phase 5 done:** Intermediate levels complete for Python, Azure, Git, Linux, SQL and Power BI (279 new cards by 4 Sonnet helpers; 57 Python programs, 20 SQL queries and 13 shell scripts run for real; Power BI RLS and CALCULATE cards corrected against Microsoft Learn) |

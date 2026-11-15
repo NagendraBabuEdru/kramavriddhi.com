@@ -1,14 +1,40 @@
 /* Kramavriddhi Learn feed (Phase 1): pick skills, then learn them unit by unit
    (Basic -> Intermediate -> Advanced) in an Instagram-style feed with a daily goal and streak.
    Content: learn/daily/tracks.js. Plan and status: learn/_TRACKER.md */
-(function () {
+function kvLearnMain() {
   'use strict';
   var K = window.KVLearn, T = window.KV_TRACKS;
   var STORE = 'kv-learn-feed', OLD_STORE = 'kv-learn-daily';
+  /* ---------- language (Phase 8): English or Telugu; Telugu text comes from te.js */
+  var LANG = (K.load(STORE, {}) || {}).lang === 'te' && window.KV_TE ? 'te' : 'en', UI = LANG === 'te' ? (window.KV_TE.ui || {}) : {};
+  function tr(en, v) { var o = UI[en] || en; return v ? o.replace(/\{(\w+)\}/g, function (m, k) { return v[k] === undefined ? m : v[k]; }) : o; }
+  if (LANG === 'te') {
+    var TE = window.KV_TE;
+    document.documentElement.lang = 'te'; document.documentElement.classList.add('lang-te');
+    T.tracks.forEach(function (t) {
+      if (TE.tracks[t.id]) t.blurb = TE.tracks[t.id].blurb;
+      t.units.forEach(function (u) {
+        if (TE.units[u.id]) u.title = TE.units[u.id];
+        u.cards.forEach(function (c) {
+          var x = TE.cards[c.id]; if (!x) return;
+          ['title', 'body', 'q', 'a', 'why'].forEach(function (k) { if (x[k]) c[k] = x[k]; });
+          if (x.w) c.w = x.w;
+          if (x.items) c.items = x.items;
+          if (x.steps) c.steps = c.steps.map(function (b, i) { return [b[0], x.steps[i] || b[1]].concat(b.slice(2)); });
+          if (x.extra && c.extra) c.extra = c.extra.map(function (b, i) { return [b[0], x.extra[i] || b[1]].concat(b.slice(2)); });
+          c.te = 1;
+        });
+        u.te = u.cards.length && u.cards.every(function (c) { return c.te; });
+      });
+    });
+  }
+  function langSwitch() {
+    return '<div class="langsw" role="group" aria-label="Language / భాష"><button type="button" data-lang="en" aria-pressed="' + (LANG === 'en') + '">English</button><button type="button" data-lang="te" lang="te" aria-pressed="' + (LANG === 'te') + '">తెలుగు</button></div>';
+  }
   var URL = 'https://kramavriddhi.com/learn/daily/';
   var DAY_MS = 86400000, GOAL = T.goal || 6;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var LEVEL = { b: 'Basic', i: 'Intermediate', a: 'Advanced' };
+  var LEVEL = { b: tr('Basic'), i: tr('Intermediate'), a: tr('Advanced') };
 
   function dayNo(d) { return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / DAY_MS); }
   var today = dayNo(new Date());
@@ -31,7 +57,7 @@
   /* ---------- saved progress (on this phone only) */
   var st = K.load(STORE, null);
   if (!st || typeof st !== 'object' || !st.done) {
-    st = { tracks: [], done: {}, likes: {}, saved: {}, streak: { n: 0, last: 0 }, best: 0, days: {} };
+    st = { tracks: [], done: {}, likes: {}, saved: {}, streak: { n: 0, last: 0 }, best: 0, days: {}, lang: st && st.lang };
     var old = K.load(OLD_STORE, null);          /* keep the streak from the day-based feed (Day 1 = 12 Nov 2026) */
     if (old && old.streak && old.streak.last) {
       st.streak = { n: old.streak.n || 0, last: Date.UTC(2026, 10, 12) / DAY_MS + old.streak.last - 1 };
@@ -41,6 +67,7 @@
   ['done', 'likes', 'saved', 'days', 'review'].forEach(function (k) { st[k] = st[k] || {}; });
   st.tracks = (st.tracks || []).filter(function (id) { return TR[id]; });
   st.mastered = st.mastered || 0;
+  st.streak = st.streak && typeof st.streak === 'object' ? st.streak : { n: 0, last: 0 }; st.best = st.best || 0;
 
   /* ---------- spaced review: a missed card comes back after 1 day, then 3, then 7; right 3 times = mastered */
   var GAPS = [1, 3, 7], MAX_REVIEWS = 10;
@@ -58,10 +85,10 @@
   function reviewAnswer(id, ok) {
     var r = st.review[id] || { step: 0 };
     K.track('review_answer', { ok: ok ? 1 : 0, step: r.step + 1 });
-    if (!ok) { st.review[id] = { due: today + GAPS[0], step: 0 }; return '<p class="revnote">🔁 It will come back tomorrow. Read the explanation once more.</p>'; }
-    if (r.step + 1 >= GAPS.length) { delete st.review[id]; st.mastered++; return '<p class="revnote">🏅 Mastered! You got it right 3 reviews in a row, so it will not come back.</p>'; }
+    if (!ok) { st.review[id] = { due: today + GAPS[0], step: 0 }; return '<p class="revnote">' + tr('🔁 It will come back tomorrow. Read the explanation once more.') + '</p>'; }
+    if (r.step + 1 >= GAPS.length) { delete st.review[id]; st.mastered++; return '<p class="revnote">' + tr('🏅 Mastered! You got it right 3 reviews in a row, so it will not come back.') + '</p>'; }
     st.review[id] = { due: today + GAPS[r.step + 1], step: r.step + 1 };
-    return '<p class="revnote">🔁 Well remembered. Next review in ' + GAPS[r.step + 1] + ' days.</p>';
+    return '<p class="revnote">' + tr('🔁 Well remembered. Next review in {n} days.', { n: GAPS[r.step + 1] }) + '</p>';
   }
   function reviewsOn(day) { return Object.keys(st.review).filter(function (id) { return st.review[id].due === day && st.tracks.indexOf(CARD[id].unit.track.id) >= 0; }).length; }
   function save() { K.save(STORE, st); }
@@ -74,8 +101,8 @@
   function nextUnit(t) { var a = t.units.filter(function (u) { return live(u) && !unitDone(u); }); return a[0] || null; }
 
   var feed = document.getElementById('feed'), pill = document.getElementById('pill');
-  var TYPE = { learn: 'Learn', output: 'What does it print?', choice: 'Pick the right answer', order: 'Tap in the right order', bug: 'Find the line with the bug',
-    pipe: 'Mini game · Build the pipeline', indent: 'Mini game · Fix the indentation', check: 'Checkpoint' };
+  var TYPE = { learn: tr('Learn'), output: tr('What does it print?'), choice: tr('Pick the right answer'), order: tr('Tap in the right order'), bug: tr('Find the line with the bug'),
+    pipe: tr('Mini game · Build the pipeline'), indent: tr('Mini game · Fix the indentation'), check: tr('Checkpoint') };
   var testing = {};   /* unit id -> true while someone is trying to test out of it */
   var KW = /^(def|return|if|elif|else|for|in|and|or|not|while|break|try|except|with|as|True|False|None)$/;
 
@@ -153,17 +180,17 @@
     var chosen = st.tracks.slice();
     pill.hidden = true;
     feed.innerHTML = '<section class="dcard picker" aria-label="Pick your skills"><div class="dinner post profile">' +
-      '<div class="prow"><span class="pav big">' + ICON.logo + '</span><div><h1>What do you want to learn?</h1>' +
-      '<p class="pbio">Pick one or more skills. Your feed teaches them step by step: <strong>Basic → Intermediate → Advanced</strong>. You can change this any time.</p></div></div>' +
+      '<div class="prow"><span class="pav big">' + ICON.logo + '</span><div><h1>' + tr('What do you want to learn?') + '</h1>' +
+      '<p class="pbio">' + tr('Pick one or more skills. Your feed teaches them step by step: <strong>Basic → Intermediate → Advanced</strong>. You can change this any time.') + '</p></div></div>' + langSwitch() +
       '<div class="skills" role="group" aria-label="Skills">' + T.tracks.map(function (t) {
         var lu = liveUnits(t).length, on = chosen.indexOf(t.id) >= 0;
         return '<button type="button" class="skill t-' + tkey(t.topic) + '" data-track="' + t.id + '" aria-pressed="' + on + '">' +
           '<span class="pav" aria-hidden="true">' + K.esc((TOPIC[tkey(t.topic)] || TOPIC.devops).ab) + '</span>' +
-          '<span class="sk-txt"><strong>' + K.esc(t.name) + '</strong><span>' + K.esc(t.blurb) + '</span><em>' + lu + ' of ' + t.units.length + ' units ready</em></span>' +
+          '<span class="sk-txt"><strong>' + K.esc(t.name) + '</strong><span>' + K.esc(t.blurb) + '</span><em>' + tr('{n} of {m} units ready', { n: lu, m: t.units.length }) + '</em></span>' +
           '<span class="sk-tick" aria-hidden="true"></span></button>';
       }).join('') + '</div>' +
-      '<p class="pick-note">New units are added in every update. Skills with more units ready are best to start with.</p>' +
-      '<button type="button" class="btn go" id="pick-go"' + (chosen.length ? '' : ' disabled') + '>' + (chosen.length ? 'Start learning (' + chosen.length + ') ↓' : 'Pick at least one skill') + '</button>' +
+      '<p class="pick-note">' + tr('New units are added in every update. Skills with more units ready are best to start with.') + '</p>' +
+      '<button type="button" class="btn go" id="pick-go"' + (chosen.length ? '' : ' disabled') + '>' + (chosen.length ? tr('Start learning ({n}) ↓', { n: chosen.length }) : tr('Pick at least one skill')) + '</button>' +
       '</div></section>';
     var go = document.getElementById('pick-go');
     feed.querySelector('.skills').addEventListener('click', function (e) {
@@ -172,7 +199,7 @@
       if (i >= 0) chosen.splice(i, 1); else chosen.push(id);
       b.setAttribute('aria-pressed', i < 0);
       go.disabled = !chosen.length;
-      go.textContent = chosen.length ? 'Start learning (' + chosen.length + ') ↓' : 'Pick at least one skill';
+      go.textContent = chosen.length ? tr('Start learning ({n}) ↓', { n: chosen.length }) : tr('Pick at least one skill');
     });
     go.addEventListener('click', function () {
       st.tracks = T.tracks.map(function (t) { return t.id; }).filter(function (id) { return chosen.indexOf(id) >= 0; });
@@ -203,12 +230,12 @@
     queue = buildQueue(); qi = 0;
     var html = intro();
     var hm = /card=([\w.]+)/.exec(location.hash), shared = hm && CARD[hm[1]];
-    if (shared) html += '<section class="dcard sharedhead" aria-label="Shared card"><p class="kicker">Shared with you · ' + K.esc(shared.unit.track.name) + ' · ' + K.esc(shared.unit.title) + '</p></section>' + cardHtml(shared);
+    if (shared) html += '<section class="dcard sharedhead" aria-label="Shared card"><p class="kicker">' + tr('Shared with you') + ' · ' + K.esc(shared.unit.track.name) + ' · ' + K.esc(shared.unit.title) + '</p></section>' + cardHtml(shared);
     var due = dueReviews();
     if (due.length) {
       html += '<section class="dcard reviewhead" aria-label="Review time"><div class="dinner post">' +
-        '<p class="kicker">🔁 Review time</p><h2 class="uh-title">' + due.length + ' card' + (due.length > 1 ? 's' : '') + ' to review</h2>' +
-        '<p class="uh-sub">You missed ' + (due.length > 1 ? 'these' : 'this') + ' before. Get a card right 3 reviews in a row (after 1, 3 and 7 days) and it is mastered for good.</p>' +
+        '<p class="kicker">' + tr('🔁 Review time') + '</p><h2 class="uh-title">' + tr(due.length > 1 ? '{n} cards to review' : '1 card to review', { n: due.length }) + '</h2>' +
+        '<p class="uh-sub">' + tr('You missed these before. Get a card right 3 reviews in a row (after 1, 3 and 7 days) and it is mastered for good.') + '</p>' +
         '</div></section>' + due.map(function (c) { return cardHtml(c, 'review'); }).join('');
     }
     html += nextBlocks() + '<section class="dcard end" id="c-end" aria-label="Today"><div class="dinner" id="endin"></div></section>';
@@ -244,7 +271,7 @@
     az: [{ name: 'Build the Data Pipeline', href: '/learn/devops/azure-data-pipeline/', key: 'kv-learn-pipeline', blurb: 'Put Azure services in the order data travels and watch it flow.' }],
     ans: [{ name: 'Fix the Playbook', href: '/learn/devops/ansible-fix-the-playbook/', key: 'kv-learn-playbook', blurb: 'Fix a broken Ansible playbook and run it on two servers.' }]
   };
-  var GB_KIND = { speed: '⚡ Speed round', puzzle: '🧩 Puzzle', full: '🕹️ Full game' };
+  var GB_KIND = { speed: tr('⚡ Speed round'), puzzle: tr('🧩 Puzzle'), full: tr('🕹️ Full game') };
   st.gb = st.gb || {};
   function gstat(type) { return st.gb[type] || (st.gb[type] = { p: 0, l: 0, s: 0 }); }
   function chosenCards(test) {
@@ -280,22 +307,22 @@
     var k = gbs.push({ kind: kind, counted: false }) - 1, g = gbs[k], body = '', after = '';
     var names = st.tracks.map(function (id) { return TR[id].name; }).join(', ');
     if (kind === 'speed') {
-      body = '<h2 class="dq">3 quick questions, 30 seconds</h2><p class="gbsub">From your skills: ' + K.esc(names) + '. Keep a combo going for bonus fire.</p>' +
-        '<button type="button" class="btn go" data-gbstart>Start ⚡</button><div class="gbplay" hidden></div>';
+      body = '<h2 class="dq">' + tr('3 quick questions, 30 seconds') + '</h2><p class="gbsub">' + tr('From your skills: {s}. Keep a combo going for bonus fire.', { s: K.esc(names) }) + '</p>' +
+        '<button type="button" class="btn go" data-gbstart>' + tr('Start ⚡') + '</button><div class="gbplay" hidden></div>';
     } else if (kind === 'puzzle') {
       var ps = puzzlePool(); g.card = ps[Math.floor(Math.random() * ps.length)];
-      body = '<p class="gbsub">A quick puzzle from ' + K.esc(g.card.unit.track.name) + '. Solve it below, or skip.</p>';
+      body = '<p class="gbsub">' + tr('A quick puzzle from {s}. Solve it below, or skip.', { s: K.esc(g.card.unit.track.name) }) + '</p>';
       after = cardHtml(g.card, 'play');
     } else {
       var fs = fullPool(); g.game = fs[Math.floor(Math.random() * fs.length)];
       var pr = K.load(g.game.key, null), stars = pr && pr.stars ? pr.stars.reduce(function (a, b) { return a + (b || 0); }, 0) : 0;
-      body = '<h2 class="dq">' + K.esc(g.game.name) + '</h2><p class="gbsub">' + K.esc(g.game.blurb) + '</p>' +
-        '<p class="gbsub">' + (stars ? K.stars(1, 1) + ' Your stars: ' + stars + ' of 15. Go for more!' : '5 levels, up to 15 stars.') + '</p>' +
-        '<a class="btn go" href="' + g.game.href + '?from=feed" data-gbopen>Play now</a>';
+      body = '<h2 class="dq">' + K.esc(g.game.name) + '</h2><p class="gbsub">' + K.esc(tr(g.game.blurb)) + '</p>' +
+        '<p class="gbsub">' + (stars ? K.stars(1, 1) + ' ' + tr('Your stars: {n} of 15. Go for more!', { n: stars }) : tr('5 levels, up to 15 stars.')) + '</p>' +
+        '<a class="btn go" href="' + g.game.href + '?from=feed" data-gbopen>' + tr('Play now') + '</a>';
     }
     return '<section class="dcard gamebreak" id="gb-' + k + '" data-gb="' + k + '" aria-label="Game break: ' + GB_KIND[kind] + '"><div class="dinner post">' +
-      '<div class="gbhead"><span class="gbbadge">🎮 Game break</span><span class="gbkind">' + GB_KIND[kind] + '</span>' +
-      '<button type="button" class="gbskip" data-gbskip>Skip ↓</button></div>' + body + '</div></section>' + after;
+      '<div class="gbhead"><span class="gbbadge">' + tr('🎮 Game break') + '</span><span class="gbkind">' + GB_KIND[kind] + '</span>' +
+      '<button type="button" class="gbskip" data-gbskip>' + tr('Skip ↓') + '</button></div>' + body + '</div></section>' + after;
   }
 
   function gbScrollPast(sec, k) {
@@ -343,8 +370,8 @@
     var g = gbs[k], c = g.qs[g.i], play = sec.querySelector('.gbplay');
     var codeQ = c.t === 'output' || (c.t === 'check' && c.code && !c.q);
     play.innerHTML = '<div class="gbbar" aria-hidden="true"><i style="width:' + Math.max(0, (g.limit - (Date.now() - g.t0)) / g.limit * 100) + '%"></i></div>' +
-      '<p class="gbmeta"><span>Question ' + (g.i + 1) + ' of ' + g.qs.length + '</span><span class="gbtime"></span><span>' + (g.combo > 1 ? '🔥 combo ×' + g.combo : '') + '</span></p>' +
-      (codeQ ? '<p class="gbq">' + (c.lang === 'sql' ? 'What does it return?' : 'What does it print?') + '</p>' + codeBlock(c.code.split('\n'), false, c.lang) : '<p class="gbq">' + K.rich(c.q) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '')) +
+      '<p class="gbmeta"><span>' + tr('Question {n} of {m}', { n: g.i + 1, m: g.qs.length }) + '</span><span class="gbtime"></span><span>' + (g.combo > 1 ? '🔥 combo ×' + g.combo : '') + '</span></p>' +
+      (codeQ ? '<p class="gbq">' + tr(c.lang === 'sql' ? 'What does it return?' : 'What does it print?') + '</p>' + codeBlock(c.code.split('\n'), false, c.lang) : '<p class="gbq">' + K.rich(c.q) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '')) +
       choiceList(c) + '<p class="gbflash" role="status" aria-live="polite"></p>';
   }
 
@@ -353,7 +380,7 @@
     var c = g.qs[g.i], ok = opt === c.a, play = sec.querySelector('.gbplay');
     markChoices(play, c, opt);
     if (ok) { g.right++; g.combo++; g.best = Math.max(g.best, g.combo); } else { g.combo = 0; g.wrong.push(c); }
-    play.querySelector('.gbflash').textContent = ok ? (g.combo > 1 ? '✓ Right! 🔥 combo ×' + g.combo : '✓ Right!') : '✗ It was: ' + c.a.replace(/\n/g, ' / ');
+    play.querySelector('.gbflash').textContent = ok ? (g.combo > 1 ? tr('✓ Right!') + ' 🔥 combo ×' + g.combo : tr('✓ Right!')) : tr('✗ It was:') + ' ' + c.a.replace(/\n/g, ' / ');
     setTimeout(function () {
       if (g.over) return;
       g.i++;
@@ -370,19 +397,19 @@
     if (!g.counted) { g.counted = true; gstat('speed').p++; bumpDay(); save(); updatePill(); refreshStats(); renderEnd(); }
     K.track('game_break', { kind: 'speed', action: 'done', right: g.right, seconds: secs });
     sec.querySelector('.gbplay').innerHTML =
-      '<p class="verdict">' + (timeout ? '⏰ Time up! ' : '⚡ ') + g.right + ' of ' + n + ' right' + (timeout ? '' : ' in ' + secs + ' s') + '</p>' +
+      '<p class="verdict">' + (timeout ? tr('⏰ Time up!') + ' ' : '⚡ ') + tr(timeout ? '{n} of {m} right' : '{n} of {m} right in {s} s', { n: g.right, m: n, s: secs }) + '</p>' +
       (stars ? '<p>' + K.stars(stars).replace('class="stars"', 'class="stars big"') + '</p>' : '') +
-      (g.best > 1 ? '<p class="revnote">🔥 Best combo ×' + g.best + '</p>' : '') +
-      (g.wrong.length ? '<p class="small">Remember:</p><ul class="gbwrong">' + g.wrong.map(function (c) {
+      (g.best > 1 ? '<p class="revnote">🔥 ' + tr('Best combo') + ' ×' + g.best + '</p>' : '') +
+      (g.wrong.length ? '<p class="small">' + tr('Remember:') + '</p><ul class="gbwrong">' + g.wrong.map(function (c) {
         return '<li>' + K.esc(c.q ? c.q.replace(/`|\*\*/g, '') : c.code.split('\n')[0]) + ' → <strong>' + K.esc(c.a.replace(/\n/g, ' / ')) + '</strong></li>';
       }).join('') + '</ul>' : '') +
-      '<p class="revnote">🎮 Game break done · it counts for today</p>' +
-      '<div class="mbar"><button type="button" class="btn ghost" data-gbagain>Play again</button><button type="button" class="btn primary" data-gbnext>Back to learning ↓</button></div>';
+      '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>' +
+      '<div class="mbar"><button type="button" class="btn ghost" data-gbagain>' + tr('Play again') + '</button><button type="button" class="btn primary" data-gbnext>' + tr('Back to learning ↓') + '</button></div>';
   }
 
   function levelProgress(t) {
     var lu = liveUnits(t), du = lu.filter(unitDone).length, nu = nextUnit(t);
-    return { live: lu.length, done: du, next: nu, label: nu ? LEVEL[nu.level] + ' · Unit ' + nu.n + ': ' + nu.title : (lu.length ? 'All ready units done' : 'Coming soon') };
+    return { live: lu.length, done: du, next: nu, label: nu ? LEVEL[nu.level] + ' · ' + tr('Unit {n}', { n: nu.n }) + ': ' + nu.title : tr(lu.length ? 'All ready units done' : 'Coming soon') };
   }
 
   function intro() {
@@ -390,33 +417,33 @@
     st.tracks.forEach(function (id) { unitsDone += liveUnits(TR[id]).filter(unitDone).length; });
     return '<section class="dcard intro" id="c-intro" aria-label="Your learning"><div class="dinner post profile">' +
       '<div class="prow"><span class="pav big">' + ICON.logo + '</span>' +
-      '<div class="dstats"><div><strong id="s-streak">' + (s ? '🔥' + s : '0') + '</strong><span>streak</span></div><div><strong id="s-today">' + Math.min(todayCount(), GOAL) + '/' + GOAL + '</strong><span>today</span></div><div><strong id="s-units">' + unitsDone + '</strong><span>units done</span></div></div></div>' +
+      '<div class="dstats"><div><strong id="s-streak">' + (s ? '🔥' + s : '0') + '</strong><span>' + tr('streak') + '</span></div><div><strong id="s-today">' + Math.min(todayCount(), GOAL) + '/' + GOAL + '</strong><span>' + tr('today') + '</span></div><div><strong id="s-units">' + unitsDone + '</strong><span>' + tr('units done') + '</span></div></div></div>' +
       '<h1>kramavriddhi.learn</h1>' +
-      '<p class="pbio">Your skills, step by step: Basic → Intermediate → Advanced. Daily goal: ' + GOAL + ' cards. 📚</p>' +
+      '<p class="pbio">' + tr('Your skills, step by step: Basic → Intermediate → Advanced. Daily goal: {n} cards.', { n: GOAL }) + ' 📚</p>' + langSwitch() +
       '<p class="revline" id="s-review">' + reviewLine() + '</p>' +
-      '<h2 class="mysk">My skills</h2><ul class="mytracks">' + st.tracks.map(function (id) { return trackRow(TR[id]); }).join('') + '</ul>' +
-      '<div class="introbtns"><button type="button" class="btn go" data-start>' + (todayCount() ? 'Continue ↓' : 'Start today ↓') + '</button><a class="btn ghost" href="?pick=1" data-pick>Change skills</a></div>' +
+      '<h2 class="mysk">' + tr('My skills') + '</h2><ul class="mytracks">' + st.tracks.map(function (id) { return trackRow(TR[id]); }).join('') + '</ul>' +
+      '<div class="introbtns"><button type="button" class="btn go" data-start>' + tr(todayCount() ? 'Continue ↓' : 'Start today ↓') + '</button><a class="btn ghost" href="?pick=1" data-pick>' + tr('Change skills') + '</a></div>' +
       appBox() + '</div></section>';
   }
 
   /* ---------- app box: install, daily reminder, offline (Phase 7) */
   var INSTALL_HELP = {
-    ios: 'On iPhone: open this page in <strong>Safari</strong>, tap <strong>Share</strong> (the square with an arrow), then <strong>Add to Home Screen</strong>.',
-    manual: 'Open your browser menu (<strong>⋮</strong>) and tap <strong>Install app</strong> or <strong>Add to Home screen</strong>.'
+    ios: tr('On iPhone: open this page in <strong>Safari</strong>, tap <strong>Share</strong> (the square with an arrow), then <strong>Add to Home Screen</strong>.'),
+    manual: tr('Open your browser menu (<strong>⋮</strong>) and tap <strong>Install app</strong> or <strong>Add to Home screen</strong>.')
   };
   function appBox() {
     var s = K.installState(), t = st.remTime || '19:00';
     return '<div class="appbox" id="appbox">' +
       (s === 'installed' ? '' : '<div class="approw">' +
-        (s === 'prompt' ? '<button type="button" class="btn go" data-install>📲 Install the app</button>' : '<button type="button" class="btn ghost" data-installhelp aria-expanded="false">📲 Get the app</button>') +
-        '<button type="button" class="btn ghost" data-rem aria-expanded="false">⏰ Daily reminder</button></div>' +
+        (s === 'prompt' ? '<button type="button" class="btn go" data-install>' + tr('📲 Install the app') + '</button>' : '<button type="button" class="btn ghost" data-installhelp aria-expanded="false">' + tr('📲 Get the app') + '</button>') +
+        '<button type="button" class="btn ghost" data-rem aria-expanded="false">' + tr('⏰ Daily reminder') + '</button></div>' +
         (s === 'prompt' ? '' : '<p class="apphelp" id="installhelp" hidden>' + INSTALL_HELP[s] + '</p>')) +
-      (s === 'installed' ? '<div class="approw one"><button type="button" class="btn ghost" data-rem aria-expanded="false">⏰ Daily reminder</button></div>' : '') +
-      '<div class="rembox" id="rembox" hidden><label class="remtime">Remind me every day at <input type="time" value="' + K.esc(t) + '" data-remtime></label>' +
+      (s === 'installed' ? '<div class="approw one"><button type="button" class="btn ghost" data-rem aria-expanded="false">' + tr('⏰ Daily reminder') + '</button></div>' : '') +
+      '<div class="rembox" id="rembox" hidden><label class="remtime">' + tr('Remind me every day at') + ' <input type="time" value="' + K.esc(t) + '" data-remtime></label>' +
         '<div class="remlinks"><a class="btn go" data-remg href="' + K.reminderGoogle(t) + '" target="_blank" rel="noopener">Google Calendar</a>' +
-        '<a class="btn ghost" data-remics href="#" download="kramavriddhi-learn-reminder.ics">Other calendar (.ics)</a></div>' +
-        '<p class="apphelp">This adds a repeating event to <strong>your own calendar</strong>, so your phone reminds you. You can delete it there any time.</p></div>' +
-      '<p class="appnote">' + (s === 'installed' ? '✓ You are using the app. ' : '') + '📶 Works offline after your first visit. Your progress stays on this phone.</p>' +
+        '<a class="btn ghost" data-remics href="#" download="kramavriddhi-learn-reminder.ics">' + tr('Other calendar (.ics)') + '</a></div>' +
+        '<p class="apphelp">' + tr('This adds a repeating event to <strong>your own calendar</strong>, so your phone reminds you. You can delete it there any time.') + '</p></div>' +
+      '<p class="appnote">' + (s === 'installed' ? tr('✓ You are using the app.') + ' ' : '') + tr('📶 Works offline after your first visit. Your progress stays on this phone.') + '</p>' +
       '</div>';
   }
   function refreshAppBox() { var b = document.getElementById('appbox'); if (b) b.outerHTML = appBox(); }
@@ -440,7 +467,7 @@
 
   function reviewLine() {
     var n = dueReviews().filter(function (c) { return !answeredToday(c.id); }).length;
-    return [n ? '🔁 <strong>' + n + '</strong> to review today' : '', st.mastered ? '🏅 <strong>' + st.mastered + '</strong> mastered' : ''].filter(Boolean).join(' · ');
+    return [n ? '🔁 ' + tr('<strong>{n}</strong> to review today', { n: n }) : '', st.mastered ? '🏅 ' + tr('<strong>{n}</strong> mastered', { n: st.mastered }) : ''].filter(Boolean).join(' · ');
   }
   function answeredToday(id) { return feedCards.some(function (c, j) { return c.id === id && feedModes[j] === 'review' && reviewNote[j]; }); }
 
@@ -450,8 +477,8 @@
       '<span class="pav" aria-hidden="true">' + K.esc((TOPIC[tkey(t.topic)] || TOPIC.devops).ab) + '</span>' +
       '<span class="tr-txt"><strong>' + K.esc(t.name) + '</strong><span class="tr-now">' + K.esc(p.label) + '</span>' +
       '<span class="bar" role="img" aria-label="' + p.done + ' of ' + p.live + ' ready units done"><i style="width:' + pct + '%"></i></span>' +
-      '<span class="tr-count">' + p.done + ' of ' + p.live + ' ready units done · ' + t.units.length + ' planned</span></span>' +
-      '<span class="tr-open" aria-hidden="true">Path ▾</span></summary><div class="pathbox"></div></details></li>';
+      '<span class="tr-count">' + tr('{n} of {m} ready units done · {p} planned', { n: p.done, m: p.live, p: t.units.length }) + '</span></span>' +
+      '<span class="tr-open" aria-hidden="true">' + tr('Path') + ' ▾</span></summary><div class="pathbox"></div></details></li>';
   }
 
   function pathHtml(t) {
@@ -460,7 +487,7 @@
       var us = t.units.filter(function (u) { return u.level === lv; });
       return '<h3>' + LEVEL[lv] + '</h3><ol class="path">' + us.map(function (u) {
         var stt = unitDone(u) ? 'done' : u === nu ? 'now' : live(u) ? 'todo' : 'soon';
-        var lab = { done: 'done', now: 'up next', todo: 'ready', soon: 'coming soon' }[stt];
+        var lab = tr({ done: 'done', now: 'up next', todo: 'ready', soon: 'coming soon' }[stt]);
         var dn = u.cards.filter(isDone).length;
         return '<li class="p-' + stt + '"><span class="pn">' + u.n + '</span><span class="pt">' + K.esc(u.title) + '</span><span class="ps">' + lab + (live(u) && stt !== 'done' && dn ? ' · ' + dn + '/' + u.cards.length : '') + '</span></li>';
       }).join('') + '</ol>';
@@ -471,18 +498,19 @@
     var t = u.track, dn = u.cards.filter(isDone).length;
     return '<section class="dcard unithead t-' + tkey(t.topic) + '" aria-label="' + K.esc(t.name + ', unit ' + u.n + ': ' + u.title) + '"><div class="dinner post">' +
       '<header class="phead"><span class="pav" aria-hidden="true">' + K.esc((TOPIC[tkey(t.topic)] || TOPIC.devops).ab) + '</span>' +
-      '<span class="pwho"><strong>' + K.esc(t.name) + '</strong><span>' + LEVEL[u.level] + ' · Unit ' + u.n + ' of ' + t.units.length + '</span></span></header>' +
-      '<p class="kicker">New unit</p><h2 class="uh-title">' + K.esc(u.title) + '</h2>' +
-      '<p class="uh-sub">' + u.cards.length + ' cards' + (dn ? ' · ' + dn + ' done already' : '') + ': ' + countTypes(u) + '</p>' +
-      (checksOf(u).length && !dn ? '<div class="uh-test"><button type="button" class="btn ghost" data-testout="' + u.id + '">I know this: take the checkpoint ↓</button>' +
-        '<span>Get all ' + checksOf(u).length + ' checkpoint questions right to skip this unit.</span></div>' : '') +
+      '<span class="pwho"><strong>' + K.esc(t.name) + '</strong><span>' + LEVEL[u.level] + ' · ' + tr('Unit {n} of {m}', { n: u.n, m: t.units.length }) + '</span></span></header>' +
+      '<p class="kicker">' + tr('New unit') + '</p><h2 class="uh-title">' + K.esc(u.title) + '</h2>' +
+      '<p class="uh-sub">' + tr('{n} cards', { n: u.cards.length }) + (dn ? ' · ' + tr('{n} done already', { n: dn }) : '') + ': ' + countTypes(u) + '</p>' +
+      (LANG === 'te' && !u.te ? '<p class="uh-sub enonly">' + tr('This unit is in English for now. Telugu is coming soon.') + '</p>' : '') +
+      (checksOf(u).length && !dn ? '<div class="uh-test"><button type="button" class="btn ghost" data-testout="' + u.id + '">' + tr('I know this: take the checkpoint ↓') + '</button>' +
+        '<span>' + tr('Get all {n} checkpoint questions right to skip this unit.', { n: checksOf(u).length }) + '</span></div>' : '') +
       '</div></section>';
   }
   function checksOf(u) { return u.cards.filter(function (c) { return c.t === 'check'; }); }
   function countTypes(u) {
     var l = u.cards.filter(function (c) { return c.t === 'learn'; }).length, g = u.cards.filter(function (c) { return c.t === 'pipe' || c.t === 'indent'; }).length,
         k = checksOf(u).length, q = u.cards.length - l - g - k;
-    return [l ? l + ' explainer' : '', q ? q + ' practice' : '', g ? g + ' mini game' + (g > 1 ? 's' : '') : '', k ? k + ' checkpoint' + (k > 1 ? 's' : '') : ''].filter(Boolean).join(', ');
+    return [l ? tr('{n} explainer', { n: l }) : '', q ? tr('{n} practice', { n: q }) : '', g ? tr(g > 1 ? '{n} mini games' : '{n} mini game', { n: g }) : '', k ? tr(k > 1 ? '{n} checkpoints' : '{n} checkpoint', { n: k }) : ''].filter(Boolean).join(', ');
   }
 
   /* test out: when all checkpoints of a unit someone is testing are answered */
@@ -498,9 +526,9 @@
       });
       save(); refreshStats();
       K.track('unit_test_out', { unit_id: u.id });
-      return '<p class="unitdone">🎉 You tested out of “' + K.esc(u.title) + '”. Moving on!</p>';
+      return '<p class="unitdone">' + tr('🎉 You tested out of “{t}”. Moving on!', { t: K.esc(u.title) }) + '</p>';
     }
-    return '<p class="unitdone">Not yet. Go through the unit from its first card above, then try the rest.</p>';
+    return '<p class="unitdone">' + tr('Not yet. Go through the unit from its first card above, then try the rest.') + '</p>';
   }
 
   /* ---------- one card */
@@ -508,31 +536,31 @@
     var j = feedCards.push(c) - 1, isGame = c.t === 'pipe' || c.t === 'indent', u = c.unit, rev = mode === 'review';
     feedModes[j] = mode || '';
     var head = '<header class="phead"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span>' +
-      '<span class="pwho"><strong>' + K.esc(u.track.name) + '</strong><span>Unit ' + u.n + ' · ' + K.esc(u.title) + '</span></span>' +
+      '<span class="pwho"><strong>' + K.esc(u.track.name) + '</strong><span>' + tr('Unit {n}', { n: u.n }) + ' · ' + K.esc(u.title) + '</span></span>' +
       '<span class="dcount">' + (rev ? '🔁' : (c.pos + 1) + '/' + u.cards.length) + '</span></header>' +
-      (rev ? '<p class="dtype review-type">🔁 Review' + (st.review[c.id] && st.review[c.id].step ? ' ' + (st.review[c.id].step + 1) + ' of 3' : '') + '</p>' : '') +
-      '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : c.t === 'check' ? ' check-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : c.t === 'check' ? '✅ ' : '') + (c.t === 'output' && c.lang === 'sql' ? 'What does it return?' : TYPE[c.t]) + '</p>';
+      (rev ? '<p class="dtype review-type">🔁 ' + tr('Review') + (st.review[c.id] && st.review[c.id].step ? ' ' + tr('{n} of 3', { n: st.review[c.id].step + 1 }) : '') + '</p>' : '') +
+      '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : c.t === 'check' ? ' check-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : c.t === 'check' ? '✅ ' : '') + (c.t === 'output' && c.lang === 'sql' ? tr('What does it return?') : TYPE[c.t]) + '</p>';
     var body = '';
     if (c.t === 'learn') body = '<h2 class="dq">' + K.esc(c.title) + '</h2><p class="lbody">' + K.rich(c.body) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') +
-      '<div class="mbar"><button type="button" class="btn go" data-got>Got it ✓</button></div>';
+      '<div class="mbar"><button type="button" class="btn go" data-got>' + tr('Got it ✓') + '</button></div>';
     else if (c.t === 'output') body = codeBlock(c.code.split('\n'), false, c.lang) + choiceList(c);
     else if (c.t === 'choice') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + choiceList(c);
-    else if (c.t === 'check') body = '<h2 class="dq">' + K.rich(c.q || (c.lang === 'sql' ? 'What does this query return?' : 'What does this print?')) + '</h2>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') + choiceList(c);
+    else if (c.t === 'check') body = '<h2 class="dq">' + K.rich(c.q || tr(c.lang === 'sql' ? 'What does this query return?' : 'What does this print?')) + '</h2>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') + choiceList(c);
     else if (c.t === 'bug') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + codeBlock(c.code, true, c.lang);
     else if (c.t === 'order') body = '<h2 class="dq">' + K.rich(c.q) + '</h2><div class="order-list">' + shuffleDiff(c.items).map(function (it) {
         return '<button type="button" class="ord" data-item="' + K.esc(it) + '"><span class="ordn" aria-hidden="true"></span><span>' + K.esc(it) + '</span></button>';
-      }).join('') + '</div><button type="button" class="btn ghost ord-reset" hidden>Start again</button>';
+      }).join('') + '</div><button type="button" class="btn ghost ord-reset" hidden>' + tr('Start again') + '</button>';
     else if (c.t === 'pipe') body = pipeBody(c);
     else if (c.t === 'indent') body = indentBody(c);
     var liked = !!st.likes[c.id], saved = !!st.saved[c.id];
     var actions = '<div class="pactions">' +
       '<button type="button" class="pact like" data-like aria-pressed="' + liked + '" aria-label="Like">' + ICON.heart + '</button>' +
       '<a class="pact" href="' + K.wa(shareText(c)) + '" target="_blank" rel="noopener" aria-label="Share on WhatsApp">' + ICON.share + '</a>' +
-      '<button type="button" class="pact plearn" data-learn aria-expanded="false" aria-controls="lb-' + j + '">' + ICON.book + '<span>Learn more</span></button>' +
+      '<button type="button" class="pact plearn" data-learn aria-expanded="false" aria-controls="lb-' + j + '">' + ICON.book + '<span>' + tr('Learn more') + '</span></button>' +
       '<button type="button" class="pact save" data-save aria-pressed="' + saved + '" aria-label="Save for later">' + ICON.save + '</button>' +
       '</div>' +
-      '<div class="plearnbox" id="lb-' + j + '" hidden><p>Read and practise more:</p><ul>' + learnLinks(c).map(function (l) {
-        return '<li><a href="' + K.esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + K.esc(l.label) + (l.ext ? ' ↗' : '') + '</a></li>';
+      '<div class="plearnbox" id="lb-' + j + '" hidden><p>' + tr('Read and practise more:') + '</p><ul>' + learnLinks(c).map(function (l) {
+        return '<li><a href="' + K.esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + K.esc(tr(l.label)) + (l.ext ? ' ↗' : '') + '</a></li>';
       }).join('') + '</ul></div>';
     return '<section class="dcard t-' + tkey(c.topic) + (isGame ? ' gamecard' : '') + (rev ? ' reviewcard' : '') + (mode === 'play' ? ' playcard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="' + K.esc((rev ? 'Review: ' : mode === 'play' ? 'Game break: ' : '') + u.track.name + ', ' + u.title + ', card ' + (c.pos + 1) + ' of ' + u.cards.length) + '">' +
       '<div class="dinner post">' + head + '<div class="pbody">' + body + '</div>' +
@@ -540,9 +568,9 @@
   }
 
   function shareText(c) {
-    var what = c.t === 'learn' ? c.title + ': ' + c.body : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? (c.lang === 'sql' ? 'What does this SQL query return?' : c.lang === 'shell' ? 'What does this command print?' : 'What does this Python code print?') + '\n\n' + c.code : c.q;
-    return (c.t === 'learn' ? 'Learn this in 1 minute' : 'Can you solve this?') + ' (' + c.unit.track.name + ')\n' + what.replace(/`|\*\*/g, '') +
-      '\n\nTry it on Kramavriddhi Learn: ' + URL + '#card=' + c.id;
+    var what = c.t === 'learn' ? c.title + ': ' + c.body : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? tr(c.lang === 'sql' ? 'What does this SQL query return?' : c.lang === 'shell' ? 'What does this command print?' : 'What does this Python code print?') + '\n\n' + c.code : c.q;
+    return tr(c.t === 'learn' ? 'Learn this in 1 minute' : 'Can you solve this?') + ' (' + c.unit.track.name + ')\n' + what.replace(/`|\*\*/g, '') +
+      '\n\n' + tr('Try it on Kramavriddhi Learn:') + ' ' + URL + (LANG === 'te' ? '?lang=te' : '') + '#card=' + c.id;
   }
 
   function choiceList(c) {
@@ -559,21 +587,21 @@
     var all = c.steps.map(function (b, n) { return { b: b, id: 's' + n }; }).concat((c.extra || []).map(function (b, n) { return { b: b, id: 'x' + n }; }));
     return '<h2 class="dq">' + K.rich(c.q) + '</h2>' +
       '<ol class="mpipe" aria-label="Pipeline steps">' + c.steps.map(function (_, n) { return '<li><button type="button" class="mslot" data-slot="' + n + '" aria-label="Step ' + (n + 1) + ', empty"><span class="mno">' + (n + 1) + '</span></button></li>'; }).join('') + '</ol>' +
-      '<p class="mhint">Tap a block to add it to the next empty step. Tap a step to take its block back.' + (c.extra && c.extra.length ? ' One block does not belong.' : '') + '</p>' +
+      '<p class="mhint">' + tr('Tap a block to add it to the next empty step. Tap a step to take its block back.') + (c.extra && c.extra.length ? ' ' + tr('One block does not belong.') : '') + '</p>' +
       '<div class="mtray">' + K.shuffle(all).map(function (x) { return block(x.b, x.id); }).join('') + '</div>' +
-      '<div class="mbar"><button type="button" class="btn go mrun" disabled>▶ Run</button><span class="mmsg" role="status"></span></div>';
+      '<div class="mbar"><button type="button" class="btn go mrun" disabled>▶ ' + tr('Run') + '</button><span class="mmsg" role="status"></span></div>';
   }
 
   /* mini game 2: fix the indentation (lines: [spaces, text]) */
   function indentBody(c) {
     var yaml = c.step === 2;
     return '<h2 class="dq">' + K.rich(c.q) + '</h2>' +
-      '<div class="editor dcode"><div class="ed-bar"><span class="file">' + (FILE[c.lang] || (yaml ? 'site.yml' : 'main.py')) + '</span><span>Tap a line to add ' + c.step + ' spaces</span></div>' +
+      '<div class="editor dcode"><div class="ed-bar"><span class="file">' + (FILE[c.lang] || (yaml ? 'site.yml' : 'main.py')) + '</span><span>' + tr('Tap a line to add {n} spaces', { n: c.step }) + '</span></div>' +
       '<ol class="bug-lines">' + c.lines.map(function (l, n) {
         return '<li><button type="button" class="bugline iline" data-line="' + n + '" data-ind="0" aria-label="Line ' + (n + 1) + ', 0 spaces: ' + K.esc(l[1]) + '"><span class="num" aria-hidden="true">' + (n + 1) + '</span><span class="ws" aria-hidden="true"></span><span class="src">' + (yaml ? hlYaml(l[1]) : hlPy(l[1])) + '</span></button></li>';
       }).join('') + '</ol></div>' +
-      '<p class="mhint">Each tap pushes a line ' + c.step + ' spaces to the right. After the deepest level it goes back to 0. ' + (yaml ? 'In YAML, the lines under a line ending in <code>:</code> are indented 2 more.' : 'In Python, the lines under a line ending in <code>:</code> are indented 4 more.') + '</p>' +
-      '<div class="mbar"><button type="button" class="btn go mrun">▶ Check</button><span class="mmsg" role="status"></span></div>';
+      '<p class="mhint">' + tr('Each tap pushes a line {n} spaces to the right. After the deepest level it goes back to 0.', { n: c.step }) + ' ' + tr(yaml ? 'In YAML, the lines under a line ending in <code>:</code> are indented 2 more.' : 'In Python, the lines under a line ending in <code>:</code> are indented 4 more.') + '</p>' +
+      '<div class="mbar"><button type="button" class="btn go mrun">▶ ' + tr('Check') + '</button><span class="mmsg" role="status"></span></div>';
   }
   function maxInd(c) { return c.lines.reduce(function (m, l) { return Math.max(m, l[0]); }, 0) + c.step; }
   function setInd(btn, ind, c) {
@@ -588,14 +616,14 @@
     sec.classList.remove('is-right', 'is-wrong');
     sec.classList.add('answered', ok ? 'is-right' : 'is-wrong');
     sec.classList.toggle('solved-late', !ok && !!verdict);
-    var right = c.t === 'order' && !ok ? '<p class="small">The right order:</p><ol class="right-order">' + c.items.map(function (x) { return '<li>' + K.esc(x) + '</li>'; }).join('') + '</ol>' : '';
+    var right = c.t === 'order' && !ok ? '<p class="small">' + tr('The right order:') + '</p><ol class="right-order">' + c.items.map(function (x) { return '<li>' + K.esc(x) + '</li>'; }).join('') + '</ol>' : '';
     var finished = unitDone(u), last = c.pos === u.cards.length - 1;
     if (feedModes[j] === 'review') { extra = reviewNote[j] || ''; finished = false; last = false; }
-    if (feedModes[j] === 'play') { extra = '<p class="revnote">🎮 Game break done · it counts for today</p>'; finished = false; last = false; }
-    res.innerHTML = '<p class="verdict">' + (verdict || (ok ? '✓ Correct!' : '✗ Not quite.')) + (restoring ? ' <span class="muted">(done before)</span>' : '') + '</p>' + right +
+    if (feedModes[j] === 'play') { extra = '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>'; finished = false; last = false; }
+    res.innerHTML = '<p class="verdict">' + (verdict || tr(ok ? '✓ Correct!' : '✗ Not quite.')) + (restoring ? ' <span class="muted">' + tr('(done before)') + '</span>' : '') + '</p>' + right +
       (c.why ? '<p>' + K.rich(c.why) + '</p>' : '') +
-      (extra || (finished && !restoring ? '<p class="unitdone">🎉 Unit complete: ' + K.esc(u.title) + '</p>' : '')) +
-      '<button type="button" class="btn primary" data-next>' + (last || finished ? 'Next unit ↓' : 'Next ↓') + '</button>';
+      (extra || (finished && !restoring ? '<p class="unitdone">' + tr('🎉 Unit complete:') + ' ' + K.esc(u.title) + '</p>' : '')) +
+      '<button type="button" class="btn primary" data-next>' + tr(last || finished ? 'Next unit ↓' : 'Next ↓') + '</button>';
     res.hidden = false;
   }
 
@@ -666,7 +694,7 @@
       li.querySelector('.tr-now').textContent = p.label;
       li.querySelector('.bar i').style.width = pct + '%';
       li.querySelector('.bar').setAttribute('aria-label', p.done + ' of ' + p.live + ' ready units done');
-      li.querySelector('.tr-count').textContent = p.done + ' of ' + p.live + ' ready units done · ' + t.units.length + ' planned';
+      li.querySelector('.tr-count').textContent = tr('{n} of {m} ready units done · {p} planned', { n: p.done, m: p.live, p: t.units.length });
       var box = li.querySelector('.pathbox'); if (li.querySelector('details').open) box.innerHTML = pathHtml(t);
     });
   }
@@ -698,10 +726,10 @@
         msg.textContent = '';
         var ok = tries[j] === 1;
         record(j, ok, tries[j]);
-        setTimeout(function () { result(j, ok, false, ok ? '✓ Data is flowing! Solved first try.' : '✓ Solved in ' + tries[j] + ' runs.'); }, reduce ? 0 : 700);
+        setTimeout(function () { result(j, ok, false, ok ? tr('✓ Data is flowing! Solved first try.') : tr('✓ Solved in {n} runs.', { n: tries[j] })); }, reduce ? 0 : 700);
         return;
       }
-      msg.textContent = good + ' of ' + c.steps.length + ' right. Wrong blocks went back. Try again.';
+      msg.textContent = tr('{n} of {m} right. Wrong blocks went back. Try again.', { n: good, m: c.steps.length });
     }
     run.disabled = !!sec.querySelector('.mslot:not(.filled)');
   }
@@ -735,15 +763,17 @@
         sec.querySelector('.mrun').hidden = true; sec.querySelector('.mhint').hidden = true; msg.textContent = '';
         var ok = tries[j] === 1;
         record(j, ok, tries[j]);
-        result(j, ok, false, ok ? '✓ It runs! Solved first try.' : '✓ Solved in ' + tries[j] + ' tries.');
+        result(j, ok, false, ok ? tr('✓ It runs! Solved first try.') : tr('✓ Solved in {n} tries.', { n: tries[j] }));
         return;
       }
-      msg.textContent = bad + ' line' + (bad > 1 ? 's have' : ' has') + ' the wrong indent (red). Fix and check again.';
+      msg.textContent = tr(bad > 1 ? '{n} lines have the wrong indent (red). Fix and check again.' : '1 line has the wrong indent (red). Fix and check again.', { n: bad });
     }
   }
 
   /* ---------- clicks */
   feed.addEventListener('click', function (e) {
+    var lb = e.target.closest('[data-lang]');
+    if (lb) { st.lang = lb.getAttribute('data-lang'); save(); K.track('lang_switch', { lang: st.lang }); location.reload(); return; }
     if (e.target.closest('#appbox') && appClick(e)) return;
     if (e.target.closest('[data-pick]')) { e.preventDefault(); history.replaceState(null, '', location.pathname + '?pick=1'); renderPicker(); window.scrollTo(0, feed.getBoundingClientRect().top + window.scrollY - 70); return; }
     if (e.target.closest('[data-start]')) { var first = feed.querySelector('.dcard.unithead, .dcard[data-j]'); if (first) scrollToCard(first); return; }
@@ -754,7 +784,7 @@
       var tu = UNIT[to.getAttribute('data-testout')], firstCheck = -1;
       testing[tu.id] = true;
       feedCards.forEach(function (fc, k) { if (firstCheck < 0 && fc.unit === tu && fc.t === 'check' && !isDone(fc)) firstCheck = k; });
-      to.parentNode.innerHTML = '<span>Answer the checkpoint questions below. Get them all right to skip the unit.</span>';
+      to.parentNode.innerHTML = '<span>' + tr('Answer the checkpoint questions below. Get them all right to skip the unit.') + '</span>';
       if (firstCheck >= 0) scrollToCard(document.getElementById('c-' + firstCheck));
       return;
     }
@@ -779,7 +809,7 @@
     }
     if (e.target.closest('.plearnbox, .pactions')) return;
     if (isDone(c) && sec.classList.contains('answered')) return;
-    if (c.t === 'learn') { if (e.target.closest('[data-got]')) { e.target.closest('.mbar').hidden = true; record(j, true); result(j, true, false, '✓ Got it'); } return; }
+    if (c.t === 'learn') { if (e.target.closest('[data-got]')) { e.target.closest('.mbar').hidden = true; record(j, true); result(j, true, false, tr('✓ Got it')); } return; }
     if (c.t === 'pipe') return pipeClick(sec, j, e);
     if (c.t === 'indent') return indentClick(sec, j, e);
     var ch = e.target.closest('.choice');
@@ -845,7 +875,7 @@
         sec.querySelector('.mrun').hidden = true; sec.querySelector('.mhint').hidden = true;
       }
       var g = c.t === 'pipe' || c.t === 'indent';
-      result(j, d.ok, true, c.t === 'learn' ? '✓ Got it' : g ? (d.ok ? '✓ Solved first try.' : '✓ Solved' + (d.tries ? ' in ' + d.tries + ' tries.' : '.')) : null);
+      result(j, d.ok, true, c.t === 'learn' ? tr('✓ Got it') : g ? (d.ok ? tr('✓ Solved first try.') : d.tries ? tr('✓ Solved in {n} tries.', { n: d.tries }) : tr('✓ Solved.')) : null);
     });
   }
 
@@ -855,23 +885,23 @@
     var n = todayCount(), s = streakNow(), more = qi < queue.length;
     var share = 'I am learning ' + st.tracks.map(function (id) { return TR[id].name; }).join(', ') + ' step by step on Kramavriddhi Learn' + (s > 1 ? ' (' + s + '-day streak 🔥)' : '') + '. Free, in a scrolling feed: ' + URL;
     el.innerHTML =
-      '<p class="kicker">Today · ' + Math.min(n, GOAL) + ' of ' + GOAL + ' cards</p>' +
+      '<p class="kicker">' + tr('Today · {n} of {m} cards', { n: Math.min(n, GOAL), m: GOAL }) + '</p>' +
       (n >= GOAL
-        ? '<h2>Daily goal done! 🔥 ' + s + '</h2><p>' + (s > 1 ? s + ' days in a row. ' : '') + 'Come back tomorrow to keep your streak' + (st.best > s ? ' (your best: ' + st.best + ')' : '') + '. You can also keep going now.</p>'
-        : '<h2>' + (GOAL - n) + ' more to reach today’s goal</h2><p>Finish ' + GOAL + ' cards a day to grow your streak' + (s ? ' (now 🔥 ' + s + ')' : '') + '.</p>') +
-      (more ? '<button type="button" class="btn go" data-more>Load the next units ↓</button>'
-            : '<p class="alldone">🎉 You have finished every ready unit in your skills. New units arrive in every update, or <a href="?pick=1" data-pick>add another skill</a>.</p>') +
-      '<div class="share"><span class="share-label">Share:</span><a class="share-btn wa" href="' + K.wa(share) + '" target="_blank" rel="noopener">WhatsApp</a></div>' +
-      (reviewsOn(today + 1) ? '<p class="revline">🔁 ' + reviewsOn(today + 1) + ' card' + (reviewsOn(today + 1) > 1 ? 's' : '') + ' to review tomorrow.</p>' : '') +
+        ? '<h2>' + tr('Daily goal done!') + ' 🔥 ' + s + '</h2><p>' + (s > 1 ? tr('{n} days in a row.', { n: s }) + ' ' : '') + tr('Come back tomorrow to keep your streak.') + (st.best > s ? ' ' + tr('Your best: {n}.', { n: st.best }) : '') + ' ' + tr('You can also keep going now.') + '</p>'
+        : '<h2>' + tr('{n} more to reach today’s goal', { n: GOAL - n }) + '</h2><p>' + tr('Finish {n} cards a day to grow your streak.', { n: GOAL }) + (s ? ' (🔥 ' + s + ')' : '') + '</p>') +
+      (more ? '<button type="button" class="btn go" data-more>' + tr('Load the next units ↓') + '</button>'
+            : '<p class="alldone">' + tr('🎉 You have finished every ready unit in your skills. New units arrive in every update, or <a href="?pick=1" data-pick>add another skill</a>.') + '</p>') +
+      '<div class="share"><span class="share-label">' + tr('Share:') + '</span><a class="share-btn wa" href="' + K.wa(share) + '" target="_blank" rel="noopener">WhatsApp</a></div>' +
+      (reviewsOn(today + 1) ? '<p class="revline">🔁 ' + tr(reviewsOn(today + 1) > 1 ? '{n} cards to review tomorrow.' : '1 card to review tomorrow.', { n: reviewsOn(today + 1) }) + '</p>' : '') +
       savedList() +
-      '<h3>Keep learning</h3><div class="more"><a href="/learn/python/">Python games</a><a href="/learn/devops/">Cloud &amp; DevOps games</a><a href="/courses/azure-data-engineering/">Azure Data Engineering course</a><a href="https://nagendrababuedru.github.io/DevOps/" target="_blank" rel="noopener">DevOps Academy ↗</a></div>';
+      '<h3>' + tr('Keep learning') + '</h3><div class="more"><a href="/learn/python/">' + tr('Python games') + '</a><a href="/learn/devops/">' + tr('Cloud &amp; DevOps games') + '</a><a href="/courses/azure-data-engineering/">' + tr('Azure Data Engineering course') + '</a><a href="https://nagendrababuedru.github.io/DevOps/" target="_blank" rel="noopener">DevOps Academy ↗</a></div>';
   }
 
   function savedList() {
     var ids = Object.keys(st.saved).filter(function (id) { return CARD[id]; });
     if (!ids.length) return '';
-    return '<h3>🔖 Saved for later (' + ids.length + ')</h3><ul class="savedlist">' + ids.slice(0, 20).map(function (id) {
-      var c = CARD[id], title = c.t === 'learn' ? c.title : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? 'What does this print? ' + c.code.split('\n')[0] : c.q.replace(/`|\*\*/g, '');
+    return '<h3>🔖 ' + tr('Saved for later') + ' (' + ids.length + ')</h3><ul class="savedlist">' + ids.slice(0, 20).map(function (id) {
+      var c = CARD[id], title = c.t === 'learn' ? c.title : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? tr('What does this print?') + ' ' + c.code.split('\n')[0] : c.q.replace(/`|\*\*/g, '');
       return '<li class="t-' + tkey(c.topic) + '"><a href="#card=' + id + '"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span><span>' + K.esc(c.unit.track.name) + ' · ' + K.esc(title.length > 70 ? title.slice(0, 68) + '…' : title) + '</span></a></li>';
     }).join('') + '</ul>';
   }
@@ -888,4 +918,13 @@
 
   if (!st.tracks.length || /[?&]pick=1/.test(location.search)) renderPicker();
   else renderFeed();
+}
+/* load Telugu text first when the learner picked Telugu (Phase 8) */
+(function () {
+  var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
+  if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
+  if (st && st.lang === 'te' && !window.KV_TE) {
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=1';
+    sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
+  } else kvLearnMain();
 })();

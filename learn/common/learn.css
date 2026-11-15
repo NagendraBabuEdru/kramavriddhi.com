@@ -698,3 +698,16 @@ details[open] .tr-open { color: var(--color-ink); }
 .remtime input { font: inherit; padding: 6px 8px; min-height: 44px; border-radius: 10px; border: 1px solid var(--color-rule, rgba(0,0,0,.25)); background: var(--color-paper); color: var(--color-ink); }
 .remlinks { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 10px; }
 @media (max-width: 340px) { .approw { grid-template-columns: 1fr; } }
+
+/* v15-16: language switch (English / తెలుగు) and Telugu text (Phase 8) */
+.langsw { display: inline-flex; gap: 0; margin-top: var(--space-sm); border: 1px solid var(--color-rule-2); border-radius: 999px; overflow: hidden; }
+.langsw button { font: 600 .95rem var(--font-display); padding: 8px 16px; min-height: 40px; border: 0; background: transparent; color: var(--color-ink); cursor: pointer; }
+.langsw button[lang="te"] { font-family: var(--font-telugu); }
+.langsw button[aria-pressed="true"] { background: var(--color-ink); color: var(--color-paper); }
+.langsw button:focus-visible { outline: 3px solid var(--color-focus); outline-offset: -3px; }
+.lang-te .daily .dq, .lang-te .daily .lbody, .lang-te .daily .dres p, .lang-te .daily .choice pre, .lang-te .daily .pbio, .lang-te .daily .uh-sub, .lang-te .daily .mhint { line-height: 1.6; }
+.lang-te .daily .choice pre { white-space: pre-wrap; }
+.enonly { font-style: italic; opacity: .85; }
+.daily .prow > div { min-width: 0; }
+.lang-te .daily h1, .lang-te .daily h2, .lang-te .daily .dq { overflow-wrap: anywhere; }
+.lang-te .daily .picker h1 { font-size: clamp(1.3rem, 6vw, 1.7rem); }
