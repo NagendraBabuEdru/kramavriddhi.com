@@ -192,4 +192,4 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 ## 10. Waiting on other sessions
 
-- **Kramavriddhi – Main** (not opened yet): add "Learn" to the main menu → /learn/; home page card → /learn/daily/; sitemap entries for all URLs in section 5; /apps/ listing; link from /courses/azure-data-engineering/ to /learn/.
+- **Kramavriddhi – Main** (request sent 15 Nov 2026, delivered; waiting for its reply): add "Learn" to the main menu → /learn/; home page card → /learn/daily/; sitemap entries for all URLs in section 5; /apps/ listing; link from /courses/azure-data-engineering/ to /learn/.
