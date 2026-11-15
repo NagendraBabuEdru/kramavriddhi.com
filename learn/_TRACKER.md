@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 15 Nov 2026 (Phase 5 done)
+Last updated: 15 Nov 2026 (Phase 6 done)
 
 ---
 
@@ -52,8 +52,8 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 3b | Game breaks | 🎮 Game break every 6 cards (every 4 after the daily goal): ⚡ speed round (3 questions, 30 s, combo), 🧩 puzzle (pipe/indent, practice only), 🕹️ full game (opens with "Back to my feed"). Only from chosen skills; kinds played/liked come more, skipped less; never the same kind twice in a row; finishing one counts toward the daily goal, never changes lesson progress | ✅ live (15 Nov 2026), owner asked for it before Phase 4 |
 | 4 | More tracks to Basic | Git, Linux, SQL Basic, plus **Power BI** (new track added at the owner's request) | ✅ live (15 Nov 2026): 129 new cards; Git, Linux, SQL and Power BI Basic complete (6 to 8 cards + 2 checkpoints per unit) |
 | 5 | Intermediate levels | Python, Azure, Git, Linux, SQL, Power BI Intermediate | ✅ live (15 Nov 2026): 279 new cards, 35 Intermediate units complete (6 to 8 cards + 2 checkpoints each) |
-| 6 | Docker, Kubernetes, Ansible, CI/CD Basic | | ⬜ **NEXT** |
-| 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ⬜ |
+| 6 | Docker, Kubernetes, Ansible, CI/CD Basic | Docker, Kubernetes, Ansible and DevOps/CI-CD Basic levels complete | ✅ live (15 Nov 2026): 94 new cards, 13 Basic units complete (6 to 8 cards + 2 checkpoints each); bug cards now show the right file (Dockerfile, terminal, deployment.yaml, ci.yml) |
+| 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ⬜ **NEXT** |
 | 8 | Telugu version | Telugu explainer cards and questions | ⬜ |
 | 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7) |
 | 10 | Advanced levels | All tracks | ⬜ |
@@ -111,28 +111,28 @@ Added 15 Nov 2026 at the owner's request.
 ### 4.6 Docker (`dk`) · brand look: docs.docker.com
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 images vs containers · 2 run, ps, stop · 3 Dockerfile | ⬜ (4 loose cards) |
+| Basic | 1 images vs containers · 2 run, ps, stop · 3 Dockerfile | ✅ complete (Phase 6) |
 | Intermediate | 4 volumes · 5 networks · 6 Docker Compose · 7 registries | ⬜ |
 | Advanced | 8 multi-stage builds · 9 image size and security | ⬜ |
 
 ### 4.7 Kubernetes (`k8s`) · brand look: kubernetes.io
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 cluster, node, pod · 2 kubectl basics · 3 deployments | ⬜ (1 loose card) |
+| Basic | 1 cluster, node, pod · 2 kubectl basics · 3 deployments | ✅ complete (Phase 6) |
 | Intermediate | 4 services · 5 ConfigMaps and Secrets · 6 scaling | ⬜ |
 | Advanced | 7 ingress · 8 Helm · 9 RBAC · 10 AKS on Azure | ⬜ |
 
 ### 4.8 Ansible (`ans`) · brand look: Ansible docs
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 inventory · 2 ad-hoc commands · 3 playbook structure · 4 apt, copy, service | ⬜ (6 loose cards; full game "Fix the Playbook" ✅) |
+| Basic | 1 inventory · 2 ad-hoc commands · 3 playbook structure · 4 apt, copy, service | ✅ complete (Phase 6; full game "Fix the Playbook" ✅) |
 | Intermediate | 5 variables · 6 handlers · 7 templates · 8 loops and conditions | ⬜ |
 | Advanced | 9 roles · 10 Ansible Vault · 11 Galaxy · 12 testing idempotency | ⬜ |
 
 ### 4.9 DevOps and CI/CD (`ops`) · brand look: Microsoft Learn (green)
 | Level | Units in order | Status |
 |---|---|---|
-| Basic | 1 what DevOps is · 2 environments (dev, staging, prod) · 3 continuous integration | ⬜ (5 loose cards) |
+| Basic | 1 what DevOps is · 2 environments (dev, staging, prod) · 3 continuous integration | ✅ complete (Phase 6) |
 | Intermediate | 4 pipeline YAML (GitHub Actions / Azure Pipelines) · 5 test stages · 6 artifacts | ⬜ |
 | Advanced | 7 blue-green and canary releases · 8 infrastructure as code · 9 monitoring and SRE basics | ⬜ |
 
@@ -141,7 +141,7 @@ Added 15 Nov 2026 at the owner's request.
 | Page | URL | Notes |
 |---|---|---|
 | Hub | /learn/ | Daily banner, Cloud & DevOps card, Python card, total stars of 60 |
-| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 610 cards in 81 live units, 10 skills. Old day-based feed retired 15 Nov 2026 |
+| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 704 cards in 86 live units, 10 skills. Old day-based feed retired 15 Nov 2026 |
 | Cloud & DevOps | /learn/devops/ | 2 games + 6 coming-soon cards |
 | Build the Data Pipeline | /learn/devops/azure-data-pipeline/ | 5 levels |
 | Fix the Playbook | /learn/devops/ansible-fix-the-playbook/ | 5 levels |
@@ -188,6 +188,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 15 Nov 2026 | **Phase 6 done:** Basic levels complete for Docker, Kubernetes, Ansible and DevOps/CI-CD (94 new cards by 2 Sonnet helpers; every YAML card parsed; facts checked on docs.docker.com, kubernetes.io and docs.ansible.com; Ansible `command` card corrected: it does expand `$HOME`, only pipes/redirects need `shell`). Bug cards show the file name and colours of their language. Rule for these skills: Docker/kubectl/Ansible are not run here, so cards avoid printed output and cite the official page |
 | 15 Nov 2026 | **Phase 5 done:** Intermediate levels complete for Python, Azure, Git, Linux, SQL and Power BI (279 new cards by 4 Sonnet helpers; 57 Python programs, 20 SQL queries and 13 shell scripts run for real; Power BI RLS and CALCULATE cards corrected against Microsoft Learn) |
 | 15 Nov 2026 | **Phase 4 done:** Git, Linux, SQL Basic complete; new **Power BI** track (18 units planned, Basic complete); SQL cards show `query.sql` and "What does it return?"; 129 new cards (16 SQL answers run in SQLite, Git/Linux answers run in bash) |
 | 15 Nov 2026 | **Game breaks (3b):** speed rounds, puzzles and full-game breaks inside the feed, picked by interest; "Back to my feed" on full games |

@@ -100,7 +100,7 @@
   function learnLinks(c) {
     var t = topicOf(c), out = [];
     if (c.t === 'pipe' && (c.topic === 'Azure' || c.topic === 'Data')) out.push({ href: '/learn/devops/azure-data-pipeline/', label: 'Play the full game: Build the Data Pipeline' });
-    if (c.t === 'indent') out.push(c.step === 2 ? { href: '/learn/devops/ansible-fix-the-playbook/', label: 'Play the full game: Fix the Playbook' } : { href: '/learn/python/fix-the-code/', label: 'Play the full game: Fix the Code' });
+    if (c.t === 'indent' && (c.step !== 2 || c.topic === 'Ansible')) out.push(c.step === 2 ?{ href: '/learn/devops/ansible-fix-the-playbook/', label: 'Play the full game: Fix the Playbook' } : { href: '/learn/python/fix-the-code/', label: 'Play the full game: Fix the Code' });
     out.push(t.own);
     if (c.topic === 'Ansible' && c.t !== 'indent') out.push({ href: '/learn/devops/ansible-fix-the-playbook/', label: 'Play Fix the Playbook (Ansible game)' });
     out.push(t.docs);
@@ -131,8 +131,8 @@
     if (!m0) return K.esc(text);
     return m0[1] + (m0[2] ? '<span class="d">- </span>' : '') + '<span class="k">' + K.esc(m0[3]) + '</span>:' + (m0[4] ? '<span class="v">' + K.esc(m0[4]) + '</span>' : '');
   }
-  function hlLine(l, lang) { return lang === 'yaml' ? hlYaml(l) : lang === 'python' || !lang ? hlPy(l) : K.esc(l).replace(/(#.*)$/, '<span class="d">$1</span>'); }
-  var FILE = { python: 'main.py', yaml: 'site.yml', ini: 'inventory.ini', sql: 'query.sql', shell: 'terminal', docker: 'Dockerfile' };
+  function hlLine(l, lang) { return lang === 'yaml' || lang === 'k8s' || lang === 'ci' ? hlYaml(l) : lang === 'python' || !lang ? hlPy(l) : K.esc(l).replace(/(#.*)$/, '<span class="d">$1</span>'); }
+  var FILE = { python: 'main.py', yaml: 'site.yml', ini: 'inventory.ini', sql: 'query.sql', shell: 'terminal', docker: 'Dockerfile', k8s: 'deployment.yaml', ci: '.github/workflows/ci.yml' };
   function codeBlock(lines, asButtons, lang) {
     return '<div class="editor dcode">' + (lang && lang !== 'python' ? '<div class="ed-bar"><span class="file">' + FILE[lang] + '</span></div>' : '') + (asButtons
       ? '<ol class="bug-lines">' + lines.map(function (l, n) {
@@ -479,7 +479,7 @@
     else if (c.t === 'output') body = codeBlock(c.code.split('\n'), false, c.lang) + choiceList(c);
     else if (c.t === 'choice') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + choiceList(c);
     else if (c.t === 'check') body = '<h2 class="dq">' + K.rich(c.q || (c.lang === 'sql' ? 'What does this query return?' : 'What does this print?')) + '</h2>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') + choiceList(c);
-    else if (c.t === 'bug') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + codeBlock(c.code, true);
+    else if (c.t === 'bug') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + codeBlock(c.code, true, c.lang);
     else if (c.t === 'order') body = '<h2 class="dq">' + K.rich(c.q) + '</h2><div class="order-list">' + shuffleDiff(c.items).map(function (it) {
         return '<button type="button" class="ord" data-item="' + K.esc(it) + '"><span class="ordn" aria-hidden="true"></span><span>' + K.esc(it) + '</span></button>';
       }).join('') + '</div><button type="button" class="btn ghost ord-reset" hidden>Start again</button>';
@@ -529,7 +529,7 @@
   function indentBody(c) {
     var yaml = c.step === 2;
     return '<h2 class="dq">' + K.rich(c.q) + '</h2>' +
-      '<div class="editor dcode"><div class="ed-bar"><span class="file">' + (yaml ? 'site.yml' : 'main.py') + '</span><span>Tap a line to add ' + c.step + ' spaces</span></div>' +
+      '<div class="editor dcode"><div class="ed-bar"><span class="file">' + (FILE[c.lang] || (yaml ? 'site.yml' : 'main.py')) + '</span><span>Tap a line to add ' + c.step + ' spaces</span></div>' +
       '<ol class="bug-lines">' + c.lines.map(function (l, n) {
         return '<li><button type="button" class="bugline iline" data-line="' + n + '" data-ind="0" aria-label="Line ' + (n + 1) + ', 0 spaces: ' + K.esc(l[1]) + '"><span class="num" aria-hidden="true">' + (n + 1) + '</span><span class="ws" aria-hidden="true"></span><span class="src">' + (yaml ? hlYaml(l[1]) : hlPy(l[1])) + '</span></button></li>';
       }).join('') + '</ol></div>' +
