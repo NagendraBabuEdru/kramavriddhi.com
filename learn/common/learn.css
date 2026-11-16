@@ -790,3 +790,23 @@ html.reels-mode .daily .post { border-radius: 20px; box-shadow: none; }
 @media (max-width: 360px) { .pact.plearn span { display: none; } .pact.plearn { padding: 0 10px; } }
 .pact svg { flex: none; }
 .pactions { gap: 2px; }
+
+/* v21: credits (🪙), 50/50 hint, Show solution */
+.igbar .icr { font: 700 1rem var(--font-display); white-space: nowrap; margin-left: 4px; }
+html.reels-mode .igbar .icr { color: #fff; }
+@media (max-width: 400px) { .igbar .ibrand { font-size: 0.95rem; } .igbar .istreak, .igbar .icr { font-size: 0.9rem; } .igbar .ibtn { width: 36px; } }
+.crline { margin: 6px 0 0; font: 600 1rem var(--font-display); }
+.crline a { color: var(--color-ink); text-underline-offset: 3px; }
+.helpbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.hbtn { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 6px 12px; border-radius: 999px; border: 1px dashed var(--color-rule-2); background: var(--color-paper); color: var(--color-ink); font: 600 .9rem var(--font-display); cursor: pointer; }
+.hbtn .hcost { font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--color-paper-2); }
+.hbtn[data-armed] { border-style: solid; border-color: var(--color-accent); background: color-mix(in oklab, var(--color-accent) 14%, var(--color-paper)); }
+.hbtn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.hmsg { flex-basis: 100%; margin: 0; font-size: .9rem; color: var(--color-muted); }
+.hmsg:empty { display: none; }
+.answered .helpbar { display: none; }
+.post .choice.out { opacity: .35; text-decoration: line-through; }
+.earn { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: color-mix(in oklab, #F2C811 35%, var(--color-paper)); color: var(--color-ink); font: 800 .9rem var(--font-display); }
+.crbox { margin-top: var(--space-md); padding: 12px 14px; border-radius: 12px; background: color-mix(in oklab, #F2C811 14%, var(--color-paper)); }
+.crbox .pfh { margin-top: 0; }
+.crbox p { margin: 4px 0 0; font-size: .95rem; }
