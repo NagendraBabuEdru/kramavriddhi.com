@@ -64,7 +64,7 @@ function kvLearnMain() {
       st.best = old.best || 0;
     }
   }
-  ['done', 'likes', 'saved', 'days', 'review'].forEach(function (k) { st[k] = st[k] || {}; });
+  ['done', 'likes', 'saved', 'days', 'review', 'notes'].forEach(function (k) { st[k] = st[k] || {}; });
   st.tracks = (st.tracks || []).filter(function (id) { return TR[id]; });
   st.mastered = st.mastered || 0;
   st.streak = st.streak && typeof st.streak === 'object' ? st.streak : { n: 0, last: 0 }; st.best = st.best || 0;
@@ -137,6 +137,9 @@ function kvLearnMain() {
     heart: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>',
     share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3 10 14.5M21.5 3l-7 18-4.5-6.5L3 10z"/></svg>',
     save: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h12v17l-6-4.5-6 4.5z"/></svg>',
+    note: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6c0 4.4-3.8 7.9-8.5 7.9-1.3 0-2.6-.3-3.7-.8L3.5 20l1.4-3.7c-.9-1.3-1.4-2.9-1.4-4.6C3.5 7.2 7.3 3.7 12 3.7s8.5 3.5 8.5 7.9z"/></svg>',
+    user: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.2-4 4.2-6 8-6s6.8 2 8 6"/></svg>',
+    reels: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M3.5 8.5h17M8 3.5l3 5M13.5 3.5l3 5M10.5 12v5l4.3-2.5z"/></svg>',
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3-1.3 6-1.3 9 .8 3-2.1 6-2.1 9-.8v14c-3-1.3-6-1.3-9 .8-3-2.1-6-2.1-9-.8zM12 6.3v14"/></svg>',
     logo: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 24h6v-5h6v-5h6V8" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
@@ -225,6 +228,7 @@ function kvLearnMain() {
 
   function renderFeed(scroll) {
     pill.hidden = false;
+    if (/[?&]profile=1/.test(location.search)) history.replaceState(null, '', location.pathname + location.hash);
     feedCards = []; feedModes = []; reviewNote = {}; tries = {};
     gbs.forEach(function (g) { if (g.timer) clearInterval(g.timer); }); gbs = []; sinceBreak = 0;
     queue = buildQueue(); qi = 0;
@@ -241,7 +245,7 @@ function kvLearnMain() {
     html += nextBlocks() + '<section class="dcard end" id="c-end" aria-label="Today"><div class="dinner" id="endin"></div></section>';
     feed.innerHTML = html;
     restoreAll();
-    document.documentElement.classList.add('snap-feed');
+    document.documentElement.classList.add('snap-feed'); applyReels();
     updatePill(); renderEnd(); refreshStats();
     if (shared) setTimeout(function () { var e = feed.querySelector('.sharedhead'); if (e) e.scrollIntoView({ block: 'start' }); }, 60);
     else if (scroll) setTimeout(function () { feed.scrollIntoView({ block: 'start' }); }, 30);
@@ -423,6 +427,7 @@ function kvLearnMain() {
       '<p class="revline" id="s-review">' + reviewLine() + '</p>' +
       '<h2 class="mysk">' + tr('My skills') + '</h2><ul class="mytracks">' + st.tracks.map(function (id) { return trackRow(TR[id]); }).join('') + '</ul>' +
       '<div class="introbtns"><button type="button" class="btn go" data-start>' + tr(todayCount() ? 'Continue ↓' : 'Start today ↓') + '</button><a class="btn ghost" href="?pick=1" data-pick>' + tr('Change skills') + '</a></div>' +
+      '<div class="introbtns two"><a class="btn ghost" href="?profile=1" data-profile>👤 ' + tr('My profile') + '</a><button type="button" class="btn ghost" data-reels>' + (st.reels ? '✕ ' + tr('Exit reels') : '▶ ' + tr('Reels mode')) + '</button></div>' +
       appBox() + '</div></section>';
   }
 
@@ -449,6 +454,8 @@ function kvLearnMain() {
   function refreshAppBox() { var b = document.getElementById('appbox'); if (b) b.outerHTML = appBox(); }
   K.onInstallChange(refreshAppBox);
   feed.addEventListener('change', function (e) {
+    var nm = e.target.closest('[data-name]');
+    if (nm) { st.name = nm.value.trim().slice(0, 40); save(); var av = document.getElementById('pf-av'); if (av) av.innerHTML = avatar(); return; }
     var ti = e.target.closest('[data-remtime]'); if (!ti || !ti.value) return;
     st.remTime = ti.value; save();
     var g = feed.querySelector('[data-remg]'); if (g) g.href = K.reminderGoogle(ti.value);
@@ -556,12 +563,13 @@ function kvLearnMain() {
     var actions = '<div class="pactions">' +
       '<button type="button" class="pact like" data-like aria-pressed="' + liked + '" aria-label="Like">' + ICON.heart + '</button>' +
       '<a class="pact" href="' + K.wa(shareText(c)) + '" target="_blank" rel="noopener" aria-label="Share on WhatsApp">' + ICON.share + '</a>' +
+      '<button type="button" class="pact pnote" data-note aria-expanded="false" aria-pressed="' + !!st.notes[c.id] + '" aria-controls="nb-' + j + '" aria-label="' + tr('My notes') + '">' + ICON.note + '</button>' +
       '<button type="button" class="pact plearn" data-learn aria-expanded="false" aria-controls="lb-' + j + '">' + ICON.book + '<span>' + tr('Learn more') + '</span></button>' +
       '<button type="button" class="pact save" data-save aria-pressed="' + saved + '" aria-label="Save for later">' + ICON.save + '</button>' +
       '</div>' +
       '<div class="plearnbox" id="lb-' + j + '" hidden><p>' + tr('Read and practise more:') + '</p><ul>' + learnLinks(c).map(function (l) {
         return '<li><a href="' + K.esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : '') + '>' + K.esc(tr(l.label)) + (l.ext ? ' ↗' : '') + '</a></li>';
-      }).join('') + '</ul></div>';
+      }).join('') + '</ul></div>' + noteBox(c, j);
     return '<section class="dcard t-' + tkey(c.topic) + (isGame ? ' gamecard' : '') + (rev ? ' reviewcard' : '') + (mode === 'play' ? ' playcard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="' + K.esc((rev ? 'Review: ' : mode === 'play' ? 'Game break: ' : '') + u.track.name + ', ' + u.title + ', card ' + (c.pos + 1) + ' of ' + u.cards.length) + '">' +
       '<div class="dinner post">' + head + '<div class="pbody">' + body + '</div>' +
       '<div class="dres" hidden></div>' + actions + '<span class="bigheart" aria-hidden="true">' + ICON.heart + '</span></div></section>';
@@ -772,6 +780,9 @@ function kvLearnMain() {
 
   /* ---------- clicks */
   feed.addEventListener('click', function (e) {
+    if (e.target.closest('[data-profile]')) { e.preventDefault(); openProfile(); return; }
+    if (e.target.closest('[data-back]')) { e.preventDefault(); history.replaceState(null, '', location.pathname); renderFeed(true); return; }
+    if (e.target.closest('[data-reels]')) { setReels(!st.reels); return; }
     var lb = e.target.closest('[data-lang]');
     if (lb) { st.lang = lb.getAttribute('data-lang'); save(); K.track('lang_switch', { lang: st.lang }); location.reload(); return; }
     if (e.target.closest('#appbox') && appClick(e)) return;
@@ -807,7 +818,17 @@ function kvLearnMain() {
       if (open) { K.track('daily_learn_more', { topic: c.topic }); box.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); }
       return;
     }
-    if (e.target.closest('.plearnbox, .pactions')) return;
+    var nb = e.target.closest('[data-note]');
+    if (nb) {
+      var nbox = document.getElementById('nb-' + j), nopen = nbox.hidden;
+      nbox.hidden = !nopen; nb.setAttribute('aria-expanded', nopen);
+      if (nopen) { var ta = nbox.querySelector('textarea'); nbox.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); setTimeout(function () { ta.focus({ preventScroll: true }); }, 250); }
+      return;
+    }
+    if (e.target.closest('[data-notesave]')) { saveNote(sec, c); return; }
+    var ask = e.target.closest('[data-ask]');
+    if (ask) { saveNote(sec, c, true); ask.href = K.wa(askText(c, sec.querySelector('.pnotebox textarea').value)); K.track('ask_doubt', { topic: c.topic }); return; }
+    if (e.target.closest('.plearnbox, .pactions, .pnotebox')) return;
     if (isDone(c) && sec.classList.contains('answered')) return;
     if (c.t === 'learn') { if (e.target.closest('[data-got]')) { e.target.closest('.mbar').hidden = true; record(j, true); result(j, true, false, tr('✓ Got it')); } return; }
     if (c.t === 'pipe') return pipeClick(sec, j, e);
@@ -910,13 +931,144 @@ function kvLearnMain() {
   function updatePill() {
     var n = todayCount(), segs = '';
     for (var i = 0; i < GOAL; i++) segs += '<i class="' + (i < n ? 'ok' : '') + '"></i>';
-    pill.innerHTML = '<span class="ibrand">kramavriddhi.learn</span><span class="istreak">' + Math.min(n, GOAL) + '/' + GOAL + ' · 🔥 ' + streakNow() + '</span><span class="isegs" aria-hidden="true">' + segs + '</span>';
-    pill.setAttribute('aria-label', Math.min(n, GOAL) + ' of ' + GOAL + ' cards done today, streak ' + streakNow() + ' days');
+    pill.innerHTML = '<span class="ibrand">kramavriddhi.learn</span><span class="iright"><span class="istreak" role="status" aria-label="' + Math.min(n, GOAL) + ' of ' + GOAL + ' cards done today, streak ' + streakNow() + ' days">' + Math.min(n, GOAL) + '/' + GOAL + ' · 🔥 ' + streakNow() + '</span>' +
+      '<button type="button" class="ibtn" data-reels aria-pressed="' + !!st.reels + '" aria-label="' + tr(st.reels ? 'Exit reels' : 'Reels mode') + '">' + (st.reels ? '✕' : ICON.reels) + '</button>' +
+      '<a class="ibtn" href="?profile=1" data-profile aria-label="' + tr('My profile') + '">' + ICON.user + '</a></span><span class="isegs" aria-hidden="true">' + segs + '</span>';
+  }
+  pill.addEventListener('click', function (e) {
+    if (e.target.closest('[data-reels]')) { setReels(!st.reels); return; }
+    if (e.target.closest('[data-profile]')) { e.preventDefault(); openProfile(); }
+  });
+
+  /* =====================================================================
+     Reels mode: one card fills the screen, swipe up for the next (Phase 9a)
+     ===================================================================== */
+  function applyReels() { document.documentElement.classList.toggle('reels-mode', !!st.reels); }
+  function setReels(on) {
+    var cur = null, best = 1e9;
+    feed.querySelectorAll('.dcard').forEach(function (d) { var t = Math.abs(d.getBoundingClientRect().top); if (t < best) { best = t; cur = d; } });
+    st.reels = !!on; save(); applyReels(); updatePill();
+    K.track('reels_mode', { on: on ? 1 : 0 });
+    var b = feed.querySelector('.intro [data-reels]'); if (b) b.textContent = on ? '✕ ' + tr('Exit reels') : '▶ ' + tr('Reels mode');
+    if (cur) setTimeout(function () { cur.scrollIntoView({ block: 'start' }); }, 30);
+  }
+
+  /* =====================================================================
+     My notes on each card (saved on this phone) + Ask a doubt (WhatsApp)
+     ===================================================================== */
+  function noteBox(c, j) {
+    var n = st.notes[c.id];
+    return '<div class="pnotebox" id="nb-' + j + '" hidden><label class="nlabel" for="nt-' + j + '">📝 ' + tr('My notes and doubts') + '</label>' +
+      '<textarea id="nt-' + j + '" rows="3" maxlength="600" placeholder="' + K.esc(tr('Write what you learned, or your doubt…')) + '">' + K.esc(n ? n.t : '') + '</textarea>' +
+      '<div class="nbtns"><button type="button" class="btn go" data-notesave>' + tr('Save note') + '</button>' +
+      '<a class="btn ghost" data-ask href="#" target="_blank" rel="noopener">💬 ' + tr('Ask a doubt') + '</a><span class="nmsg" role="status"></span></div>' +
+      '<p class="nhelp">' + tr('Notes are saved only on this phone. “Ask a doubt” opens WhatsApp so you can ask a friend, teacher or group. Public comments are coming later.') + '</p></div>';
+  }
+  function saveNote(sec, c, quiet) {
+    var ta = sec.querySelector('.pnotebox textarea'), v = ta.value.trim().slice(0, 600);
+    if (v) st.notes[c.id] = { t: v, d: today }; else delete st.notes[c.id];
+    save();
+    sec.querySelector('[data-note]').setAttribute('aria-pressed', !!v);
+    if (!quiet) { sec.querySelector('.nmsg').textContent = v ? tr('Saved ✓') : tr('Note removed'); K.track('note_save', { topic: c.topic }); }
+  }
+  function askText(c, note) {
+    var what = c.t === 'learn' ? c.title : c.q || tr('What does this print?') + '\n' + (c.code || '');
+    return tr('I have a doubt in this {s} question:', { s: c.unit.track.name }) + '\n' + String(what).replace(/`|\*\*/g, '') +
+      (note && note.trim() ? '\n\n' + tr('My doubt:') + ' ' + note.trim() : '') + '\n\n' + URL + (LANG === 'te' ? '?lang=te' : '') + '#card=' + c.id;
+  }
+
+  /* =====================================================================
+     Profile page (on this phone): stats, calendar, skills, badges, notes
+     ===================================================================== */
+  function avatar() {
+    var nm = (st.name || '').trim();
+    if (!nm) return ICON.logo;
+    var parts = nm.split(/\s+/), ini = (parts[0].charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : '')).toUpperCase();
+    return '<span class="pfini">' + K.esc(ini) + '</span>';
+  }
+  function totals() {
+    var cards = Object.keys(st.done).filter(function (id) { return CARD[id] && !st.done[id].skip; }).length, units = 0, games = 0, basic = 0;
+    T.tracks.forEach(function (t) {
+      units += liveUnits(t).filter(unitDone).length;
+      var b = t.units.filter(function (u) { return u.level === 'b' && live(u); });
+      if (b.length && b.every(unitDone)) basic++;
+    });
+    Object.keys(st.gb || {}).forEach(function (k) { games += st.gb[k].p || 0; });
+    return { cards: cards, units: units, games: games, basic: basic, days: Object.keys(st.days).filter(function (d) { return st.days[d] > 0; }).length, notes: Object.keys(st.notes).length };
+  }
+  var BADGES = [
+    ['🌱', 'First step', 'Answer your first card', function (x) { return x.cards >= 1; }],
+    ['📘', 'First unit', 'Finish a whole unit', function (x) { return x.units >= 1; }],
+    ['🔥', '3-day streak', 'Meet the daily goal 3 days in a row', function () { return (st.best || 0) >= 3; }],
+    ['⚡', '7-day streak', 'Meet the daily goal 7 days in a row', function () { return (st.best || 0) >= 7; }],
+    ['🏆', '30-day streak', 'Meet the daily goal 30 days in a row', function () { return (st.best || 0) >= 30; }],
+    ['🎯', '50 cards', 'Answer 50 cards', function (x) { return x.cards >= 50; }],
+    ['💯', '200 cards', 'Answer 200 cards', function (x) { return x.cards >= 200; }],
+    ['🎓', 'Basic complete', 'Finish every Basic unit of a skill', function (x) { return x.basic >= 1; }],
+    ['🏅', 'Memory master', 'Master 10 cards in review', function () { return (st.mastered || 0) >= 10; }],
+    ['🎮', 'Game lover', 'Play 10 game breaks', function (x) { return x.games >= 10; }],
+    ['📝', 'Note taker', 'Write 5 notes', function (x) { return x.notes >= 5; }]
+  ];
+  function calendarHtml() {
+    var start = today - 77 - ((today + 4) % 7), cells = '';       /* 12 weeks, columns start on Sunday */
+    for (var d = start; d < start + 84; d++) {
+      var n = st.days[d] || 0, lv = d > today ? 'f' : n >= GOAL ? 4 : n >= 4 ? 3 : n >= 2 ? 2 : n ? 1 : 0;
+      var dt = new Date(d * DAY_MS);
+      cells += '<i class="c' + lv + '" title="' + dt.getUTCDate() + '/' + (dt.getUTCMonth() + 1) + ': ' + n + '"></i>';
+    }
+    return '<div class="pcal" role="img" aria-label="' + K.esc(tr('Cards done each day, last 12 weeks')) + '">' + cells + '</div>' +
+      '<p class="pcal-key"><span>' + tr('Less') + '</span><i class="c0"></i><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><span>' + tr('More') + '</span></p>';
+  }
+  function skillRing(t) {
+    return '<li class="t-' + tkey(t.topic) + '"><span class="pav" aria-hidden="true">' + K.esc((TOPIC[tkey(t.topic)] || TOPIC.devops).ab) + '</span><div class="pfsk"><strong>' + K.esc(t.name) + '</strong>' +
+      ['b', 'i', 'a'].map(function (lv) {
+        var us = t.units.filter(function (u) { return u.level === lv && live(u); }), dn = us.filter(unitDone).length, pct = us.length ? Math.round(dn / us.length * 100) : 0;
+        return '<span class="pflv"><em>' + LEVEL[lv] + '</em><span class="bar" role="img" aria-label="' + dn + ' / ' + us.length + '"><i style="width:' + pct + '%"></i></span><b>' + (us.length ? dn + '/' + us.length : '–') + '</b></span>';
+      }).join('') + '</div></li>';
+  }
+  function openProfile() {
+    history.replaceState(null, '', location.pathname + '?profile=1');
+    renderProfile(); window.scrollTo(0, 0);
+    K.track('profile_open', {});
+  }
+  function renderProfile() {
+    gbs.forEach(function (g) { if (g.timer) clearInterval(g.timer); });
+    document.documentElement.classList.remove('snap-feed', 'reels-mode');
+    pill.hidden = true;
+    var x = totals(), s = streakNow(), mine = T.tracks.filter(function (t) { return st.tracks.indexOf(t.id) >= 0 || t.units.some(function (u) { return u.cards.some(isDone); }); });
+    var first = Object.keys(st.days).map(Number).filter(function (d) { return st.days[d] > 0; }).sort()[0];
+    var since = first ? new Date(first * DAY_MS) : null;
+    var earned = BADGES.filter(function (b) { return b[3](x); }).length;
+    var share = tr('I have done {n} cards on Kramavriddhi Learn', { n: x.cards }) + (st.best > 1 ? ' (🔥 ' + st.best + ')' : '') + ': ' + mine.map(function (t) { return t.name; }).join(', ') + '. ' + URL;
+    var notes = Object.keys(st.notes).filter(function (id) { return CARD[id]; });
+    feed.innerHTML = '<section class="dcard profilepage" aria-label="' + K.esc(tr('My profile')) + '"><div class="dinner post profile">' +
+      '<p class="pfback"><a href="' + location.pathname + '" data-back>← ' + tr('Back to my feed') + '</a></p>' +
+      '<div class="prow"><span class="pav big" id="pf-av">' + avatar() + '</span><div class="pfname"><label for="pf-name">' + tr('Your name') + '</label>' +
+      '<input id="pf-name" data-name type="text" maxlength="40" autocomplete="name" value="' + K.esc(st.name || '') + '" placeholder="' + K.esc(tr('Type your name')) + '">' +
+      '<p class="pfsince">' + (since ? tr('Learning since {d}', { d: since.getUTCDate() + '/' + (since.getUTCMonth() + 1) + '/' + since.getUTCFullYear() }) : tr('Start your first card today!')) + '</p></div></div>' +
+      '<div class="pfstats">' + [[s ? '🔥' + s : '0', tr('streak')], [st.best || 0, tr('best streak')], [x.cards, tr('cards done')], [x.units, tr('units done')], [st.mastered || 0, tr('mastered')], [x.days, tr('days active')]]
+        .map(function (v) { return '<div><strong>' + v[0] + '</strong><span>' + v[1] + '</span></div>'; }).join('') + '</div>' +
+      '<h2 class="pfh">' + tr('My learning days') + '</h2>' + calendarHtml() +
+      '<h2 class="pfh">' + tr('My skills') + '</h2>' + (mine.length ? '<ul class="pfskills">' + mine.map(skillRing).join('') + '</ul>' : '<p>' + tr('No skills yet.') + '</p>') +
+      '<h2 class="pfh">' + tr('Badges') + ' <span class="muted">' + earned + '/' + BADGES.length + '</span></h2><ul class="pfbadges">' + BADGES.map(function (b) {
+        var on = b[3](x);
+        return '<li class="' + (on ? 'on' : 'off') + '"><span class="bic" aria-hidden="true">' + b[0] + '</span><strong>' + tr(b[1]) + '</strong><span>' + (on ? tr('Earned') : tr(b[2])) + '</span></li>';
+      }).join('') + '</ul>' +
+      '<h2 class="pfh">📝 ' + tr('My notes') + ' (' + notes.length + ')</h2>' + (notes.length ? '<ul class="savedlist pfnotes">' + notes.slice(0, 30).map(function (id) {
+        var c = CARD[id], n = st.notes[id].t;
+        return '<li class="t-' + tkey(c.topic) + '"><a href="#card=' + id + '"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span><span><strong>' + K.esc(c.unit.track.name) + ' · ' + K.esc(c.unit.title) + '</strong><br>' + K.esc(n.length > 90 ? n.slice(0, 88) + '…' : n) + '</span></a></li>';
+      }).join('') + '</ul>' : '<p class="muted">' + tr('Tap 💬 on any card to write a note or a doubt.') + '</p>') +
+      savedList() +
+      '<div class="introbtns"><a class="btn go" href="' + location.pathname + '" data-back>' + tr('Back to my feed') + ' ↓</a><a class="btn ghost" href="?pick=1" data-pick>' + tr('Change skills') + '</a></div>' +
+      '<div class="share"><span class="share-label">' + tr('Share:') + '</span><a class="share-btn wa" href="' + K.wa(share) + '" target="_blank" rel="noopener">WhatsApp</a></div>' +
+      langSwitch() + '<p class="nhelp">' + tr('Your profile is saved only on this phone. A public profile with login is planned for later.') + '</p>' +
+      '</div></section>';
   }
 
   window.addEventListener('hashchange', function () { if (/card=/.test(location.hash) && st.tracks.length) renderFeed(); });
 
   if (!st.tracks.length || /[?&]pick=1/.test(location.search)) renderPicker();
+  else if (/[?&]profile=1/.test(location.search)) renderProfile();
   else renderFeed();
 }
 /* load Telugu text first when the learner picked Telugu (Phase 8) */
@@ -924,7 +1076,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=1';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=2';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();
