@@ -12,8 +12,8 @@ kit = open(os.path.join(ROOT, 'SOCIAL_KIT.md'), encoding='utf-8').read()
 kit = kit[kit.index('## 6. Instagram Reels'):]
 F = '`' * 3
 
-DEADLINE = {'10': '15 Dec', '15': '30 Nov', '19': '19 Nov'}
-CHECK = {'5'}  # date-sensitive: check the guide before posting
+DEADLINE = {'10': '15 Dec', '15': '30 Nov', '19': '19 Nov', '22': 'Launch 19 Nov'}
+CHECK = {'5', '22'}  # date-sensitive: check the guide before posting
 SKIP = {'1': 'closed 31 Oct', '2': 'outdated', '4': 'closed 31 Oct', '6': 'outdated',
         '7': 'closed 31 Oct', '8': 'closed 31 Oct', '14': 'paid 30 Oct'}  # don't post
 TOPIC = {
@@ -23,7 +23,7 @@ TOPIC = {
     '10': 'PM Fasal Bima (AP Rabi)', '11': 'PM Surya Ghar solar', '12': 'Kisan Credit Card', '13': 'Ujjwala gas subsidy',
     '14': 'PM-KISAN 24th: 30 Oct reported', '15': 'Deepam-2 free cylinder', '16': 'Ayushman Bharat card', '17': 'Atal Pension Yojana',
     '18': 'PM Vidyalaxmi education loan', '19': 'Rajiv Yuva Vikasam (Telangana)', '20': 'Dr NTR Vaidya Seva (AP)',
-    '21': 'PM-KISAN + Annadata paid: not received?'}
+    '21': 'PM-KISAN + Annadata paid: not received?', '22': 'Indiramma Bima (Telangana, reported)'}
 
 shorts = []
 for m in re.finditer(r'^## Short (\d+): (.*?) \(`(.*?)`\)\n(.*?)(?=^## |^# |\Z)', up, re.S | re.M):

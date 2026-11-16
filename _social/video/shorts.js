@@ -873,6 +873,43 @@ const SHORTS = {
       { start: 28, cls: 'end', html: endCardEn('Share with farmer friends! 🌾', 'రైతు మిత్రులకు షేర్ చేయండి') },
     ],
   },
+  // ---------------------------------------------------------------- Short 22: Telangana Indiramma Kutumba Jeevitha Bima (reported; made 16 Nov 2026)
+  22: {
+    file: 'short-22-indiramma-bima-en', lang: 'en', duration: 35, tag: '📢 Telangana · reported', tagColor: '#2563eb', music: { root: 58, seed: 1 },
+    scenes: [
+      { start: 0, dark: true, html: `
+        <div class="kicker" data-in="0" data-dur="0.4">Telangana families: free life cover of</div>
+        <div class="mega gold" data-in="0.3" data-fx="pop" data-pulse style="font-size:190px;white-space:nowrap">₹5 lakh</div>
+        <div class="h1" data-in="0.9">and the govt pays the premium</div>
+        <div class="sub te" data-in="1.2">ఇందిరమ్మ కుటుంబ జీవిత బీమా: ₹5 లక్షల ఉచిత బీమా, ప్రీమియం ప్రభుత్వమే కడుతుంది</div>
+        <div class="pill" data-in="1.9" data-fx="pop" style="background:#2563eb">📢 Reported · launch 19 Nov</div>` },
+      { start: 4.5, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Indiramma Kutumba Jeevitha Bima</div>
+        <div class="h2" data-in="0.2">What we know so far</div>
+        <div class="chips">
+          ${chip('🛡️', '₹5 lakh life cover for the family head or main earner', 'కుటుంబ పెద్దకు ₹5 లక్షల జీవిత బీమా', 1.0)}
+          ${chip('💸', 'The government pays the premium', 'ప్రీమియం ప్రభుత్వమే కడుతుంది', 2.0)}
+          ${chip('✅', 'State Cabinet approved it', 'రాష్ట్ర కేబినెట్ ఆమోదం', 3.0)}
+        </div>
+        <div class="sub" data-in="4.0" style="font-size:36px">Full rules are not published yet. Details may change.</div>` },
+      { start: 11.5, dark: true, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Dates reported by the news</div>
+        <div class="h2" data-in="0.2">Launch and applications</div>
+        <div class="chips">
+          ${chip('🚀', 'Launch: 19 November', 'Reported at Siddipet · 19 నవంబర్ ప్రారంభం', 1.0)}
+          ${chip('🏠', 'House to house, 20–30 November', 'Indiramma Committees collect applications · ఇంటింటికీ దరఖాస్తులు', 2.2)}
+        </div>
+        <div class="warn" data-in="3.6" data-fx="pop">Dates are from news reports, not an official order yet<div class="e te">తేదీలు వార్తల ప్రకారం, అధికారిక ఉత్తర్వు ఇంకా లేదు</div></div>` },
+      { start: 19, cls: 'compact', html: `
+        <div class="label" data-in="0.1">Stay safe</div>
+        <div class="h2" data-in="0.2">Applying is free</div>
+        ${point('✗', 'Never pay anyone to get you enrolled', 'ఎవరికీ డబ్బు ఇవ్వకండి', 1.0)}
+        ${point('✗', 'Never share your OTP', 'OTP ఎవరికీ చెప్పకండి', 2.4)}
+        ${point('✓', 'Wait for your Indiramma Committee visit', 'ఇందిరమ్మ కమిటీ మీ ఇంటికి వచ్చే వరకు వేచి చూడండి', 3.8)}
+        <div class="warn" data-in="5.4" data-fx="pop">We will update our page when rules come out: kramavriddhi.com/updates<div class="e te">నిబంధనలు వస్తే మా పేజీలో అప్‌డేట్ చేస్తాం</div></div>` },
+      { start: 28, cls: 'end', html: endCardEn('Share with Telangana families! 🛡️', 'తెలంగాణ కుటుంబాలకు షేర్ చేయండి') },
+    ],
+  },
 };
 
 // Step 2 of the checker demo: fields fill in after each tap, then the button is pressed.

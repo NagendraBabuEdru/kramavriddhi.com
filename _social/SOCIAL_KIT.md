@@ -636,3 +636,22 @@ Step-by-step 👉 link in bio
 #PMKisan #PMKisanStatus #AnnadataSukhibhava #Farmers #Kramavriddhi
 ```
 Pinned comment: `Status check: kramavriddhi.com/schemes/pm-kisan/ · Did you get it? Comment 👇`
+
+**Reel 22 – Telangana Indiramma Kutumba Jeevitha Bima, reported, English** (`short-22-indiramma-bima-en.mp4`)
+```
+🛡️ Telangana: free ₹5 lakh life insurance for families? Here's what we know
+
+✅ ₹5 lakh life cover for the family head or main earner
+💸 The government pays the premium (Cabinet approved)
+🚀 Launch reported for 19 Nov · house-to-house applications 20–30 Nov (news reports)
+⚠️ Full rules not published yet, details may change
+❌ Applying is free: never pay anyone, never share your OTP
+
+తెలంగాణ: కుటుంబ పెద్దకు ₹5 లక్షల ఉచిత జీవిత బీమా (వార్తల ప్రకారం).
+Latest updates 👉 link in bio
+
+⚠️ Independent page, not the government. Apply only on official portals. We never ask for Aadhaar, OTP or money.
+
+#IndirammaBima #Telangana #TelanganaSchemes #LifeInsurance #Kramavriddhi
+```
+Pinned comment: `Latest: kramavriddhi.com/updates/ · Applying is free, never pay anyone 🛡️`
