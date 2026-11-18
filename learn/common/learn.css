@@ -810,3 +810,22 @@ html.reels-mode .igbar .icr { color: #fff; }
 .crbox { margin-top: var(--space-md); padding: 12px 14px; border-radius: 12px; background: color-mix(in oklab, #F2C811 14%, var(--color-paper)); }
 .crbox .pfh { margin-top: 0; }
 .crbox p { margin: 4px 0 0; font-size: .95rem; }
+
+/* v22: meme breaks (S3) */
+.memecard .post { border-top: 4px solid var(--tc, var(--color-ink)); }
+.memecard .phead .gbskip { margin-left: auto; }
+.meme { position: relative; margin: 4px 0 0; border-radius: 14px; overflow: hidden; background: radial-gradient(120% 90% at 50% 40%, #2c2f36 0%, #111214 70%); color: #fff; text-align: center; padding: 18px 14px 12px; min-height: 300px; display: flex; flex-direction: column; justify-content: space-between; }
+.meme .mtop, .meme .mbot { margin: 0; font: 900 clamp(1.15rem, 5.4vw, 1.5rem)/1.2 var(--font-display); text-transform: uppercase; letter-spacing: .01em; color: #fff; overflow-wrap: break-word;
+  text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000, 0 2px 0 #000, 2px 0 0 #000, 0 -2px 0 #000, -2px 0 0 #000; }
+.lang-te .meme .mtop, .lang-te .meme .mbot { text-transform: none; font-family: var(--font-telugu); line-height: 1.45; }
+.meme .mface { font-size: clamp(4.5rem, 24vw, 6.5rem); line-height: 1.1; margin: 10px 0; filter: drop-shadow(0 6px 14px rgb(0 0 0 / .5)); }
+.meme .mbrand { margin-top: 8px; font: 700 .7rem var(--font-display); letter-spacing: .08em; opacity: .55; }
+.mlesson { margin: 12px 0 0; padding: 10px 12px; border-radius: 12px; background: var(--color-paper-2); font-size: 1rem; line-height: 1.5; }
+.pact.mlaugh { padding: 0 14px; font-size: 1.05rem; border: 1px solid var(--color-rule); }
+.pact.mlaugh[aria-pressed="true"] { background: color-mix(in oklab, #F2C811 35%, var(--color-paper)); border-color: #d9b100; }
+.pact.mlaugh.pop { animation: likebeat 300ms var(--ease-out); }
+.pact.moff { margin-left: auto; font-size: .85rem; color: var(--color-muted); }
+.memerow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: var(--space-md) 0 0; font: 600 1rem var(--font-display); }
+.memerow .btn { border-radius: 999px; box-shadow: none; min-height: 40px; padding-inline: 18px; }
+.memerow .btn[aria-pressed="true"] { background: var(--color-success); color: #fff; border-color: var(--color-success); }
+html.reels-mode .memecard .meme { min-height: 46svh; }

@@ -222,7 +222,7 @@ function kvLearnMain() {
      2. The feed: units from the chosen skills, in order, taking turns
      ===================================================================== */
   var feedCards = [], feedModes = [], reviewNote = {}, queue = [], qi = 0, tries = {}, started = false;
-  var gbs = [], sinceBreak = 0;
+  var gbs = [], sinceBreak = 0, sinceMeme = 0;
 
   function buildQueue() {
     var lists = st.tracks.map(function (id) { return TR[id].units.filter(function (u) { return live(u) && !unitDone(u); }); });
@@ -235,7 +235,7 @@ function kvLearnMain() {
     pill.hidden = false;
     if (/[?&]profile=1/.test(location.search)) history.replaceState(null, '', location.pathname + location.hash);
     feedCards = []; feedModes = []; reviewNote = {}; tries = {};
-    gbs.forEach(function (g) { if (g.timer) clearInterval(g.timer); }); gbs = []; sinceBreak = 0;
+    gbs.forEach(function (g) { if (g.timer) clearInterval(g.timer); }); gbs = []; sinceBreak = 0; sinceMeme = 0;
     queue = buildQueue(); qi = 0;
     var html = intro();
     var hm = /card=([\w.]+)/.exec(location.hash), shared = hm && CARD[hm[1]];
@@ -263,7 +263,9 @@ function kvLearnMain() {
       var u = queue[qi++], rest = u.cards.filter(function (c) { return !isDone(c); });
       html += unitHead(u) + rest.map(function (c) {
         var h = cardHtml(c);
-        if (++sinceBreak >= (todayCount() >= GOAL ? 4 : 6)) { var b = gameBreakHtml(); if (b) { h += b; sinceBreak = 0; } }
+        var gbNow = false;
+        if (++sinceBreak >= (todayCount() >= GOAL ? 4 : 6)) { var b = gameBreakHtml(); if (b) { h += b; sinceBreak = 0; gbNow = true; } }
+        if (!gbNow && ++sinceMeme >= 10) { var mm = memeHtml(); if (mm) { h += mm; sinceMeme = 0; } }
         return h;
       }).join('');
       count += rest.length;
@@ -803,6 +805,8 @@ function kvLearnMain() {
     if (e.target.closest('[data-pick]')) { e.preventDefault(); history.replaceState(null, '', location.pathname + '?pick=1'); renderPicker(); window.scrollTo(0, feed.getBoundingClientRect().top + window.scrollY - 70); return; }
     if (e.target.closest('[data-start]')) { var first = feed.querySelector('.dcard.unithead, .dcard[data-j]'); if (first) scrollToCard(first); return; }
     var gbSec = e.target.closest('.dcard.gamebreak'); if (gbSec) { gbClick(e, gbSec); return; }
+    var mSec = e.target.closest('.dcard.memecard'); if (mSec) { memeClick(e, mSec); return; }
+    if (e.target.closest('[data-memetoggle]')) { st.memesOff = !st.memesOff; save(); K.track('meme_toggle', { on: st.memesOff ? 0 : 1 }); renderProfile(); return; }
     if (e.target.closest('[data-more]')) { var endSec = document.getElementById('c-end'), before = feedCards.length; endSec.insertAdjacentHTML('beforebegin', nextBlocks()); renderEnd(); var n = document.getElementById('c-' + before); if (n) scrollToCard(n.previousElementSibling || n); return; }
     var to = e.target.closest('[data-testout]');
     if (to) {
@@ -961,6 +965,50 @@ function kvLearnMain() {
       var c = CARD[id], title = c.t === 'learn' ? c.title : (c.t === 'output' || (c.t === 'check' && c.code && !c.q)) ? tr('What does this print?') + ' ' + c.code.split('\n')[0] : c.q.replace(/`|\*\*/g, '');
       return '<li class="t-' + tkey(c.topic) + '"><a href="#card=' + id + '"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span><span><strong>' + K.esc(c.unit.track.name) + ' · ' + K.esc(c.unit.title) + '</strong><br>' + K.esc(title.length > 80 ? title.slice(0, 78) + '…' : title) + '</span></a></li>';
     }).join('') + '</ul>';
+  }
+
+  /* =====================================================================
+     Meme breaks: a light, original meme every 10 cards, with a real lesson (Phase S3)
+     ===================================================================== */
+  st.laughs = st.laughs || {};
+  function memeHtml() {
+    var all = window.KV_MEMES || [];
+    if (st.memesOff || !all.length) return '';
+    var pool = all.filter(function (m) { return st.tracks.indexOf(m.tr) >= 0 && TR[m.tr]; });
+    if (!pool.length) return '';
+    var seen = st.memeSeen || [], avail = pool.filter(function (m) { return seen.indexOf(m.id) < 0; });
+    if (!avail.length) { seen = seen.filter(function (id) { return !pool.some(function (m) { return m.id === id; }); }); avail = pool; }
+    var shown = {}; feed.querySelectorAll('.memecard').forEach(function (x) { shown[x.getAttribute('data-meme')] = 1; });
+    var fresh = avail.filter(function (m) { return !shown[m.id]; }); if (fresh.length) avail = fresh;
+    var m = avail[Math.floor(Math.random() * avail.length)], t = TR[m.tr], x = LANG === 'te' && m.te ? m.te : m;
+    seen.push(m.id); st.memeSeen = seen.slice(-40);
+    var share = '😂 ' + x.top + '\n' + m.face + '\n' + x.bottom + '\n\n📚 ' + x.lesson.replace(/`|\*\*/g, '') + '\n\n' + tr('Learn {s} with memes and games on Kramavriddhi Learn:', { s: t.name }) + ' ' + URL + (LANG === 'te' ? '?lang=te' : '');
+    return '<section class="dcard memecard t-' + tkey(t.topic) + '" data-meme="' + m.id + '" aria-label="' + K.esc(tr('😂 Meme break')) + '"><div class="dinner post">' +
+      '<header class="phead"><span class="pav" aria-hidden="true">' + K.esc((TOPIC[tkey(t.topic)] || TOPIC.devops).ab) + '</span><span class="pwho"><strong>' + tr('😂 Meme break') + '</strong><span>' + K.esc(t.name) + '</span></span>' +
+      '<button type="button" class="gbskip" data-memeskip>' + tr('Skip ↓') + '</button></header>' +
+      '<figure class="meme"><p class="mtop">' + K.esc(x.top) + '</p><div class="mface" aria-hidden="true">' + m.face + '</div><p class="mbot">' + K.esc(x.bottom) + '</p><figcaption class="mbrand">kramavriddhi.learn</figcaption></figure>' +
+      '<p class="mlesson">📚 <strong>' + tr('Lesson:') + '</strong> ' + K.rich(x.lesson) + '</p>' +
+      '<div class="pactions"><button type="button" class="pact mlaugh" data-laugh aria-pressed="' + !!st.laughs[m.id] + '">😂 <span>' + tr('Haha') + '</span></button>' +
+      '<a class="pact" href="' + K.wa(share) + '" target="_blank" rel="noopener" data-memeshare aria-label="Share on WhatsApp">' + ICON.share + '</a>' +
+      '<button type="button" class="pact moff" data-memeoff>' + tr('Turn off memes') + '</button></div>' +
+      '</div></section>';
+  }
+  function memeClick(e, sec) {
+    var id = sec.getAttribute('data-meme');
+    if (e.target.closest('[data-memeskip]')) { var nx = sec.nextElementSibling; if (nx) scrollToCard(nx); return; }
+    var lb = e.target.closest('[data-laugh]');
+    if (lb) {
+      var on = !st.laughs[id]; if (on) st.laughs[id] = 1; else delete st.laughs[id];
+      lb.setAttribute('aria-pressed', on); save();
+      if (on) { K.track('meme_laugh', { meme: id }); if (!reduce) { lb.classList.remove('pop'); void lb.offsetWidth; lb.classList.add('pop'); } }
+      return;
+    }
+    if (e.target.closest('[data-memeshare]')) { K.track('meme_share', { meme: id }); return; }
+    if (e.target.closest('[data-memeoff]')) {
+      st.memesOff = true; save(); K.track('meme_toggle', { on: 0 });
+      feed.querySelectorAll('.memecard').forEach(function (x) { if (x !== sec) x.remove(); });
+      sec.querySelector('.dinner').innerHTML = '<p class="mlesson">' + tr('Memes are off. You can turn them on again in your profile.') + '</p>';
+    }
   }
 
   /* ---------- end card */
@@ -1126,6 +1174,7 @@ function kvLearnMain() {
       revealedList() + savedList() +
       '<div class="introbtns"><a class="btn go" href="' + location.pathname + '" data-back>' + tr('Back to my feed') + ' ↓</a><a class="btn ghost" href="?pick=1" data-pick>' + tr('Change skills') + '</a></div>' +
       '<div class="share"><span class="share-label">' + tr('Share:') + '</span><a class="share-btn wa" href="' + K.wa(share) + '" target="_blank" rel="noopener">WhatsApp</a></div>' +
+      '<p class="memerow">😂 ' + tr('Memes in my feed') + ' <button type="button" class="btn ghost" data-memetoggle aria-pressed="' + !st.memesOff + '">' + tr(st.memesOff ? 'Off' : 'On') + '</button></p>' +
       langSwitch() + '<p class="nhelp">' + tr('Your profile is saved only on this phone. A public profile with login is planned for later.') + '</p>' +
       '</div></section>';
   }
@@ -1141,7 +1190,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=4';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=5';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();

@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 16 Nov 2026 (Phase 8 done)
+Last updated: 18 Nov 2026 (S3 meme breaks)
 
 ---
 
@@ -58,6 +58,7 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 6b | Docker, Kubernetes, Ansible, CI/CD Intermediate | Units dk 4–7, k8s 4–6, ans 5–8, ops 4–6 (14 units) to 6–8 cards + 2 checkpoints, same method as Phases 5–6. Gap found 16 Nov 2026: Phase 5 covered only 6 skills | ⬜ **NEXT** (owner's pick pending) |
 | S1 | Reels mode, My notes, Profile (owner asked 16 Nov 2026) | ▶ Reels mode (full screen, one card per swipe, site menu hidden, remembered per phone); 💬 My notes on every card (saved on the phone) + "Ask a doubt" (WhatsApp message with the question and the doubt); 👤 Profile page (`?profile=1`: name + initials avatar, 6 stats, 12-week calendar, skills by level, 11 badges, notes, saved, WhatsApp share). All in English and Telugu | ✅ live (16 Nov 2026). Public comments / public profiles need login + database (decision D5) |
 | S2 | Credits 🪙 (owner asked 16 Nov 2026) | Start 10 (+1 per card already right). Earn: +1 right answer, +2 checkpoint, +3 unit complete, +5 daily goal, +1 per right answer in a speed round. Spend (tap twice to confirm): 💡 50/50 = 1 (choice/output), 🔓 Show solution = 3 (all practice cards; not checkpoints or game-break puzzles). A shown solution counts as a miss, returns for review, and is saved in "Solutions I opened" (profile + end card) linking to that reel (`#card=`). Credits in the top bar, profile and intro | ✅ live (16 Nov 2026) |
+| S3 | Meme breaks (owner asked 18 Nov 2026) | `learn/daily/memes.js`: 30 original memes (3 per skill, EN + Telugu; no meme templates or film stills), each with a real 📚 lesson. One after every 10 cards from the chosen skills (never right after a game break, no repeats until all seen). 😂 Haha, WhatsApp share, "Turn off memes" (back on in Profile) | ✅ live (18 Nov 2026) |
 | 8b | Telugu for Intermediate | The 309 Intermediate cards in Telugu, same method | ⬜ |
 | 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7; 8b can run any time before or after) |
 | 10 | Advanced levels | All tracks | ⬜ |
@@ -192,6 +193,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 18 Nov 2026 | **S3 done:** meme breaks (30 original memes with lessons, EN + Telugu). Rule: memes must be original (no copyrighted templates, film scenes or real people) and the lesson must be a true fact. Analytics `meme_laugh`, `meme_share`, `meme_toggle` |
 | 16 Nov 2026 | **S2 done:** credits 🪙 with 50/50 hint and Show solution; opened solutions saved and linked to their reel. State `st.cr`, `st.revealed`; analytics `credit_spend` |
 | 16 Nov 2026 | **S1 done:** Reels mode, My notes + Ask a doubt, Profile page with calendar and badges (owner asked). New analytics events `reels_mode`, `note_save`, `ask_doubt`, `profile_open`. Note: the site CSS already has a `.note` class, so feed classes use `pnote`/`pnotebox` |
 | 16 Nov 2026 | **Phase 8 done:** Telugu version: 391 Basic cards translated by 4 Sonnet helpers, checked by script (all backtick text, bold marks, answer lists, item counts identical to English) and read by the main session; 171 UI strings in Telugu; Noto Sans Telugu font on Learn pages; language saved per phone (`st.lang`). New analytics event `lang_switch`. **Rule: when a card changes in English, update its Telugu in te.js too (and bump `te.js?v=` in app.js)** |
