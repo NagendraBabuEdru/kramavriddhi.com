@@ -28,6 +28,8 @@ GUIDE_UPDATED = {
                      "ap-nethanna-sevalo", "pm-fasal-bima-yojana", "ap-auto-drivers-sevalo", "ap-ntr-vaidya-seva",
                      "ap-aadabidda-nidhi", "ap-nirudyoga-bhruthi",
                      "pm-vidyalaxmi", "pm-kusum", "ts-indiramma-atmiya-bharosa"], "2026-10-24"),
+    # 22 Nov 2026 fact check
+    **dict.fromkeys(["ap-auto-drivers-sevalo", "ts-rajiv-yuva-vikasam", "ap-thalliki-vandanam", "ts-rythu-bharosa"], "2026-11-22"),
     # 2 Nov 2026 fact check
     **dict.fromkeys(["pm-kisan", "ap-annadata-sukhibhava", "ap-thalliki-vandanam",
                      "aicte-pragati-scholarship", "central-sector-scholarship"], "2026-11-02"),
@@ -166,7 +168,7 @@ SCHEMES = [
          summary="Collateral-free loans of ₹15,000, ₹25,000 and ₹50,000 for street vendors, with a 7% interest subsidy. Open until 2030."),
     dict(slug="ap-auto-drivers-sevalo", name="Auto Drivers Sevalo (Andhra Pradesh)", short="Auto Drivers Sevalo",
          state="ap", cat="business", cat_label="Business & Self-employment", icon="🛺",
-         summary="₹15,000 a year for auto, taxi and maxi-cab owner-drivers in AP. 2026 payment date not yet announced."),
+         summary="₹15,000 a year for auto, taxi and maxi-cab owner-drivers in AP. ₹231 crore released on 17 Nov 2026; payment date awaited."),
     dict(slug="ap-nethanna-sevalo", name="Nethanna Sevalo for Handloom Weavers (Andhra Pradesh)", short="Nethanna Sevalo",
          state="ap", cat="business", cat_label="Business & Self-employment", icon="🧵",
          summary="₹25,000 a year for BPL handloom weaver families who own a loom. 2nd phase payment date not yet announced."),
@@ -2465,7 +2467,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         <h2>What is Rajiv Yuva Vikasam?</h2>
         <p>Rajiv Yuva Vikasam was announced by the Telangana government in 2025 to help unemployed youth from SC, ST, BC and minority communities set up self-employment units, with the government paying most of the cost.</p>
 
-        <div class="note"><strong>Current status (24 October 2026):</strong> About <strong>16 lakh</strong> applications were received. Sanction letters were announced for June 2025 but the rollout was stopped after complaints about ineligible names in the list, and in April 2026 the scheme had still <strong>not been implemented</strong>. In September 2026 the Deputy Chief Minister said the <strong>first phase</strong>, for units costing <strong>up to ₹1 lakh</strong>, will start on <strong>19 November 2026</strong>, with beneficiaries selected under the District Collector. <strong>No money has been paid yet</strong>, and the final list has not been published. Larger units (₹1–4 lakh) have no date.</div>
+        <div class="note"><strong>Current status (24 October 2026):</strong> About <strong>16 lakh</strong> applications were received. Sanction letters were announced for June 2025 but the rollout was stopped after complaints about ineligible names in the list, and in April 2026 the scheme had still <strong>not been implemented</strong>. In September 2026 the Deputy Chief Minister said the <strong>first phase</strong>, for units costing <strong>up to ₹1 lakh</strong>, will start on <strong>19 November 2026</strong>, with beneficiaries selected under the District Collector. <strong>No money has been paid yet</strong>, and the final list has not been published. <strong>Update, 22 November 2026:</strong> we found no news confirming that sanction letters or money began on 19 November. Larger units (₹1–4 lakh) have no date.</div>
 
         <h2>Support that was announced</h2>
         <div class="table-wrap">
@@ -2499,7 +2501,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
         </div>
 ''',
     faqs=[
-        ("Has Rajiv Yuva Vikasam started?", "Not yet. About 16 lakh people applied. In September 2026 the Deputy Chief Minister said the first phase, for units up to ₹1 lakh, will start on 19 November 2026. No money had been paid as of 24 October 2026."),
+        ("Has Rajiv Yuva Vikasam started?", "Not yet. About 16 lakh people applied. In September 2026 the Deputy Chief Minister said the first phase, for units up to ₹1 lakh, will start on 19 November 2026. We found no confirmation that payments began on 19 November (checked 22 November 2026)."),
         ("Will everyone who applied get Rajiv Yuva Vikasam?", "No. Applying does not mean you are selected. Beneficiaries are chosen after verification under the District Collector, and the first phase covers only units up to ₹1 lakh."),
         ("How much support was announced under Rajiv Yuva Vikasam?", "₹50,000 to ₹4 lakh per unit, with a subsidy of 100% for units up to ₹50,000, falling to 70% for units up to ₹4 lakh."),
         ("Who could apply for Rajiv Yuva Vikasam?", "Unemployed SC, ST, BC and minority youth in Telangana with family income below ₹1.5 lakh (rural) or ₹2 lakh (urban), aged 21 to 55."),
@@ -2869,12 +2871,12 @@ s = BY_SLUG["ap-auto-drivers-sevalo"]
 write(f"schemes/{s['slug']}/index.html", article(s,
     lede="Auto Drivers Sevalo is an Andhra Pradesh scheme that gives ₹15,000 a year to auto-rickshaw, taxi (motor cab) and maxi-cab drivers who own and drive their own vehicle. It was started in October 2025 to support drivers after free bus travel for women began.",
     description="Auto Drivers Sevalo (Andhra Pradesh) explained: ₹15,000 a year for auto, taxi and maxi-cab owner-drivers, eligibility, and 2026-27 status.",
-    facts=[("Per year", "₹15,000"), ("Launched", "4 October 2025"), ("Drivers paid (2025)", "About 2.9 lakh"), ("2026 payment", "Date not announced")],
+    facts=[("Per year", "₹15,000"), ("Launched", "4 October 2025"), ("Drivers paid (2025)", "About 2.9 lakh"), ("2026 payment", "Funds released, date awaited")],
     body='''
         <h2>What is Auto Drivers Sevalo?</h2>
         <p>The Andhra Pradesh government launched <strong>Auto Drivers Sevalo</strong> on <strong>4 October 2025</strong> in Vijayawada. About <strong>2.9 lakh drivers</strong> received <strong>₹15,000 each</strong> (about ₹436 crore in total) directly in their bank accounts. The government said the scheme supports drivers whose income was affected by <a href="/schemes/ap-stree-shakti/">Stree Shakti</a> free bus travel for women.</p>
 
-        <div class="note"><strong>2026-27 status:</strong> news reports say funds have been earmarked for Auto Drivers Sevalo in 2026-27, but as of 24 October 2026 we have not found an official date for the second year's payment. We will update this page when it is announced.</div>
+        <div class="note"><strong>2026-27 status (22 November 2026):</strong> news reports say the government issued an order (G.O.Rt.No.142, dated 17 November 2026) releasing <strong>₹231.13 crore</strong> for the second year, ₹15,000 per driver. Reports say the money will be credited "soon", but <strong>no payment date has been announced</strong> and we have not seen confirmation that it has been paid. We will update this page when it is.</div>
 
         <h2>Who is eligible?</h2>
         <ul>
@@ -2903,7 +2905,7 @@ write(f"schemes/{s['slug']}/index.html", article(s,
     faqs=[
         ("How much do auto drivers get in Andhra Pradesh?", "₹15,000 a year under Auto Drivers Sevalo, paid directly to the bank account."),
         ("Who is eligible for Auto Drivers Sevalo?", "Auto, taxi and maxi-cab drivers who own and drive their own vehicle, with a valid licence and AP registration."),
-        ("When will the 2026 Auto Drivers Sevalo money come?", "As of 24 October 2026, no official date has been announced for the second year, though funds are reported as earmarked for 2026-27."),
+        ("When will the 2026 Auto Drivers Sevalo money come?", "As of 22 November 2026, the government has released ₹231.13 crore for 2026-27 (order dated 17 November), but no payment date has been announced and we have not seen confirmation that drivers have been paid."),
         ("Can I apply if I drive someone else's auto?", "According to the government's clarification, the scheme is only for drivers who own and personally drive their vehicle."),
         ("I didn't get the money last year. What can I do?", "Contact your village or ward secretariat with your licence, RC and Aadhaar to have your eligibility checked."),
     ],
@@ -4007,7 +4009,7 @@ CHECKER_TEXT = {
             eshram="Free e-Shram card for unorganised workers aged 16–59, linking you to welfare schemes.",
             pmsym="Workers earning up to ₹15,000 a month can get a ₹3,000 pension at 60; the government matches your payment.",
             svanidhi="Street vendors get collateral-free loans of ₹15,000, ₹25,000 and ₹50,000 with a 7% interest subsidy.",
-            apAuto="AP auto, taxi and maxi-cab owner-drivers got ₹15,000 a year (2026 payment date not announced yet).",
+            apAuto="AP auto, taxi and maxi-cab owner-drivers got ₹15,000 a year (₹231 crore released on 17 Nov 2026; payment date awaited).",
             pmfby="Farmers can insure notified crops for a small premium: at most 1.5% for Rabi food and oilseed crops.",
             pmfbyAp="Insure your Rabi crop for a small premium. AP last date: 15 December (paddy 31 December).",
             pmfbyTs="Telangana plans crop insurance from Yasangi 2026-27, but it is not notified yet. Ask your AEO.",
@@ -4840,13 +4842,13 @@ write("games/index.html",
 # ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
 # Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
 UPDATES = [
-    dict(kind="news", date="10 Nov 2026",
-         title="Telangana: ₹5 lakh family life insurance to start on 19 November",
-         text="The state Cabinet approved Indiramma Kutumba Jeevitha Bima, a ₹5 lakh life cover for the head or main earner of each family, with the premium paid by the government. News reports say it will be launched on 19 November at Siddipet; Indiramma Committees are to collect applications house to house from 20 to 30 November. Full rules are not published yet. Applying is free: never pay anyone.",
+    dict(kind="news", date="20 Nov 2026",
+         title="Telangana: ₹5 lakh family life insurance launched on 19 November",
+         text="News reports say Chief Minister Revanth Reddy launched Indiramma Kutumba Jeevitha Bima at Siddipet on 19 November: a ₹5 lakh life cover for one earning member of each family, with the premium paid by the government. Reports differ on enrolment dates (village-level collection from 20 to 30 November in one, camps until 18 December in another), so wait for the official notice from your Gram Panchayat or Tahsildar. Applying is free: never pay anyone.",
          link="/schemes/telangana/"),
-    dict(kind="news", date="9 Nov 2026",
+    dict(kind="news", date="22 Nov 2026",
          title="Rythu Bharosa Yasangi 2026-27: no release date yet",
-         text="The Telangana government has not announced when the ₹6,000 per acre Yasangi (Rabi) instalment will be paid. No announcement was made at the Chief Minister's farmers' meeting on 9 November.",
+         text="As of 22 November the Telangana government has not announced when the ₹6,000 per acre Yasangi (Rabi) instalment will be paid. No announcement was made at the Chief Minister's farmers' meeting on 9 November.",
          link="/schemes/ts-rythu-bharosa/"),
     dict(kind="news", date="30 Oct 2026",
          title="PM-KISAN 24th instalment paid on 30 October",
@@ -4856,17 +4858,17 @@ UPDATES = [
          title="Annadata Sukhibhava 2nd instalment paid on 30 October",
          text="News reports say ₹7,000 per family (₹5,000 state + ₹2,000 PM-KISAN) was credited to about 46.86 lakh farmer families. About 17,828 farmers did not get it because of technical problems; ask at your Rythu Seva Kendram.",
          link="/schemes/ap-annadata-sukhibhava/"),
-    dict(kind="expected", date="16 Nov 2026",
+    dict(kind="expected", date="22 Nov 2026",
          title="Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed",
-         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not officially confirmed as paid by 16 November.",
+         text="The 2nd phase covers 3,29,201 students: new Class 1 and Inter first-year admissions and those left out in July. The order was issued on 10 October. The money was expected before Dasara but is not officially confirmed as paid by 22 November.",
          link="/schemes/ap-thalliki-vandanam/"),
     dict(kind="deadline", date="15 Oct 2026", until="2026-12-31",
          title="AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)",
          text="Under PM Fasal Bima Yojana, farmers pay at most 1.5% premium for Rabi food and oilseed crops. Enrol through your bank, CSC or Rythu Seva Kendram; an Agristack farmer ID is needed.",
          link="/schemes/pm-fasal-bima-yojana/"),
-    dict(kind="news", date="24 Oct 2026",
-         title="AP Auto Drivers Sevalo: 2026 payment date not announced",
-         text="Last year auto, taxi and maxi-cab owner-drivers got ₹15,000 on 4 October 2025. No official date has been given for this year's payment yet.",
+    dict(kind="news", date="22 Nov 2026",
+         title="AP Auto Drivers Sevalo: ₹231 crore released, payment date awaited",
+         text="An order dated 17 November releases ₹231.13 crore for auto, taxi and maxi-cab owner-drivers, ₹15,000 each (G.O.Rt.No.142). Reports say the money will be credited soon, but no payment date is announced and payment is not yet confirmed.",
          link="/schemes/ap-auto-drivers-sevalo/"),
     dict(kind="expected", date="15 Oct 2026",
          title="Nethanna Sevalo 2nd phase: ₹25,000 for weavers, date awaited",
@@ -4888,9 +4890,9 @@ UPDATES = [
          title="Sukanya Samriddhi interest stays at 8.2% for Oct–Dec 2026",
          text="The rate is reviewed every quarter. The next announcement is expected at the end of December.",
          link="/schemes/sukanya-samriddhi-yojana/"),
-    dict(kind="expected", date="15 Sep 2026",
-         title="Rajiv Yuva Vikasam: first phase planned from 19 November",
-         text="The Deputy CM said units up to ₹1 lakh will be supported first, from 19 November 2026. The final beneficiary list is not out yet, and applying does not guarantee selection.",
+    dict(kind="expected", date="22 Nov 2026",
+         title="Rajiv Yuva Vikasam: 19 November start not confirmed",
+         text="The Deputy CM said units up to ₹1 lakh would be supported first, from 19 November 2026. We found no news that sanction letters or money began on that date, and the final beneficiary list is not out. Applying does not guarantee selection.",
          link="/schemes/ts-rajiv-yuva-vikasam/"),
     dict(kind="news", date="1 Sep 2026",
          title="Kalyana Lakshmi and Shaadi Mubarak continue after High Court order",
@@ -4913,7 +4915,7 @@ UPDATES = [
          text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
          link="/schemes/pm-internship-scheme/"),
 ]
-UPDATES_CHECKED = "16 November 2026"  # change when you re-check the list
+UPDATES_CHECKED = "22 November 2026"  # change when you re-check the list
 KIND_LABEL = {"deadline": "Deadline", "expected": "Expected", "news": "News", "rate": "Rate"}
 
 def update_item(u):
@@ -4962,20 +4964,20 @@ with open(os.path.join(os.path.dirname(__file__), "home_updates.html"), "w", enc
 
 # ---- Telugu updates page (added 18 Oct 2026). Every item in UPDATES needs a Telugu entry here (keyed by the English title).
 TE_UPDATES = {
-    "Telangana: ₹5 lakh family life insurance to start on 19 November": ("తెలంగాణ: కుటుంబానికి ₹5 లక్షల జీవిత బీమా 19 నవంబర్ నుంచి",
-        "ఇందిరమ్మ కుటుంబ జీవిత బీమాకు మంత్రివర్గం ఆమోదం తెలిపింది: ప్రతి కుటుంబ పెద్ద లేదా సంపాదించే వ్యక్తికి ₹5 లక్షల జీవిత బీమా, ప్రీమియం ప్రభుత్వమే కడుతుంది. వార్తల ప్రకారం 19 నవంబర్‌న సిద్దిపేటలో ప్రారంభం; 20 నుంచి 30 నవంబర్ వరకు ఇందిరమ్మ కమిటీలు ఇంటింటికీ వచ్చి దరఖాస్తులు తీసుకుంటాయి. పూర్తి నిబంధనలు ఇంకా రాలేదు. దరఖాస్తు ఉచితం: ఎవరికీ డబ్బు ఇవ్వకండి."),
+    "Telangana: ₹5 lakh family life insurance launched on 19 November": ("తెలంగాణ: కుటుంబానికి ₹5 లక్షల జీవిత బీమా 19 నవంబర్‌న ప్రారంభం",
+        "వార్తల ప్రకారం ముఖ్యమంత్రి రేవంత్ రెడ్డి 19 నవంబర్‌న సిద్దిపేటలో ఇందిరమ్మ కుటుంబ జీవిత బీమాను ప్రారంభించారు: ప్రతి కుటుంబంలో సంపాదించే ఒకరికి ₹5 లక్షల జీవిత బీమా, ప్రీమియం ప్రభుత్వమే కడుతుంది. నమోదు తేదీలపై వార్తల్లో తేడాలున్నాయి (ఒక వార్తలో 20–30 నవంబర్ గ్రామ స్థాయిలో దరఖాస్తులు, మరొకదానిలో 18 డిసెంబర్ వరకు శిబిరాలు), కాబట్టి మీ గ్రామ పంచాయతీ లేదా తహశీల్దార్ నుంచి అధికారిక ప్రకటన కోసం చూడండి. దరఖాస్తు ఉచితం: ఎవరికీ డబ్బు ఇవ్వకండి."),
     "Rythu Bharosa Yasangi 2026-27: no release date yet": ("రైతు భరోసా యాసంగి 2026-27: విడుదల తేదీ ఇంకా లేదు",
-        "ఎకరానికి ₹6,000 యాసంగి విడత ఎప్పుడు ఇస్తారో తెలంగాణ ప్రభుత్వం ఇంకా ప్రకటించలేదు. 9 నవంబర్‌న ముఖ్యమంత్రి రైతు సభలో కూడా ప్రకటన రాలేదు."),
+        "22 నవంబర్ నాటికి ఎకరానికి ₹6,000 యాసంగి విడత ఎప్పుడు ఇస్తారో తెలంగాణ ప్రభుత్వం ఇంకా ప్రకటించలేదు. 9 నవంబర్‌న ముఖ్యమంత్రి రైతు సభలో కూడా ప్రకటన రాలేదు."),
     "AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)": ("ఏపీ రబీ పంటల బీమా: 15 డిసెంబర్ లోపు చేరండి (వరికి 31 డిసెంబర్)",
         "పీఎం ఫసల్ బీమా యోజన కింద రబీ ఆహార, నూనెగింజల పంటలకు రైతు గరిష్ఠంగా 1.5% ప్రీమియం కడతారు. బ్యాంకు, CSC లేదా రైతు సేవా కేంద్రంలో చేరండి; అగ్రిస్టాక్ రైతు ఐడీ అవసరం."),
     "Annadata Sukhibhava 2nd instalment paid on 30 October": ("అన్నదాత సుఖీభవ రెండో విడత 30 అక్టోబర్‌న జమ",
         "ఒక్కో కుటుంబానికి ₹7,000 (రాష్ట్రం ₹5,000 + పీఎం కిసాన్ ₹2,000) సుమారు 46.86 లక్షల రైతు కుటుంబాల ఖాతాల్లో జమ అయిందని వార్తలు చెబుతున్నాయి. సాంకేతిక సమస్యల వల్ల సుమారు 17,828 మందికి రాలేదు; రైతు సేవా కేంద్రంలో అడగండి."),
     "Thalliki Vandanam 2nd phase: ₹13,000 for new students delayed": ("తల్లికి వందనం రెండో విడత: కొత్త విద్యార్థులకు ₹13,000 ఆలస్యం",
-        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న ఉత్తర్వు వచ్చింది. దసరా లోపు వస్తుందనుకున్నా, 16 నవంబర్ నాటికి జమ అయినట్లు అధికారిక నిర్ధారణ లేదు."),
+        "రెండో విడతలో 3,29,201 మంది విద్యార్థులు: కొత్తగా 1వ తరగతి, ఇంటర్ మొదటి సంవత్సరంలో చేరినవారు, జూలైలో రానివారు. 10 అక్టోబర్‌న ఉత్తర్వు వచ్చింది. దసరా లోపు వస్తుందనుకున్నా, 22 నవంబర్ నాటికి జమ అయినట్లు అధికారిక నిర్ధారణ లేదు."),
     "PM-KISAN 24th instalment paid on 30 October": ("పీఎం కిసాన్ 24వ విడత 30 అక్టోబర్‌న జమ",
         "PIB ప్రకారం 9.34 కోట్ల రైతులకు ఒక్కొక్కరికి ₹2,000 చొప్పున సుమారు ₹18,690 కోట్లు జమ అయ్యాయి. రాలేదా? pmkisan.gov.in లో Know Your Status చూడండి (ఈకేవైసీ, ల్యాండ్ సీడింగ్, ఆధార్ బ్యాంకు లింక్). 25వ విడత తేదీ ఇంకా ప్రకటించలేదు."),
-    "AP Auto Drivers Sevalo: 2026 payment date not announced": ("ఏపీ ఆటో డ్రైవర్ల సేవలో: 2026 చెల్లింపు తేదీ ప్రకటించలేదు",
-        "గత ఏడాది సొంత ఆటో, ట్యాక్సీ, మ్యాక్సీ క్యాబ్ డ్రైవర్లకు 4 అక్టోబర్ 2025న ₹15,000 ఇచ్చారు. ఈ ఏడాది చెల్లింపుకు అధికారిక తేదీ ఇంకా ఇవ్వలేదు."),
+    "AP Auto Drivers Sevalo: ₹231 crore released, payment date awaited": ("ఏపీ ఆటో డ్రైవర్ల సేవలో: ₹231 కోట్లు విడుదల, చెల్లింపు తేదీ రాలేదు",
+        "సొంత ఆటో, ట్యాక్సీ, మ్యాక్సీ క్యాబ్ డ్రైవర్లకు ఒక్కొక్కరికి ₹15,000 చొప్పున ₹231.13 కోట్లు విడుదల చేస్తూ 17 నవంబర్‌న ఉత్తర్వు (G.O.Rt.No.142) వచ్చింది. డబ్బు త్వరలో జమ అవుతుందని వార్తలు చెబుతున్నాయి, కానీ చెల్లింపు తేదీ ప్రకటించలేదు, జమ అయినట్లు నిర్ధారణ లేదు."),
     "Nethanna Sevalo 2nd phase: ₹25,000 for weavers, date awaited": ("నేతన్నల సేవలో రెండో విడత: నేతన్నలకు ₹25,000, తేదీ కోసం ఎదురుచూపు",
         "రెండో విడతకు 36,632 మంది చేనేత కార్మికులు దరఖాస్తు చేశారు, జాబితా 3 అక్టోబర్ నాటికి ఖరారు కావాలి. చెల్లింపు తేదీ ఇంకా ప్రకటించలేదు."),
     "Deepam-2: book your free gas cylinder by 30 November": ("దీపం-2: 30 నవంబర్ లోపు ఉచిత గ్యాస్ సిలిండర్ బుక్ చేయండి",
@@ -4986,8 +4988,8 @@ TE_UPDATES = {
         "యాసంగి సీజన్ నుంచి పంటల బీమా మళ్ళీ తెస్తామని ప్రభుత్వం చెప్పింది. అధికారిక నోటిఫికేషన్, చివరి తేదీ ఇంకా రాలేదు."),
     "Sukanya Samriddhi interest stays at 8.2% for Oct–Dec 2026": ("అక్టోబర్–డిసెంబర్ 2026కు సుకన్య సమృద్ధి వడ్డీ 8.2%",
         "వడ్డీ రేటును ప్రతి త్రైమాసికం సమీక్షిస్తారు. తర్వాతి ప్రకటన డిసెంబర్ చివర్లో రావచ్చు."),
-    "Rajiv Yuva Vikasam: first phase planned from 19 November": ("రాజీవ్ యువ వికాసం: 19 నవంబర్ నుంచి మొదటి విడత ప్రణాళిక",
-        "₹1 లక్ష వరకు యూనిట్లకు ముందు, 19 నవంబర్ 2026 నుంచి సాయం ఇస్తామని ఉప ముఖ్యమంత్రి చెప్పారు. తుది లబ్ధిదారుల జాబితా ఇంకా రాలేదు, దరఖాస్తు చేసినంత మాత్రాన ఎంపిక కాదు."),
+    "Rajiv Yuva Vikasam: 19 November start not confirmed": ("రాజీవ్ యువ వికాసం: 19 నవంబర్ ప్రారంభం నిర్ధారణ కాలేదు",
+        "₹1 లక్ష వరకు యూనిట్లకు ముందు, 19 నవంబర్ 2026 నుంచి సాయం ఇస్తామని ఉప ముఖ్యమంత్రి చెప్పారు. ఆ రోజున మంజూరు పత్రాలు లేదా డబ్బు మొదలైనట్లు వార్తలు కనపడలేదు, తుది లబ్ధిదారుల జాబితా రాలేదు. దరఖాస్తు చేసినంత మాత్రాన ఎంపిక కాదు."),
     "Kalyana Lakshmi and Shaadi Mubarak continue after High Court order": ("హైకోర్టు ఉత్తర్వు తర్వాత కళ్యాణ లక్ష్మి, షాదీ ముబారక్ కొనసాగుతున్నాయి",
         "పెళ్ళి సాయం పథకాలను నిలిపిన సింగిల్ జడ్జి ఉత్తర్వుపై డివిజన్ బెంచ్ స్టే ఇచ్చింది. తులం బంగారం హామీ ఇంకా అమలు కాలేదు."),
     "PM-KISAN continued until 2030-31": ("పీఎం కిసాన్ 2030-31 వరకు కొనసాగింపు",
