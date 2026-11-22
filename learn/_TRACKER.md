@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 18 Nov 2026 (S3 meme breaks)
+Last updated: 22 Nov 2026 (Phase 6b done)
 
 ---
 
@@ -55,7 +55,7 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | 6 | Docker, Kubernetes, Ansible, CI/CD Basic | Docker, Kubernetes, Ansible and DevOps/CI-CD Basic levels complete | ✅ live (15 Nov 2026): 94 new cards, 13 Basic units complete (6 to 8 cards + 2 checkpoints each); bug cards now show the right file (Dockerfile, terminal, deployment.yaml, ci.yml) |
 | 7 | Install as an app (PWA) | Add to home screen, works offline, optional daily reminder | ✅ live (15 Nov 2026): `learn/manifest.webmanifest` (name "Kramavriddhi Learn", opens `/learn/daily/`), icons in `learn/icons/`, service worker `learn/sw.js` (scope `/learn/`: saves all 8 Learn pages + their files on first visit; pages network-first, `?v=` files cache-first, keeps only the newest version of each file). Profile card has 📲 Install (one tap on Android Chrome; steps for iPhone and other browsers) and ⏰ Daily reminder = a repeating event in the learner's **own calendar** (Google Calendar link or .ics file), because real push notifications need a server (later, with D5) |
 | 8 | Telugu version | Telugu explainer cards and questions | ✅ live (16 Nov 2026): English / తెలుగు switch on the picker and profile card (also `?lang=te` links); all **391 Basic cards** of all 10 skills, all 142 unit titles, skill blurbs and every button/label in Telugu (`learn/daily/te.js`, loaded only in Telugu mode). Code, commands, outputs and backtick text stay English; tech words stay in English letters. Intermediate units show "English for now" (→ **8b**) |
-| 6b | Docker, Kubernetes, Ansible, CI/CD Intermediate | Units dk 4–7, k8s 4–6, ans 5–8, ops 4–6 (14 units) to 6–8 cards + 2 checkpoints, same method as Phases 5–6. Gap found 16 Nov 2026: Phase 5 covered only 6 skills | ⬜ **NEXT** (owner's pick pending) |
+| 6b | Docker, Kubernetes, Ansible, CI/CD Intermediate | Units dk 4–7, k8s 4–6, ans 5–8, ops 4–6 (14 units) to 6–8 cards + 2 checkpoints, same method as Phases 5–6. Gap found 16 Nov 2026: Phase 5 covered only 6 skills | ✅ live (22 Nov 2026): 121 new cards, 14 Intermediate units complete (6 to 8 cards + 2 checkpoints); Compose cards show `compose.yaml` |
 | S1 | Reels mode, My notes, Profile (owner asked 16 Nov 2026) | ▶ Reels mode (full screen, one card per swipe, site menu hidden, remembered per phone); 💬 My notes on every card (saved on the phone) + "Ask a doubt" (WhatsApp message with the question and the doubt); 👤 Profile page (`?profile=1`: name + initials avatar, 6 stats, 12-week calendar, skills by level, 11 badges, notes, saved, WhatsApp share). All in English and Telugu | ✅ live (16 Nov 2026). Public comments / public profiles need login + database (decision D5) |
 | S2 | Credits 🪙 (owner asked 16 Nov 2026) | Start 10 (+1 per card already right). Earn: +1 right answer, +2 checkpoint, +3 unit complete, +5 daily goal, +1 per right answer in a speed round. Spend (tap twice to confirm): 💡 50/50 = 1 (choice/output), 🔓 Show solution = 3 (all practice cards; not checkpoints or game-break puzzles). A shown solution counts as a miss, returns for review, and is saved in "Solutions I opened" (profile + end card) linking to that reel (`#card=`). Credits in the top bar, profile and intro | ✅ live (16 Nov 2026) |
 | S3 | Meme breaks (owner asked 18 Nov 2026) | `learn/daily/memes.js`: 30 original memes (3 per skill, EN + Telugu; no meme templates or film stills), each with a real 📚 lesson. One after every 10 cards from the chosen skills (never right after a game break, no repeats until all seen). 😂 Haha, WhatsApp share, "Turn off memes" (back on in Profile) | ✅ live (18 Nov 2026) |
@@ -117,28 +117,28 @@ Added 15 Nov 2026 at the owner's request.
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 images vs containers · 2 run, ps, stop · 3 Dockerfile | ✅ complete (Phase 6) |
-| Intermediate | 4 volumes · 5 networks · 6 Docker Compose · 7 registries | ⬜ |
+| Intermediate | 4 volumes · 5 networks · 6 Docker Compose · 7 registries | ✅ complete (Phase 6b) |
 | Advanced | 8 multi-stage builds · 9 image size and security | ⬜ |
 
 ### 4.7 Kubernetes (`k8s`) · brand look: kubernetes.io
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 cluster, node, pod · 2 kubectl basics · 3 deployments | ✅ complete (Phase 6) |
-| Intermediate | 4 services · 5 ConfigMaps and Secrets · 6 scaling | ⬜ |
+| Intermediate | 4 services · 5 ConfigMaps and Secrets · 6 scaling | ✅ complete (Phase 6b) |
 | Advanced | 7 ingress · 8 Helm · 9 RBAC · 10 AKS on Azure | ⬜ |
 
 ### 4.8 Ansible (`ans`) · brand look: Ansible docs
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 inventory · 2 ad-hoc commands · 3 playbook structure · 4 apt, copy, service | ✅ complete (Phase 6; full game "Fix the Playbook" ✅) |
-| Intermediate | 5 variables · 6 handlers · 7 templates · 8 loops and conditions | ⬜ |
+| Intermediate | 5 variables · 6 handlers · 7 templates · 8 loops and conditions | ✅ complete (Phase 6b) |
 | Advanced | 9 roles · 10 Ansible Vault · 11 Galaxy · 12 testing idempotency | ⬜ |
 
 ### 4.9 DevOps and CI/CD (`ops`) · brand look: Microsoft Learn (green)
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 what DevOps is · 2 environments (dev, staging, prod) · 3 continuous integration | ✅ complete (Phase 6) |
-| Intermediate | 4 pipeline YAML (GitHub Actions / Azure Pipelines) · 5 test stages · 6 artifacts | ⬜ |
+| Intermediate | 4 pipeline YAML (GitHub Actions / Azure Pipelines) · 5 test stages · 6 artifacts | ✅ complete (Phase 6b) |
 | Advanced | 7 blue-green and canary releases · 8 infrastructure as code · 9 monitoring and SRE basics | ⬜ |
 
 ## 5. What is live now (inventory)
@@ -146,7 +146,7 @@ Added 15 Nov 2026 at the owner's request.
 | Page | URL | Notes |
 |---|---|---|
 | Hub | /learn/ | Daily banner, Cloud & DevOps card, Python card, total stars of 60 |
-| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 704 cards in 86 live units, 10 skills. Old day-based feed retired 15 Nov 2026 |
+| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 825 cards in 98 live units, 10 skills. Old day-based feed retired 15 Nov 2026 |
 | Cloud & DevOps | /learn/devops/ | 2 games + 6 coming-soon cards |
 | Build the Data Pipeline | /learn/devops/azure-data-pipeline/ | 5 levels |
 | Fix the Playbook | /learn/devops/ansible-fix-the-playbook/ | 5 levels |
@@ -193,6 +193,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 22 Nov 2026 | **Phase 6b done:** Intermediate complete for Docker, Kubernetes, Ansible, DevOps (121 cards, 2 Sonnet helpers; 28 YAML samples parsed; every card read). Basic + Intermediate now complete for all 10 skills |
 | 18 Nov 2026 | **S3 done:** meme breaks (30 original memes with lessons, EN + Telugu). Rule: memes must be original (no copyrighted templates, film scenes or real people) and the lesson must be a true fact. Analytics `meme_laugh`, `meme_share`, `meme_toggle` |
 | 16 Nov 2026 | **S2 done:** credits 🪙 with 50/50 hint and Show solution; opened solutions saved and linked to their reel. State `st.cr`, `st.revealed`; analytics `credit_spend` |
 | 16 Nov 2026 | **S1 done:** Reels mode, My notes + Ask a doubt, Profile page with calendar and badges (owner asked). New analytics events `reels_mode`, `note_save`, `ask_doubt`, `profile_open`. Note: the site CSS already has a `.note` class, so feed classes use `pnote`/`pnotebox` |

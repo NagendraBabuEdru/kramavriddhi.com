@@ -166,8 +166,8 @@ function kvLearnMain() {
     if (!m0) return K.esc(text);
     return m0[1] + (m0[2] ? '<span class="d">- </span>' : '') + '<span class="k">' + K.esc(m0[3]) + '</span>:' + (m0[4] ? '<span class="v">' + K.esc(m0[4]) + '</span>' : '');
   }
-  function hlLine(l, lang) { return lang === 'yaml' || lang === 'k8s' || lang === 'ci' ? hlYaml(l) : lang === 'python' || !lang ? hlPy(l) : K.esc(l).replace(/(#.*)$/, '<span class="d">$1</span>'); }
-  var FILE = { python: 'main.py', yaml: 'site.yml', ini: 'inventory.ini', sql: 'query.sql', shell: 'terminal', docker: 'Dockerfile', k8s: 'deployment.yaml', ci: '.github/workflows/ci.yml' };
+  function hlLine(l, lang) { return lang === 'yaml' || lang === 'k8s' || lang === 'ci' || lang === 'compose' ? hlYaml(l) : lang === 'python' || !lang ? hlPy(l) : K.esc(l).replace(/(#.*)$/, '<span class="d">$1</span>'); }
+  var FILE = { python: 'main.py', yaml: 'site.yml', ini: 'inventory.ini', sql: 'query.sql', shell: 'terminal', docker: 'Dockerfile', k8s: 'deployment.yaml', ci: '.github/workflows/ci.yml', compose: 'compose.yaml' };
   function codeBlock(lines, asButtons, lang) {
     return '<div class="editor dcode">' + (lang && lang !== 'python' ? '<div class="ed-bar"><span class="file">' + FILE[lang] + '</span></div>' : '') + (asButtons
       ? '<ol class="bug-lines">' + lines.map(function (l, n) {
