@@ -4842,9 +4842,13 @@ write("games/index.html",
 # ---------------------------------------------------------------- latest updates & deadlines (added 8 Oct 2026)
 # Newest first. kind: "deadline" | "expected" | "news" | "rate". until = last useful day (YYYY-MM-DD) for deadlines.
 UPDATES = [
-    dict(kind="news", date="20 Nov 2026",
+    dict(kind="news", date="23 Nov 2026",
+         title="Telangana: one crore Indiramma sarees for women, distribution under way",
+         text="News reports say distribution of one crore sarees began on 19 November: villages first (reported to run until 9 December), then towns and cities in a second phase planned for 1 to 8 March. Collect yours from your ward or village distribution point; it is free, so never pay anyone. Details are from news reports, not an official notice.",
+         link="/schemes/telangana/"),
+    dict(kind="news", date="23 Nov 2026",
          title="Telangana: ₹5 lakh family life insurance launched on 19 November",
-         text="News reports say Chief Minister Revanth Reddy launched Indiramma Kutumba Jeevitha Bima at Siddipet on 19 November: a ₹5 lakh life cover for one earning member of each family, with the premium paid by the government. Reports differ on enrolment dates (village-level collection from 20 to 30 November in one, camps until 18 December in another), so wait for the official notice from your Gram Panchayat or Tahsildar. Applying is free: never pay anyone.",
+         text="News reports say Chief Minister Revanth Reddy launched Indiramma Kutumba Jeevitha Bima at Siddipet on 19 November: a ₹5 lakh life cover for one earning member of each family (reported age 18 to 59), with the premium paid by the government. Reports say you need Aadhaar, ration card and mobile number, one application per ration card, and ration card e-KYC done at your ration shop. Reports differ on enrolment dates (door-to-door 20 to 30 November in one, month-long camps at gram panchayats and urban wards in another), so wait for the official notice from your Gram Panchayat or Tahsildar. Applying is free: never pay anyone. We have not found the official order, so details may change.",
          link="/schemes/telangana/"),
     dict(kind="news", date="22 Nov 2026",
          title="Rythu Bharosa Yasangi 2026-27: no release date yet",
@@ -4915,7 +4919,7 @@ UPDATES = [
          text="Final-year UG and PG students aged 18–25 can apply with an NOC from their college. Interns get at least ₹9,000 a month.",
          link="/schemes/pm-internship-scheme/"),
 ]
-UPDATES_CHECKED = "22 November 2026"  # change when you re-check the list
+UPDATES_CHECKED = "23 November 2026"  # change when you re-check the list
 KIND_LABEL = {"deadline": "Deadline", "expected": "Expected", "news": "News", "rate": "Rate"}
 
 def update_item(u):
@@ -4964,8 +4968,10 @@ with open(os.path.join(os.path.dirname(__file__), "home_updates.html"), "w", enc
 
 # ---- Telugu updates page (added 18 Oct 2026). Every item in UPDATES needs a Telugu entry here (keyed by the English title).
 TE_UPDATES = {
+    "Telangana: one crore Indiramma sarees for women, distribution under way": ("తెలంగాణ: మహిళలకు కోటి ఇందిరమ్మ చీరలు, పంపిణీ జరుగుతోంది",
+        "వార్తల ప్రకారం కోటి చీరల పంపిణీ 19 నవంబర్‌న మొదలైంది: ముందు గ్రామాల్లో (9 డిసెంబర్ వరకు అని వార్తలు), తర్వాత పట్టణాలు, నగరాల్లో రెండో దశ మార్చి 1–8న. మీ వార్డు లేదా గ్రామ పంపిణీ కేంద్రంలో తీసుకోండి; ఉచితం, ఎవరికీ డబ్బు ఇవ్వకండి. వివరాలు వార్తల నుంచి, అధికారిక ప్రకటన కాదు."),
     "Telangana: ₹5 lakh family life insurance launched on 19 November": ("తెలంగాణ: కుటుంబానికి ₹5 లక్షల జీవిత బీమా 19 నవంబర్‌న ప్రారంభం",
-        "వార్తల ప్రకారం ముఖ్యమంత్రి రేవంత్ రెడ్డి 19 నవంబర్‌న సిద్దిపేటలో ఇందిరమ్మ కుటుంబ జీవిత బీమాను ప్రారంభించారు: ప్రతి కుటుంబంలో సంపాదించే ఒకరికి ₹5 లక్షల జీవిత బీమా, ప్రీమియం ప్రభుత్వమే కడుతుంది. నమోదు తేదీలపై వార్తల్లో తేడాలున్నాయి (ఒక వార్తలో 20–30 నవంబర్ గ్రామ స్థాయిలో దరఖాస్తులు, మరొకదానిలో 18 డిసెంబర్ వరకు శిబిరాలు), కాబట్టి మీ గ్రామ పంచాయతీ లేదా తహశీల్దార్ నుంచి అధికారిక ప్రకటన కోసం చూడండి. దరఖాస్తు ఉచితం: ఎవరికీ డబ్బు ఇవ్వకండి."),
+        "వార్తల ప్రకారం ముఖ్యమంత్రి రేవంత్ రెడ్డి 19 నవంబర్‌న సిద్దిపేటలో ఇందిరమ్మ కుటుంబ జీవిత బీమాను ప్రారంభించారు: ప్రతి కుటుంబంలో సంపాదించే ఒకరికి (వయసు 18–59 అని వార్తలు) ₹5 లక్షల జీవిత బీమా, ప్రీమియం ప్రభుత్వమే కడుతుంది. ఆధార్, రేషన్ కార్డు, మొబైల్ నంబర్ కావాలని, రేషన్ కార్డుకు ఒక్క దరఖాస్తే అని, రేషన్ షాపులో రేషన్ కార్డు ఈ-కేవైసీ పూర్తి చేయాలని వార్తలు చెబుతున్నాయి. నమోదు తేదీలపై వార్తల్లో తేడాలున్నాయి (ఒక వార్తలో 20–30 నవంబర్ ఇంటింటికీ, మరొకదానిలో గ్రామ పంచాయతీలు, పట్టణ వార్డుల్లో నెల రోజుల శిబిరాలు), కాబట్టి మీ గ్రామ పంచాయతీ లేదా తహశీల్దార్ నుంచి అధికారిక ప్రకటన కోసం చూడండి. దరఖాస్తు ఉచితం: ఎవరికీ డబ్బు ఇవ్వకండి. అధికారిక ఉత్తర్వు మాకు దొరకలేదు, వివరాలు మారవచ్చు."),
     "Rythu Bharosa Yasangi 2026-27: no release date yet": ("రైతు భరోసా యాసంగి 2026-27: విడుదల తేదీ ఇంకా లేదు",
         "22 నవంబర్ నాటికి ఎకరానికి ₹6,000 యాసంగి విడత ఎప్పుడు ఇస్తారో తెలంగాణ ప్రభుత్వం ఇంకా ప్రకటించలేదు. 9 నవంబర్‌న ముఖ్యమంత్రి రైతు సభలో కూడా ప్రకటన రాలేదు."),
     "AP crop insurance for Rabi: enrol by 15 December (paddy 31 December)": ("ఏపీ రబీ పంటల బీమా: 15 డిసెంబర్ లోపు చేరండి (వరికి 31 డిసెంబర్)",
