@@ -79,3 +79,29 @@ Plain JavaScript object literals; double quotes for strings that contain a singl
 - rh.b.04 Firewall with firewalld — `firewall-cmd --state`, zones, `--add-service=http`, `--add-port=8080/tcp`, `--permanent` + `--reload`, `--list-all`.
 - rh.b.05 SELinux basics — modes enforcing/permissive/disabled, `getenforce`, `setenforce 0` is temporary, labels/contexts `ls -Z`, don't disable it to "fix" problems; `restorecon`.
 - rh.b.06 OpenShift: what it is — Red Hat's Kubernetes platform; projects (namespaces with more), `oc` CLI (`oc login`, `oc new-project`, `oc get pods`), web console, Routes expose apps.
+
+## Units (Intermediate `i` and Advanced `a` levels): AWS and Google Cloud
+Learners finished all Basic units of the same skill first; build on them. Intermediate = can do real tasks; Advanced = designs and production habits. Same card rules; `shell` for `aws` / `gcloud` / `bq` / `kubectl` / `terraform` commands, `yaml` for CloudFormation YAML, `k8s` for Kubernetes manifests, `text` for HCL (Terraform) or JSON policies.
+
+**AWS (`aws`)**
+- aws.i.07 RDS databases — managed relational DB (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, Aurora); AWS handles patching/backups; Multi-AZ (standby for failover) vs read replicas (scale reads); automated backups and snapshots; keep it in a private subnet; endpoint to connect.
+- aws.i.08 Lambda (serverless) — run code without servers; triggers/events (S3 upload, API Gateway, schedule via EventBridge); handler function; pay per request and duration (no amounts); timeout and memory settings; execution role for permissions; stateless.
+- aws.i.09 CloudWatch monitoring — metrics, alarms (alarm → SNS email), logs (log groups, log streams), dashboards; Lambda writes logs to CloudWatch Logs; CloudTrail records API calls (who did what) vs CloudWatch (how it performs).
+- aws.i.10 Load balancers and Auto Scaling — Elastic Load Balancing: Application Load Balancer (HTTP/HTTPS, path rules) vs Network Load Balancer (TCP/UDP); target groups and health checks; Auto Scaling group (min/desired/max, launch template, scale out/in); spread across AZs.
+- aws.i.11 AWS CLI — `aws configure` (profile, Region), `aws sts get-caller-identity`, `aws ec2 describe-instances`, `aws s3 sync`, `--region`, `--profile`, `--output table/json`, `--query`; never paste access keys in code; prefer roles / IAM Identity Center.
+- aws.i.12 Data on AWS: Glue, Athena, Redshift — S3 as a data lake; Glue Data Catalog and crawlers, Glue ETL jobs; Athena runs SQL on files in S3 (pay per data scanned, partitions and columnar Parquet scan less); Redshift data warehouse; Kinesis for streams (one card).
+- aws.a.13 CloudFormation — infrastructure as code; template (YAML/JSON), `Resources` (required), `Parameters`, `Outputs`; stack; change sets to preview; drift detection; delete the stack to remove all resources; `!Ref`, `!GetAtt`.
+- aws.a.14 EKS (Kubernetes on AWS) — managed Kubernetes control plane; node groups / Fargate; `aws eks update-kubeconfig`, `kubectl get nodes`; ECR for images; IAM roles for service accounts / Pod Identity (one card); delete clusters after practice.
+- aws.a.15 Security best practices — least privilege policies (JSON: Effect, Action, Resource), MFA, no long-term keys, roles; encryption with KMS; S3 Block Public Access; CloudTrail on; GuardDuty threat detection; Security Hub; Secrets Manager for secrets; shared responsibility model.
+- aws.a.16 Well-Architected Framework — the six pillars: operational excellence, security, reliability, performance efficiency, cost optimization, sustainability; Well-Architected Tool reviews; examples per pillar.
+
+**Google Cloud (`gcp`)**
+- gcp.i.07 VPC networks and firewall rules — global VPC, regional subnets, auto vs custom mode, firewall rules (direction, priority, targets via network tags or service accounts, implied deny ingress / allow egress), Cloud NAT for private VMs, `gcloud compute firewall-rules create`.
+- gcp.i.08 Cloud Run — run containers serverless; services vs jobs; `gcloud run deploy --source .` or `--image`; scales to zero; revisions and traffic split; `--allow-unauthenticated` makes it public (warn); container must listen on `PORT`.
+- gcp.i.09 Cloud SQL — managed MySQL, PostgreSQL, SQL Server; high availability (regional) vs read replicas; automated backups; private IP; Cloud SQL Auth Proxy / connectors; stop instance when not in use.
+- gcp.i.10 Pub/Sub — topics, subscriptions, publishers, subscribers; pull vs push; ack; at-least-once delivery (handle duplicates); decouple services; `gcloud pubsub topics create`, `subscriptions create`.
+- gcp.i.11 Dataflow — managed Apache Beam; batch and streaming pipelines; PCollections and transforms; templates; autoscaling workers; typical flow Pub/Sub → Dataflow → BigQuery; stop/drain jobs.
+- gcp.i.12 gcloud CLI — `gcloud init`, `gcloud auth login`, `gcloud config set project`, `gcloud config list`, configurations, `--format`, `--filter`, `gcloud services enable`, `gcloud components`; `bq` and `gcloud storage` siblings; Cloud Shell.
+- gcp.a.13 GKE (Kubernetes on Google Cloud) — Autopilot vs Standard; `gcloud container clusters create-auto`, `get-credentials`; `kubectl apply`; Artifact Registry for images; Workload Identity Federation for GKE; delete clusters after practice.
+- gcp.a.14 Terraform on Google Cloud — HCL, `provider "google"`, `resource`, `terraform init/plan/apply/destroy`, state file (store remotely in a Cloud Storage bucket, never commit), variables; plan before apply.
+- gcp.a.15 Security and organization policies — resource hierarchy inheritance of IAM; organization policy constraints (e.g. restrict public IPs, domain-restricted sharing); avoid service account keys; Secret Manager; Cloud Audit Logs; VPC Service Controls (one card); Security Command Center.

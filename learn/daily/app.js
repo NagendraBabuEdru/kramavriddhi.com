@@ -107,7 +107,7 @@ function kvLearnMain() {
 
   var feed = document.getElementById('feed'), pill = document.getElementById('pill');
   var TYPE = { learn: tr('Learn'), output: tr('What does it print?'), choice: tr('Pick the right answer'), order: tr('Tap in the right order'), bug: tr('Find the line with the bug'),
-    pipe: tr('Mini game · Build the pipeline'), indent: tr('Mini game · Fix the indentation'), check: tr('Checkpoint') };
+    pipe: tr('Mini game · Build the pipeline'), indent: tr('Mini game · Fix the indentation'), cmd: tr('Mini game · Build the command'), check: tr('Checkpoint') };
   var testing = {};   /* unit id -> true while someone is trying to test out of it */
   var KW = /^(def|return|if|elif|else|for|in|and|or|not|while|break|try|except|with|as|True|False|None)$/;
 
@@ -252,6 +252,7 @@ function kvLearnMain() {
         '<p class="uh-sub">' + tr('You missed these before. Get a card right 3 reviews in a row (after 1, 3 and 7 days) and it is mastered for good.') + '</p>' +
         '</div></section>' + due.map(function (c) { return cardHtml(c, 'review'); }).join('');
     }
+    html += cleanupReminder();
     html += nextBlocks() + '<section class="dcard end" id="c-end" aria-label="Today"><div class="dinner" id="endin"></div></section>';
     feed.innerHTML = html;
     restoreAll();
@@ -300,7 +301,7 @@ function kvLearnMain() {
     var seen = all.filter(isDone);
     return seen.length >= 6 ? seen : all;
   }
-  function puzzlePool() { return chosenCards(function (c) { return c.t === 'pipe' || c.t === 'indent'; }); }
+  function puzzlePool() { return chosenCards(function (c) { return c.t === 'pipe' || c.t === 'indent' || c.t === 'cmd'; }); }
   function fullPool() { var out = []; st.tracks.forEach(function (id) { (FULL[id] || []).forEach(function (g) { out.push(g); }); }); return out; }
 
   /* interest: kinds you play or like come more often, kinds you skip less; never the same kind twice in a row */
@@ -490,7 +491,7 @@ function kvLearnMain() {
     if (cb) {
       var box = cb.closest('.cleanbox'), all = box.querySelectorAll('[data-clean]'), on = box.querySelectorAll('[data-clean]:checked').length;
       if (on === all.length && !st.cleaned[box.getAttribute('data-unit')]) {
-        st.cleaned[box.getAttribute('data-unit')] = today; st.cr += 2; save(); updatePill(); refreshStats();
+        st.cleaned[box.getAttribute('data-unit')] = today; st.cr += 2; if (box.closest('.cleanhead')) skipAllCleanups(); save(); updatePill(); refreshStats();
         box.querySelector('.cleanmsg').innerHTML = tr('🧹 Clean-up done!') + ' <span class="earn">+2 🪙</span>' + (Object.keys(st.cleaned).length === 3 ? ' · ' + tr('New badge: Cloud cleaner') : '');
         K.track('cleanup_done', { unit_id: box.getAttribute('data-unit') });
       }
@@ -582,7 +583,7 @@ function kvLearnMain() {
 
   /* ---------- one card */
   function cardHtml(c, mode) {
-    var j = feedCards.push(c) - 1, isGame = c.t === 'pipe' || c.t === 'indent', u = c.unit, rev = mode === 'review';
+    var j = feedCards.push(c) - 1, isGame = c.t === 'pipe' || c.t === 'indent' || c.t === 'cmd', u = c.unit, rev = mode === 'review';
     feedModes[j] = mode || '';
     var head = '<header class="phead"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span>' +
       '<span class="pwho"><strong>' + K.esc(u.track.name) + '</strong><span>' + tr('Unit {n}', { n: u.n }) + ' · ' + K.esc(u.title) + '</span></span>' +
@@ -601,6 +602,7 @@ function kvLearnMain() {
       }).join('') + '</div><button type="button" class="btn ghost ord-reset" hidden>' + tr('Start again') + '</button>';
     else if (c.t === 'pipe') body = pipeBody(c);
     else if (c.t === 'indent') body = indentBody(c);
+    else if (c.t === 'cmd') body = cmdBody(c);
     if (c.t !== 'learn' && c.t !== 'check' && mode !== 'play') body += helpBar(c);
     var liked = !!st.likes[c.id], saved = !!st.saved[c.id];
     var actions = '<div class="pactions">' +
@@ -628,6 +630,63 @@ function kvLearnMain() {
     return '<div class="choices">' + K.shuffle([c.a].concat(c.w)).map(function (o, n) {
       return '<button type="button" class="choice" data-opt="' + K.esc(o) + '"><span class="key" aria-hidden="true">' + 'ABCD'.charAt(n) + '</span><pre>' + K.esc(o) + '</pre></button>';
     }).join('') + '</div>';
+  }
+
+  /* mini game 3: build the command from word chips (parts in order + extra words that do not belong) */
+  function cmdBody(c) {
+    var all = c.parts.concat(c.extra || []);
+    return '<h2 class="dq">' + K.rich(c.q) + '</h2>' +
+      '<div class="cmdline" aria-live="polite"><span class="cprompt" aria-hidden="true">$</span><span class="cbuilt"></span><span class="ccur" aria-hidden="true"></span></div>' +
+      '<p class="mhint">' + tr('Tap the words in order to build the command. Tap a word in the command to take it back.') + (c.extra && c.extra.length ? ' ' + tr('{n} words do not belong.', { n: c.extra.length }) : '') + '</p>' +
+      '<div class="ctray">' + shuffleDiff(all.map(function (w, n) { return n; })).map(function (n) {
+        return '<button type="button" class="cchip" data-w="' + n + '">' + K.esc(all[n]) + '</button>'; }).join('') + '</div>' +
+      '<div class="mbar cmdbar"><button type="button" class="btn go cmdrun" disabled>▶ ' + tr('Run') + '</button><button type="button" class="btn ghost cmdreset" hidden>' + tr('Start again') + '</button></div>';
+  }
+  function cmdClick(sec, j, e) {
+    var c = feedCards[j], all = c.parts.concat(c.extra || []), built = sec.querySelector('.cbuilt');
+    function sync() {
+      var n = built.children.length;
+      sec.querySelector('.cmdrun').disabled = !n; sec.querySelector('.cmdreset').hidden = !n;
+    }
+    var t = e.target.closest('.ctray .cchip');
+    if (t && !t.disabled) {
+      t.disabled = true; t.classList.add('used');
+      built.insertAdjacentHTML('beforeend', '<button type="button" class="cchip in" data-w="' + t.getAttribute('data-w') + '">' + K.esc(all[+t.getAttribute('data-w')]) + '</button>');
+      return sync();
+    }
+    var b = e.target.closest('.cbuilt .cchip');
+    if (b && !b.disabled) {
+      var src = sec.querySelector('.ctray .cchip[data-w="' + b.getAttribute('data-w') + '"]'); if (src) { src.disabled = false; src.classList.remove('used'); }
+      b.remove(); return sync();
+    }
+    if (e.target.closest('.cmdreset')) { built.innerHTML = ''; sec.querySelectorAll('.ctray .cchip').forEach(function (x) { x.disabled = false; x.classList.remove('used'); }); return sync(); }
+    if (e.target.closest('.cmdrun')) {
+      var got = [].map.call(built.children, function (x) { return all[+x.getAttribute('data-w')]; }), ok = cmdNorm(got) === cmdNorm(c.parts);
+      built.querySelectorAll('.cchip').forEach(function (x, n) { x.disabled = true; x.classList.add(ok || got[n] === c.parts[n] ? 'ok' : 'bad'); });
+      sec.querySelectorAll('.ctray .cchip').forEach(function (x) { x.disabled = true; });
+      sec.querySelector('.cmdbar').hidden = true; sec.querySelector('.mhint').hidden = true;
+      record(j, ok); result(j, ok);
+    }
+  }
+  /* same command if the words before the first flag match and the flag groups (--flag value) are the same in any order */
+  function cmdNorm(w) {
+    var k = 0; while (k < w.length && w[k].charAt(0) !== '-') k++;
+    var groups = [], cur = null;
+    w.slice(k).forEach(function (t) {
+      if (t.charAt(0) === '-') { cur = [t]; groups.push(cur); if (t.indexOf('=') >= 0) cur = null; }
+      else if (cur && cur.length === 1) cur.push(t);
+      else { groups.push([t]); cur = null; }
+    });
+    return w.slice(0, k).join(' ') + ' | ' + groups.map(function (g) { return g.join(' '); }).sort().join(' ; ');
+  }
+  /* after a bug card: the wrong line and the fixed line, with the changed part marked */
+  function bugDiff(c) {
+    var a = c.code[c.bad], b = c.fix, i = 0, ea = a.length, eb = b.length;
+    if (a === b) return '';
+    while (i < ea && i < eb && a[i] === b[i]) i++;
+    while (ea > i && eb > i && a[ea - 1] === b[eb - 1]) { ea--; eb--; }
+    function line(x, s0, e0, cls, sign) { return '<code class="dline ' + cls + '"><span class="dsign" aria-hidden="true">' + sign + '</span>' + K.esc(x.slice(0, s0)) + (e0 > s0 ? '<mark>' + K.esc(x.slice(s0, e0)) + '</mark>' : '') + K.esc(x.slice(e0)) + '</code>'; }
+    return '<div class="bugdiff" aria-label="' + K.esc(tr('What changed')) + '"><p class="small">' + tr('What changed:') + '</p>' + line(a, i, ea, 'minus', '−') + line(b, i, eb, 'plus', '+') + '</div>';
   }
 
   /* mini game 1: build the pipeline (steps: [glyph, name, style]) */
@@ -667,7 +726,9 @@ function kvLearnMain() {
     sec.classList.remove('is-right', 'is-wrong');
     sec.classList.add('answered', ok ? 'is-right' : 'is-wrong');
     sec.classList.toggle('solved-late', !ok && !!verdict);
-    var right = c.t === 'order' && !ok ? '<p class="small">' + tr('The right order:') + '</p><ol class="right-order">' + c.items.map(function (x) { return '<li>' + K.esc(x) + '</li>'; }).join('') + '</ol>' : '';
+    var right = c.t === 'cmd' && !ok ? '<p class="small">' + tr('The right command:') + '</p><pre class="cright">' + K.esc(c.parts.join(' ')) + '</pre>' :
+      c.t === 'bug' && c.fix ? bugDiff(c) :
+      c.t === 'order' && !ok ? '<p class="small">' + tr('The right order:') + '</p><ol class="right-order">' + c.items.map(function (x) { return '<li>' + K.esc(x) + '</li>'; }).join('') + '</ol>' : '';
     var finished = unitDone(u), last = c.pos === u.cards.length - 1;
     if (feedModes[j] === 'review') { extra = reviewNote[j] || ''; finished = false; last = false; }
     if (feedModes[j] === 'play') { extra = '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>'; finished = false; last = false; }
@@ -842,6 +903,8 @@ function kvLearnMain() {
     if (e.target.closest('.gpop')) return;
     var gbSec = e.target.closest('.dcard.gamebreak'); if (gbSec) { gbClick(e, gbSec); return; }
     var mSec = e.target.closest('.dcard.memecard'); if (mSec) { memeClick(e, mSec); return; }
+    var cs = e.target.closest('[data-cleanskip]');
+    if (cs) { skipAllCleanups(); save(); var ch = cs.closest('.cleanhead'); ch.querySelector('.dinner').innerHTML = '<p class="kicker">🧹 ' + tr('OK, nothing to clean.') + '</p>'; return; }
     if (e.target.closest('[data-memetoggle]')) { st.memesOff = !st.memesOff; save(); K.track('meme_toggle', { on: st.memesOff ? 0 : 1 }); renderProfile(); return; }
     if (e.target.closest('[data-more]')) { var endSec = document.getElementById('c-end'), before = feedCards.length; endSec.insertAdjacentHTML('beforebegin', nextBlocks()); renderEnd(); var n = document.getElementById('c-' + before); if (n) scrollToCard(n.previousElementSibling || n); return; }
     var to = e.target.closest('[data-testout]');
@@ -889,6 +952,7 @@ function kvLearnMain() {
     if (c.t === 'learn') { if (e.target.closest('[data-got]')) { e.target.closest('.mbar').hidden = true; record(j, true); result(j, true, false, tr('✓ Got it')); } return; }
     if (c.t === 'pipe') return pipeClick(sec, j, e);
     if (c.t === 'indent') return indentClick(sec, j, e);
+    if (c.t === 'cmd') return cmdClick(sec, j, e);
     var ch = e.target.closest('.choice');
     if (ch && !ch.disabled) { var ok = ch.getAttribute('data-opt') === c.a; markChoices(sec, c, ch.getAttribute('data-opt')); record(j, ok); result(j, ok, false, null, testOutResult(c)); return; }
     var bl = e.target.closest('.bugline');
@@ -937,7 +1001,7 @@ function kvLearnMain() {
       var sec = document.getElementById('c-' + j), d = st.done[c.id];
       if (!sec || sec.classList.contains('answered')) return;
       showSolution(sec, c);
-      var g = c.t === 'pipe' || c.t === 'indent';
+      var g = c.t === 'pipe' || c.t === 'indent' || c.t === 'cmd';
       result(j, d.ok, true, st.revealed[c.id] ? '🔓 ' + tr('Solution shown') : c.t === 'learn' ? tr('✓ Got it') : g ? (d.ok ? tr('✓ Solved first try.') : d.tries ? tr('✓ Solved in {n} tries.', { n: d.tries }) : tr('✓ Solved.')) : null);
     });
   }
@@ -946,6 +1010,7 @@ function kvLearnMain() {
   function showSolution(sec, c) {
     if (c.t === 'output' || c.t === 'choice' || c.t === 'check') markChoices(sec, c, null);
     else if (c.t === 'bug') markBug(sec, c, null);
+    else if (c.t === 'cmd') { sec.querySelector('.cbuilt').innerHTML = c.parts.map(function (w) { return '<span class="cchip in ok">' + K.esc(w) + '</span>'; }).join(''); sec.querySelector('.ctray').hidden = true; sec.querySelector('.cmdbar').hidden = true; sec.querySelector('.mhint').hidden = true; }
     else if (c.t === 'order') { sec.querySelectorAll('.ord').forEach(function (b) { b.setAttribute('data-n', c.items.indexOf(b.getAttribute('data-item')) + 1); b.querySelector('.ordn').textContent = b.getAttribute('data-n'); }); markOrder(sec, c); }
     else if (c.t === 'learn') sec.querySelector('.mbar').hidden = true;
     else if (c.t === 'pipe') {
@@ -1102,7 +1167,7 @@ function kvLearnMain() {
     play.innerHTML = '<p class="gbmeta"><span>' + tr('Question {n} of {m}', { n: g.i + 1, m: g.qs.length }) + '</span><span class="gbtime"></span><span>' + (g.combo > 1 ? '🔥 ×' + g.combo : '') + '</span></p>' +
       '<div class="gbbar" aria-hidden="true"><i style="width:100%"></i></div>' +
       (G.rules ? '<div class="swrules"><strong>📋 ' + tr('Rules') + '</strong><ul>' + (gx.rules || G.rules).map(function (r) { return '<li>' + K.esc(r) + '</li>'; }).join('') + '</ul></div>' : '') +
-      '<div class="swstage"><div class="swcard" tabindex="0" aria-live="polite">' + K.esc(arcText(it).t) + '</div></div>' +
+      '<div class="swstage"><div class="swcard" tabindex="0" aria-live="polite">' + K.rich(arcText(it).t) + '</div></div>' +
       '<div class="swbtns"><button type="button" class="btn swl" data-arcpick="l">◀ ' + K.esc(gx.left) + '</button><button type="button" class="btn swr" data-arcpick="r">' + K.esc(gx.right) + ' ▶</button></div>' +
       '<p class="swhint">' + tr('Swipe the card, or tap a button.') + '</p><p class="gbflash" role="status"></p><button type="button" class="btn primary swnext" data-arcnext hidden>' + tr('Next ↓') + '</button>';
     var card = play.querySelector('.swcard'), x0 = null;
@@ -1127,7 +1192,7 @@ function kvLearnMain() {
     if (ok) { g.right++; g.combo++; } else { g.combo = 0; g.wrong.push(it); }
     var card = play.querySelector('.swcard'); card.classList.add(ok ? 'ok' : 'bad', it.a === 'l' ? 'goL' : 'goR');
     play.querySelectorAll('[data-arcpick]').forEach(function (b) { b.disabled = true; if (b.getAttribute('data-arcpick') === it.a) b.classList.add('right'); });
-    play.querySelector('.gbflash').innerHTML = (ok ? '✓ ' + tr('Right!') : (pick ? '✗ ' : '⏰ ') + tr('It is') + ' <strong>' + K.esc(it.a === 'l' ? gx.left : gx.right) + '</strong>.') + ' ' + K.esc(arcText(it).why);
+    play.querySelector('.gbflash').innerHTML = (ok ? '✓ ' + tr('Right!') : (pick ? '✗ ' : '⏰ ') + tr('It is') + ' <strong>' + K.esc(it.a === 'l' ? gx.left : gx.right) + '</strong>.') + ' ' + K.rich(arcText(it).why);
     var nb = play.querySelector('.swnext'); nb.hidden = false; nb.focus({ preventScroll: true });
     g.next = function () { if (g.over || g.nextDone) return; g.nextDone = true; clearTimeout(g.auto); g.i++; if (g.i < g.qs.length) arcItem(sec, k); else arcEnd(sec, k); };
     g.nextDone = false; g.auto = setTimeout(g.next, ok ? 5000 : 8000);
@@ -1141,7 +1206,7 @@ function kvLearnMain() {
       (stars ? '<p>' + K.stars(stars).replace('class="stars"', 'class="stars big"') + '</p>' : '') +
       (g.wrong.length ? '<p class="small">' + tr('Remember:') + '</p><ul class="gbwrong">' + g.wrong.map(function (it) {
         var gx = LANG === 'te' && G.te ? G.te : G;
-        return '<li>' + K.esc(arcText(it).t) + ' → <strong>' + K.esc(it.a === 'l' ? gx.left : gx.right) + '</strong></li>'; }).join('') + '</ul>' : '') +
+        return '<li>' + K.rich(arcText(it).t) + ' → <strong>' + K.esc(it.a === 'l' ? gx.left : gx.right) + '</strong></li>'; }).join('') + '</ul>' : '') +
       '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>' +
       '<div class="mbar"><button type="button" class="btn ghost" data-arcagain>' + tr('Play again') + '</button><button type="button" class="btn primary" data-gbnext>' + tr('Back to learning ↓') + '</button></div>';
   }
@@ -1159,7 +1224,7 @@ function kvLearnMain() {
       '<div class="gbbar" aria-hidden="true"><i style="width:100%"></i></div>' +
       (g.scene.q ? '<p class="gbq">' + K.rich(LANG === 'te' && g.scene.te_q ? g.scene.te_q : g.scene.q) + '</p>' : '') +
       '<p class="tapask">👆 ' + K.esc(gx.ask) + '</p>' +
-      '<div class="tapgrid">' + g.tiles.map(function (t, n) { return '<button type="button" class="tapt" data-tap="' + n + '" aria-pressed="false">' + K.esc(arcText(t).t) + '</button>'; }).join('') + '</div>' +
+      '<div class="tapgrid">' + g.tiles.map(function (t, n) { return '<button type="button" class="tapt" data-tap="' + n + '" aria-pressed="false">' + K.rich(arcText(t).t) + '</button>'; }).join('') + '</div>' +
       '<div class="mbar"><button type="button" class="btn go" data-tapcheck>✓ ' + tr('Check') + '</button></div>';
     g.t0 = Date.now();
     if (g.timer) clearInterval(g.timer);
@@ -1178,7 +1243,7 @@ function kvLearnMain() {
       var t = g.tiles[+b.getAttribute('data-tap')], on = b.getAttribute('aria-pressed') === 'true', ok = on === t.on;
       if (ok) right++;
       b.disabled = true; b.classList.add(ok ? 'right' : 'wrong', t.on ? 'yes' : 'no');
-      b.insertAdjacentHTML('beforeend', '<span class="tapwhy">' + (ok ? '✓ ' : '✗ ') + K.esc(arcText(t).why) + '</span>');
+      b.insertAdjacentHTML('beforeend', '<span class="tapwhy">' + (ok ? '✓ ' : '✗ ') + K.rich(arcText(t).why) + '</span>');
     });
     var gain = Math.round(right / 2), stars = right === n ? 3 : right >= n - 2 ? 2 : right ? 1 : 0;
     if (!g.counted) { g.counted = true; gstat('arcade').p++; st.cr += gain; bumpDay(); save(); updatePill(); refreshStats(); renderEnd(); }
@@ -1227,7 +1292,7 @@ function kvLearnMain() {
       K.track('game_break', { kind: 'arcade', action: 'done', game: G.id, miss: g.miss });
       play.innerHTML = '<p class="verdict">🕵️ ' + tr('Case solved!') + ' <span class="earn">+' + gain + ' 🪙</span></p><p>' + K.stars(stars).replace('class="stars"', 'class="stars big"') + '</p>' +
         '<ul class="clues">' + g.clues.map(function (cl) { return '<li>🔎 ' + K.rich(cl) + '</li>'; }).join('') + '</ul>' +
-        '<p class="small">' + tr('Real servers fail in this order too: installed? running? firewall? permissions?') + '</p>' +
+        '<p class="small">' + (G.outro ? K.esc((LANG === 'te' && G.te && G.te.outro) || G.outro) : tr('Real servers fail in this order too: installed? running? firewall? permissions?')) + '</p>' +
         '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>' +
         '<div class="mbar"><button type="button" class="btn ghost" data-arcagain>' + tr('Play again') + '</button><button type="button" class="btn primary" data-gbnext>' + tr('Back to learning ↓') + '</button></div>';
     }, reduce ? 300 : 900);
@@ -1242,6 +1307,27 @@ function kvLearnMain() {
     gcp: ['Delete the VMs and disks you made for practice', 'Delete buckets and BigQuery data you do not need, and release unused static IP addresses', 'Open Billing reports and check your budget'],
     az: ['Delete the practice VMs, or stop them so they show Stopped (deallocated)', 'Delete the practice resource groups you do not need', 'Open Cost Management and check your budget']
   };
+  /* "Did you delete it?": on a later day, remind once about the last finished cloud unit not cleaned up */
+  st.cleanSkip = st.cleanSkip || {};
+  function cleanupReminder() {
+    var best = null, bestDay = -1;
+    st.tracks.forEach(function (id) {
+      if (!CLEAN[id] || !TR[id]) return;
+      TR[id].units.forEach(function (u) {
+        if (!unitDone(u) || st.cleaned[u.id] || st.cleanSkip[u.id]) return;
+        var d = u.cards.reduce(function (m, c) { return Math.max(m, (st.done[c.id] && st.done[c.id].d) || 0); }, 0);
+        if (d < today && d >= today - 7 && d > bestDay) { best = u; bestDay = d; }
+      });
+    });
+    if (!best) return '';
+    return '<section class="dcard cleanhead" aria-label="' + K.esc(tr('Did you delete it?')) + '"><div class="dinner post">' +
+      '<p class="kicker">🧹 ' + tr('Did you delete it?') + '</p><h2 class="uh-title">' + K.esc(best.track.name) + ' · ' + K.esc(best.title) + '</h2>' +
+      '<p class="uh-sub">' + tr('You finished this unit before. If you made anything in your own cloud account, check it is gone so you do not pay for it.') + '</p>' +
+      cleanupBox(best) + '<div class="mbar"><button type="button" class="btn ghost" data-cleanskip="' + K.esc(best.id) + '">' + tr('I made nothing, skip') + '</button></div></div></section>';
+  }
+  function skipAllCleanups() {   /* one answer covers every cloud unit finished so far */
+    st.tracks.forEach(function (id) { if (CLEAN[id] && TR[id]) TR[id].units.forEach(function (u) { if (unitDone(u) && !st.cleaned[u.id]) st.cleanSkip[u.id] = today; }); });
+  }
   function cleanupBox(u) {
     var list = CLEAN[u.track.id]; if (!list) return '';
     var done = !!st.cleaned[u.id];
@@ -1430,7 +1516,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=15';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=16';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();
