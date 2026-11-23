@@ -863,3 +863,21 @@ html.reels-mode .memecard .meme { min-height: 46svh; }
 .gpop .gclose:hover { background: var(--color-rule); }
 .dcard[data-j] .gpop { background: var(--cbox, var(--color-paper-2)); color: var(--cink, var(--color-ink)); border-left-color: var(--chead, var(--color-accent)); }
 .gpop .gcloud small { display: block; margin-top: 4px; font-size: .78rem; color: var(--color-muted); }
+
+/* v26: arcade swipe games (S6) */
+.swstage { position: relative; margin: 10px 0 6px; min-height: 150px; display: grid; place-items: center; }
+.swcard { width: 100%; box-sizing: border-box; min-height: 140px; display: grid; place-items: center; text-align: center; padding: 18px 16px; border-radius: 18px; background: var(--color-paper); border: 2px solid var(--tc, var(--color-ink)); box-shadow: 0 10px 24px -14px rgb(0 0 0 / .45); font: 700 1.2rem/1.35 var(--font-display); color: var(--color-ink); touch-action: pan-y; user-select: none; cursor: grab; transition: transform .25s var(--ease-out), opacity .25s; }
+.lang-te .swcard { font-family: var(--font-telugu); line-height: 1.6; }
+.swcard.drag { transition: none; cursor: grabbing; }
+.swcard.ok { border-color: var(--color-success); background: color-mix(in oklab, var(--color-success) 12%, var(--color-paper)); }
+.swcard.bad { border-color: var(--color-error); background: color-mix(in oklab, var(--color-error) 10%, var(--color-paper)); }
+.swcard.goL { transform: translateX(-14px) rotate(-3deg); }
+.swcard.goR { transform: translateX(14px) rotate(3deg); }
+.swbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.swbtns .btn { min-height: 52px; border-radius: 14px; box-shadow: none; justify-content: center; font-size: 1.05rem; }
+.swbtns .btn.right { outline: 3px solid var(--color-success); outline-offset: 2px; }
+.swhint { margin: 6px 0 0; text-align: center; font-size: .85rem; color: var(--color-muted); }
+@media (prefers-reduced-motion: reduce) { .swcard, .swcard.goL, .swcard.goR { transition: none; transform: none; } }
+.arcplay { user-select: none; -webkit-user-select: none; }
+.swnext { display: block; margin: 8px auto 0; border-radius: 999px; box-shadow: none; }
+.introbtns .btn { min-width: 0; white-space: normal; text-align: center; }

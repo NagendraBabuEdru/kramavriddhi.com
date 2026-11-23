@@ -287,7 +287,7 @@ function kvLearnMain() {
     az: [{ name: 'Build the Data Pipeline', href: '/learn/devops/azure-data-pipeline/', key: 'kv-learn-pipeline', blurb: 'Put Azure services in the order data travels and watch it flow.' }],
     ans: [{ name: 'Fix the Playbook', href: '/learn/devops/ansible-fix-the-playbook/', key: 'kv-learn-playbook', blurb: 'Fix a broken Ansible playbook and run it on two servers.' }]
   };
-  var GB_KIND = { speed: tr('⚡ Speed round'), puzzle: tr('🧩 Puzzle'), full: tr('🕹️ Full game') };
+  var GB_KIND = { speed: tr('⚡ Speed round'), puzzle: tr('🧩 Puzzle'), full: tr('🕹️ Full game'), arcade: tr('🎯 Arcade') };
   st.gb = st.gb || {};
   function gstat(type) { return st.gb[type] || (st.gb[type] = { p: 0, l: 0, s: 0 }); }
   function chosenCards(test) {
@@ -309,6 +309,7 @@ function kvLearnMain() {
     if (mcPool().length >= 3) avail.push('speed');
     if (puzzlePool().length) avail.push('puzzle');
     if (fullPool().length) avail.push('full');
+    if (arcadePool().length) avail.push('arcade');
     if (!avail.length) return null;
     var choices = avail.length > 1 ? avail.filter(function (t) { return t !== st.gbLast; }) : avail;
     var w = choices.map(function (t) { var g = gstat(t); return (1 + g.p + 2 * g.l) / (1 + 1.5 * g.s); });
@@ -325,6 +326,12 @@ function kvLearnMain() {
     if (kind === 'speed') {
       body = '<h2 class="dq">' + tr('3 quick questions, 30 seconds') + '</h2><p class="gbsub">' + tr('From your skills: {s}. Keep a combo going for bonus fire.', { s: K.esc(names) }) + '</p>' +
         '<button type="button" class="btn go" data-gbstart>' + tr('Start ⚡') + '</button><div class="gbplay" hidden></div>';
+    } else if (kind === 'arcade') {
+      var ap = arcadePool(); g.game = ap[Math.floor(Math.random() * ap.length)];
+      var gx = LANG === 'te' && g.game.te ? g.game.te : g.game;
+      body = '<h2 class="dq">' + g.game.icon + ' ' + K.esc(gx.name) + '</h2><p class="gbsub">' + K.esc(gx.intro) + '</p>' +
+        '<p class="gbsub">' + tr('{n} rounds · {s} seconds each · +1 🪙 for every right answer', { n: g.game.rounds, s: g.game.secs }) + '</p>' +
+        '<button type="button" class="btn go" data-arcstart>' + tr('Start') + ' ' + g.game.icon + '</button><div class="arcplay" hidden></div>';
     } else if (kind === 'puzzle') {
       var ps = puzzlePool(); g.card = ps[Math.floor(Math.random() * ps.length)];
       body = '<p class="gbsub">' + tr('A quick puzzle from {s}. Solve it below, or skip.', { s: K.esc(g.card.unit.track.name) }) + '</p>';
@@ -357,8 +364,16 @@ function kvLearnMain() {
         var pl = sec.querySelector('.gbplay'); pl.innerHTML = ''; pl.hidden = true;
         var sb = sec.querySelector('[data-gbstart]'); if (sb) sb.hidden = false;
       }
+      if (g.kind === 'arcade' && g.qs && !g.over) {
+        g.over = true;
+        var ap2 = sec.querySelector('.arcplay'); ap2.innerHTML = ''; ap2.hidden = true;
+        var as2 = sec.querySelector('[data-arcstart]'); if (as2) as2.hidden = false;
+      }
       gbScrollPast(sec, k); return;
     }
+    if (e.target.closest('[data-arcstart]') || e.target.closest('[data-arcagain]')) { arcStart(sec, k); return; }
+    if (e.target.closest('[data-arcnext]')) { if (g.next) g.next(); return; }
+    var ab = e.target.closest('[data-arcpick]'); if (ab && !ab.disabled) { arcAnswer(sec, k, ab.getAttribute('data-arcpick')); return; }
     if (e.target.closest('[data-gbopen]')) { gstat(g.kind).p++; save(); K.track('game_break', { kind: 'full', action: 'open', game: g.game.name }); return; }
     if (e.target.closest('[data-gbnext]')) { gbScrollPast(sec, k); return; }
     if (e.target.closest('[data-gbstart]') || e.target.closest('[data-gbagain]')) { speedStart(sec, k); return; }
@@ -1054,6 +1069,67 @@ function kvLearnMain() {
     if (gt && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); glossOpen(gt); }
   });
 
+  /* =====================================================================
+     Arcade (S6): swipe games inside game breaks
+     ===================================================================== */
+  function arcadePool() { return (window.KV_ARCADE || []).filter(function (a) { return a.skills.some(function (s) { return st.tracks.indexOf(s) >= 0; }); }); }
+  function arcStart(sec, k) {
+    var g = gbs[k], G = g.game, play = sec.querySelector('.arcplay');
+    var half = Math.floor(G.rounds / 2), Ls = K.shuffle(G.items.filter(function (x) { return x.a === 'l'; })), Rs = K.shuffle(G.items.filter(function (x) { return x.a === 'r'; }));
+    g.qs = K.shuffle(Ls.slice(0, half).concat(Rs.slice(0, G.rounds - half))); g.i = 0; g.right = 0; g.wrong = []; g.over = false; g.combo = 0;
+    var b = sec.querySelector('[data-arcstart]'); if (b) b.hidden = true;
+    play.hidden = false; arcItem(sec, k);
+    K.track('game_break', { kind: 'arcade', action: 'play', game: G.id });
+  }
+  function arcText(it) { return LANG === 'te' && it.te ? it.te : it; }
+  function arcItem(sec, k) {
+    var g = gbs[k], G = g.game, it = g.qs[g.i], gx = LANG === 'te' && G.te ? G.te : G, play = sec.querySelector('.arcplay');
+    play.innerHTML = '<p class="gbmeta"><span>' + tr('Question {n} of {m}', { n: g.i + 1, m: g.qs.length }) + '</span><span class="gbtime"></span><span>' + (g.combo > 1 ? '🔥 ×' + g.combo : '') + '</span></p>' +
+      '<div class="gbbar" aria-hidden="true"><i style="width:100%"></i></div>' +
+      '<div class="swstage"><div class="swcard" tabindex="0" aria-live="polite">' + K.esc(arcText(it).t) + '</div></div>' +
+      '<div class="swbtns"><button type="button" class="btn swl" data-arcpick="l">◀ ' + K.esc(gx.left) + '</button><button type="button" class="btn swr" data-arcpick="r">' + K.esc(gx.right) + ' ▶</button></div>' +
+      '<p class="swhint">' + tr('Swipe the card, or tap a button.') + '</p><p class="gbflash" role="status"></p><button type="button" class="btn primary swnext" data-arcnext hidden>' + tr('Next ↓') + '</button>';
+    var card = play.querySelector('.swcard'), x0 = null;
+    card.addEventListener('pointerdown', function (e) { x0 = e.clientX; card.setPointerCapture(e.pointerId); card.classList.add('drag'); });
+    card.addEventListener('pointermove', function (e) { if (x0 === null) return; var dx = e.clientX - x0; card.style.transform = 'translateX(' + dx + 'px) rotate(' + dx / 20 + 'deg)'; });
+    function up(e) { if (x0 === null) return; var dx = e.clientX - x0; x0 = null; card.classList.remove('drag'); card.style.transform = '';
+      if (Math.abs(dx) > 60) arcAnswer(sec, k, dx < 0 ? 'l' : 'r'); }
+    card.addEventListener('pointerup', up); card.addEventListener('pointercancel', function () { x0 = null; card.style.transform = ''; card.classList.remove('drag'); });
+    card.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') arcAnswer(sec, k, 'l'); if (e.key === 'ArrowRight') arcAnswer(sec, k, 'r'); });
+    g.t0 = Date.now(); g.lock = false;
+    if (g.timer) clearInterval(g.timer);
+    g.timer = setInterval(function () {
+      var left = Math.max(0, G.secs * 1000 - (Date.now() - g.t0)), bar = sec.querySelector('.arcplay .gbbar i'), tl = sec.querySelector('.arcplay .gbtime');
+      if (bar) bar.style.width = (left / (G.secs * 1000) * 100) + '%'; if (tl) tl.textContent = Math.ceil(left / 1000) + ' s';
+      if (!left) arcAnswer(sec, k, null);
+    }, 150);
+  }
+  function arcAnswer(sec, k, pick) {
+    var g = gbs[k], G = g.game; if (g.lock || g.over) return;
+    g.lock = true; clearInterval(g.timer); g.timer = null;
+    var it = g.qs[g.i], ok = pick === it.a, gx = LANG === 'te' && G.te ? G.te : G, play = sec.querySelector('.arcplay');
+    if (ok) { g.right++; g.combo++; } else { g.combo = 0; g.wrong.push(it); }
+    var card = play.querySelector('.swcard'); card.classList.add(ok ? 'ok' : 'bad', it.a === 'l' ? 'goL' : 'goR');
+    play.querySelectorAll('[data-arcpick]').forEach(function (b) { b.disabled = true; if (b.getAttribute('data-arcpick') === it.a) b.classList.add('right'); });
+    play.querySelector('.gbflash').innerHTML = (ok ? '✓ ' + tr('Right!') : (pick ? '✗ ' : '⏰ ') + tr('It is') + ' <strong>' + K.esc(it.a === 'l' ? gx.left : gx.right) + '</strong>.') + ' ' + K.esc(arcText(it).why);
+    var nb = play.querySelector('.swnext'); nb.hidden = false; nb.focus({ preventScroll: true });
+    g.next = function () { if (g.over || g.nextDone) return; g.nextDone = true; clearTimeout(g.auto); g.i++; if (g.i < g.qs.length) arcItem(sec, k); else arcEnd(sec, k); };
+    g.nextDone = false; g.auto = setTimeout(g.next, ok ? 5000 : 8000);
+  }
+  function arcEnd(sec, k) {
+    var g = gbs[k], G = g.game, n = g.qs.length; g.over = true;
+    var stars = g.right === n ? 3 : g.right >= n - 2 ? 2 : g.right ? 1 : 0;
+    if (!g.counted) { g.counted = true; gstat('arcade').p++; st.cr += g.right; bumpDay(); save(); updatePill(); refreshStats(); renderEnd(); }
+    K.track('game_break', { kind: 'arcade', action: 'done', game: G.id, right: g.right });
+    sec.querySelector('.arcplay').innerHTML = '<p class="verdict">' + G.icon + ' ' + tr('{n} of {m} right', { n: g.right, m: n }) + ' <span class="earn">+' + g.right + ' 🪙</span></p>' +
+      (stars ? '<p>' + K.stars(stars).replace('class="stars"', 'class="stars big"') + '</p>' : '') +
+      (g.wrong.length ? '<p class="small">' + tr('Remember:') + '</p><ul class="gbwrong">' + g.wrong.map(function (it) {
+        var gx = LANG === 'te' && G.te ? G.te : G;
+        return '<li>' + K.esc(arcText(it).t) + ' → <strong>' + K.esc(it.a === 'l' ? gx.left : gx.right) + '</strong></li>'; }).join('') + '</ul>' : '') +
+      '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>' +
+      '<div class="mbar"><button type="button" class="btn ghost" data-arcagain>' + tr('Play again') + '</button><button type="button" class="btn primary" data-gbnext>' + tr('Back to learning ↓') + '</button></div>';
+  }
+
   /* ---------- end card */
   function renderEnd() {
     var el = document.getElementById('endin'); if (!el) return;
@@ -1233,7 +1309,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=8';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=10';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();
