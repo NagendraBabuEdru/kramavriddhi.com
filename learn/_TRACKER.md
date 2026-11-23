@@ -172,6 +172,10 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 9. How Phase 4 content was made (reuse this): a Sonnet helper drafts cards with `verify` fields (SQL: SQLite setup/query/rows; shell/git: bash script + expected output); the main session runs them for real, reads every concept card, checks cloud facts on Microsoft Learn, strips `verify`, then merges.
 10. Only say what an official source confirms. If a number (copies, limits, counts) is not stated on the official page, leave it out.
 
+## 6b. Reviewer ideas waiting for the owner (23 Nov 2026)
+Games: Batch or Stream? (swipe speed round) · Firewall Bouncer (security-group rules) · Bill Shock Hunter (tap what still costs money) · Scan Less, Pay Less (BigQuery columns vs bytes meter) · Why can't I open it? (RHEL detective: package, service, firewall) · Pipe Plumber (leaking pipeline) · Warehouse Wake-Up (AUTO_SUSPEND slider) · Least Privilege Lockers (smallest IAM role) · Star Builder (fact vs dimension columns) · Command Builder (tap words into a CLI command).
+Features: Glossary chips (tap a bold word for a one-line meaning, EN + Telugu) · Cloud compare chips (AWS / Azure / Google name for the same thing) · Clean-up checklist badge after cloud units · Copy-query button on SQL cards · Terminal peek animation on output cards.
+
 ## 7. Open decisions (need the owner's answer)
 
 | # | Question | Options | Recommendation |
