@@ -849,3 +849,17 @@ html.reels-mode .memecard .meme { min-height: 46svh; }
 .dcard.t-redhat { --cfont: "Red Hat Text", "Helvetica Neue", Arial, system-ui, sans-serif; --chfont: "Red Hat Display", "Helvetica Neue", Arial, system-ui, sans-serif; --chead: #CC0000; --chead-ink: #fff; --cstripe: #151515; --cbtn: #CC0000; --cbtn-ink: #fff; --clink: #CC0000; --crad: 3px; }
 .dcard.t-redhat .phead .pav { color: #CC0000; }
 @media (prefers-color-scheme: dark) { .dcard.t-aws { --cbtn: #FF9900; --clink: #5EA9F5; } .dcard.t-redhat { --cstripe: #444; } }
+
+/* v25: glossary chips (S5) */
+.gterm { cursor: pointer; text-decoration: underline dotted; text-decoration-color: var(--tc, var(--color-accent)); text-decoration-thickness: 2px; text-underline-offset: 4px; border-radius: 4px; }
+.gterm:hover, .gterm[aria-expanded="true"] { background: color-mix(in oklab, var(--tc, var(--color-accent)) 16%, transparent); }
+.gterm:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.gpop { position: relative; margin: 8px 0 10px; padding: 10px 40px 10px 12px; border-radius: 12px; background: var(--color-paper-2); border-left: 4px solid var(--tc, var(--color-accent)); color: var(--color-ink); font-family: var(--font-body); }
+.gpop p { margin: 0; font-size: .98rem; line-height: 1.5; }
+.gpop .gen { margin-top: 4px; font-size: .88rem; color: var(--color-muted); }
+.gpop .gcloud { margin-top: 6px; font-size: .9rem; }
+.gpop .gcloud span { display: block; font: 600 .8rem var(--font-display); color: var(--color-muted); }
+.gpop .gclose { position: absolute; top: 4px; right: 4px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: none; color: var(--color-ink); cursor: pointer; font-size: 1rem; }
+.gpop .gclose:hover { background: var(--color-rule); }
+.dcard[data-j] .gpop { background: var(--cbox, var(--color-paper-2)); color: var(--cink, var(--color-ink)); border-left-color: var(--chead, var(--color-accent)); }
+.gpop .gcloud small { display: block; margin-top: 4px; font-size: .78rem; color: var(--color-muted); }

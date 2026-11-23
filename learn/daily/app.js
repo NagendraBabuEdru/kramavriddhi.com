@@ -562,7 +562,7 @@ function kvLearnMain() {
       (rev ? '<p class="dtype review-type">🔁 ' + tr('Review') + (st.review[c.id] && st.review[c.id].step ? ' ' + tr('{n} of 3', { n: st.review[c.id].step + 1 }) : '') + '</p>' : '') +
       '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : c.t === 'check' ? ' check-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : c.t === 'check' ? '✅ ' : '') + (c.t === 'output' && c.lang === 'sql' ? tr('What does it return?') : TYPE[c.t]) + '</p>';
     var body = '';
-    if (c.t === 'learn') body = '<h2 class="dq">' + K.esc(c.title) + '</h2><p class="lbody">' + K.rich(c.body) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') +
+    if (c.t === 'learn') body = '<h2 class="dq">' + K.esc(c.title) + '</h2><p class="lbody">' + gl(K.rich(c.body)) + '</p>' + (c.code ? codeBlock(c.code.split('\n'), false, c.lang) : '') +
       '<div class="mbar"><button type="button" class="btn go" data-got>' + tr('Got it ✓') + '</button></div>';
     else if (c.t === 'output') body = codeBlock(c.code.split('\n'), false, c.lang) + choiceList(c);
     else if (c.t === 'choice') body = '<h2 class="dq">' + K.rich(c.q) + '</h2>' + choiceList(c);
@@ -645,7 +645,7 @@ function kvLearnMain() {
     if (feedModes[j] === 'play') { extra = '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>'; finished = false; last = false; }
     var gain = earned[j]; delete earned[j];
     res.innerHTML = '<p class="verdict">' + (verdict || tr(ok ? '✓ Correct!' : '✗ Not quite.')) + (restoring ? ' <span class="muted">' + tr('(done before)') + '</span>' : '') + (gain ? ' <span class="earn">+' + gain + ' 🪙</span>' : '') + '</p>' + right +
-      (c.why ? '<p>' + K.rich(c.why) + '</p>' : '') +
+      (c.why ? '<p>' + gl(K.rich(c.why)) + '</p>' : '') +
       (extra || (finished && !restoring ? '<p class="unitdone">' + tr('🎉 Unit complete:') + ' ' + K.esc(u.title) + '</p>' : '')) +
       '<button type="button" class="btn primary" data-next>' + tr(last || finished ? 'Next unit ↓' : 'Next ↓') + '</button>';
     res.hidden = false;
@@ -809,6 +809,9 @@ function kvLearnMain() {
     if (e.target.closest('#appbox') && appClick(e)) return;
     if (e.target.closest('[data-pick]')) { e.preventDefault(); history.replaceState(null, '', location.pathname + '?pick=1'); renderPicker(); window.scrollTo(0, feed.getBoundingClientRect().top + window.scrollY - 70); return; }
     if (e.target.closest('[data-start]')) { var first = feed.querySelector('.dcard.unithead, .dcard[data-j]'); if (first) scrollToCard(first); return; }
+    var gt = e.target.closest('.gterm'); if (gt) { glossOpen(gt); return; }
+    if (e.target.closest('[data-gclose]')) { var gp = e.target.closest('.gpop'); glossClose(gp); return; }
+    if (e.target.closest('.gpop')) return;
     var gbSec = e.target.closest('.dcard.gamebreak'); if (gbSec) { gbClick(e, gbSec); return; }
     var mSec = e.target.closest('.dcard.memecard'); if (mSec) { memeClick(e, mSec); return; }
     if (e.target.closest('[data-memetoggle]')) { st.memesOff = !st.memesOff; save(); K.track('meme_toggle', { on: st.memesOff ? 0 : 1 }); renderProfile(); return; }
@@ -1016,6 +1019,41 @@ function kvLearnMain() {
     }
   }
 
+  /* =====================================================================
+     Glossary chips (S5): tap a bold tech word for a one-line meaning
+     ===================================================================== */
+  var GL = {};
+  (window.KV_GLOSS || []).forEach(function (g) { [g.key].concat(g.aliases || []).forEach(function (k) { GL[k.toLowerCase()] = g; }); });
+  var CLOUD_NAME = { aws: 'AWS', azure: 'Azure', gcp: 'Google Cloud' };
+  function gl(html) {
+    return html.replace(/<strong>([^<]{2,60})<\/strong>/g, function (m, t) {
+      var g = GL[t.replace(/&amp;/g, '&').trim().toLowerCase()];
+      return g ? '<strong class="gterm" role="button" tabindex="0" aria-expanded="false" data-g="' + K.esc(g.key) + '">' + t + '</strong>' : m;
+    });
+  }
+  function glossClose(pop) {
+    if (!pop) return;
+    var owner = pop.previousElementSibling; pop.remove();
+    if (owner) owner.querySelectorAll('.gterm[aria-expanded="true"]').forEach(function (x) { x.setAttribute('aria-expanded', 'false'); });
+  }
+  function glossOpen(el) {
+    var g = GL[el.getAttribute('data-g')]; if (!g) return;
+    var para = el.closest('p'), open = el.getAttribute('aria-expanded') === 'true';
+    feed.querySelectorAll('.gpop').forEach(glossClose);
+    if (open) return;
+    var cloud = g.cloud ? '<p class="gcloud"><span>' + tr('Same idea in other clouds:') + '</span> ' + ['aws', 'azure', 'gcp'].filter(function (k) { return g.cloud[k]; }).map(function (k) {
+      return '<b>' + CLOUD_NAME[k] + '</b>: ' + K.esc(g.cloud[k]); }).join(' · ') + '<small>' + tr('Official names; the features are not always exactly the same.') + '</small></p>' : '';
+    para.insertAdjacentHTML('afterend', '<div class="gpop" role="note"><p class="gdef"><strong>' + K.esc(g.term) + '</strong> · ' + K.esc(LANG === 'te' && g.te ? g.te : g.def) + '</p>' +
+      (LANG === 'te' && g.te ? '<p class="gen">' + K.esc(g.def) + '</p>' : '') + cloud +
+      '<button type="button" class="gclose" data-gclose aria-label="' + tr('Close') + '">✕</button></div>');
+    el.setAttribute('aria-expanded', 'true');
+    K.track('glossary_open', { term: g.key });
+  }
+  feed.addEventListener('keydown', function (e) {
+    var gt = e.target.closest && e.target.closest('.gterm');
+    if (gt && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); glossOpen(gt); }
+  });
+
   /* ---------- end card */
   function renderEnd() {
     var el = document.getElementById('endin'); if (!el) return;
@@ -1195,7 +1233,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=6';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=8';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();
