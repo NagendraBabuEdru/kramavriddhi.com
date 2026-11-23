@@ -125,6 +125,11 @@ function kvLearnMain() {
     docker: { ab: 'Dk', own: ACADEMY, docs: { href: 'https://docs.docker.com/get-started/', label: 'Docker docs: get started', ext: 1 } },
     kubernetes: { ab: 'K8s', own: ACADEMY, docs: { href: 'https://kubernetes.io/docs/tutorials/kubernetes-basics/', label: 'Kubernetes basics (kubernetes.io)', ext: 1 } },
     powerbi: { ab: 'BI', own: { href: 'https://learn.microsoft.com/en-us/training/powerplatform/power-bi', label: 'Microsoft Learn: free Power BI training', ext: 1 }, docs: { href: 'https://learn.microsoft.com/en-us/power-bi/fundamentals/power-bi-overview', label: 'Microsoft Learn: what is Power BI?', ext: 1 } },
+    dataeng: { ab: 'DE', own: COURSE, docs: { href: 'https://airflow.apache.org/docs/apache-airflow/stable/index.html', label: 'Apache Airflow docs (pipelines and scheduling)', ext: 1 } },
+    snowflake: { ab: 'Sn', own: { href: 'https://docs.snowflake.com/en/user-guide-getting-started', label: 'Snowflake docs: getting started', ext: 1 }, docs: { href: 'https://docs.snowflake.com/en/sql-reference', label: 'Snowflake SQL reference', ext: 1 } },
+    aws: { ab: 'AWS', own: { href: 'https://skillbuilder.aws/', label: 'AWS Skill Builder: free AWS courses', ext: 1 }, docs: { href: 'https://docs.aws.amazon.com/', label: 'AWS documentation', ext: 1 } },
+    gcp: { ab: 'GC', own: { href: 'https://cloud.google.com/learn/training', label: 'Google Cloud training', ext: 1 }, docs: { href: 'https://cloud.google.com/docs', label: 'Google Cloud documentation', ext: 1 } },
+    redhat: { ab: 'RH', own: ACADEMY, docs: { href: 'https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/', label: 'Red Hat Enterprise Linux docs', ext: 1 } },
     devops: { ab: 'Ops', own: ACADEMY, docs: { href: 'https://learn.microsoft.com/en-us/devops/what-is-devops', label: 'Microsoft Learn: what is DevOps?', ext: 1 } }
   };
   function tkey(topic) { return String(topic).toLowerCase(); }
@@ -169,7 +174,7 @@ function kvLearnMain() {
   function hlLine(l, lang) { return lang === 'yaml' || lang === 'k8s' || lang === 'ci' || lang === 'compose' ? hlYaml(l) : lang === 'python' || !lang ? hlPy(l) : K.esc(l).replace(/(#.*)$/, '<span class="d">$1</span>'); }
   var FILE = { python: 'main.py', yaml: 'site.yml', ini: 'inventory.ini', sql: 'query.sql', shell: 'terminal', docker: 'Dockerfile', k8s: 'deployment.yaml', ci: '.github/workflows/ci.yml', compose: 'compose.yaml' };
   function codeBlock(lines, asButtons, lang) {
-    return '<div class="editor dcode">' + (lang && lang !== 'python' ? '<div class="ed-bar"><span class="file">' + FILE[lang] + '</span></div>' : '') + (asButtons
+    return '<div class="editor dcode">' + (lang && lang !== 'python' && FILE[lang] ? '<div class="ed-bar"><span class="file">' + FILE[lang] + '</span></div>' : '') + (asButtons
       ? '<ol class="bug-lines">' + lines.map(function (l, n) {
           return '<li><button type="button" class="bugline" data-line="' + n + '"><span class="num" aria-hidden="true">' + (n + 1) + '</span><span class="src">' + hlLine(l, lang) + '</span></button></li>';
         }).join('') + '</ol>'
@@ -1190,7 +1195,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=5';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=6';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();

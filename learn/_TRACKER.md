@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 22 Nov 2026 (Phase 6b done)
+Last updated: 23 Nov 2026 (S4: 5 new skills)
 
 ---
 
@@ -59,6 +59,7 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | S1 | Reels mode, My notes, Profile (owner asked 16 Nov 2026) | ▶ Reels mode (full screen, one card per swipe, site menu hidden, remembered per phone); 💬 My notes on every card (saved on the phone) + "Ask a doubt" (WhatsApp message with the question and the doubt); 👤 Profile page (`?profile=1`: name + initials avatar, 6 stats, 12-week calendar, skills by level, 11 badges, notes, saved, WhatsApp share). All in English and Telugu | ✅ live (16 Nov 2026). Public comments / public profiles need login + database (decision D5) |
 | S2 | Credits 🪙 (owner asked 16 Nov 2026) | Start 10 (+1 per card already right). Earn: +1 right answer, +2 checkpoint, +3 unit complete, +5 daily goal, +1 per right answer in a speed round. Spend (tap twice to confirm): 💡 50/50 = 1 (choice/output), 🔓 Show solution = 3 (all practice cards; not checkpoints or game-break puzzles). A shown solution counts as a miss, returns for review, and is saved in "Solutions I opened" (profile + end card) linking to that reel (`#card=`). Credits in the top bar, profile and intro | ✅ live (16 Nov 2026) |
 | S3 | Meme breaks (owner asked 18 Nov 2026) | `learn/daily/memes.js`: 30 original memes (3 per skill, EN + Telugu; no meme templates or film stills), each with a real 📚 lesson. One after every 10 cards from the chosen skills (never right after a game break, no repeats until all seen). 😂 Haha, WhatsApp share, "Turn off memes" (back on in Profile) | ✅ live (18 Nov 2026) |
+| S4 | 5 new skills, Basic level, with an expert reviewer (owner asked 23 Nov 2026) | Data Engineering (`de`), Snowflake (`snow`), AWS (`aws`), Google Cloud (`gcp`), Red Hat (`rh`: RHEL + OpenShift); Intermediate and Advanced units planned in tracks.js. Flow: Sonnet writers follow `learn/_review/WRITER.md` → structure/YAML/SQL checks → **expert reviewer** (`learn/_review/REVIEWER.md`) approve/fix per card + memes + game/feature ideas → fixes re-reviewed until all approved → merged. Owner decisions: reviewer approval is enough to publish; good reviewer memes are added automatically; bigger feature ideas go to the owner | ✅ live (23 Nov 2026): 266 cards, 30 Basic units, all approved (round 1: 247 approved, 19 fixed; rounds 2–3 approved the fixes); Telugu for all 266; 15 reviewer memes (EN + Telugu); brand looks for each skill. **Next for these skills:** Intermediate (same flow), reviewer game/feature ideas list (in the session report) |
 | 8b | Telugu for Intermediate | The 309 Intermediate cards in Telugu, same method | ⬜ |
 | 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7; 8b can run any time before or after) |
 | 10 | Advanced levels | All tracks | ⬜ |
@@ -146,7 +147,7 @@ Added 15 Nov 2026 at the owner's request.
 | Page | URL | Notes |
 |---|---|---|
 | Hub | /learn/ | Daily banner, Cloud & DevOps card, Python card, total stars of 60 |
-| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 825 cards in 98 live units, 10 skills. Old day-based feed retired 15 Nov 2026 |
+| Learn feed | /learn/daily/ | Skill picker, unit-by-unit feed (skills take turns), daily goal of 6 cards, streak, Path view per skill, checkpoints + "I know this" test-out, likes, saves, share links `#card=<id>`, Learn more links. 1,091 cards in 128 live units, 15 skills, 10 skills. Old day-based feed retired 15 Nov 2026 |
 | Cloud & DevOps | /learn/devops/ | 2 games + 6 coming-soon cards |
 | Build the Data Pipeline | /learn/devops/azure-data-pipeline/ | 5 levels |
 | Fix the Playbook | /learn/devops/ansible-fix-the-playbook/ | 5 levels |
@@ -193,6 +194,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 
 | Date | Change |
 |---|---|
+| 23 Nov 2026 | **S4 done:** 5 new skills (Data Engineering, Snowflake, AWS, Google Cloud, Red Hat) Basic level, 266 cards approved by the expert reviewer, Telugu + 15 memes. Reviewer and writer guides saved in `learn/_review/`. Code blocks with an unknown `lang` (e.g. `text`) now show no file bar |
 | 22 Nov 2026 | **Phase 6b done:** Intermediate complete for Docker, Kubernetes, Ansible, DevOps (121 cards, 2 Sonnet helpers; 28 YAML samples parsed; every card read). Basic + Intermediate now complete for all 10 skills |
 | 18 Nov 2026 | **S3 done:** meme breaks (30 original memes with lessons, EN + Telugu). Rule: memes must be original (no copyrighted templates, film scenes or real people) and the lesson must be a true fact. Analytics `meme_laugh`, `meme_share`, `meme_toggle` |
 | 16 Nov 2026 | **S2 done:** credits 🪙 with 50/50 hint and Show solution; opened solutions saved and linked to their reel. State `st.cr`, `st.revealed`; analytics `credit_spend` |

@@ -829,3 +829,23 @@ html.reels-mode .igbar .icr { color: #fff; }
 .memerow .btn { border-radius: 999px; box-shadow: none; min-height: 40px; padding-inline: 18px; }
 .memerow .btn[aria-pressed="true"] { background: var(--color-success); color: #fff; border-color: var(--color-success); }
 html.reels-mode .memecard .meme { min-height: 46svh; }
+
+/* v24: new skills (Data Engineering, Snowflake, AWS, Google Cloud, Red Hat) */
+.t-dataeng { --tc: #0F766E; --tc2: #5EEAD4; --tc-ink: #fff; }
+.t-snowflake { --tc: #11567F; --tc2: #29B5E8; --tc-ink: #fff; }
+.t-aws { --tc: #232F3E; --tc2: #FF9900; --tc-ink: #fff; }
+.t-gcp { --tc: #1A73E8; --tc2: #FBBC04; --tc-ink: #fff; }
+.t-redhat { --tc: #CC0000; --tc2: #151515; --tc-ink: #fff; }
+/* neutral data look: teal band */
+.dcard.t-dataeng { --chead: #0F766E; --chead-ink: #fff; --cstripe: #5EEAD4; --cbtn: #0F766E; --cbtn-ink: #fff; --clink: #0F766E; --crad: 6px; }
+/* docs.snowflake.com: mid-blue band, Snowflake-blue accent */
+.dcard.t-snowflake { --cbg: #F7FBFD; --cink: #0B2533; --cbox: #FFFFFF; --chead: #11567F; --chead-ink: #fff; --cstripe: #29B5E8; --cbtn: #11567F; --cbtn-ink: #fff; --clink: #11567F; --crad: 8px; }
+/* AWS docs: squid-ink band, AWS orange */
+.dcard.t-aws { --cfont: "Amazon Ember", "Helvetica Neue", Arial, system-ui, sans-serif; --chead: #232F3E; --chead-ink: #fff; --cstripe: #FF9900; --cbtn: #FF9900; --cbtn-ink: #232F3E; --clink: #0972D3; --crad: 4px; }
+/* cloud.google.com: Google blue band, Google colours stripe */
+.dcard.t-gcp { --cfont: "Google Sans", Roboto, Arial, system-ui, sans-serif; --chead: #1A73E8; --chead-ink: #fff; --cstripe: #FBBC04; --cbtn: #1A73E8; --cbtn-ink: #fff; --clink: #1A73E8; --crad: 8px; }
+.dcard.t-gcp .phead { border-image: linear-gradient(90deg, #4285F4 0 25%, #EA4335 25% 50%, #FBBC04 50% 75%, #34A853 75%) 1; }
+/* redhat.com: Red Hat red band, black stripe */
+.dcard.t-redhat { --cfont: "Red Hat Text", "Helvetica Neue", Arial, system-ui, sans-serif; --chfont: "Red Hat Display", "Helvetica Neue", Arial, system-ui, sans-serif; --chead: #CC0000; --chead-ink: #fff; --cstripe: #151515; --cbtn: #CC0000; --cbtn-ink: #fff; --clink: #CC0000; --crad: 3px; }
+.dcard.t-redhat .phead .pav { color: #CC0000; }
+@media (prefers-color-scheme: dark) { .dcard.t-aws { --cbtn: #FF9900; --clink: #5EA9F5; } .dcard.t-redhat { --cstripe: #444; } }
