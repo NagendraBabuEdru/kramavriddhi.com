@@ -330,7 +330,7 @@ function kvLearnMain() {
       var ap = arcadePool(); g.game = ap[Math.floor(Math.random() * ap.length)];
       var gx = LANG === 'te' && g.game.te ? g.game.te : g.game;
       body = '<h2 class="dq">' + g.game.icon + ' ' + K.esc(gx.name) + '</h2><p class="gbsub">' + K.esc(gx.intro) + '</p>' +
-        '<p class="gbsub">' + tr('{n} rounds · {s} seconds each · +1 🪙 for every right answer', { n: g.game.rounds, s: g.game.secs }) + '</p>' +
+        '<p class="gbsub">' + (g.game.type === 'chain' ? tr('Solve the case · +3 🪙, minus 1 for each wrong guess') : g.game.type === 'tapset' ? tr('{s} seconds · +1 🪙 for every 2 right tiles', { s: g.game.secs }) : tr('{n} rounds · {s} seconds each · +1 🪙 for every right answer', { n: g.game.rounds, s: g.game.secs })) + '</p>' +
         '<button type="button" class="btn go" data-arcstart>' + tr('Start') + ' ' + g.game.icon + '</button><div class="arcplay" hidden></div>';
     } else if (kind === 'puzzle') {
       var ps = puzzlePool(); g.card = ps[Math.floor(Math.random() * ps.length)];
@@ -373,6 +373,9 @@ function kvLearnMain() {
     }
     if (e.target.closest('[data-arcstart]') || e.target.closest('[data-arcagain]')) { arcStart(sec, k); return; }
     if (e.target.closest('[data-arcnext]')) { if (g.next) g.next(); return; }
+    var tp = e.target.closest('[data-tap]'); if (tp && !tp.disabled) { tp.setAttribute('aria-pressed', tp.getAttribute('aria-pressed') !== 'true'); return; }
+    if (e.target.closest('[data-tapcheck]')) { tapEnd(sec, k, false); return; }
+    var ch2 = e.target.closest('[data-chain]'); if (ch2 && !ch2.disabled) { chainPick(sec, k, ch2); return; }
     var ab = e.target.closest('[data-arcpick]'); if (ab && !ab.disabled) { arcAnswer(sec, k, ab.getAttribute('data-arcpick')); return; }
     if (e.target.closest('[data-gbopen]')) { gstat(g.kind).p++; save(); K.track('game_break', { kind: 'full', action: 'open', game: g.game.name }); return; }
     if (e.target.closest('[data-gbnext]')) { gbScrollPast(sec, k); return; }
@@ -483,6 +486,16 @@ function kvLearnMain() {
   function refreshAppBox() { var b = document.getElementById('appbox'); if (b) b.outerHTML = appBox(); }
   K.onInstallChange(refreshAppBox);
   feed.addEventListener('change', function (e) {
+    var cb = e.target.closest('[data-clean]');
+    if (cb) {
+      var box = cb.closest('.cleanbox'), all = box.querySelectorAll('[data-clean]'), on = box.querySelectorAll('[data-clean]:checked').length;
+      if (on === all.length && !st.cleaned[box.getAttribute('data-unit')]) {
+        st.cleaned[box.getAttribute('data-unit')] = today; st.cr += 2; save(); updatePill(); refreshStats();
+        box.querySelector('.cleanmsg').innerHTML = tr('🧹 Clean-up done!') + ' <span class="earn">+2 🪙</span>' + (Object.keys(st.cleaned).length === 3 ? ' · ' + tr('New badge: Cloud cleaner') : '');
+        K.track('cleanup_done', { unit_id: box.getAttribute('data-unit') });
+      }
+      return;
+    }
     var nm = e.target.closest('[data-name]');
     if (nm) { st.name = nm.value.trim().slice(0, 40); save(); var av = document.getElementById('pf-av'); if (av) av.innerHTML = avatar(); return; }
     var ti = e.target.closest('[data-remtime]'); if (!ti || !ti.value) return;
@@ -661,7 +674,7 @@ function kvLearnMain() {
     var gain = earned[j]; delete earned[j];
     res.innerHTML = '<p class="verdict">' + (verdict || tr(ok ? '✓ Correct!' : '✗ Not quite.')) + (restoring ? ' <span class="muted">' + tr('(done before)') + '</span>' : '') + (gain ? ' <span class="earn">+' + gain + ' 🪙</span>' : '') + '</p>' + right +
       (c.why ? '<p>' + gl(K.rich(c.why)) + '</p>' : '') +
-      (extra || (finished && !restoring ? '<p class="unitdone">' + tr('🎉 Unit complete:') + ' ' + K.esc(u.title) + '</p>' : '')) +
+      (extra || (finished && !restoring ? '<p class="unitdone">' + tr('🎉 Unit complete:') + ' ' + K.esc(u.title) + '</p>' + cleanupBox(u) : '')) +
       '<button type="button" class="btn primary" data-next>' + tr(last || finished ? 'Next unit ↓' : 'Next ↓') + '</button>';
     res.hidden = false;
   }
@@ -1074,6 +1087,8 @@ function kvLearnMain() {
      ===================================================================== */
   function arcadePool() { return (window.KV_ARCADE || []).filter(function (a) { return a.skills.some(function (s) { return st.tracks.indexOf(s) >= 0; }); }); }
   function arcStart(sec, k) {
+    if (gbs[k].game.type === 'tapset') return tapStart(sec, k);
+    if (gbs[k].game.type === 'chain') return chainStart(sec, k);
     var g = gbs[k], G = g.game, play = sec.querySelector('.arcplay');
     var half = Math.floor(G.rounds / 2), Ls = K.shuffle(G.items.filter(function (x) { return x.a === 'l'; })), Rs = K.shuffle(G.items.filter(function (x) { return x.a === 'r'; }));
     g.qs = K.shuffle(Ls.slice(0, half).concat(Rs.slice(0, G.rounds - half))); g.i = 0; g.right = 0; g.wrong = []; g.over = false; g.combo = 0;
@@ -1086,6 +1101,7 @@ function kvLearnMain() {
     var g = gbs[k], G = g.game, it = g.qs[g.i], gx = LANG === 'te' && G.te ? G.te : G, play = sec.querySelector('.arcplay');
     play.innerHTML = '<p class="gbmeta"><span>' + tr('Question {n} of {m}', { n: g.i + 1, m: g.qs.length }) + '</span><span class="gbtime"></span><span>' + (g.combo > 1 ? '🔥 ×' + g.combo : '') + '</span></p>' +
       '<div class="gbbar" aria-hidden="true"><i style="width:100%"></i></div>' +
+      (G.rules ? '<div class="swrules"><strong>📋 ' + tr('Rules') + '</strong><ul>' + (gx.rules || G.rules).map(function (r) { return '<li>' + K.esc(r) + '</li>'; }).join('') + '</ul></div>' : '') +
       '<div class="swstage"><div class="swcard" tabindex="0" aria-live="polite">' + K.esc(arcText(it).t) + '</div></div>' +
       '<div class="swbtns"><button type="button" class="btn swl" data-arcpick="l">◀ ' + K.esc(gx.left) + '</button><button type="button" class="btn swr" data-arcpick="r">' + K.esc(gx.right) + ' ▶</button></div>' +
       '<p class="swhint">' + tr('Swipe the card, or tap a button.') + '</p><p class="gbflash" role="status"></p><button type="button" class="btn primary swnext" data-arcnext hidden>' + tr('Next ↓') + '</button>';
@@ -1128,6 +1144,110 @@ function kvLearnMain() {
         return '<li>' + K.esc(arcText(it).t) + ' → <strong>' + K.esc(it.a === 'l' ? gx.left : gx.right) + '</strong></li>'; }).join('') + '</ul>' : '') +
       '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>' +
       '<div class="mbar"><button type="button" class="btn ghost" data-arcagain>' + tr('Play again') + '</button><button type="button" class="btn primary" data-gbnext>' + tr('Back to learning ↓') + '</button></div>';
+  }
+
+  /* tap-set: tap every tile that matches, then Check */
+  function tapStart(sec, k) {
+    var g = gbs[k], G = g.game, play = sec.querySelector('.arcplay');
+    var scenes = G.scenes.filter(function (sc) { return !sc.skill || st.tracks.indexOf(sc.skill) >= 0; });
+    g.scene = (scenes.length ? scenes : G.scenes)[Math.floor(Math.random() * (scenes.length || G.scenes.length))];
+    g.tiles = K.shuffle(g.scene.tiles); g.over = false;
+    var b = sec.querySelector('[data-arcstart]'); if (b) b.hidden = true;
+    var gx = LANG === 'te' && G.te ? G.te : G;
+    play.hidden = false;
+    play.innerHTML = '<p class="gbmeta"><span>' + K.esc(LANG === 'te' && g.scene.te_title ? g.scene.te_title : g.scene.title) + '</span><span class="gbtime"></span></p>' +
+      '<div class="gbbar" aria-hidden="true"><i style="width:100%"></i></div>' +
+      (g.scene.q ? '<p class="gbq">' + K.rich(LANG === 'te' && g.scene.te_q ? g.scene.te_q : g.scene.q) + '</p>' : '') +
+      '<p class="tapask">👆 ' + K.esc(gx.ask) + '</p>' +
+      '<div class="tapgrid">' + g.tiles.map(function (t, n) { return '<button type="button" class="tapt" data-tap="' + n + '" aria-pressed="false">' + K.esc(arcText(t).t) + '</button>'; }).join('') + '</div>' +
+      '<div class="mbar"><button type="button" class="btn go" data-tapcheck>✓ ' + tr('Check') + '</button></div>';
+    g.t0 = Date.now();
+    if (g.timer) clearInterval(g.timer);
+    g.timer = setInterval(function () {
+      var left = Math.max(0, G.secs * 1000 - (Date.now() - g.t0)), bar = sec.querySelector('.arcplay .gbbar i'), tl = sec.querySelector('.arcplay .gbtime');
+      if (bar) bar.style.width = (left / (G.secs * 1000) * 100) + '%'; if (tl) tl.textContent = Math.ceil(left / 1000) + ' s';
+      if (!left) tapEnd(sec, k, true);
+    }, 200);
+    K.track('game_break', { kind: 'arcade', action: 'play', game: G.id });
+  }
+  function tapEnd(sec, k, timeout) {
+    var g = gbs[k], G = g.game; if (g.over) return;
+    g.over = true; clearInterval(g.timer); g.timer = null;
+    var play = sec.querySelector('.arcplay'), right = 0, n = g.tiles.length;
+    play.querySelectorAll('[data-tap]').forEach(function (b) {
+      var t = g.tiles[+b.getAttribute('data-tap')], on = b.getAttribute('aria-pressed') === 'true', ok = on === t.on;
+      if (ok) right++;
+      b.disabled = true; b.classList.add(ok ? 'right' : 'wrong', t.on ? 'yes' : 'no');
+      b.insertAdjacentHTML('beforeend', '<span class="tapwhy">' + (ok ? '✓ ' : '✗ ') + K.esc(arcText(t).why) + '</span>');
+    });
+    var gain = Math.round(right / 2), stars = right === n ? 3 : right >= n - 2 ? 2 : right ? 1 : 0;
+    if (!g.counted) { g.counted = true; gstat('arcade').p++; st.cr += gain; bumpDay(); save(); updatePill(); refreshStats(); renderEnd(); }
+    K.track('game_break', { kind: 'arcade', action: 'done', game: G.id, right: right });
+    play.querySelector('.mbar').outerHTML = '<p class="verdict">' + (timeout ? tr('⏰ Time up!') + ' ' : '') + G.icon + ' ' + tr('{n} of {m} right', { n: right, m: n }) + (gain ? ' <span class="earn">+' + gain + ' 🪙</span>' : '') + '</p>' +
+      (stars ? '<p>' + K.stars(stars).replace('class="stars"', 'class="stars big"') + '</p>' : '') +
+      '<p class="small">' + K.esc((LANG === 'te' && G.te && G.te.legend) || G.legend || '') + '</p>' +
+      '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>' +
+      '<div class="mbar"><button type="button" class="btn ghost" data-arcagain>' + tr('Play again') + '</button><button type="button" class="btn primary" data-gbnext>' + tr('Back to learning ↓') + '</button></div>';
+  }
+
+  /* chain: a short story; pick the right check at each step */
+  function chainStart(sec, k) {
+    var g = gbs[k], G = g.game;
+    var cs = G.cases.filter(function (c) { return !c.skill || st.tracks.indexOf(c.skill) >= 0; }); if (!cs.length) cs = G.cases;
+    g.case = cs[Math.floor(Math.random() * cs.length)]; g.step = 0; g.miss = 0; g.clues = []; g.over = false;
+    var b = sec.querySelector('[data-arcstart]'); if (b) b.hidden = true;
+    sec.querySelector('.arcplay').hidden = false;
+    chainRender(sec, k);
+    K.track('game_break', { kind: 'arcade', action: 'play', game: G.id });
+  }
+  function stepText(stp) { var t = LANG === 'te' && stp.te ? stp.te : {}; return { q: t.q || stp.q, a: t.a || stp.a, w: t.w || stp.w, clue: t.clue || stp.clue }; }
+  function chainRender(sec, k) {
+    var g = gbs[k], c = g.case, stp = stepText(c.steps[g.step]), play = sec.querySelector('.arcplay');
+    var opts = K.shuffle([{ t: stp.a, ok: 1 }].concat(stp.w.map(function (w) { return { t: w, ok: 0 }; })));
+    g.opts = opts;
+    play.innerHTML = '<p class="gbmeta"><span>🕵️ ' + K.esc(LANG === 'te' && c.te_title ? c.te_title : c.title) + '</span><span>' + tr('Step {n} of {m}', { n: g.step + 1, m: c.steps.length }) + '</span></p>' +
+      (g.clues.length ? '<ul class="clues">' + g.clues.map(function (cl) { return '<li>🔎 ' + K.rich(cl) + '</li>'; }).join('') + '</ul>' : '') +
+      '<p class="gbq">' + K.rich(stp.q) + '</p><div class="choices">' + opts.map(function (o, n) {
+        return '<button type="button" class="choice" data-chain="' + n + '"><span class="key" aria-hidden="true">' + 'ABC'.charAt(n) + '</span><span class="ctext">' + K.rich(o.t) + '</span></button>'; }).join('') + '</div>' +
+      '<p class="gbflash" role="status"></p>';
+  }
+  function chainPick(sec, k, btn) {
+    var g = gbs[k], G = g.game, c = g.case; if (g.over) return;
+    var o = g.opts[+btn.getAttribute('data-chain')], play = sec.querySelector('.arcplay');
+    if (!o.ok) { g.miss++; btn.disabled = true; btn.classList.add('wrong'); play.querySelector('.gbflash').textContent = '✗ ' + tr('Not that one. Think: what must be true first?'); return; }
+    btn.classList.add('right'); play.querySelectorAll('[data-chain]').forEach(function (b) { b.disabled = true; });
+    g.clues.push(stepText(c.steps[g.step]).clue);
+    setTimeout(function () {
+      if (g.over) return;
+      g.step++;
+      if (g.step < c.steps.length) return chainRender(sec, k);
+      g.over = true;
+      var gain = Math.max(1, 3 - g.miss), stars = g.miss === 0 ? 3 : g.miss <= 2 ? 2 : 1;
+      if (!g.counted) { g.counted = true; gstat('arcade').p++; st.cr += gain; bumpDay(); save(); updatePill(); refreshStats(); renderEnd(); }
+      K.track('game_break', { kind: 'arcade', action: 'done', game: G.id, miss: g.miss });
+      play.innerHTML = '<p class="verdict">🕵️ ' + tr('Case solved!') + ' <span class="earn">+' + gain + ' 🪙</span></p><p>' + K.stars(stars).replace('class="stars"', 'class="stars big"') + '</p>' +
+        '<ul class="clues">' + g.clues.map(function (cl) { return '<li>🔎 ' + K.rich(cl) + '</li>'; }).join('') + '</ul>' +
+        '<p class="small">' + tr('Real servers fail in this order too: installed? running? firewall? permissions?') + '</p>' +
+        '<p class="revnote">' + tr('🎮 Game break done · it counts for today') + '</p>' +
+        '<div class="mbar"><button type="button" class="btn ghost" data-arcagain>' + tr('Play again') + '</button><button type="button" class="btn primary" data-gbnext>' + tr('Back to learning ↓') + '</button></div>';
+    }, reduce ? 300 : 900);
+  }
+
+  /* =====================================================================
+     Clean-up checklist after a cloud unit (S9): stop paying for practice resources
+     ===================================================================== */
+  st.cleaned = st.cleaned || {};
+  var CLEAN = {
+    aws: ['Terminate EC2 instances you started for practice', 'Delete unused EBS volumes and snapshots, release Elastic IPs, and delete S3 data you do not need', 'Open Billing and Cost Management and check your budget'],
+    gcp: ['Delete the VMs and disks you made for practice', 'Delete buckets and BigQuery data you do not need, and release unused static IP addresses', 'Open Billing reports and check your budget'],
+    az: ['Delete the practice VMs, or stop them so they show Stopped (deallocated)', 'Delete the practice resource groups you do not need', 'Open Cost Management and check your budget']
+  };
+  function cleanupBox(u) {
+    var list = CLEAN[u.track.id]; if (!list) return '';
+    var done = !!st.cleaned[u.id];
+    return '<div class="cleanbox" data-unit="' + K.esc(u.id) + '"><p class="cleanh">🧹 ' + tr('Did a hands-on lab? Clean up so you do not pay (only delete things you created for practice):') + '</p>' +
+      list.map(function (t, n) { return '<label class="cleanrow"><input type="checkbox" data-clean' + (done ? ' checked disabled' : '') + '> <span>' + K.esc(tr(t)) + '</span></label>'; }).join('') +
+      '<p class="cleanmsg" role="status">' + (done ? tr('🧹 Clean-up done!') : '') + '</p></div>';
   }
 
   /* ---------- end card */
@@ -1237,7 +1357,8 @@ function kvLearnMain() {
     ['🎓', 'Basic complete', 'Finish every Basic unit of a skill', function (x) { return x.basic >= 1; }],
     ['🏅', 'Memory master', 'Master 10 cards in review', function () { return (st.mastered || 0) >= 10; }],
     ['🎮', 'Game lover', 'Play 10 game breaks', function (x) { return x.games >= 10; }],
-    ['📝', 'Note taker', 'Write 5 notes', function (x) { return x.notes >= 5; }]
+    ['📝', 'Note taker', 'Write 5 notes', function (x) { return x.notes >= 5; }],
+    ['🧹', 'Cloud cleaner', 'Finish 3 clean-up checklists after cloud units', function () { return Object.keys(st.cleaned || {}).length >= 3; }]
   ];
   function calendarHtml() {
     var start = today - 77 - ((today + 4) % 7), cells = '';       /* 12 weeks, columns start on Sunday */
@@ -1309,7 +1430,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=10';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=15';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();

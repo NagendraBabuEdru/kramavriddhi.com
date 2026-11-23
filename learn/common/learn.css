@@ -881,3 +881,32 @@ html.reels-mode .memecard .meme { min-height: 46svh; }
 .arcplay { user-select: none; -webkit-user-select: none; }
 .swnext { display: block; margin: 8px auto 0; border-radius: 999px; box-shadow: none; }
 .introbtns .btn { min-width: 0; white-space: normal; text-align: center; }
+.swrules { margin: 8px 0 0; padding: 8px 12px; border-radius: 12px; background: var(--color-paper); border: 1px dashed var(--color-rule-2); font-size: .92rem; }
+.swrules ul { margin: 4px 0 0; padding-left: 18px; }
+.swrules li { margin: 2px 0; }
+
+/* v30: arcade tap-set (Bill Shock Hunter, Scan Less) */
+.tapask { margin: 8px 0 6px; font: 700 1rem var(--font-display); }
+.tapgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tapt { position: relative; min-height: 64px; padding: 10px; border-radius: 12px; border: 2px solid var(--color-rule-2); background: var(--color-paper); color: var(--color-ink); font: 600 .92rem/1.3 var(--font-display); text-align: left; cursor: pointer; }
+.lang-te .tapt { font-family: var(--font-telugu); }
+.tapt[aria-pressed="true"] { border-color: var(--tc, var(--color-ink)); background: color-mix(in oklab, var(--tc, var(--color-accent)) 16%, var(--color-paper)); }
+.tapt[aria-pressed="true"]::after { content: "✓"; position: absolute; top: 4px; right: 8px; font-weight: 800; }
+.tapt:disabled { cursor: default; }
+.tapt.yes { border-color: var(--color-success); }
+.tapt.no { border-color: var(--color-rule-2); }
+.tapt.wrong { background: color-mix(in oklab, var(--color-error) 10%, var(--color-paper)); }
+.tapt .tapwhy { display: block; margin-top: 6px; font: 400 .8rem/1.35 var(--font-body); color: var(--color-muted); }
+.tapt.wrong .tapwhy { color: var(--color-error); }
+@media (max-width: 340px) { .tapgrid { grid-template-columns: 1fr; } }
+/* v31: arcade chain (detective) */
+.clues { list-style: none; margin: 8px 0; padding: 8px 10px; border-radius: 12px; background: var(--color-paper); border: 1px dashed var(--color-rule-2); font-size: .92rem; }
+.clues li { margin: 4px 0; }
+.arcplay .choice .ctext { text-align: left; }
+/* v32: clean-up checklist (S9) */
+.cleanbox { margin: 10px 0; padding: 10px 12px; border-radius: 12px; background: color-mix(in oklab, var(--color-success) 8%, var(--color-paper)); border: 1px solid color-mix(in oklab, var(--color-success) 40%, transparent); color: var(--color-ink); }
+.cleanh { margin: 0 0 6px; font: 700 .95rem var(--font-display); }
+.cleanrow { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; font-size: .95rem; cursor: pointer; }
+.cleanrow input { width: 22px; height: 22px; flex: none; margin-top: 2px; accent-color: var(--color-success); }
+.cleanmsg { margin: 4px 0 0; font: 700 .95rem var(--font-display); }
+.cleanmsg:empty { display: none; }
