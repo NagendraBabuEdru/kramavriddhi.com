@@ -1542,7 +1542,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=18';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=19';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();

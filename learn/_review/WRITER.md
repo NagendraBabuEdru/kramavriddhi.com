@@ -172,3 +172,29 @@ Exception: `sql.a.12` already has 2 cards (learn + choice about fact vs dimensio
 - lx.a.11 Logs and journalctl — `/var/log/`, `tail -f`, `grep -i error`, `journalctl -u nginx`, `-f`, `--since "1 hour ago"`, `-p err`, `-b` (this boot), log rotation (`logrotate`), `less +F`. `grep`/`tail` output cards with `verify`.
 - lx.a.12 SSH keys — key pair: private key stays secret, public key goes to the server's `~/.ssh/authorized_keys`, `ssh-keygen -t ed25519`, `ssh-copy-id user@host`, permissions `chmod 600` private key and `700 ~/.ssh`, `~/.ssh/config` Host alias, disable password login (`PasswordAuthentication no`) only after keys work.
 - lx.a.13 Troubleshooting a slow server — a calm order: `uptime` (load average), `top` / `htop` (CPU, memory), `free -h`, `df -h` (full disk), `du -sh *` to find big folders, `ps aux --sort=-%mem`, logs; one change at a time. `du`/`df`-style cards only as concepts unless the output is certain.
+
+## Units (Advanced `a` level): Docker, Kubernetes, Ansible, DevOps
+Learners finished Basic and Intermediate of the same skill. Simple English, real-job depth. Same card rules.
+`lang`: `'docker'` (Dockerfile), `'compose'` (compose.yaml), `'k8s'` (Kubernetes manifests, Helm values), `'yaml'` (Ansible), `'ci'` (GitHub Actions), `'shell'` (docker / kubectl / helm / ansible / az / terraform commands), `'ini'` (Ansible inventory). Terraform HCL: show it with `lang: 'shell'` only in `learn` cards (1–5 lines), no HCL bug/indent cards.
+**Checks we run:** every YAML (learn code, indent lines, bug code after `fix`, Helm values) must parse with PyYAML; Helm *templates* with `{{ }}` are not YAML: only in `learn` cards, quoted, or as `choice` text. No printed command output unless it is in the official docs word for word: no invented `kubectl get` tables or `docker images` sizes. No version numbers that change (latest Helm/K8s/Ansible versions), no prices.
+
+**Docker (`dk`)** — cite docs.docker.com
+- dk.a.08 Multi-stage builds — several `FROM` lines, `FROM golang AS build` / `FROM node:22 AS build`, `COPY --from=build`, the final stage holds only what runs (no compilers), smaller and safer images, `--target` to build one stage, build cache and layer order (copy dependency files first).
+- dk.a.09 Image size and security — slim / alpine / distroless bases, `.dockerignore`, fewer layers and cleaning package caches in the same `RUN`, run as non-root (`USER`), pin image tags (or digests), never bake secrets into images (use build secrets `--secret`), scan images (`docker scout` exists; concept), `HEALTHCHECK`.
+
+**Kubernetes (`k8s`)** — cite kubernetes.io/docs, helm.sh/docs, learn.microsoft.com (AKS)
+- k8s.a.07 Ingress — Ingress routes HTTP(S) by host and path to Services; needs an Ingress controller installed (e.g. ingress-nginx); `ingressClassName`; `rules` → `host`, `http.paths` (`path`, `pathType: Prefix`, `backend.service.name/port.number`); TLS with a Secret; Gateway API is the newer option (one card, no version claims).
+- k8s.a.08 Helm — chart (templates + `values.yaml` + `Chart.yaml`), release, repository; `helm repo add`, `helm install myrel repo/chart`, `helm upgrade`, `--set` / `-f values.yaml`, `helm rollback`, `helm uninstall`, `helm list`; values override template defaults.
+- k8s.a.09 RBAC — Role (namespace) vs ClusterRole (cluster-wide); RoleBinding / ClusterRoleBinding attach roles to users, groups or ServiceAccounts; rules: `apiGroups`, `resources`, `verbs` (get, list, watch, create, update, delete); least privilege; `kubectl auth can-i`; pods use a ServiceAccount.
+- k8s.a.10 AKS on Azure — Azure Kubernetes Service: Azure runs the control plane; `az aks create`, `az aks get-credentials` then `kubectl`; node pools (system vs user); cluster autoscaler; Azure Container Registry attach (`--attach-acr`); stop or delete practice clusters to save money (no prices).
+
+**Ansible (`ans`)** — cite docs.ansible.com
+- ans.a.09 Roles — role folder layout (`tasks/main.yml`, `handlers/`, `templates/`, `files/`, `vars/`, `defaults/`, `meta/`), `ansible-galaxy role init`, using roles in a play (`roles:` or `ansible.builtin.import_role` / `include_role`), `defaults` have the lowest precedence (easy to override), reuse.
+- ans.a.10 Ansible Vault — encrypt secrets: `ansible-vault create`, `encrypt`, `edit`, `view`, `encrypt_string`; run with `--ask-vault-pass` or `--vault-password-file`; never commit the vault password; `no_log: true` to hide secrets in output.
+- ans.a.11 Galaxy and collections — Ansible Galaxy hub; collections (`namespace.collection`, e.g. `community.general`) hold modules/roles/plugins; FQCN like `ansible.builtin.copy`; `ansible-galaxy collection install`, `requirements.yml` and `ansible-galaxy install -r requirements.yml`.
+- ans.a.12 Testing idempotency — idempotent = second run reports `changed=0`; `--check` (dry run) and `--diff`; `command`/`shell` always report changed unless `creates:` / `changed_when:`; prefer modules over shell; `ansible-lint`; Molecule for role testing (concept).
+
+**DevOps (`ops`)** — cite docs.github.com, learn.microsoft.com, developer.hashicorp.com/terraform, sre.google
+- ops.a.07 Blue-green and canary releases — blue-green: two identical environments, switch traffic, instant rollback; canary: send a small share of users first, watch metrics, then increase; rolling updates (Kubernetes default); feature flags; always have a rollback plan.
+- ops.a.08 Infrastructure as code — define servers/networks in files kept in Git; declarative (Terraform, Bicep) vs imperative scripts; Terraform workflow `init` → `plan` → `apply` (→ `destroy`); state file (keep it remote and safe, never commit secrets); drift; review `plan` in pull requests.
+- ops.a.09 Monitoring and SRE basics — metrics, logs, traces; the four golden signals (latency, traffic, errors, saturation); SLI, SLO, error budget; alert on symptoms users feel, not every CPU spike; blameless postmortems; on-call runbooks.

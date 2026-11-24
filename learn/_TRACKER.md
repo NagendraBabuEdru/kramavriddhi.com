@@ -68,7 +68,7 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | Q2 | Owner: "ask the expert reviewer what next and do it; add an Instagram/YouTube Shorts UX expert" (24 Nov 2026) | **Reviewer roadmap** (do first: de/snow Intermediate, Telugu 8b, then rh). **Intermediate** for Data Engineering (de.i.07–12), Snowflake (snow.i.07–12), Red Hat (rh.i.07–12): 162 cards, all approved (de 47+7 fixed, snow 48+6, rh 37+17, round 2 approved all; rh round 2 fixed 1 more). **Phase 8b done:** Telugu for every Intermediate and Advanced card (614 + 162) → all 1,433 cards in Telugu. 9 reviewer memes m52–m60. **New UX expert** guide `learn/_review/UX_EXPERT.md` (+ local screenshot helpers `dev_state.html`, `dev_frame.html` for headless Edge): 15 changes, 14 built (result scrolls into view + live region, game breaks only from reached cards, sticky Start in picker, open on the lesson not the dashboard, icon-only Learn more on phones, tighter Reels cards + 2-column short answers, ✓/✗ marks + labels, bug-line tap hint, Daily goal done card, intro extras in "More", 360px top bar, Telugu font mix, big Got it, unit progress bar, loading placeholder); UX round 2 approved | ✅ live (24 Nov 2026) |
 | 8b | Telugu for Intermediate | The 309 Intermediate cards in Telugu, same method | ⬜ |
 | 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7; 8b can run any time before or after) |
-| 10 | Advanced levels | All tracks | 🟡 Python, SQL, Git, Linux live (24 Nov 2026, A1+A2, 190 cards, reviewed, Telugu); aws/gcp Advanced live (Q1); next A3 Docker/K8s/Ansible/DevOps, then A4 az/pbi/de/snow/rh |
+| 10 | Advanced levels | All tracks | 🟡 Python, SQL, Git, Linux (A1+A2, 190 cards) and Docker, Kubernetes, Ansible, DevOps (A3, 118 cards) live 24 Nov 2026, all reviewed + Telugu; aws/gcp Advanced live (Q1); next A4 az/pbi/de/snow/rh |
 | 11 | Challenges and achievement posts | Timed challenge (10 questions, time limit, up to 3 tries, shuffled) after a completed level; achievement card (skill brand look, time, tries, score, Gold/Silver/Bronze badge, check code, caption); share to LinkedIn / WhatsApp / image. Can start with completed **Basic** levels before Phase 10. Mockup approved by owner 15 Nov 2026 | ⬜ |
 | 12 | Achievements feed | Shared Instagram-style feed of everyone's achievement posts, Applaud + Insightful reactions only, "Try this challenge" button. Needs accounts, a database and moderation (decision D5) | ⬜ (after D5) |
 
@@ -125,28 +125,28 @@ Added 15 Nov 2026 at the owner's request.
 |---|---|---|
 | Basic | 1 images vs containers · 2 run, ps, stop · 3 Dockerfile | ✅ complete (Phase 6) |
 | Intermediate | 4 volumes · 5 networks · 6 Docker Compose · 7 registries | ✅ complete (Phase 6b) |
-| Advanced | 8 multi-stage builds · 9 image size and security | ⬜ |
+| Advanced | 8 multi-stage builds · 9 image size and security | ✅ live 24 Nov 2026 |
 
 ### 4.7 Kubernetes (`k8s`) · brand look: kubernetes.io
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 cluster, node, pod · 2 kubectl basics · 3 deployments | ✅ complete (Phase 6) |
 | Intermediate | 4 services · 5 ConfigMaps and Secrets · 6 scaling | ✅ complete (Phase 6b) |
-| Advanced | 7 ingress · 8 Helm · 9 RBAC · 10 AKS on Azure | ⬜ |
+| Advanced | 7 ingress · 8 Helm · 9 RBAC · 10 AKS on Azure | ✅ live 24 Nov 2026 |
 
 ### 4.8 Ansible (`ans`) · brand look: Ansible docs
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 inventory · 2 ad-hoc commands · 3 playbook structure · 4 apt, copy, service | ✅ complete (Phase 6; full game "Fix the Playbook" ✅) |
 | Intermediate | 5 variables · 6 handlers · 7 templates · 8 loops and conditions | ✅ complete (Phase 6b) |
-| Advanced | 9 roles · 10 Ansible Vault · 11 Galaxy · 12 testing idempotency | ⬜ |
+| Advanced | 9 roles · 10 Ansible Vault · 11 Galaxy · 12 testing idempotency | ✅ live 24 Nov 2026 |
 
 ### 4.9 DevOps and CI/CD (`ops`) · brand look: Microsoft Learn (green)
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 what DevOps is · 2 environments (dev, staging, prod) · 3 continuous integration | ✅ complete (Phase 6) |
 | Intermediate | 4 pipeline YAML (GitHub Actions / Azure Pipelines) · 5 test stages · 6 artifacts | ✅ complete (Phase 6b) |
-| Advanced | 7 blue-green and canary releases · 8 infrastructure as code · 9 monitoring and SRE basics | ⬜ |
+| Advanced | 7 blue-green and canary releases · 8 infrastructure as code · 9 monitoring and SRE basics | ✅ live 24 Nov 2026 |
 
 ## 5. What is live now (inventory)
 
@@ -203,6 +203,7 @@ All 8 built and live (S5–S9). Not built yet (also UX r2-4: `defer` for memes/a
 
 | Date | Change |
 |---|---|
+| 24 Nov 2026 | Phase 10 A3 (owner: "Docker/K8s Advanced next"): Advanced for Docker (dk.a.08–09), Kubernetes (k8s.a.07–10: Ingress, Helm, RBAC, AKS), Ansible (ans.a.09–12: roles, Vault, Galaxy, idempotency), DevOps (ops.a.07–09: blue-green/canary + feature flags, IaC/Terraform, SRE) = 118 cards, YAML parsed; expert reviewer: dk/ops 34+11 fixed (+1 feature-flag card), k8s 29+7, ans 25+11; round 2 fixed 3 more, all approved. Notes: ingress-nginx is retired (examples use Traefik/Contour, Gateway API recommended); action tags `actions/checkout@v6`, `hashicorp/setup-terraform@v4` (re-check in weekly fact checks); docs.ansible.com links now redirect to /projects/ansible/. Telugu for all (1,742 cards); memes m73–m84 |
 | 24 Nov 2026 | Phase 10 A1+A2 (owner: "Advanced levels next"): Advanced for Python (py.a.21–28, 73 cards), SQL (sql.a.09–12, 35), Git (git.a.09–13, 45), Linux (lx.a.10–13, 38) = 190 cards, every program/query/shell answer run; expert reviewer: py 57+16 fixed, sql 23+11 (+1 surrogate-key card), git/lx 77+6 (+1 log --graph card), rounds 2–3 approved all; Telugu for all (1,624 cards, all Telugu); 12 memes m61–m72; Star Builder swipe game (sql/pbi/de); WRITER.md Advanced syllabus |
 | 23 Nov 2026 | **S7 + S9 done:** all 8 reviewer ideas are live (glossary, cloud compare, 5 arcade games, clean-up badge). Analytics `cleanup_done` |
 | 23 Nov 2026 | **S6 done:** 🎯 Arcade game breaks with "Batch or Stream?". Analytics `game_break` kind `arcade` |
