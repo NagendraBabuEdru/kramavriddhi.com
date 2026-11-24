@@ -68,7 +68,7 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | Q2 | Owner: "ask the expert reviewer what next and do it; add an Instagram/YouTube Shorts UX expert" (24 Nov 2026) | **Reviewer roadmap** (do first: de/snow Intermediate, Telugu 8b, then rh). **Intermediate** for Data Engineering (de.i.07–12), Snowflake (snow.i.07–12), Red Hat (rh.i.07–12): 162 cards, all approved (de 47+7 fixed, snow 48+6, rh 37+17, round 2 approved all; rh round 2 fixed 1 more). **Phase 8b done:** Telugu for every Intermediate and Advanced card (614 + 162) → all 1,433 cards in Telugu. 9 reviewer memes m52–m60. **New UX expert** guide `learn/_review/UX_EXPERT.md` (+ local screenshot helpers `dev_state.html`, `dev_frame.html` for headless Edge): 15 changes, 14 built (result scrolls into view + live region, game breaks only from reached cards, sticky Start in picker, open on the lesson not the dashboard, icon-only Learn more on phones, tighter Reels cards + 2-column short answers, ✓/✗ marks + labels, bug-line tap hint, Daily goal done card, intro extras in "More", 360px top bar, Telugu font mix, big Got it, unit progress bar, loading placeholder); UX round 2 approved | ✅ live (24 Nov 2026) |
 | 8b | Telugu for Intermediate | The 309 Intermediate cards in Telugu, same method | ⬜ |
 | 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7; 8b can run any time before or after) |
-| 10 | Advanced levels | All tracks | ⬜ |
+| 10 | Advanced levels | All tracks | 🟡 Python, SQL, Git, Linux live (24 Nov 2026, A1+A2, 190 cards, reviewed, Telugu); aws/gcp Advanced live (Q1); next A3 Docker/K8s/Ansible/DevOps, then A4 az/pbi/de/snow/rh |
 | 11 | Challenges and achievement posts | Timed challenge (10 questions, time limit, up to 3 tries, shuffled) after a completed level; achievement card (skill brand look, time, tries, score, Gold/Silver/Bronze badge, check code, caption); share to LinkedIn / WhatsApp / image. Can start with completed **Basic** levels before Phase 10. Mockup approved by owner 15 Nov 2026 | ⬜ |
 | 12 | Achievements feed | Shared Instagram-style feed of everyone's achievement posts, Applaud + Insightful reactions only, "Try this challenge" button. Needs accounts, a database and moderation (decision D5) | ⬜ (after D5) |
 
@@ -81,7 +81,7 @@ Unit count per level is a plan; it can grow. Each unit = about 6 to 8 cards.
 |---|---|---|
 | Basic | 1 print and variables · 2 numbers and maths · 3 strings · 4 input and type conversion · 5 if / elif / else · 6 lists · 7 for loops and range · 8 while loops · 9 functions · 10 dictionaries | ✅ complete: every unit 6 to 8 cards + 2 checkpoints |
 | Intermediate | 11 tuples and sets · 12 string methods and f-strings · 13 errors and try/except · 14 files (`with open`) · 15 modules and pip · 16 list comprehensions · 17 default args, *args, **kwargs · 18 classes and objects · 19 virtual environments · 20 JSON and CSV | ✅ complete (Phase 5) |
-| Advanced | 21 iterators and generators · 22 decorators · 23 context managers · 24 type hints · 25 testing with pytest · 26 async basics · 27 pandas for data · 28 project structure and packaging | ⬜ |
+| Advanced | 21 iterators and generators · 22 decorators · 23 context managers · 24 type hints · 25 testing with pytest · 26 async basics · 27 pandas for data · 28 project structure and packaging | ✅ live 24 Nov 2026 |
 
 ### 4.2 Azure Data Engineering (`az`) · brand look: Microsoft Learn
 Matches the levels of `/courses/azure-data-engineering/`.
@@ -96,21 +96,21 @@ Matches the levels of `/courses/azure-data-engineering/`.
 |---|---|---|
 | Basic | 1 what Git is · 2 init, clone, add, commit · 3 status, log, diff · 4 push and pull | ✅ complete (Phase 4) |
 | Intermediate | 5 branches · 6 merge · 7 merge conflicts · 8 pull requests | ✅ complete (Phase 5) |
-| Advanced | 9 rebase · 10 stash · 11 revert vs reset · 12 tags and releases · 13 team workflows | ⬜ |
+| Advanced | 9 rebase · 10 stash · 11 revert vs reset · 12 tags and releases · 13 team workflows | ✅ live 24 Nov 2026 |
 
 ### 4.4 Linux (`lx`) · brand look: ubuntu.com
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 files and folders · 2 reading files · 3 permissions · 4 users and sudo | ✅ complete (Phase 4) |
 | Intermediate | 5 processes · 6 services (systemctl) · 7 packages (apt) · 8 networking commands · 9 shell scripts | ✅ complete (Phase 5) |
-| Advanced | 10 cron · 11 logs and journalctl · 12 SSH keys · 13 troubleshooting a slow server | ⬜ |
+| Advanced | 10 cron · 11 logs and journalctl · 12 SSH keys · 13 troubleshooting a slow server | ✅ live 24 Nov 2026 |
 
 ### 4.5 SQL (`sql`) · brand look: Microsoft Learn (teal)
 | Level | Units in order | Status |
 |---|---|---|
 | Basic | 1 SELECT and FROM · 2 WHERE · 3 ORDER BY · 4 COUNT, SUM, AVG | ✅ complete (Phase 4) |
 | Intermediate | 5 GROUP BY and HAVING · 6 JOINs · 7 subqueries · 8 INSERT, UPDATE, DELETE | ✅ complete (Phase 5) |
-| Advanced | 9 window functions · 10 CTEs · 11 indexes and performance · 12 star schema modelling | ⬜ |
+| Advanced | 9 window functions · 10 CTEs · 11 indexes and performance · 12 star schema modelling | ✅ live 24 Nov 2026 |
 
 ### 4.5b Power BI (`pbi`) · brand look: Microsoft Learn with the Power BI yellow band (#F2C811, dark text)
 Added 15 Nov 2026 at the owner's request.
@@ -203,6 +203,7 @@ All 8 built and live (S5–S9). Not built yet (also UX r2-4: `defer` for memes/a
 
 | Date | Change |
 |---|---|
+| 24 Nov 2026 | Phase 10 A1+A2 (owner: "Advanced levels next"): Advanced for Python (py.a.21–28, 73 cards), SQL (sql.a.09–12, 35), Git (git.a.09–13, 45), Linux (lx.a.10–13, 38) = 190 cards, every program/query/shell answer run; expert reviewer: py 57+16 fixed, sql 23+11 (+1 surrogate-key card), git/lx 77+6 (+1 log --graph card), rounds 2–3 approved all; Telugu for all (1,624 cards, all Telugu); 12 memes m61–m72; Star Builder swipe game (sql/pbi/de); WRITER.md Advanced syllabus |
 | 23 Nov 2026 | **S7 + S9 done:** all 8 reviewer ideas are live (glossary, cloud compare, 5 arcade games, clean-up badge). Analytics `cleanup_done` |
 | 23 Nov 2026 | **S6 done:** 🎯 Arcade game breaks with "Batch or Stream?". Analytics `game_break` kind `arcade` |
 | 23 Nov 2026 | **S5 done:** glossary chips + cloud compare. Analytics `glossary_open`. Ideas list order now: Batch or Stream, Firewall Bouncer, Bill Shock Hunter, Why can't I open it?, Scan Less Pay Less, Clean-up badge |

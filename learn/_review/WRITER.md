@@ -132,3 +132,43 @@ Learners finished all Basic units of the same skill. Same card rules. Data Engin
 - rh.i.10 Podman containers — daemonless, rootless; `podman run -d -p 8080:80`, `podman ps`, `podman logs`, `podman images`; UBI images from registry.access.redhat.com; Docker-compatible commands; run as a systemd service (Quadlet, one card).
 - rh.i.11 OpenShift projects and the oc CLI — `oc login`, `oc new-project`, `oc project`, `oc get pods`, `oc logs`, `oc describe`; a project is a Kubernetes namespace with extra features; web console; `oc` vs `kubectl`.
 - rh.i.12 Deploying an app on OpenShift — `oc new-app` (from image or Git source, Source-to-Image), Deployment, Service, Route to expose (`oc expose service`), scale with `oc scale`; containers run as a random non-root user by default (restricted SCC).
+
+## Units (Advanced `a` level): Python, SQL, Git, Linux
+Learners finished Basic and Intermediate of the same skill. Still simple English, but real-job depth. Same card rules.
+Exception: `sql.a.12` already has 2 cards (learn + choice about fact vs dimension), so add **no learn card** there, only 4–6 practice cards (not repeating that question) + 2 checks.
+
+**Verification (required, we run it):**
+- **Python** `output` / `check` cards with `code`: a complete program that runs on Python 3.11 and prints EXACTLY `a` ("\n" between lines). Standard library only, except py.a.27 may `import pandas` (we have pandas 3.0). pandas cards: print scalars or `.tolist()` / `int(...)` values, **never print a whole DataFrame/Series or a dtype** (the text layout changes between versions). No `input()`, network, randomness, dates/times, or set/dict order that could vary. `bug` cards must crash exactly on line `bad`+1 with the error the question names. `indent` cards must run when correctly indented (`step: 4`, `lang: 'python'`).
+- **pytest is not installed here**: py.a.25 test code goes in `learn`, `choice`, `bug` (with `fix`, no run) or `order` cards, not `output` cards. Facts from docs.pytest.org.
+- **asyncio** output cards are fine (stdlib) if the printed order is certain.
+- **SQL**: SQLite 3.42 (window functions and CTEs work). Every result question gets `verify: { setup, query, rows }`; the shown `code` must be the same query, with the table rows in `--` comment lines first matching `setup`. `EXPLAIN QUERY PLAN` text differs by version: concept cards only. CREATE INDEX syntax is fine to show.
+- **Git / Linux** cards that show command output: `verify: { sh, expect }` (bash + git in an empty temp folder; git user is set; LC_ALL=C). For `crontab`, `journalctl`, `ssh`, `systemctl`, `top`, `ssh-keygen` output and anything machine-dependent: concept cards (cite the man page), never invented output.
+
+**Python (`py`)** — cite docs.python.org/3, docs.pytest.org, pandas.pydata.org
+- py.a.21 Iterators and generators — iterable vs iterator, `iter()` / `next()`, `StopIteration`, `yield`, generator functions are lazy and single-use, generator expressions `(x*x for x in ...)`, memory saving for big files, `yield from`.
+- py.a.22 Decorators — functions are objects, inner functions and closures, a decorator wraps a function (`@timer`), `*args, **kwargs` in the wrapper, `functools.wraps` keeps the name, decorators with arguments (one card), stacking order.
+- py.a.23 Context managers — `with open(...)` closes even on error, `__enter__` / `__exit__`, `contextlib.contextmanager` with `yield`, `try/finally` equivalent, several managers in one `with`, `contextlib.suppress`.
+- py.a.24 Type hints — `def f(x: int) -> str`, hints are not checked at runtime (Python runs anyway), `list[int]`, `dict[str, int]`, `X | None` (3.10+), `Optional`, type checkers like mypy, `dataclasses` with hints (one card).
+- py.a.25 Testing with pytest — test files `test_*.py`, functions `test_*`, plain `assert`, run `pytest`, `pytest.raises`, fixtures, `@pytest.mark.parametrize`, arrange–act–assert, test one behaviour per test.
+- py.a.26 Async basics — `async def`, `await`, `asyncio.run(main())`, coroutines do nothing until awaited, `asyncio.gather` for many waits at once, `asyncio.sleep` vs `time.sleep` (blocks the loop), async helps with waiting (network/files), not CPU work.
+- py.a.27 pandas for data — `pd.DataFrame`, `read_csv`, `df["col"]`, `df[df["marks"] > 50]`, `groupby().sum()` / `.mean()`, `len(df)`, `.shape`, missing values `isna()` / `fillna()`, `merge`; prefer vectorised operations over loops.
+- py.a.28 Project structure and packaging — modules and packages, `if __name__ == "__main__":`, virtual environments `python -m venv .venv`, `pip install -r requirements.txt`, `pyproject.toml`, `src/` layout, never commit `.venv` or secrets (`.gitignore`).
+
+**SQL (`sql`)** — portable SQL, run in SQLite
+- sql.a.09 Window functions — `OVER()`, `PARTITION BY`, `ORDER BY` inside OVER, `ROW_NUMBER()` vs `RANK()` vs `DENSE_RANK()` (ties), running total `SUM() OVER (ORDER BY ...)`, `LAG()` / `LEAD()`; window functions keep every row (unlike GROUP BY); top-N per group.
+- sql.a.10 CTEs — `WITH name AS (...)`, several CTEs separated by commas, readability over nested subqueries, using a CTE twice, recursive CTE `WITH RECURSIVE` (one simple card: numbers 1–5 or an org chart).
+- sql.a.11 Indexes and performance — an index is like a book's index (faster lookups, slower writes, extra space), `CREATE INDEX idx ON t(col)`, composite index column order (leftmost), `SELECT *` vs needed columns, functions on an indexed column can stop the index being used, `EXPLAIN` exists (concept), don't index everything.
+- sql.a.12 Star schema modelling — grain of the fact table (one row per what?), surrogate keys, date dimension, joining fact to dimensions for a report (`verify`), measures vs attributes, snowflake schema vs star (one card).
+
+**Git (`git`)** — cite git-scm.com/docs
+- git.a.09 Rebase — `git rebase main` replays your commits on top, linear history vs merge commit, conflicts during rebase (`git rebase --continue` / `--abort`), **never rebase commits others already pulled** (shared/pushed), interactive rebase `-i` to squash (concept), `git pull --rebase`.
+- git.a.10 Stash — `git stash` (or `git stash push -m "msg"`), `git stash list`, `pop` vs `apply`, `git stash drop`, untracked files need `-u`, stash before switching branches.
+- git.a.11 Revert vs reset — `git revert <commit>` makes a new undo commit (safe for shared history), `git reset --soft` / `--mixed` (default) / `--hard` (loses changes), `git reflog` to recover, `git restore` for files.
+- git.a.12 Tags and releases — lightweight vs annotated tags (`git tag -a v1.0 -m`), `git tag` lists, tags are not pushed by default (`git push origin v1.0` or `--tags`), semantic versioning MAJOR.MINOR.PATCH, checkout a tag (detached HEAD).
+- git.a.13 Team workflows — feature branches, pull requests and code review, protected main, GitHub flow (branch → PR → review → merge → deploy), trunk-based (short-lived branches), keep PRs small, `.gitignore` and no secrets, `git blame` / `git log --oneline --graph`.
+
+**Linux (`lx`)** — cite man7.org man pages
+- lx.a.10 cron — `crontab -e`, `crontab -l`, the 5 fields (minute hour day-of-month month day-of-week), `*/15`, examples (`0 2 * * *` = 2 AM daily), use full paths, cron has a small PATH and no terminal, redirect output to a log `>> /var/log/job.log 2>&1`, systemd timers exist as an alternative (one card).
+- lx.a.11 Logs and journalctl — `/var/log/`, `tail -f`, `grep -i error`, `journalctl -u nginx`, `-f`, `--since "1 hour ago"`, `-p err`, `-b` (this boot), log rotation (`logrotate`), `less +F`. `grep`/`tail` output cards with `verify`.
+- lx.a.12 SSH keys — key pair: private key stays secret, public key goes to the server's `~/.ssh/authorized_keys`, `ssh-keygen -t ed25519`, `ssh-copy-id user@host`, permissions `chmod 600` private key and `700 ~/.ssh`, `~/.ssh/config` Host alias, disable password login (`PasswordAuthentication no`) only after keys work.
+- lx.a.13 Troubleshooting a slow server — a calm order: `uptime` (load average), `top` / `htop` (CPU, memory), `free -h`, `df -h` (full disk), `du -sh *` to find big folders, `ps aux --sort=-%mem`, logs; one change at a time. `du`/`df`-style cards only as concepts unless the output is certain.
