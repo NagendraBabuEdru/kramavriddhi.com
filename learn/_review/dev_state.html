@@ -1,0 +1,17 @@
+<!doctype html><meta charset="utf-8"><title>dev state</title>
+<!-- LOCAL TESTING ONLY (not published: _ folder). Usage:
+  /learn/_review/dev_state.html#{"tracks":["py","aws"],"lang":"en","reels":true}   -> merges into kv-learn-feed
+  /learn/_review/dev_state.html#clear                                          -> removes saved state
+  Then open /learn/daily/ with the same browser profile. -->
+<pre id="o"></pre>
+<script>
+var h = decodeURIComponent(location.hash.slice(1)), o = document.getElementById('o');
+try {
+  if (h === 'clear') { localStorage.removeItem('kv-learn-feed'); o.textContent = 'cleared'; }
+  else {
+    var cur = JSON.parse(localStorage.getItem('kv-learn-feed') || 'null') || { tracks: [], done: {}, likes: {}, saved: {}, streak: { n: 0, last: 0 }, best: 0, days: {} };
+    var add = JSON.parse(h); for (var k in add) cur[k] = add[k];
+    localStorage.setItem('kv-learn-feed', JSON.stringify(cur)); o.textContent = 'set ' + JSON.stringify(cur).slice(0, 300);
+  }
+} catch (e) { o.textContent = 'error ' + e; }
+</script>

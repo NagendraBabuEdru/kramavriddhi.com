@@ -4,7 +4,7 @@
 It is the single place that says what exists, what comes next, and in what order.
 Folders and files starting with `_` are not published, so this file stays private.
 
-Last updated: 23 Nov 2026 (S4: 5 new skills)
+Last updated: 24 Nov 2026 (Q2: de/snow/rh Intermediate, Telugu for all cards, UX expert)
 
 ---
 
@@ -65,6 +65,7 @@ Work strictly in this order. Do not start a phase before the one above is ✅.
 | S7 | Arcade: Firewall Bouncer, Bill Shock Hunter, Why can’t I open it?, Scan Less Pay Less (reviewer ideas 4–7) | Swipe engine + rules box (Bouncer: 16 visitors, 10 s); new **tap-set** engine (Bill Shock Hunter: AWS/Google Cloud/Azure scenes, 50 s; Scan Less: 3 BigQuery column questions, 35 s); new **chain** engine (detective: RHEL/Apache, Ubuntu/nginx, Docker cases). All in `learn/daily/arcade.js`, EN + Telugu, each reviewed by the expert reviewer (fixes: SELinux `mv` vs `cp`, no numbers on billing tiles, on-demand pricing wording, longer timers) | ✅ live (23 Nov 2026) |
 | S9 | Clean-up checklist + Cloud cleaner badge (reviewer idea 8) | After each completed AWS / Google Cloud / Azure unit: 3-item clean-up checklist (reviewed wording: release Elastic IPs / static IPs, Azure "Stopped (deallocated)", only delete practice things); all 3 ticked = +2 🪙 once per unit (`st.cleaned`); 3 checklists = 🧹 Cloud cleaner badge | ✅ live (23 Nov 2026) |
 | Q1 | AWS + Google Cloud Intermediate and Advanced, with games, memes and features (owner asked 24 Nov 2026: "go with all, including games and memes") | 19 units (aws.i.07–12, aws.a.13–16, gcp.i.07–12, gcp.a.13–15): 171 cards by 4 Sonnet writers, all approved by the expert reviewer (AWS 72 + 18 fixed; Google Cloud 76 + 5 fixed; round 2 approved all fixes; all AWS src links checked 200). 6 memes m46–m51 (EN + Telugu). 5 arcade games: Watch or Trail? and Filter or Format? (swipe), Least Privilege Locksmith and Leak Hunter (tap-set), 2 AM Pager (chain, own closing tip `outro`). Features: **command builder** card type `cmd` (tap word chips; flag groups accepted in any order; 9 reviewed cards, also used as puzzle breaks), **bug diff** after bug cards, **"Did you delete it?"** reminder on a later day for cloud units finished in the last 7 days (one skip/clean covers all). Game tiles now show `code`. New units are English only for now (like other Intermediate units) | ✅ live (24 Nov 2026) |
+| Q2 | Owner: "ask the expert reviewer what next and do it; add an Instagram/YouTube Shorts UX expert" (24 Nov 2026) | **Reviewer roadmap** (do first: de/snow Intermediate, Telugu 8b, then rh). **Intermediate** for Data Engineering (de.i.07–12), Snowflake (snow.i.07–12), Red Hat (rh.i.07–12): 162 cards, all approved (de 47+7 fixed, snow 48+6, rh 37+17, round 2 approved all; rh round 2 fixed 1 more). **Phase 8b done:** Telugu for every Intermediate and Advanced card (614 + 162) → all 1,433 cards in Telugu. 9 reviewer memes m52–m60. **New UX expert** guide `learn/_review/UX_EXPERT.md` (+ local screenshot helpers `dev_state.html`, `dev_frame.html` for headless Edge): 15 changes, 14 built (result scrolls into view + live region, game breaks only from reached cards, sticky Start in picker, open on the lesson not the dashboard, icon-only Learn more on phones, tighter Reels cards + 2-column short answers, ✓/✗ marks + labels, bug-line tap hint, Daily goal done card, intro extras in "More", 360px top bar, Telugu font mix, big Got it, unit progress bar, loading placeholder); UX round 2 approved | ✅ live (24 Nov 2026) |
 | 8b | Telugu for Intermediate | The 309 Intermediate cards in Telugu, same method | ⬜ |
 | 9 | User-submitted tasks | Submit form, review queue, credit on the card | ⬜ (needs a decision on how: see section 7; 8b can run any time before or after) |
 | 10 | Advanced levels | All tracks | ⬜ |
@@ -178,7 +179,7 @@ Analytics events: `game_start`, `level_complete` (feed: per unit, with `unit_id`
 10. Only say what an official source confirms. If a number (copies, limits, counts) is not stated on the official page, leave it out.
 
 ## 6b. Reviewer ideas (23 Nov 2026)
-All 8 built and live (S5–S9). Not built yet: Pipe Plumber, Warehouse Wake-Up, Least Privilege Lockers, Star Builder, Command Builder, Terminal peek, Copy-query button.
+All 8 built and live (S5–S9). Not built yet (also UX r2-4: `defer` for memes/arcade/glossary + preload te.js): Pipe Plumber, Warehouse Wake-Up, Least Privilege Lockers, Star Builder, Command Builder, Terminal peek, Copy-query button.
 
 ## 7. Open decisions (need the owner's answer)
 

@@ -787,7 +787,7 @@ html.reels-mode .daily .post { border-radius: 20px; box-shadow: none; }
 .pfbadges li.off .bic { filter: grayscale(1); }
 .pfbadges li.on { border-color: var(--color-success); background: color-mix(in oklab, var(--color-success) 8%, var(--color-paper)); }
 .pact.plearn { white-space: nowrap; }
-@media (max-width: 360px) { .pact.plearn span { display: none; } .pact.plearn { padding: 0 10px; } }
+@media (max-width: 480px) { .pact.plearn span { display: none; } .pact.plearn { padding: 0 10px; } }
 .pact svg { flex: none; }
 .pactions { gap: 2px; }
 
@@ -939,3 +939,70 @@ html.reels-mode .memecard .meme { min-height: 46svh; }
 .tapgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .tapt { min-width: 0; overflow-wrap: anywhere; }
 .tapt code, .swcard code, .gbflash code, .tapwhy code { white-space: normal; overflow-wrap: anywhere; font-size: .9em; }
+
+/* ===== UX expert round 1 (24 Nov 2026): Reels/Shorts feel ===== */
+/* ux3 picker: short skill cards, Start always under the thumb */
+.skill .sk-txt > span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.skill .skpill { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--color-paper-2); font: 600 var(--text-xs) var(--font-display); font-style: normal; color: var(--color-muted); vertical-align: 2px; white-space: nowrap; }
+.picker #pick-go { position: sticky; bottom: 12px; z-index: 5; width: 100%; min-height: 52px; justify-content: center; box-shadow: 0 4px 16px rgb(0 0 0 / .18); }
+.picker #pick-go[hidden] { display: none; }
+/* ux5 action row never overlaps */
+.pactions { flex-wrap: nowrap; }
+.pact { flex: none; }
+/* ux6 short answers side by side; tighter cards in Reels mode */
+.dcard .choices.short { grid-template-columns: 1fr 1fr; }
+html.reels-mode .post .choice { min-height: 48px; padding: 4px 12px 4px 6px; }
+html.reels-mode .post .choice .key { width: 30px; height: 30px; }
+html.reels-mode .dcard[data-j] .phead { padding-block: 8px; margin-bottom: 8px; }
+html.reels-mode .dcard[data-j] .snippet { padding-block: 8px; }
+html.reels-mode .helpbar { flex-wrap: nowrap; gap: 6px; }
+html.reels-mode .hbtn { min-height: 44px; padding: 4px 10px; }
+html.reels-mode .dcard.answered .dtype { display: none; }
+/* ux7 right/wrong also shown by a mark, not only colour */
+.choice.right::after, .bugline.right::after, .ord.right::after { content: "✓"; margin-left: auto; padding-left: 8px; font: 800 1.25rem var(--font-display); color: var(--color-success); }
+.choice.wrong::after, .bugline.wrong::after, .ord.wrong::after { content: "✗"; margin-left: auto; padding-left: 8px; font: 800 1.25rem var(--font-display); color: var(--color-error); }
+.bugline.right::after { color: var(--code-ok); } .bugline.wrong::after { color: var(--code-err); }
+@media (prefers-reduced-motion: reduce) { .choice.wrong, .mslot.bad, .slot.bad, .iline.wrong, .srv.fail { animation: none !important; } }
+/* ux8 bug lines look tappable, bigger code on phones */
+.ed-bar .taphint { margin-left: auto; font: 600 12px var(--font-display); color: var(--code-dim); }
+.bugline:not(.iline) { border-bottom: 1px dashed color-mix(in oklab, var(--code-ink) 18%, transparent); }
+.bugline:not(.iline):not(.right):not(.wrong):not(:disabled)::after { content: "›"; margin-left: auto; padding-left: 8px; color: var(--code-dim); }
+@media (max-width: 40rem) { .bugline { font-size: 14px; } }
+/* ux9 daily goal card */
+.goalcard .post { text-align: center; padding: var(--space-lg) var(--space-md); }
+.goalcard .goalfire { margin: 0; font: 800 3.5rem/1 var(--font-display); }
+.goalcard .goalbtns { display: grid; gap: 8px; margin-top: var(--space-md); }
+.goalcard .goalbtns .btn { justify-content: center; border-radius: 12px; min-height: 48px; }
+@media (prefers-reduced-motion: no-preference) { .goalcard .post { animation: goalin 420ms var(--ease-out); } }
+@keyframes goalin { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: none; } }
+/* ux10 intro extras folded away */
+.intromore { margin-top: var(--space-md); border-top: 1px solid var(--color-rule); padding-top: 8px; }
+.intromore summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font: 600 var(--text-sm) var(--font-display); color: var(--color-muted); }
+/* ux11 top bar fits 360px */
+.igbar .ibrand { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 400px) { .igbar .ibrand { font-size: 0.875rem; } .igbar { padding-inline: 0; column-gap: 6px; } .igbar .iright { gap: 0; } .igbar .ibtn { width: 40px; } }
+/* ux12 one Telugu-capable font for mixed headings; Telugu buttons may wrap */
+.lang-te .dcard[data-j] .dq, .lang-te .dcard[data-j] .lbody, .lang-te .daily .btn { font-family: var(--font-telugu), var(--cfont, var(--font-display)); }
+.lang-te .introbtns .btn { white-space: normal; line-height: 1.35; min-height: 52px; height: auto; padding-block: 8px; }
+/* ux14 big Got it button; cards start at the top outside Reels mode */
+.dcard[data-j] .mbar .btn[data-got] { width: 100%; min-height: 52px; font-size: 1.0625rem; justify-content: center; }
+html:not(.reels-mode) .daily .dcard { align-items: flex-start; }
+/* ux15 lining numbers; unit progress bar */
+.phead, .igbar, .dstats, .pfstats { font-variant-numeric: lining-nums tabular-nums; }
+.phead { position: relative; }
+.phead .ubar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: color-mix(in oklab, currentColor 12%, transparent); }
+.phead .ubar i { display: block; height: 100%; background: var(--cstripe, var(--tc, var(--color-accent))); }
+/* ux13 placeholder while the lessons load */
+.feed .skel { display: grid; gap: 16px; padding: 16px 0; }
+.feed .skel i { display: block; height: 180px; border-radius: 16px; background: var(--color-paper-2); }
+.feed .skel i + i { height: 320px; }
+@media (prefers-reduced-motion: no-preference) { .feed .skel i { animation: skel 1.2s ease-in-out infinite alternate; } }
+@keyframes skel { to { opacity: 0.5; } }
+/* UX expert round 2 polish */
+html.reels-mode .daily .dcard[data-j] .pbody { justify-content: flex-start; }
+html.reels-mode .daily .dcard[data-j] .pactions { margin-top: auto; }
+.intromore summary { list-style: none; justify-content: space-between; }
+.intromore summary::-webkit-details-marker { display: none; }
+.intromore summary::after { content: "▾"; font-size: 1.1rem; transition: transform var(--dur-micro) var(--ease-out); }
+.intromore[open] summary::after { transform: rotate(180deg); }
+.lang-te .dtype { text-transform: none; letter-spacing: 0; }

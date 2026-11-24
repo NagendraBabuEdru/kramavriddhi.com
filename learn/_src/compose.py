@@ -32,7 +32,7 @@ PAGES = [
 for out, body, title, desc in [p for p in PAGES if (S / p[1]).exists()]:
     url = "https://kramavriddhi.com/" + out.replace("index.html", "")
     t = top.replace(OLD_T, html.escape(title, quote=True)).replace(OLD_D, html.escape(desc, quote=True)).replace(OLD_U, url)
-    extra = ('  <link rel="stylesheet" href="/learn/common/learn.css?v=34">\n'
+    extra = ('  <link rel="stylesheet" href="/learn/common/learn.css?v=36">\n'
              '  <link rel="manifest" href="/learn/manifest.webmanifest">\n'
              '  <meta name="theme-color" content="#a46400">\n'
              '  <link rel="apple-touch-icon" href="/learn/icons/apple-touch-icon.png">\n'

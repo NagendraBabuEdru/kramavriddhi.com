@@ -105,3 +105,30 @@ Learners finished all Basic units of the same skill first; build on them. Interm
 - gcp.a.13 GKE (Kubernetes on Google Cloud) — Autopilot vs Standard; `gcloud container clusters create-auto`, `get-credentials`; `kubectl apply`; Artifact Registry for images; Workload Identity Federation for GKE; delete clusters after practice.
 - gcp.a.14 Terraform on Google Cloud — HCL, `provider "google"`, `resource`, `terraform init/plan/apply/destroy`, state file (store remotely in a Cloud Storage bucket, never commit), variables; plan before apply.
 - gcp.a.15 Security and organization policies — resource hierarchy inheritance of IAM; organization policy constraints (e.g. restrict public IPs, domain-restricted sharing); avoid service account keys; Secret Manager; Cloud Audit Logs; VPC Service Controls (one card); Security Command Center.
+
+## Units (Intermediate `i` level): Data Engineering, Snowflake, Red Hat
+Learners finished all Basic units of the same skill. Same card rules. Data Engineering: `sql` for SQL, `python` for PySpark/Airflow Python, `yaml` only for YAML. Snowflake: `sql`. Red Hat: `shell`, `k8s` for OpenShift manifests.
+
+**Data Engineering (`de`)** — tool-neutral concepts first, tools named where standard (cite airflow.apache.org, spark.apache.org, parquet.apache.org, iceberg/delta docs only when needed)
+- de.i.07 Data quality checks — not-null, unique, accepted values, referential (foreign key) checks, row counts vs source, freshness; fail the pipeline or quarantine bad rows; check early (before loading the warehouse). SQL checks with `verify`.
+- de.i.08 Incremental loads and CDC — full vs incremental load; watermark column (e.g. `updated_at`) and saving the last value; upsert/MERGE; change data capture reads the database log (inserts, updates, deletes); deletes are missed by a simple watermark; idempotent reruns.
+- de.i.09 Partitioning and file formats — CSV vs JSON vs Parquet (columnar, compressed, schema) vs Avro (row, good for streams); partition by date folders (`dt=2026-11-24/`); partition pruning reads less; too many small files is slow; pick a column queries filter on.
+- de.i.10 Orchestration with Airflow — DAG, task, operator, schedule, dependencies `a >> b`, retries, backfill / catchup, idempotent tasks; Airflow schedules and watches, it should not do heavy data processing itself. Python DAG code must match the current Airflow 3 docs (`from airflow.sdk import DAG`, `schedule=`); mention that Airflow 2 used `from airflow import DAG`.
+- de.i.11 Slowly changing dimensions — SCD Type 1 (overwrite, no history) vs Type 2 (new row with valid_from / valid_to / is_current); surrogate keys; fact rows join to the version valid at that time; Type 2 for history like a customer's city.
+- de.i.12 Spark basics — distributed processing, driver and executors, DataFrame, lazy transformations vs actions (`count()`, `show()`, `write`), partitions, PySpark `spark.read.parquet`, `filter`, `groupBy().agg()`; shuffle is expensive.
+
+**Snowflake (`snow`)** — cite docs.snowflake.com only
+- snow.i.07 Roles and access control — RBAC: privileges granted to roles, roles granted to users; system roles ACCOUNTADMIN, SECURITYADMIN, SYSADMIN, USERADMIN, PUBLIC; `GRANT USAGE ON WAREHOUSE`, `GRANT SELECT ON TABLE ... TO ROLE`, `USE ROLE`; role hierarchy; don't use ACCOUNTADMIN for daily work.
+- snow.i.08 Semi-structured data (VARIANT) — load JSON into a VARIANT column; path syntax `col:customer.name`, cast with `::string`; `FLATTEN` with `LATERAL` for arrays; `PARSE_JSON`.
+- snow.i.09 Snowpipe — continuous loading of files from a stage as they arrive; `CREATE PIPE ... AS COPY INTO`; auto-ingest with cloud event notifications; serverless (no warehouse of yours); vs bulk COPY INTO on a schedule.
+- snow.i.10 Streams and tasks — a stream records changes (inserts, updates, deletes) on a table (`METADATA$ACTION`); a task runs SQL on a schedule (`SCHEDULE`) or after another task; tasks start suspended → `ALTER TASK ... RESUME`; stream + task + MERGE = simple incremental pipeline.
+- snow.i.11 Performance and caching — result cache (same query, unchanged data), warehouse (local disk) cache, micro-partitions and pruning, clustering keys for very large tables, Query Profile; scale up (bigger size) for complex queries vs scale out (multi-cluster) for many users.
+- snow.i.12 Cost control — credits used by warehouses while running; AUTO_SUSPEND and AUTO_RESUME; right-size warehouses; resource monitors (notify / suspend at a quota); serverless features also use credits; no prices.
+
+**Red Hat (`rh`)** — cite docs.redhat.com (RHEL 9) and docs.openshift.com / docs.redhat.com OpenShift
+- rh.i.07 Users, groups and sudo — `useradd`, `passwd`, `usermod -aG wheel`, `groupadd`, `id`; /etc/passwd vs /etc/shadow; the `wheel` group gets sudo on RHEL; `visudo`; avoid logging in as root.
+- rh.i.08 Storage: LVM and file systems — physical volume → volume group → logical volume (`pvcreate`, `vgcreate`, `lvcreate`); `mkfs.xfs` (XFS is the RHEL default); mount and `/etc/fstab` (use UUID); `lvextend -r` to grow; `lsblk`, `df -h`.
+- rh.i.09 Logs with journalctl — systemd journal; `journalctl -u sshd`, `-f`, `-p err`, `--since`, `-b`; persistent journal (`/var/log/journal`); rsyslog and /var/log/messages also exist.
+- rh.i.10 Podman containers — daemonless, rootless; `podman run -d -p 8080:80`, `podman ps`, `podman logs`, `podman images`; UBI images from registry.access.redhat.com; Docker-compatible commands; run as a systemd service (Quadlet, one card).
+- rh.i.11 OpenShift projects and the oc CLI — `oc login`, `oc new-project`, `oc project`, `oc get pods`, `oc logs`, `oc describe`; a project is a Kubernetes namespace with extra features; web console; `oc` vs `kubectl`.
+- rh.i.12 Deploying an app on OpenShift — `oc new-app` (from image or Git source, Source-to-Image), Deployment, Service, Route to expose (`oc expose service`), scale with `oc scale`; containers run as a random non-root user by default (restricted SCC).

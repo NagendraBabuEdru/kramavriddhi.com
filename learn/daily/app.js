@@ -174,7 +174,8 @@ function kvLearnMain() {
   function hlLine(l, lang) { return lang === 'yaml' || lang === 'k8s' || lang === 'ci' || lang === 'compose' ? hlYaml(l) : lang === 'python' || !lang ? hlPy(l) : K.esc(l).replace(/(#.*)$/, '<span class="d">$1</span>'); }
   var FILE = { python: 'main.py', yaml: 'site.yml', ini: 'inventory.ini', sql: 'query.sql', shell: 'terminal', docker: 'Dockerfile', k8s: 'deployment.yaml', ci: '.github/workflows/ci.yml', compose: 'compose.yaml' };
   function codeBlock(lines, asButtons, lang) {
-    return '<div class="editor dcode">' + (lang && lang !== 'python' && FILE[lang] ? '<div class="ed-bar"><span class="file">' + FILE[lang] + '</span></div>' : '') + (asButtons
+    var file = lang && lang !== 'python' && FILE[lang];
+    return '<div class="editor dcode">' + (file || asButtons ? '<div class="ed-bar">' + (file ? '<span class="file">' + FILE[lang] + '</span>' : '<span></span>') + (asButtons ? '<span class="taphint">👆 ' + tr('Tap the line with the bug') + '</span>' : '') + '</div>' : '') + (asButtons
       ? '<ol class="bug-lines">' + lines.map(function (l, n) {
           return '<li><button type="button" class="bugline" data-line="' + n + '"><span class="num" aria-hidden="true">' + (n + 1) + '</span><span class="src">' + hlLine(l, lang) + '</span></button></li>';
         }).join('') + '</ol>'
@@ -199,11 +200,11 @@ function kvLearnMain() {
         var lu = liveUnits(t).length, on = chosen.indexOf(t.id) >= 0;
         return '<button type="button" class="skill t-' + tkey(t.topic) + '" data-track="' + t.id + '" aria-pressed="' + on + '">' +
           '<span class="pav" aria-hidden="true">' + K.esc((TOPIC[tkey(t.topic)] || TOPIC.devops).ab) + '</span>' +
-          '<span class="sk-txt"><strong>' + K.esc(t.name) + '</strong><span>' + K.esc(t.blurb) + '</span><em>' + tr('{n} of {m} units ready', { n: lu, m: t.units.length }) + '</em></span>' +
+          '<span class="sk-txt"><strong>' + K.esc(t.name) + ' <em class="skpill">' + tr('{n} of {m} units ready', { n: lu, m: t.units.length }) + '</em></strong><span>' + K.esc(t.blurb) + '</span></span>' +
           '<span class="sk-tick" aria-hidden="true"></span></button>';
       }).join('') + '</div>' +
       '<p class="pick-note">' + tr('New units are added in every update. Skills with more units ready are best to start with.') + '</p>' +
-      '<button type="button" class="btn go" id="pick-go"' + (chosen.length ? '' : ' disabled') + '>' + (chosen.length ? tr('Start learning ({n}) ↓', { n: chosen.length }) : tr('Pick at least one skill')) + '</button>' +
+      '<button type="button" class="btn go" id="pick-go"' + (chosen.length ? '' : ' hidden') + '>' + (chosen.length ? tr('Start learning ({n}) ↓', { n: chosen.length }) : tr('Pick at least one skill')) + '</button>' +
       '</div></section>';
     var go = document.getElementById('pick-go');
     feed.querySelector('.skills').addEventListener('click', function (e) {
@@ -211,7 +212,7 @@ function kvLearnMain() {
       var id = b.getAttribute('data-track'), i = chosen.indexOf(id);
       if (i >= 0) chosen.splice(i, 1); else chosen.push(id);
       b.setAttribute('aria-pressed', i < 0);
-      go.disabled = !chosen.length;
+      go.hidden = !chosen.length;
       go.textContent = chosen.length ? tr('Start learning ({n}) ↓', { n: chosen.length }) : tr('Pick at least one skill');
     });
     go.addEventListener('click', function () {
@@ -259,7 +260,10 @@ function kvLearnMain() {
     document.documentElement.classList.add('snap-feed'); applyReels();
     updatePill(); renderEnd(); refreshStats();
     if (shared) setTimeout(function () { var e = feed.querySelector('.sharedhead'); if (e) e.scrollIntoView({ block: 'start' }); }, 60);
-    else if (scroll) setTimeout(function () { feed.scrollIntoView({ block: 'start' }); }, 30);
+    else if (scroll || Object.keys(st.done).length) setTimeout(function () {
+      var f = feed.querySelector('.dcard.reviewhead, .dcard.cleanhead, .dcard.unithead, .dcard[data-j]');
+      if (f) f.scrollIntoView({ block: 'start' }); else if (scroll) feed.scrollIntoView({ block: 'start' });
+    }, 30);
   }
 
   /* add unit blocks until there are about two days' worth of cards */
@@ -298,10 +302,9 @@ function kvLearnMain() {
   }
   function mcPool() {
     var all = chosenCards(function (c) { return c.t === 'output' || c.t === 'choice' || c.t === 'check'; });
-    var seen = all.filter(isDone);
-    return seen.length >= 6 ? seen : all;
+    return all.filter(isDone);
   }
-  function puzzlePool() { return chosenCards(function (c) { return c.t === 'pipe' || c.t === 'indent' || c.t === 'cmd'; }); }
+  function puzzlePool() { return chosenCards(function (c) { return (c.t === 'pipe' || c.t === 'indent' || c.t === 'cmd') && (isDone(c) || unitDone(c.unit)); }); }
   function fullPool() { var out = []; st.tracks.forEach(function (id) { (FULL[id] || []).forEach(function (g) { out.push(g); }); }); return out; }
 
   /* interest: kinds you play or like come more often, kinds you skip less; never the same kind twice in a row */
@@ -455,13 +458,14 @@ function kvLearnMain() {
       '<div class="prow"><span class="pav big">' + ICON.logo + '</span>' +
       '<div class="dstats"><div><strong id="s-streak">' + (s ? '🔥' + s : '0') + '</strong><span>' + tr('streak') + '</span></div><div><strong id="s-today">' + Math.min(todayCount(), GOAL) + '/' + GOAL + '</strong><span>' + tr('today') + '</span></div><div><strong id="s-units">' + unitsDone + '</strong><span>' + tr('units done') + '</span></div></div></div>' +
       '<h1>kramavriddhi.learn</h1>' +
-      '<p class="pbio">' + tr('Your skills, step by step: Basic → Intermediate → Advanced. Daily goal: {n} cards.', { n: GOAL }) + ' 📚</p>' + langSwitch() +
+      langSwitch() +
       '<p class="revline" id="s-review">' + reviewLine() + '</p>' +
-      '<p class="crline">🪙 <strong id="s-cr">' + st.cr + '</strong> ' + tr('credits') + ' · <a href="?profile=1" data-profile>' + tr('how to earn and use them') + '</a></p>' +
       '<h2 class="mysk">' + tr('My skills') + '</h2><ul class="mytracks">' + st.tracks.map(function (id) { return trackRow(TR[id]); }).join('') + '</ul>' +
       '<div class="introbtns"><button type="button" class="btn go" data-start>' + tr(todayCount() ? 'Continue ↓' : 'Start today ↓') + '</button><a class="btn ghost" href="?pick=1" data-pick>' + tr('Change skills') + '</a></div>' +
+      '<details class="intromore"><summary>' + tr('More: app, reminder, credits') + '</summary>' +
+      '<p class="crline">🪙 <strong id="s-cr">' + st.cr + '</strong> ' + tr('credits') + ' · <a href="?profile=1" data-profile>' + tr('how to earn and use them') + '</a></p>' +
       '<div class="introbtns two"><a class="btn ghost" href="?profile=1" data-profile>👤 ' + tr('My profile') + '</a><button type="button" class="btn ghost" data-reels>' + (st.reels ? '✕ ' + tr('Exit reels') : '▶ ' + tr('Reels mode')) + '</button></div>' +
-      appBox() + '</div></section>';
+      appBox() + '</details></div></section>';
   }
 
   /* ---------- app box: install, daily reminder, offline (Phase 7) */
@@ -587,7 +591,8 @@ function kvLearnMain() {
     feedModes[j] = mode || '';
     var head = '<header class="phead"><span class="pav" aria-hidden="true">' + K.esc(topicOf(c).ab) + '</span>' +
       '<span class="pwho"><strong>' + K.esc(u.track.name) + '</strong><span>' + tr('Unit {n}', { n: u.n }) + ' · ' + K.esc(u.title) + '</span></span>' +
-      '<span class="dcount">' + (rev ? '🔁' : (c.pos + 1) + '/' + u.cards.length) + '</span></header>' +
+      '<span class="dcount">' + (rev ? '🔁' : (c.pos + 1) + '/' + u.cards.length) + '</span>' +
+      (rev ? '' : '<span class="ubar" aria-hidden="true"><i style="width:' + Math.round((c.pos + 1) / u.cards.length * 100) + '%"></i></span>') + '</header>' +
       (rev ? '<p class="dtype review-type">🔁 ' + tr('Review') + (st.review[c.id] && st.review[c.id].step ? ' ' + tr('{n} of 3', { n: st.review[c.id].step + 1 }) : '') + '</p>' : '') +
       '<p class="dtype' + (isGame ? ' game-type' : c.t === 'learn' ? ' learn-type' : c.t === 'check' ? ' check-type' : '') + '">' + (isGame ? '🎮 ' : c.t === 'learn' ? '💡 ' : c.t === 'check' ? '✅ ' : '') + (c.t === 'output' && c.lang === 'sql' ? tr('What does it return?') : TYPE[c.t]) + '</p>';
     var body = '';
@@ -609,7 +614,7 @@ function kvLearnMain() {
       '<button type="button" class="pact like" data-like aria-pressed="' + liked + '" aria-label="Like">' + ICON.heart + '</button>' +
       '<a class="pact" href="' + K.wa(shareText(c)) + '" target="_blank" rel="noopener" aria-label="Share on WhatsApp">' + ICON.share + '</a>' +
       '<button type="button" class="pact pnote" data-note aria-expanded="false" aria-pressed="' + !!st.notes[c.id] + '" aria-controls="nb-' + j + '" aria-label="' + tr('My notes') + '">' + ICON.note + '</button>' +
-      '<button type="button" class="pact plearn" data-learn aria-expanded="false" aria-controls="lb-' + j + '">' + ICON.book + '<span>' + tr('Learn more') + '</span></button>' +
+      '<button type="button" class="pact plearn" data-learn aria-expanded="false" aria-controls="lb-' + j + '" aria-label="' + K.esc(tr('Learn more')) + '">' + ICON.book + '<span>' + tr('Learn more') + '</span></button>' +
       '<button type="button" class="pact save" data-save aria-pressed="' + saved + '" aria-label="Save for later">' + ICON.save + '</button>' +
       '</div>' +
       '<div class="plearnbox" id="lb-' + j + '" hidden><p>' + tr('Read and practise more:') + '</p><ul>' + learnLinks(c).map(function (l) {
@@ -617,7 +622,7 @@ function kvLearnMain() {
       }).join('') + '</ul></div>' + noteBox(c, j);
     return '<section class="dcard t-' + tkey(c.topic) + (isGame ? ' gamecard' : '') + (rev ? ' reviewcard' : '') + (mode === 'play' ? ' playcard' : '') + '" id="c-' + j + '" data-j="' + j + '" aria-label="' + K.esc((rev ? 'Review: ' : mode === 'play' ? 'Game break: ' : '') + u.track.name + ', ' + u.title + ', card ' + (c.pos + 1) + ' of ' + u.cards.length) + '">' +
       '<div class="dinner post">' + head + '<div class="pbody">' + body + '</div>' +
-      '<div class="dres" hidden></div>' + actions + '<span class="bigheart" aria-hidden="true">' + ICON.heart + '</span></div></section>';
+      '<div class="dres" role="status" aria-live="polite" hidden></div>' + actions + '<span class="bigheart" aria-hidden="true">' + ICON.heart + '</span></div></section>';
   }
 
   function shareText(c) {
@@ -627,7 +632,8 @@ function kvLearnMain() {
   }
 
   function choiceList(c) {
-    return '<div class="choices">' + K.shuffle([c.a].concat(c.w)).map(function (o, n) {
+    var short = [c.a].concat(c.w).every(function (o) { return String(o).length <= 10 && String(o).indexOf('\n') < 0; });
+    return '<div class="choices' + (short ? ' short' : '') + '">' + K.shuffle([c.a].concat(c.w)).map(function (o, n) {
       return '<button type="button" class="choice" data-opt="' + K.esc(o) + '"><span class="key" aria-hidden="true">' + 'ABCD'.charAt(n) + '</span><pre>' + K.esc(o) + '</pre></button>';
     }).join('') + '</div>';
   }
@@ -738,20 +744,26 @@ function kvLearnMain() {
       (extra || (finished && !restoring ? '<p class="unitdone">' + tr('🎉 Unit complete:') + ' ' + K.esc(u.title) + '</p>' + cleanupBox(u) : '')) +
       '<button type="button" class="btn primary" data-next>' + tr(last || finished ? 'Next unit ↓' : 'Next ↓') + '</button>';
     res.hidden = false;
+    if (!restoring) {
+      res.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+      setTimeout(function () { var nb = res.querySelector('[data-next]'); if (nb && nb.isConnected) nb.focus({ preventScroll: true }); }, 350);
+    }
   }
 
   function markChoices(sec, c, picked) {
     sec.querySelectorAll('.choice').forEach(function (b) {
       b.disabled = true;
       var o = b.getAttribute('data-opt');
-      if (o === c.a) b.classList.add('right'); else if (o === picked) b.classList.add('wrong');
+      if (o === c.a) { b.classList.add('right'); b.setAttribute('aria-label', tr('Correct answer') + ': ' + o); }
+      else if (o === picked) { b.classList.add('wrong'); b.setAttribute('aria-label', tr('Your answer, wrong') + ': ' + o); }
     });
   }
   function markBug(sec, c, picked) {
     sec.querySelectorAll('.bugline').forEach(function (b) {
       b.disabled = true;
       var n = +b.getAttribute('data-line');
-      if (n === c.bad) b.classList.add('right'); else if (n === picked) b.classList.add('wrong');
+      if (n === c.bad) { b.classList.add('right'); b.setAttribute('aria-label', tr('Correct answer') + ': ' + (n + 1)); }
+      else if (n === picked) { b.classList.add('wrong'); b.setAttribute('aria-label', tr('Your answer, wrong') + ': ' + (n + 1)); }
     });
   }
   function markOrder(sec, c) {
@@ -759,6 +771,7 @@ function kvLearnMain() {
       b.disabled = true;
       var want = c.items.indexOf(b.getAttribute('data-item')) + 1, got = +(b.getAttribute('data-n') || 0);
       b.classList.add(want === got ? 'right' : 'wrong');
+      b.setAttribute('aria-label', (want === got ? tr('Correct answer') : tr('Your answer, wrong')) + ': ' + want + '. ' + b.getAttribute('data-item'));
       if (!got) b.querySelector('.ordn').textContent = want;
     });
     sec.querySelector('.ord-reset').hidden = true;
@@ -776,7 +789,8 @@ function kvLearnMain() {
     }
     var gain = ok && c.t !== 'learn' ? (c.t === 'check' ? 2 : 1) : 0, before = todayCount();
     bumpDay();
-    if (before < GOAL && todayCount() >= GOAL) gain += 5;
+    var goalNow = before < GOAL && todayCount() >= GOAL;
+    if (goalNow) gain += 5;
     if (!wasDone && unitDone(u)) gain += 3;
     if (gain) { st.cr += gain; earned[j] = gain; }
     if (!wasDone && unitDone(u)) {
@@ -785,6 +799,18 @@ function kvLearnMain() {
     }
     save();
     updatePill(); refreshStats(); renderEnd();
+    if (goalNow) goalCard(j);
+  }
+  function goalCard(j) {
+    var sec = document.getElementById('c-' + j); if (!sec || document.getElementById('c-goal')) return;
+    var s = streakNow();
+    sec.insertAdjacentHTML('afterend', '<section class="dcard goalcard" id="c-goal" aria-label="' + K.esc(tr('Daily goal done!')) + '"><div class="dinner post">' +
+      '<p class="goalfire" aria-hidden="true">🔥' + (s || 1) + '</p><h2 class="uh-title">' + tr('Daily goal done!') + '</h2>' +
+      '<p class="uh-sub">' + tr('Good place to stop. Come back tomorrow to keep your streak.') + '</p>' +
+      '<div class="goalbtns"><a class="btn go" href="' + K.reminderGoogle(st.remTime || '19:00') + '" target="_blank" rel="noopener">' + tr('⏰ Daily reminder') + '</a>' +
+      '<a class="btn ghost" href="' + K.wa(tr('I finished my daily goal on Kramavriddhi Learn. Streak: {n} days 🔥', { n: s || 1 }) + ' ' + URL + (LANG === 'te' ? '?lang=te' : '')) + '" target="_blank" rel="noopener">' + tr('Share on WhatsApp') + '</a>' +
+      '<button type="button" class="btn ghost" data-next>' + tr('Keep going ↓') + '</button></div></div></section>');
+    K.track('daily_goal_card', {});
   }
 
   /* one more card (or game break) done today; the streak grows when the daily goal is reached */
@@ -1033,7 +1059,7 @@ function kvLearnMain() {
     var fifty = c.t === 'choice' || c.t === 'output';
     return '<div class="helpbar">' +
       (fifty ? '<button type="button" class="hbtn" data-hint>💡 50/50 <span class="hcost">' + COST.hint + ' 🪙</span></button>' : '') +
-      '<button type="button" class="hbtn" data-reveal>🔓 ' + tr('Show solution') + ' <span class="hcost">' + COST.reveal + ' 🪙</span></button>' +
+      '<button type="button" class="hbtn" data-reveal aria-label="' + K.esc(tr('Show solution')) + '">🔓 ' + tr('Solution') + ' <span class="hcost">' + COST.reveal + ' 🪙</span></button>' +
       '<p class="hmsg" role="status"></p></div>';
   }
   function helpClick(sec, j, c, btn) {
@@ -1516,7 +1542,7 @@ function kvLearnMain() {
   var lang = /[?&]lang=(te|en)\b/.exec(location.search), st = window.KVLearn.load('kv-learn-feed', null);
   if (lang) { st = st || {}; st.lang = lang[1]; window.KVLearn.save('kv-learn-feed', st); }
   if (st && st.lang === 'te' && !window.KV_TE) {
-    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=16';
+    var sc = document.createElement('script'); sc.src = '/learn/daily/te.js?v=17';
     sc.onload = sc.onerror = kvLearnMain; document.head.appendChild(sc);
   } else kvLearnMain();
 })();
